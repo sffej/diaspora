@@ -43,7 +43,7 @@ message = Morley::Shorty::swap(params[:status_message][:message])
                                          :person => @status_message.person,
                                          :photos => @status_message.photos,
                                          :comments => [],
-                                         :aspects => current_user.aspects,
+                                         :all_aspects => current_user.aspects,
                                          :current_user => current_user
                                         }
                                      )
