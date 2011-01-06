@@ -78,6 +78,9 @@ message = Morley::Shorty::swap(params[:status_message][:message])
         :person => person_hash[comment.person_id]
       }
     end
+
+    @object_aspect_ids = @status_message.aspects.map{|a| a.id}
+
     respond_with @status_message
   end
 end
