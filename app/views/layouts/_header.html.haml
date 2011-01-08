@@ -13,8 +13,8 @@
     .right
       %ul#landing_nav
         %li= link_to '@diasporg', "http://twitter.com/diasporg"
-        %li= link_to 'github', "https://github.com/diaspora/diaspora"
-        %li= link_to t('.blog'), 'http://blog.joindiaspora.com/'
+        %li= link_to 'Main', "http://www.diasp.org"
+        %li= link_to t('.blog'), 'http://b.diasp.org/'
         %li= link_to t('.login'), new_user_session_path, :class => 'login'
 
   - elsif (current_user || !@landing_page)
