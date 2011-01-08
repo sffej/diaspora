@@ -5,7 +5,7 @@ require 'net/http'
 require 'uri'
 require 'rubygems'
 	#do
-        new = Net::HTTP.get(URI.parse("http://boun.cc/yourls-api.php?action=shorturl&url=#{url}&signature=b6be212a4e&format=simple"))
+        new = Net::HTTP.get(URI.parse("http://boun.cc/yourls-api.php?action=shorturl&url=#{url}&signature=ef2748f487&format=simple"))
 	#return new
 	return (new)
 #puts new

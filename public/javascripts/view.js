@@ -215,8 +215,8 @@ $(document).ready(function() { $('<div id="diasp" style="position: absolute; dis
                 'transitionIn' : 'elastic',
                 'transitionOut' : 'elastic',
                 'type' : 'iframe',
-                'height' : '100%',
-                'width' : '100%',
+                'height' : '70%',
+                'width' : '70%',
                 'speedIn' : 600,
                 'speedOut' : 600,
                 'overlayShow' : false

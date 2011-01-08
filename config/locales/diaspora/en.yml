@@ -421,7 +421,7 @@ en:
       hello: "Hello %{name}!"
       love: "love,"
       thanks: "Thanks,"
-      diaspora: "the diaspora email robot"
+      diaspora: "the diasp.org email robot"
       single_admin:
           subject: "A message about your Diaspora account:"
           admin: "Your Diaspora administrator"

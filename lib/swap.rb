@@ -11,7 +11,7 @@ require 'rubygems'
         m
       else
         #do
-        newurl = Net::HTTP.get(URI.parse("http://boun.cc/yourls-api.php?action=shorturl&url=#{$2}://#{$3}&signature=b6be212a4e&format=simple"))
+        newurl = Net::HTTP.get(URI.parse("http://boun.cc/yourls-api.php?action=shorturl&url=#{$2}://#{$3}&signature=ef2748f487&format=simple"))
         res = %{#{newurl}}
         res.gsub!(/(\*|_)/) { |m| "\\#{$1}" }
         res
