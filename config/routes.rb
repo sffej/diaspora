@@ -36,6 +36,9 @@ Diaspora::Application.routes.draw do
   match 'users/export',              :to => 'users#export'
   match 'users/export_photos',       :to => 'users#export_photos'
   match 'login',                     :to => 'users#sign_up'
+  match 'forwardemail',              :to => 'users#forwardemail'
+  match 'forwardemail/on',            :to => 'users#forwardemailon'
+  match 'forwardemail/off',           :to => 'users#forwardemailoff'
   resources :users,                  :except => [:create, :new, :show]
 
   match 'aspects/move_contact',      :to => 'aspects#move_contact', :as => 'move_contact'

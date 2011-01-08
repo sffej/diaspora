@@ -73,8 +73,8 @@
                 = link_to (image_tag "social_media_logos/feed-16x16.png", :title => "RSS"), current_user.public_url
                 - if current_user.services
                   - for service in current_user.services
-                    = image_tag "social_media_logos/#{service.provider}-16x16.png", :title => service.provider
-
+                    = image_tag "social_media_logos/#{service.provider}-16x16.png", :title => service.provider     
+              <span style="color:blue">Shorten any URL by adding an extra / e.g. http:///foo.bar or https:///foo.bar</span>
             = link_to '(?)', "#question_mark_pane", :class => 'question_mark', :style=>"display:none;"
 
             .fancybox_content

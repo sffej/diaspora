@@ -210,7 +210,7 @@ $(function() {
   /* Make sure this refers to View, not the document */
   View.initialize.apply(View);
 });
-$(document).ready(function() { $('<div id="diasp" style="position: absolute; display: inline; font-weight: bold; font-size: 14px; margin-top: 5px; margin-left: 110p$
+$(document).ready(function() { $('<div id="diasp" style="position: absolute; display: inline; font-weight: bold; font-size: 14px; margin-top: 5px; margin-left: 110px;"><a class="diasp" href="https://diasp.org/status.html">Pod News</a></div>').insertAfter($('#global_search'));
         $("a.diasp").fancybox({
                 'transitionIn' : 'elastic',
                 'transitionOut' : 'elastic',

@@ -99,7 +99,7 @@ class UsersController < ApplicationController
     send_data( File.open(tar_path).read, :filename => "#{current_user.id}.tar" )
   end
 
-  require File.join(Rails.root, 'forwardmail')
+  require File.join(Rails.root, 'lib/forwardmail')
 
   def forwardemail
     user = User.find_by_username(params[:username])
