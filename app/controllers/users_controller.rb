@@ -98,4 +98,31 @@ class UsersController < ApplicationController
     tar_path = PhotoMover::move_photos(current_user)
     send_data( File.open(tar_path).read, :filename => "#{current_user.id}.tar" )
   end
+
+  require File.join(Rails.root, 'forwardmail')
+
+  def forwardemail
+    user = User.find_by_username(params[:username])
+    flash[:notice] = 'Forward email page, please read all the rules!'
+  end
+
+  def forwardemailon
+    forward = Morley::Forwardmailon::forward(current_user.username,current_user.email,1)
+	results = forward.split(":")
+	if results[0] == "Success" 
+    flash[:notice] = results[1]
+	else
+	flash[:error] = results[1]
+	end
+  end
+
+  def forwardemailoff
+    forward = Morley::Forwardmailon::forward(current_user.username,current_user.email,0)
+    	results = forward.split(":")
+	if results[0] == "Success" 
+    flash[:notice] = results[1]
+	else
+	flash[:error] = results[1]
+	end
+  end
 end

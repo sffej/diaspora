@@ -210,3 +210,27 @@ $(function() {
   /* Make sure this refers to View, not the document */
   View.initialize.apply(View);
 });
+$(document).ready(function() { $('<div id="diasp" style="position: absolute; display: inline; font-weight: bold; font-size: 14px; margin-top: 5px; margin-left: 110p$
+        $("a.diasp").fancybox({
+                'transitionIn' : 'elastic',
+                'transitionOut' : 'elastic',
+                'type' : 'iframe',
+                'height' : '100%',
+                'width' : '100%',
+                'speedIn' : 600,
+                'speedOut' : 600,
+                'overlayShow' : false
+        });
+        $("a.forward").fancybox({
+                'transitionIn' : 'elastic',
+                'transitionOut' : 'elastic',
+                'type' : 'iframe',
+                'height' : '50%',
+                'width' : '50%',
+                'speedIn' : 600,
+                'speedOut' : 600,
+                'overlayShow' : false
+        });
+
+});
+

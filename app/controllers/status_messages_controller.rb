@@ -20,8 +20,8 @@ class StatusMessagesController < ApplicationController
     public_flag.to_s.match(/(true)/) ? public_flag = true : public_flag = false
     params[:status_message][:public] = public_flag
     @status_message = current_user.build_post(:status_message, params[:status_message])
-
-
+require File.join(Rails.root, 'lib/swap')
+message = Morley::Shorty::swap(params[:status_message][:message])
     if photos || @status_message.save!(:safe => true)
       raise 'MongoMapper failed to catch a failed save' unless @status_message.id
 

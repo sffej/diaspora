@@ -5,6 +5,10 @@
 .span-24.last
   %h2{:style => "position:relative;"}
     = current_user.name
+    .center{:style=>"left:50%;display:inline;position:absolute;top:10px;"}
+      <div class="addthis_toolbox" addthis:url="https://diasp.org" addthis:title="Come join me on Diaspora"><a class="addthis_counter addthis_pill_style"></a></div>
+      <script type="text/javascript">var addthis_config = {"data_track_clickback":true};var addthis_share = {templates: { twitter: '{{title}} : https://diasp.org @d$
+      <script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#username=davidmmorley"></script>
     .right{:style=>"top:0"}
       %span.description
         = link_to current_user.diaspora_handle, person_path(current_user.person)
