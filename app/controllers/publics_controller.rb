@@ -60,8 +60,4 @@ class PublicsController < ApplicationController
 
     render :nothing => true, :status => 200
   end
-def status
-end
-def help
-end
 end

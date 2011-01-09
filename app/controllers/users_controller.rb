@@ -125,4 +125,8 @@ class UsersController < ApplicationController
 	flash[:error] = results[1]
 	end
   end
+def help
+end
+def status
+end
 end
