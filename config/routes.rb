@@ -37,8 +37,11 @@ Diaspora::Application.routes.draw do
   match 'users/export_photos',       :to => 'users#export_photos'
   match 'login',                     :to => 'users#sign_up'
   match 'forwardemail',              :to => 'users#forwardemail'
-  match 'forwardemail/on',            :to => 'users#forwardemailon'
-  match 'forwardemail/off',           :to => 'users#forwardemailoff'
+  match 'forwardemail/on',           :to => 'users#forwardemailon'
+  match 'forwardemail/off',          :to => 'users#forwardemailoff'
+  match 'status',                    :to => 'users#status'
+  match 'help',                      :to => 'users#help'
+
   resources :users,                  :except => [:create, :new, :show]
 
   match 'aspects/move_contact',      :to => 'aspects#move_contact', :as => 'move_contact'
@@ -53,8 +56,6 @@ Diaspora::Application.routes.draw do
   match '.well-known/host-meta',:to => 'publics#host_meta'
   match 'receive/users/:id',    :to => 'publics#receive'
   match 'hub',                  :to => 'publics#hub'
-  match 'status',               :to => 'publics#status'
-  match 'help',                 :to => 'publics#help'
   #root
   root :to => 'home#show'
 end
