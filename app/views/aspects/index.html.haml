@@ -1,23 +1,14 @@
 -#   Copyright (c) 2010, Diaspora Inc.  This file is
 -#   licensed under the Affero General Public License version 3 or later.  See
 -#   the COPYRIGHT file.
-<<<<<<< HEAD
-
-=======
 .center{:style=>"left:1px;display:inline;position:absolute;top:59px;"}
   <div class="addthis_toolbox" addthis:url="https://diasp.org" addthis:title="Come join me on Diaspora"><a class="addthis_counter addthis_pill_style"></a></div>
   <script type="text/javascript">var addthis_config = {"data_track_clickback":true};var addthis_share = {templates: { twitter: '{{title}} : https://diasp.org @diasporg' }};</script>
   <script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#username=davidmmorley"></script>
   <a rel="facebox" href="/status.html">Pod News</a><br><a rel="facebox" href="/forwardemail">Email</a><br><a rel="facebox" href="/help.html">Help</a>
->>>>>>> h
 
 - content_for :head do
   = include_javascripts :home
-
-    .center{:style=>"left:50%;display:inline;position:absolute;top:10px;"}
-      <div class="addthis_toolbox" addthis:url="https://diasp.org" addthis:title="Come join me on Diaspora"><a class="addthis_counter addthis_pill_style"></a></div>
-      <script type="text/javascript">var addthis_config = {"data_track_clickback":true};var addthis_share = {templates: { twitter: '{{title}} : https://diasp.org @diasporg' }};</script>
-      <script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#username=davidmmorley"></script>
 
 .span-15.append-2
   = render 'aspects/no_contacts_message', :aspect => @aspect, :contact_count => @contacts.count
