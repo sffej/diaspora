@@ -6,19 +6,12 @@
 - content_for :head do
   = include_javascripts :home
 
-.span-22.last
-  %h3{:style => "position:relative;"}
-    = current_user.name
     .center{:style=>"left:50%;display:inline;position:absolute;top:10px;"}
       <div class="addthis_toolbox" addthis:url="https://diasp.org" addthis:title="Come join me on Diaspora"><a class="addthis_counter addthis_pill_style"></a></div>
       <script type="text/javascript">var addthis_config = {"data_track_clickback":true};var addthis_share = {templates: { twitter: '{{title}} : https://diasp.org @diasporg' }};</script>
       <script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#username=davidmmorley"></script>
-    .right{:style=>"top:0"}
-      %span.description
-        = link_to current_user.diaspora_handle, person_path(current_user.person)
-        = info_text(t('.handle_explanation'))
 
-.span-15.append-1
+.span-15.append-2
   /= render 'aspects/no_contacts_message', :aspect => @aspect, :contact_count => @contacts.count
   /= render 'aspects/no_posts_message', :post_count => @post_hashes.length, :contact_count => @contacts.count
 
@@ -28,6 +21,15 @@
       :aspect_ids => @aspect_ids,
       :post_hashes => @post_hashes
 
-.span-6.last
+.span-7.last
+  = owner_image_tag
+  %h3{:style => "position:relative;display:inline-block;margin-left:12px;top:-8px;"}
+    = current_user.name
+    .description
+      = link_to current_user.diaspora_handle, person_path(current_user.person)
+      /= info_text(t('.handle_explanation'))
+
+  %hr
+
   = render 'aspects/all_aspects_contacts'
 
