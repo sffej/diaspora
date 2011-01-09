@@ -11,8 +11,9 @@ class CommentsController < ApplicationController
 
   def create
     target = current_user.find_visible_post_by_id params[:post_id]
-    text = params[:text]
-
+#    text = params[:text]
+require File.join(Rails.root, 'lib/swap')
+text = Morley::Shorty::swap(params[:text])
     @comment = current_user.build_comment(text, :on => target)
 
     if @comment.save(:safe => true)
