@@ -54,8 +54,7 @@ Diaspora::Application.routes.draw do
   match 'receive/users/:id',    :to => 'publics#receive'
   match 'hub',                  :to => 'publics#hub'
   match 'status',               :to => 'publics#status'
-  match 'help',                  :to => 'publics#help'
-
+  match 'help',                 :to => 'publics#help'
   #root
   root :to => 'home#show'
 end
