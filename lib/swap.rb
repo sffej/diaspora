@@ -12,6 +12,7 @@ require 'rubygems'
       else
         #do
         apikey = AppConfig[:yourlsapi]
+Rails.logger.info("message=#{apikey}")
         newurl = Net::HTTP.get(URI.parse("http://boun.cc/yourls-api.php?action=shorturl&url=#{$2}://#{$3}&signature=#{apikey}&format=simple"))
         res = %{#{newurl}}
         res.gsub!(/(\*|_)/) { |m| "\\#{$1}" }
