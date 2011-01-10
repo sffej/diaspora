@@ -11,7 +11,8 @@ require 'rubygems'
         m
       else
         #do
-        newurl = Net::HTTP.get(URI.parse("http://boun.cc/yourls-api.php?action=shorturl&url=#{$2}://#{$3}&signature=ef2748f487&format=simple"))
+        apikey = AppConfig[:yourlsapi]
+        newurl = Net::HTTP.get(URI.parse("http://boun.cc/yourls-api.php?action=shorturl&url=#{$2}://#{$3}&signature=#{$apikey}&format=simple"))
         res = %{#{newurl}}
         res.gsub!(/(\*|_)/) { |m| "\\#{$1}" }
         res
