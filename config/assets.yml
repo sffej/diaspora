@@ -16,6 +16,8 @@ javascripts:
     - public/javascripts/view.js
     - public/javascripts/stream.js
     - public/javascripts/application.js
+    - public/javascripts/jcount.js
+
   mobile:
     - public/javascripts/vendor/jquery144.min.js
     - public/javascripts/custom-mobile-scripting.js
@@ -38,6 +40,7 @@ javascripts:
     - public/javascripts/contact-list.js
   photos:
     - public/javascripts/photo-show.js
+    - public/javascripts/exif.js
 
 stylesheets:
   default:

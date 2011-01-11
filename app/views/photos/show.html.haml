@@ -4,6 +4,7 @@
 
 - content_for :head do
   = include_javascripts :photos
+  <script type="text/javascript">$("#img1").click(function() {alert($(this).exifPretty());});  </script>
 
 .span-15.append-1.last
   #photo_controls
@@ -21,9 +22,9 @@
     #show_photo{:data=>{:guid=>@photo.id}}
       -if @ownership
         = image_tag 'ajax-loader.gif', :id => "photo_spinner", :class => "hidden"
-        = image_tag @photo.url(:scaled_full)
+        = image_tag @photo.url(:scaled_full), :id => "img1", :exif => "true"
       -else
-        = image_tag @photo.url(:scaled_full)
+        = image_tag @photo.url(:scaled_full), :id => "img1", :exif => "true"
 
       #caption
         = @photo.caption
