@@ -4,7 +4,7 @@
 
 - content_for :head do
   = include_javascripts :photos
-  <script type="text/javascript">$("#img1").click(function() {alert($(this).exifPretty());});  </script>
+  <script type="text/javascript">$(document).ready(function(){$("#img1").click(function(){alert($(this).exifPretty());});});</script>
 
 .span-15.append-1.last
   #photo_controls
