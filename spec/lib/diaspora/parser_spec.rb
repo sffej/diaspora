@@ -30,30 +30,10 @@ describe Diaspora::Parser do
       retraction = Retraction.for(message)
       xml = retraction.to_diaspora_xml
 
-      proc { user.receive xml, user2.person }.should change(StatusMessage, :count).by(-1)
-    end
-
-    context "connecting" do
-
-    let(:good_request) { FakeHttpRequest.new(:success)}
-      it "should create a new person upon getting a person request" do
-        remote_user = Factory.create(:user)
-        new_person = remote_user.person
-
-        request = Request.new(:to =>user.person, :from => new_person)
-        xml = remote_user.salmon(request).xml_for(user.person)
-        request.delete
-        request.from.delete
-        remote_user.delete
-        new_person.delete
-
-        Person.should_receive(:by_account_identifier).twice.and_return(new_person)
-
-        lambda {
-          user.receive_salmon xml
-        }.should change(Person, :count).by(1)
-      end
-
+      proc {
+        zord = Postzord::Receiver.new(user, :person => user2.person)
+        zord.parse_and_receive(xml)
+       }.should change(StatusMessage, :count).by(-1)
 
     end
 
@@ -75,7 +55,10 @@ describe Diaspora::Parser do
       retraction = Retraction.for(user2)
       retraction_xml = retraction.to_diaspora_xml
 
-      lambda { user.receive retraction_xml, user2.person }.should change {
+      lambda { 
+          zord = Postzord::Receiver.new(user, :person => user2.person)
+          zord.parse_and_receive(retraction_xml)
+      }.should change {
         aspect.reload.contacts.size }.by(-1)
     end
 
@@ -102,7 +85,8 @@ describe Diaspora::Parser do
       old_profile.first_name.should == 'bob'
 
       #Marshal profile
-      user.receive xml, person
+      zord = Postzord::Receiver.new(user, :person => person)
+      zord.parse_and_receive(xml)
 
       #Check that marshaled profile is the same as old profile
       person = Person.first(:id => person.id)

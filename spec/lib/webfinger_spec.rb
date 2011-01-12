@@ -14,10 +14,7 @@ describe Webfinger do
   let(:person){ Factory(:person, :diaspora_handle => account)}
   let(:finger){Webfinger.new(account)}
 
-
   let(:good_request) { FakeHttpRequest.new(:success)}
-  let(:stub_good) {EventMachine::HttpRequest.stub!(:new).and_return(good_request)}
-  let(:stub_bad) {EventMachine::HttpRequest.stub!(:new).and_return(bad_request)}
 
   let(:diaspora_xrd) {File.open(File.join(Rails.root, 'spec/fixtures/host_xrd')).read}
   let(:diaspora_finger) {File.open(File.join(Rails.root, 'spec/fixtures/finger_xrd')).read}
@@ -69,13 +66,13 @@ describe Webfinger do
       end
     end
 
+
     context 'webfingering local people' do
       it 'should return a person from the database if it matches its handle' do
         person.save
           finger.fetch.id.should == person.id
         end
       end
-
       it 'should fetch a diaspora webfinger and make a person for them' do
         diaspora_xrd.stub!(:body).and_return(diaspora_xrd)
         hcard_xml.stub!(:body).and_return(hcard_xml)
@@ -84,8 +81,8 @@ describe Webfinger do
         #new_person = Factory.build(:person, :diaspora_handle => "tom@tom.joindiaspora.com")
         # http://tom.joindiaspora.com/.well-known/host-meta 
         f = Webfinger.new("tom@tom.joindiaspora.com").fetch
-        f.should be_valid
 
+        f.should be_valid
       end
       
       it 'should retry with http if https fails' do

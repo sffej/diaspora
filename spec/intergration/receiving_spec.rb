@@ -4,7 +4,7 @@
 
 require 'spec_helper'
 
-describe User do
+describe 'a user receives a post' do
 
   let(:user) { make_user }
   let(:aspect) { user.aspects.create(:name => 'heroes') }
@@ -15,17 +15,25 @@ describe User do
   let(:user3) { make_user }
   let(:aspect3) { user3.aspects.create(:name => 'heroes') }
 
+  def zord(user, person, xml)
+    zord = Postzord::Receiver.new(user, :person => person)
+    zord.parse_and_receive(xml)
+  end
+
   before do
     connect_users(user, aspect, user2, aspect2)
   end
+
+
 
   it 'should stream only one message to the everyone aspect when a multi-aspected contacts posts' do
     contact = user.contact_for(user2.person)
     user.add_contact_to_aspect(contact, user.aspects.create(:name => "villains"))
     status = user2.post(:status_message, :message => "Users do things", :to => aspect2.id)
-    xml = status.to_diaspora_xml
+    #xml = status.to_diaspora_xml
     Diaspora::WebSocket.should_receive(:queue_to_user).exactly(:once)
-    user.receive xml, user2.person
+    zord = Postzord::Receiver.new(user, :object => status, :person => user2.person)
+    zord.receive_object
   end
 
   it 'should be able to parse and store a status message from xml' do
@@ -35,7 +43,9 @@ describe User do
     user2.delete
     status_message.destroy
 
-    lambda {user.receive xml , user2.person}.should change(Post,:count).by(1)
+    lambda {
+      zord(user, user2.person, xml)
+    }.should change(Post,:count).by(1)
   end
 
   it 'should not create new aspects on message receive' do
@@ -48,25 +58,14 @@ describe User do
     user.aspects.size.should == num_aspects
   end
 
-  describe '#receive_salmon' do
-    it 'should handle the case where the webfinger fails' do
-      pending "Write this to test #receive_salmon"
-      Webfinger.stub!(:fetch).and_return(nil)
-
-      proc{
-        user2.post :status_message, :message => "store this!", :to => aspect2.id
-      }.should_not raise_error
-    end
-
-
-  end
-
   context 'update posts' do
     it 'does not update posts not marked as mutable' do
       status = user.post :status_message, :message => "store this!", :to => aspect.id
       status.message = 'foo'
       xml = status.to_diaspora_xml
-      user2.receive(xml, user.person)
+
+      zord(user2, user.person, xml)
+
       status.reload.message.should == 'store this!'
     end
 
@@ -74,7 +73,10 @@ describe User do
       photo = user.post(:photo, :user_file => uploaded_photo, :caption => "Original", :to => aspect.id)
       photo.caption = 'foo'
       xml = photo.to_diaspora_xml
-      user2.reload.receive(xml, user.person)
+      user2.reload
+
+      zord(user2, user.person, xml)
+
       photo.reload.caption.should match(/foo/)
     end
   end
@@ -120,7 +122,9 @@ describe User do
 
     it 'should not override userrefs on receive by another person' do
       user3.activate_contact(user2.person, aspect3)
-      user3.receive @status_message.to_diaspora_xml, user2.person
+      xml = @status_message.to_diaspora_xml
+      
+      zord(user3, user2.person, xml)
 
       @status_message.reload
       @status_message.user_refs.should == 2
@@ -136,8 +140,10 @@ describe User do
       connect_users(user, aspect, user3, aspect3)
       @post = user.post :status_message, :message => "hello", :to => aspect.id
 
-      user2.receive @post.to_diaspora_xml, user.person
-      user3.receive @post.to_diaspora_xml, user.person
+      xml = @post.to_diaspora_xml
+
+      zord(user2, user.person, xml)
+      zord(user3, user.person, xml)
 
       @comment = user3.comment('tada',:on => @post)
       @comment.post_creator_signature = @comment.sign_with_key(user.encryption_key)
@@ -151,7 +157,9 @@ describe User do
       user2.reload.raw_visible_posts.size.should == 1
       post_in_db = user2.raw_visible_posts.first
       post_in_db.comments.should == []
-      user2.receive(@xml, user.person)
+
+      zord(user2, user.person, @xml)
+
       post_in_db.reload
 
       post_in_db.comments.include?(@comment).should be true
@@ -167,11 +175,12 @@ describe User do
       Person.should_receive(:by_account_identifier).and_return{ |handle| if handle == user.person.diaspora_handle; user.person.save
         user.person; else; remote_person.save; remote_person; end }
 
-
       user2.reload.raw_visible_posts.size.should == 1
       post_in_db = user2.raw_visible_posts.first
       post_in_db.comments.should == []
-      user2.receive(@xml, user.person)
+
+      zord(user2, user.person, @xml)
+
       post_in_db.reload
 
       post_in_db.comments.include?(@comment).should be true
@@ -184,7 +193,11 @@ describe User do
     let(:salmon){user.salmon( post )}
 
     it 'should receive a salmon for a post' do
-      user2.receive_salmon( salmon.xml_for(user2.person) )
+      salmon_xml = salmon.xml_for(user2.person)
+
+      zord = Postzord::Receiver.new(user2, :salmon_xml => salmon_xml)
+      zord.perform
+
       user2.visible_post_ids.include?(post.id).should be true
     end
   end
