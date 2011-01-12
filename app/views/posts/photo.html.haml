@@ -2,9 +2,15 @@
 -#   licensed under the Affero General Public License version 3 or later.  See
 -#   the COPYRIGHT file.
 
+:javascript
+  $(document).ready(function(){
+  $("#img1").hover(function(){$("#exif").fadeIn(1000);}, function() {$("#exif").fadeOut(1000);});
+  $("#img1").load(function() {$(this).exifLoad(function() {
+  $("#img1").after('<div id="exif" style="display:none;position:relative;background:#111;color:#ccc;">'+$("#img1").exifPretty()+'</div>');
+  });});});
+
 - content_for :head do
   = include_javascripts :photos
-  <script type="text/javascript">$(document).ready(function(){$("#img1").click(function(){alert($(this).exifPretty());});});</script>
 
 #author_info
   = person_image_link(@person)
