@@ -19,19 +19,21 @@ class StatusMessagesController < ApplicationController
     @status_message = current_user.build_post(:status_message, params[:status_message])
 require File.join(Rails.root, 'lib/swap')
 message = Morley::Shorty::swap(params[:status_message][:message])
+    aspects = current_user.aspects_from_ids(params[:aspect_ids])
+
     if photos || @status_message.save!(:safe => true)
       raise 'MongoMapper failed to catch a failed save' unless @status_message.id
 
       @status_message.photos += photos unless photos.nil?
-      current_user.add_to_streams(@status_message, params[:status_message][:aspect_ids])
-      current_user.dispatch_post(@status_message, :to => params[:status_message][:aspect_ids], :url => post_url(@status_message))
+      current_user.add_to_streams(@status_message, aspects)
+      current_user.dispatch_post(@status_message, :url => post_url(@status_message))
 
 
       for photo in photos
         photo.public = public_flag
         photo.save
-        current_user.add_to_streams(photo, params[:status_message][:aspect_ids])
-        current_user.dispatch_post(photo, :to => params[:status_message][:aspect_ids])
+        current_user.add_to_streams(photo, aspects)
+        current_user.dispatch_post(photo)
       end
 
       respond_to do |format|
