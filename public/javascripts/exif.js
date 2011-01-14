@@ -895,27 +895,27 @@ jQuery.fn.exifPretty = function() {
 
 
   $(document).ready(function(){
-  $("#img1").hover(function(){$("#exif").show("slide",{ direction: "right"},300);}, function() {$("#exif").hide("slide",{ direction: "right"},300);});
+  $("#show_photo").hover(function(){$("#exif").slideDown(900);}, function() {$("#exif").slideUp(900);});
   $(window).load(function() {
   $("#img1").exifLoad(function() {
-  $("#img1").before('<div id="exif" style="width:200px;z-index:-2;position:absolute;background:#111;color:#ccc;text-align:left;right:100%;top:20%">'+
-  '<b>EXIF Info</b><br>'+
-  '<b>Make:</b>'+$("#img1").exif('Make')+'<br>'+
-  '<b>Model:</b>'+$("#img1").exif('Model')+'<br>'+
-  '<b>Date:</b>'+$("#img1").exif('DateTimeOriginal')+'<br>'+
-  '<b>Exposure Time:</b>'+$("#img1").exif('ExposureTime')+'<br>'+
-  '<b>F-Stop:</b>'+$("#img1").exif('FNumber')+'<br>'+
-  '<b>Shutter Speed:</b>'+$("#img1").exif('ShutterSpeedValue')+'<br>'+
-  '<b>Focal Length 35mm:</b>'+$("#img1").exif('FocalLength')+'<br>'+
-  '<b>Flash:</b>'+$("#img1").exif('Flash')+'<br>'+
-  '<b>White Balance:</b>'+$("#img1").exif('WhiteBalance')+'<br>'+
-  '<b>Exposure Mode:</b>'+$("#img1").exif('ExposureMode')+'<br>'+
-  '<b>Contrast:</b>'+$("#img1").exif('Contrast')+'<br>'+
-  '<b>Sharpness:</b>'+$("#img1").exif('Saturation')+'<br>'+
-  '<b>Latitude:</b>'+$("#img1").exif('GPSLatitude')+'<br>'+
-  '<b>Longitude:</b>'+$("#img1").exif('GPSLongitude')+'<br>'+
+  $("#img1").before('<div id="exif" style="width:230px;z-index:2;position:absolute;background:#111;color:#ccc;text-align:left;">'+
+  '<b>EXIF Data</b><br>'+
+  '<b>Make:</b> '+$("#img1").exif('Make')+'<br>'+
+  '<b>Model:</b> '+$("#img1").exif('Model')+'<br>'+
+  '<b>Date:</b> '+$("#img1").exif('DateTimeOriginal')+'<br>'+
+  '<b>Exposure Time:</b> '+$("#img1").exif('ExposureTime')+'<br>'+
+  '<b>F-Stop:</b> '+$("#img1").exif('FNumber')+'<br>'+
+  '<b>Shutter Speed:</b> '+$("#img1").exif('ShutterSpeedValue')+'<br>'+
+  '<b>Focal Length 35mm:</b> '+$("#img1").exif('FocalLength')+'<br>'+
+  '<b>Flash:</b> '+$("#img1").exif('Flash')+'<br>'+
+  '<b>White Balance:</b> '+$("#img1").exif('WhiteBalance')+'<br>'+
+  '<b>Exposure Mode:</b> '+$("#img1").exif('ExposureMode')+'<br>'+
+  '<b>Contrast:</b> '+$("#img1").exif('Contrast')+'<br>'+
+  '<b>Sharpness:</b> '+$("#img1").exif('Saturation')+'<br>'+
+  '<b>Latitude:</b> '+$("#img1").exif('GPSLatitude')+'<br>'+
+  '<b>Longitude:</b> '+$("#img1").exif('GPSLongitude')+'<br>'+
   '</div>');
-  $("#exif").hide("slide",{ direction: "right"},3500);
+  $("#exif").delay(800).slideUp(900);
   });});
   });
 
