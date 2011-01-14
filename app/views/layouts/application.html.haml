@@ -89,12 +89,16 @@
       /=render :partial => 'layouts/debug.haml'
     %footer
       .container
-        Running diasp.org modified <a href="https://github.com/diasporg">code</a> of:
         = image_tag 'powered_by_diaspora.png', :height => "11px", :width => "145px"
         %ul#footer_nav
           %li= link_to '@diasporg', "http://twitter.com/diasporg"
           %li= link_to 'github', "https://github.com/diasporg/diaspora"
-          %li= link_to t('layouts.header.blog'), "http://b.diasp.org"
+          %li
+            Code was updated:
+            %strong=last_modified
+          %li= link_to ('Help'), '/help'
+          %li= link_to ('Status'), '/status'
+          %li= link_to ('Email Forward'), '/forwardemail'
           %li= link_to t('layouts.header.code'), "#{root_url.chomp('/')}/source.tar.gz" unless request.url.match(/joindiaspora.com/)
           %li= link_to t('.whats_new'), 'https://github.com/diasporg/diaspora/wiki/Changelog'
 
