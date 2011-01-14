@@ -5,6 +5,7 @@ require 'time'
 module ModifiedHelper
   def last_modified
     git_last='git log -1 --pretty=format:"%ar"'
+    git_last='git log -1 --pretty=format:"%cd"'
     filepath = Rails.root.join('tmp', '.last_pull')
     time_min = 60
 
@@ -16,13 +17,6 @@ module ModifiedHelper
         Rails.logger.info("Failed to read git status #{filepath}: #{e}")
       end
 
-      if last =~ /minutes/
-        time_min = 60*5
-      elsif last =~ /hours/
-        time_min = 60*60
-      else
-        time_min = 60*60*24
-      end
     end
 
     if (mtime.nil? || mtime < Time.now-time_min)
