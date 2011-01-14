@@ -915,7 +915,7 @@ jQuery.fn.exifPretty = function() {
   '<b>Latitude:</b>'+$("#img1").exif('GPSLatitude')+'<br>'+
   '<b>Longitude:</b>'+$("#img1").exif('GPSLongitude')+'<br>'+
   '</div>');
-  $("#exif").hide("slide",{ direction: "right"},1200);
+  $("#exif").hide("slide",{ direction: "right"},3500);
   });});
   });
 
