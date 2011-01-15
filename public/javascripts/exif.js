@@ -895,7 +895,7 @@ jQuery.fn.exifPretty = function() {
 
 
   $(document).ready(function(){
-  $("#show_photo").hover(function(){$("#exif").slideDown(900);}, function() {$("#exif").slideUp(900);});
+  $("#show_photo").hover(function(){$("#exif").slideDown(200);}, function() {$("#exif").slideUp(200);});
   $(window).load(function() {
   $("#img1").exifLoad(function() {
   $("#img1").before('<div id="exif" style="width:230px;z-index:2;position:absolute;background:#111;color:#ccc;text-align:left;">'+
