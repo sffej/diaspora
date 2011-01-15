@@ -29,7 +29,7 @@ GIT
 
 GIT
   remote: git://github.com/jnunemaker/mongomapper.git
-  revision: 108510cc9b96bfbcf7f095ec037bce30cb6aa2c9
+  revision: 49821df61931aebd426f3fba4658f31dc7c13825
   branch: rails3
   specs:
     mongo_mapper (0.8.6)
@@ -101,8 +101,8 @@ GEM
       activesupport (= 3.0.3)
     activesupport (3.0.3)
     addressable (2.2.2)
-    arel (2.0.6)
-    aws (2.3.34)
+    arel (2.0.7)
+    aws (2.4.0)
       activesupport
       http_connection
       uuidtools
