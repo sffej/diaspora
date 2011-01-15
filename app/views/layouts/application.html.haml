@@ -101,8 +101,6 @@
           %li= link_to ('Help'), '/help'
           %li= link_to ('Status'), '/status'
           %li= link_to ('Email Forward'), '/forwardemail'
-          %li= link_to t('layouts.header.code'), "#{root_url.chomp('/')}/source.tar.gz" unless request.url.match(/joindiaspora.com/)
-          %li= link_to t('.whats_new'), 'https://github.com/diasporg/diaspora/wiki/Changelog'
 
     -if !@landing_page && request.url.match(/joindiaspora.com/)
       :javascript
