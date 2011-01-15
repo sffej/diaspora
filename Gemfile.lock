@@ -1,6 +1,7 @@
 GIT
   remote: git://github.com/Empact/roxml.git
   revision: 7ea9a9ffd2338aaef5b04cb792060ae8c98f346a
+  ref: 7ea9a9ffd2338aaef5b0
   specs:
     roxml (3.1.6)
       activesupport (>= 2.3.0)
@@ -9,6 +10,7 @@ GIT
 GIT
   remote: git://github.com/collectiveidea/devise-mongo_mapper
   revision: fa2f20310e0988295adc192255d3b1cedee1b412
+  ref: fa2f20310e0988295adc
   specs:
     devise-mongo_mapper (0.0.1)
       devise (~> 1.1.0)
@@ -16,12 +18,14 @@ GIT
 GIT
   remote: git://github.com/iain/http_accept_language.git
   revision: 0b78aa7849fc90cf9e12586af162fa4c408a795d
+  ref: 0b78aa7849fc90cf9e12
   specs:
     http_accept_language (1.0.1)
 
 GIT
   remote: git://github.com/igrigorik/em-websocket
   revision: e278f5a1c4db60be7485859520a069e08bfe1247
+  ref: e278f5a1c4db60be7485
   specs:
     em-websocket (0.2.0)
       addressable (>= 2.1.1)
@@ -29,7 +33,8 @@ GIT
 
 GIT
   remote: git://github.com/jnunemaker/mongomapper.git
-  revision: 49821df61931aebd426f3fba4658f31dc7c13825
+  revision: 108510cc9b96bfbcf7f095ec037bce30cb6aa2c9
+  ref: 108510cc9b96bfbcf7f0
   branch: rails3
   specs:
     mongo_mapper (0.8.6)
@@ -102,7 +107,7 @@ GEM
     activesupport (3.0.3)
     addressable (2.2.2)
     arel (2.0.7)
-    aws (2.3.34)
+    aws (2.3.32)
       activesupport
       http_connection
       uuidtools
@@ -362,16 +367,16 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  SystemTimer
-  addressable
-  aws
+  SystemTimer (= 1.2.1)
+  addressable (= 2.2.2)
+  aws (= 2.3.32)
   bson (= 1.1)
   bson_ext (= 1.1)
   bundler (>= 1.0.0)
   capybara (~> 0.3.9)
   carrierwave!
-  chef
-  cloudfiles
+  chef (= 0.9.12)
+  cloudfiles (= 1.4.10)
   cucumber-rails (= 0.3.2)
   database_cleaner (= 0.5.2)
   devise (= 1.1.3)
@@ -379,28 +384,28 @@ DEPENDENCIES
   devise_invitable (= 0.3.5)
   em-websocket!
   factory_girl_rails
-  fastercsv
-  haml
+  fastercsv (= 1.5.4)
+  haml (= 3.0.25)
   http_accept_language!
-  jammit
+  jammit (= 0.5.4)
   jasmine!
-  json
+  json (= 1.4.6)
   launchy
-  mini_magick
+  mini_magick (= 3.2)
   mocha
   mongo_mapper!
   mongrel
   nokogiri (= 1.4.3.1)
   omniauth (= 0.1.6)
   rails (= 3.0.3)
-  resque
-  rest-client
+  resque (= 1.10.0)
+  rest-client (= 1.6.1)
   roxml!
   rspec (>= 2.0.0)
   rspec-instafail
   rspec-rails (>= 2.0.0)
   ruby-debug
-  thin
+  thin (= 1.2.7)
   twitter!
   webmock
   will_paginate (= 3.0.pre2)
