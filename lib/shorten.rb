@@ -4,12 +4,11 @@ module Morley
 require 'net/http'
 require 'uri'
 require 'rubygems'
-	#do
         apikey = AppConfig[:yourlsapi]
-        new = Net::HTTP.get(URI.parse("http://boun.cc/yourls-api.php?action=shorturl&url=#{url}&signature=#{apikey}&format=simple"))
-	#return new
+        if url
+          new = Net::HTTP.get(URI.parse("http://boun.cc/yourls-api.php?action=shorturl&url=#{url}&signature=#{apikey}&format=simple"))
+        end
 	return (new)
-#puts new
 	end
 	end
 end
