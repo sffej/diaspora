@@ -5,7 +5,6 @@ class UsersController < ApplicationController
   require File.join(Rails.root, 'lib/diaspora/ostatus_builder')
   require File.join(Rails.root, 'lib/diaspora/exporter')
   require File.join(Rails.root, 'lib/collect_user_photos')
-  require File.join(Rails.root, 'lib/app_config')
 
   before_filter :authenticate_user!, :except => [:new, :create, :public]
 
@@ -132,6 +131,5 @@ def status
 end
 def fb
 @user     = current_user.diaspora_handle
-@key      = AppConfig[:fbapiKey]
 end
 end
