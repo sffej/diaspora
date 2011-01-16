@@ -5,18 +5,25 @@
 #facebox_header
   <h4 id="fbname"></h4>
 .contact_list
-  <ul id="list"></ul>
-  <script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>
+  <ul id="list"></ul><div id="fb-root"></div>
+  <script type="text/javascript" src="https://connect.facebook.net/en_US/all.js"></script>
   <script type="text/javascript">
-  //window.onload=login;
-  setTimeout("login()", 10);
+  //window.onload=areyouin;
+  setTimeout("login()", 20);
+  setTimeout("backup()",20);
+  function backup() {
+  var divInfo = document.getElementById("list");
+  divInfo.innerHTML = 'You are not logged into Facebook already. <a href="#" onclick="javascript:login();">Login to Facebook</a>';
+  }
   function login() {
   FB.login(handleLogin);
   }
   function handleLogin(response) {
   if (!response.session) {
-  return;
+  alert('fail');return;
   }
+  var divInfo = document.getElementById("list");
+  divInfo.innerHTML = '<img src="/images/ajax-loader.gif">';
   FB.api("/me?fields=name", handleMe);
   FB.api("/me/friends?fields=name,id,picture", handleFriends);
   }
@@ -28,6 +35,7 @@
   function handleFriends(response) {
   var divInfo = document.getElementById("list");
   var friends = response.data;
+  divInfo.innerHTML = '';
   for (var i = 0; i < friends.length; i++) {
   divInfo.innerHTML += '<li><img src="'+ friends[i].picture +'"><h4 class="name">' + friends[i].name + '</h4><div class="right"><a href="JavaScript:void(0)" onclick="javascript:publish('+friends[i].id+','+[i]+')" id="'+[i]+'" class="add button">Post</a></div></li>';
   }
