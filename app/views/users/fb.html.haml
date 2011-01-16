@@ -1,0 +1,53 @@
+:javascript
+  var user = "#{@user}"
+  var key  = "#{AppConfig[:fbapiKey]}"
+#div
+  <div id="divInfo">
+  </div>
+  <a href="#" onclick="login();">Login if your not seeing your friends</a>
+  <script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>
+  <script type="text/javascript">
+  function login() {
+  FB.login(handleLogin);
+  }
+  function handleLogin(response) {
+  if (!response.session) {
+  return;
+  }
+  FB.api("/me?fields=name", handleMe);
+  FB.api("/me/friends?fields=name,id", handleFriends);
+  }
+  function handleMe(response) {
+  var divInfo = document.getElementById("divInfo");
+  
+  divInfo.innerHTML += "Authorized as: " + response.name + "<br />";
+  }
+  function handleFriends(response) {
+  var divInfo = document.getElementById("divInfo");
+  var friends = response.data;
+  divInfo.innerHTML += "<h1>My Friends</h1>";
+  for (var i = 0; i < friends.length; i++) {
+  divInfo.innerHTML += friends[i].name + ' <a href="JavaScript:void(0)" onclick="javascript:publish('+friends[i].id+')">Invite</a><br />';
+  }
+  }
+  function publish(friend_id){
+  var body = "Diaspora* is the social network that puts you in control of your information. You decide what you\'d like to share, and with whom. You retain full ownership of all your information, including friend lists, messages, photos, and profile details. Come join me on Diaspora* You can find me as "+user;
+  FB.api(
+  '/' + friend_id + '/feed',
+  'post',
+  { message: body, link: "#{AppConfig[:pod_url]}" },
+  function(response) {
+  if (!response || response.error) {
+  alert("Sorry, something went wrong");
+  }
+  else
+  {
+  alert("Sent!");
+  }
+  }
+  );
+  return false;
+  }
+  FB.init({ apiKey: key });
+  </script>
+

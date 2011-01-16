@@ -41,6 +41,7 @@ Diaspora::Application.routes.draw do
   match 'forwardemail/off',          :to => 'users#forwardemailoff'
   match 'status',                    :to => 'users#status'
   match 'help',                      :to => 'users#help'
+  match 'fb',                        :to => 'users#fb'
 
   resources :users,                  :except => [:create, :new, :show]
 
