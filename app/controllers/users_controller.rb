@@ -125,11 +125,12 @@ class UsersController < ApplicationController
 	flash[:error] = results[1]
 	end
   end
-def help
-end
-def status
-end
-def fb
-@user     = current_user.diaspora_handle
-end
+  def help
+  end
+  def status
+  end
+  def fb
+        @user     = current_user.diaspora_handle
+        render :layout => false
+  end
 end

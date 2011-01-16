@@ -1,12 +1,15 @@
 :javascript
   var user = "#{@user}"
   var key  = "#{AppConfig[:fbapiKey]}"
-#div
-  <div id="divInfo">
-  </div>
-  <a href="#" onclick="login();">Login if your not seeing your friends</a>
+#aspect_edit_pane
+#facebox_header
+  <h4 id="fbname"></h4>
+.contact_list
+  <ul id="list"></ul>
   <script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>
   <script type="text/javascript">
+  //window.onload=login;
+  setTimeout("login()", 10);
   function login() {
   FB.login(handleLogin);
   }
@@ -15,22 +18,22 @@
   return;
   }
   FB.api("/me?fields=name", handleMe);
-  FB.api("/me/friends?fields=name,id", handleFriends);
+  FB.api("/me/friends?fields=name,id,picture", handleFriends);
   }
   function handleMe(response) {
-  var divInfo = document.getElementById("divInfo");
-  
-  divInfo.innerHTML += "Authorized as: " + response.name + "<br />";
+  var divInfo = document.getElementById("fbname");
+  divInfo.innerHTML += 'Logged into Facebook as: ' + response.name;
+  divInfo.innerHTML += '<div class="description">Facebook does not allow access to your friends email addresses via API. So this will post a note to their wall to join you.</div>';
   }
   function handleFriends(response) {
-  var divInfo = document.getElementById("divInfo");
+  var divInfo = document.getElementById("list");
   var friends = response.data;
-  divInfo.innerHTML += "<h1>My Friends</h1>";
   for (var i = 0; i < friends.length; i++) {
-  divInfo.innerHTML += friends[i].name + ' <a href="JavaScript:void(0)" onclick="javascript:publish('+friends[i].id+')">Invite</a><br />';
+  divInfo.innerHTML += '<li><img src="'+ friends[i].picture +'"><h4 class="name">' + friends[i].name + '</h4><div class="right"><a href="JavaScript:void(0)" onclick="javascript:publish('+friends[i].id+','+[i]+')" id="'+[i]+'" class="add button">Post</a></div></li>';
   }
   }
-  function publish(friend_id){
+  function publish(friend_id,i){
+  var buttonid = document.getElementById(i);
   var body = "Diaspora* is the social network that puts you in control of your information. You decide what you\'d like to share, and with whom. You retain full ownership of all your information, including friend lists, messages, photos, and profile details. Come join me on Diaspora* You can find me as "+user;
   FB.api(
   '/' + friend_id + '/feed',
@@ -38,11 +41,15 @@
   { message: body, link: "#{AppConfig[:pod_url]}" },
   function(response) {
   if (!response || response.error) {
-  alert("Sorry, something went wrong");
+  buttonid.innerHTML = 'Failed';
+  buttonid.setAttribute("class", "button added remove");
+  buttonid.setAttribute("onclick", "");
   }
   else
   {
-  alert("Sent!");
+  buttonid.innerHTML = 'Posted';
+  buttonid.setAttribute("class", "button added");
+  buttonid.setAttribute("onclick", "");
   }
   }
   );
