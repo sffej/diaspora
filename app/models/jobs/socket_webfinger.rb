@@ -12,7 +12,7 @@ module Jobs
       begin
         user = User.find_by_id(user_id)
         result = finger.fetch
-        result.socket_to_uid(user, opts)
+        result.socket_to_user(user, opts)
       rescue
         Diaspora::WebSocket.queue_to_user(user_id,
           {:class => 'people',

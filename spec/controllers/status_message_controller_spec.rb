@@ -7,10 +7,10 @@ require 'spec_helper'
 describe StatusMessagesController do
   render_views
 
-  let!(:user1)   { make_user }
+  let!(:user1)   { Factory.create(:user) }
   let!(:aspect1) { user1.aspects.create(:name => "AWESOME!!") }
 
-  let!(:user2)   { make_user }
+  let!(:user2)   { Factory.create(:user) }
   let!(:aspect2) { user2.aspects.create(:name => "WIN!!") }
 
   before do
@@ -22,38 +22,24 @@ describe StatusMessagesController do
   end
 
   describe '#show' do
-    before do
-      @video_id = "ABYnqp-bxvg"
-      @url="http://www.youtube.com/watch?v=#{@video_id}&a=GxdCwVVULXdvEBKmx_f5ywvZ0zZHHHDU&list=ML&playnext=1"
-    end
-    it 'renders posts with youtube urls' do
-      message = user1.build_post :status_message, :message => @url, :to => aspect1.id
-      message[:youtube_titles]= {@video_id => "title"}
+    it 'succeeds' do
+      message = user1.build_post :status_message, :message => "ohai", :to => aspect1.id
       message.save!
       user1.add_to_streams(message, [aspect1])
       user1.dispatch_post message, :to => aspect1.id
 
-      get :show, :id => message.id
-      response.body.should match /Youtube: title/
-    end
-    it 'renders posts with comments with youtube urls' do
-      message = user1.post :status_message, :message => "Respond to this with a video!", :to => aspect1.id
-      @comment = user1.comment "none", :on => message
-      @comment.text = @url
-      @comment[:youtube_titles][@video_id] = "title"
-      @comment.save!
-
-      get :show, :id => message.id
-      response.body.should match /Youtube: title/
+      get :show, "id" => message.id.to_s
+      response.should be_success
     end
   end
+
   describe '#create' do
     let(:status_message_hash) {
       { :status_message => {
-        :public  =>"true",
-        :message =>"facebook, is that you?",
+        :public  => "true",
+        :message => "facebook, is that you?",
         },
-      :aspect_ids =>"#{aspect1.id}" }
+      :aspect_ids => [aspect1.id.to_s] }
     }
     it 'responds to js requests' do
       post :create, status_message_hash.merge(:format => 'js')
@@ -70,9 +56,7 @@ describe StatusMessagesController do
     it "doesn't overwrite id" do
       old_status_message = user1.post(:status_message, :message => "hello", :to => aspect1.id)
       status_message_hash[:status_message][:id] = old_status_message.id
-      lambda {
-        post :create, status_message_hash
-      }.should raise_error /failed save/
+      post :create, status_message_hash
       old_status_message.reload.message.should == 'hello'
     end
 
@@ -93,6 +77,7 @@ describe StatusMessagesController do
       post :create, hash
     end
   end
+
   describe '#destroy' do
     let!(:message) {user1.post(:status_message, :message => "hey", :to => aspect1.id)}
     let!(:message2) {user2.post(:status_message, :message => "hey", :to => aspect2.id)}

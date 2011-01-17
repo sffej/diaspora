@@ -2,9 +2,8 @@
 require 'spec_helper'
 
 describe Notifier do
-
-  let!(:user) {make_user}
-  let!(:user2) {make_user}
+  let!(:user) {Factory.create(:user)}
+  let!(:user2) {Factory.create(:user)}
 
   let!(:aspect) {user.aspects.create(:name => "win")}
   let!(:aspect2) {user2.aspects.create(:name => "win")}
@@ -17,15 +16,15 @@ describe Notifier do
     it 'mails a user' do
       mails = Notifier.admin("Welcome to bureaucracy!", [user])
       mails.length.should == 1
-      mail = mails.first 
+      mail = mails.first
       mail.to.should == [user.email]
       mail.body.encoded.should match /Welcome to bureaucracy!/
       mail.body.encoded.should match /#{user.username}/
     end
     it 'mails a bunch of users' do
       users = []
-      5.times do 
-        users << make_user
+      5.times do
+        users << Factory.create(:user)
       end
       mails = Notifier.admin("Welcome to bureaucracy!", users)
       mails.length.should == 5

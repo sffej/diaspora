@@ -9,7 +9,7 @@ describe HomeController do
   render_views
 
   before do
-    @user = make_user
+    @user = Factory.create(:user)
     sign_in @user
     sign_out @user
   end
@@ -37,7 +37,7 @@ describe HomeController do
 
   describe "custom logging on redirect" do
     before do
-      sign_in :user, make_user
+      sign_in :user, Factory(:user)
       @action = :show
       @action_params = {"lasers" => "green"}
     end

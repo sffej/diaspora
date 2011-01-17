@@ -7,20 +7,21 @@ class StatusMessage < Post
   include YoutubeTitles
   require File.join(Rails.root, 'lib/youtube_titles')
   include ActionView::Helpers::TextHelper
-  
+
   validates_length_of :message, :maximum => 1000, :message => "please make your status messages less than 1000 characters"
   xml_name :status_message
-  xml_reader :message
+  xml_attr :message
 
-  key :message, String
-  many :photos, :class => Photo, :foreign_key => :status_message_id, :dependent => :destroy
+  has_many :photos, :dependent => :destroy
   validate :message_or_photos_present?
 
   attr_accessible :message
 
+  serialize :youtube_titles, Hash
   before_save do
     get_youtube_title message
   end
+
   def to_activity
     <<-XML
   <entry>
@@ -35,7 +36,6 @@ class StatusMessage < Post
       XML
   end
 
-
   def public_message(length, url = "")
     space_for_url = url.blank? ? 0 : (url.length + 1)
     truncated = truncate(self.message, :length => (length - space_for_url))
@@ -46,10 +46,9 @@ class StatusMessage < Post
   protected
 
   def message_or_photos_present?
-    if self.message.blank? && self.photos.count == 0
+    if self.message.blank? && self.photos == []
       errors[:base] << 'Status message requires a message or at least one photo'
     end
   end
-
 end
 

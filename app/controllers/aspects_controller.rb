@@ -24,10 +24,11 @@ class AspectsController < ApplicationController
       @aspect_ids = @aspects.map{|a| a.id}
       post_ids = @aspects.map{|a| a.post_ids}.flatten!
 
-      @posts = Post.where(:id.in => post_ids, :_type => "StatusMessage").paginate :page => params[:page], :per_page => 15, :order => 'created_at DESC'
+      @posts = Post.where(:id => post_ids, :type => "StatusMessage").paginate(
+        :page => params[:page], :per_page => 15, :order => 'created_at DESC')
       @post_hashes = hashes_for_posts @posts
 
-      @contacts = Contact.all(:aspect_ids.in => @aspect_ids, :user_id => current_user.id, :pending => false)
+      @contacts = current_user.contacts.includes(:person).where(:pending => false)
       @contact_hashes = hashes_for_contacts @contacts
       @aspect_hashes = hashes_for_aspects @aspects, @contacts, :limit => 16
 
@@ -58,7 +59,7 @@ class AspectsController < ApplicationController
   end
 
   def destroy
-    @aspect = current_user.aspect_by_id params[:id]
+    @aspect = current_user.aspects.where(:id => params[:id]).first
 
     begin
       current_user.drop_aspect @aspect
@@ -71,23 +72,8 @@ class AspectsController < ApplicationController
   end
 
   def show
-    @aspect = current_user.aspect_by_id params[:id]
-    @contacts = current_user.contacts.where(:pending => false)
-    unless @aspect
-      render :file => "#{Rails.root}/public/404.html", :layout => false, :status => 404
-    else
-      @aspect_ids = [@aspect.id]
-      @aspect_contacts = hashes_for_contacts Contact.all(:user_id => current_user.id, :aspect_ids.in => [@aspect.id], :pending => false)
-      @aspect_contacts_count = @aspect_contacts.count
-
-      @all_contacts = hashes_for_contacts @contacts
-
-      @posts = @aspect.posts.find_all_by__type("StatusMessage", :order => 'created_at desc').paginate :page => params[:page], :per_page => 15
-      @post_hashes = hashes_for_posts @posts
-      @post_count = @posts.count
-
-      redirect_to aspects_path('a_ids[]' => @aspect.id)
-    end
+    @aspect = current_user.aspects.where(:id => params[:id]).first
+    redirect_to aspects_path('a_ids[]' => @aspect.id)
   end
 
   def edit
@@ -97,7 +83,7 @@ class AspectsController < ApplicationController
       render :file => "#{Rails.root}/public/404.html", :layout => false, :status => 404
     else
       @aspect_ids = [@aspect.id]
-      @aspect_contacts = hashes_for_contacts Contact.all(:user_id => current_user.id, :aspect_ids.in => [@aspect.id], :pending => false)
+      @aspect_contacts = hashes_for_contacts @aspect.contacts.where(:pending => false)
       @aspect_contacts_count = @aspect_contacts.count
 
       @all_contacts = hashes_for_contacts @contacts
@@ -114,7 +100,7 @@ class AspectsController < ApplicationController
   end
 
   def update
-    @aspect = current_user.aspect_by_id(params[:id])
+    @aspect = current_user.aspects.where(:id => params[:id]).first
     if @aspect.update_attributes( params[:aspect] )
       flash[:notice] = I18n.t 'aspects.update.success',:name => @aspect.name
     else
@@ -125,13 +111,13 @@ class AspectsController < ApplicationController
 
   def move_contact
     @person = Person.find(params[:person_id])
-    @from_aspect = current_user.aspects.find(params[:from])
-    @to_aspect = current_user.aspects.find(params[:to][:to])
+    @from_aspect = current_user.aspects.where(:id => params[:from]).first
+    @to_aspect = current_user.aspects.where(:id => params[:to][:to]).first
 
     unless current_user.move_contact( @person, @to_aspect, @from_aspect)
       flash[:error] = I18n.t 'aspects.move_contact.error',:inspect => params.inspect
     end
-    if aspect = current_user.aspect_by_id(params[:to][:to])
+    if aspect = current_user.aspects.where(:id => params[:to][:to]).first
       flash[:notice] = I18n.t 'aspects.move_contact.success'
       render :nothing => true
     else
@@ -151,7 +137,7 @@ class AspectsController < ApplicationController
       current_user.send_contact_request_to(@person, @aspect)
       contact = current_user.contact_for(@person)
 
-      if request = Request.from(@person).to(current_user).first
+      if request = Request.where(:sender_id => @person.id, :recipient_id => current_user.person.id).first
         request.destroy
         contact.update_attributes(:pending => false)
       end
@@ -201,10 +187,7 @@ class AspectsController < ApplicationController
 
   private
   def hashes_for_contacts contacts
-    people = Person.all(:id.in => contacts.map{|c| c.person_id}, :fields => [:profile, :diaspora_handle])
-    people_hash = {}
-    people.each{|p| people_hash[p.id] = p}
-    contacts.map{|c| {:contact => c, :person => people_hash[c.person_id.to_id]}}
+    contacts.includes(:person).map{|c| {:contact => c, :person => c.person}}
   end
 
   def hashes_for_aspects aspects, contacts, opts = {}
@@ -212,7 +195,7 @@ class AspectsController < ApplicationController
     aspects.map do |a|
       hash = {:aspect => a}
       aspect_contact_hashes = contact_hashes.select{|c|
-          c[:contact].aspect_ids.include?(a.id)}
+          c[:contact].aspects.include?(a)}
       hash[:contact_count] = aspect_contact_hashes.count
       if opts[:limit]
         hash[:contacts] = aspect_contact_hashes.slice(0,opts[:limit])
@@ -232,7 +215,7 @@ class AspectsController < ApplicationController
     photo_hash = Photo.hash_from_post_ids post_ids
 
     post_person_ids.uniq!
-    posters = Person.all(:id.in => post_person_ids, :fields => [:profile, :owner_id, :diaspora_handle])
+    posters = Person.where(:id => post_person_ids)
     posters_hash = {}
     posters.each{|poster| posters_hash[poster.id] = poster}
 

@@ -6,19 +6,19 @@ require 'spec_helper'
 
 describe "attack vectors" do
 
-  let(:user) { make_user }
+  let(:user) { Factory.create(:user) }
   let(:aspect) { user.aspects.create(:name => 'heroes') }
-  
-  let(:bad_user) { make_user}
 
-  let(:user2) { make_user }
+  let(:bad_user) { Factory.create(:user)}
+
+  let(:user2) { Factory.create(:user) }
   let(:aspect2) { user2.aspects.create(:name => 'losers') }
 
-  let(:user3) { make_user }
+  let(:user3) { Factory.create(:user) }
   let(:aspect3) { user3.aspects.create(:name => 'heroes') }
 
   context 'non-contact valid user' do
-    
+
     it 'does not save a post from a non-contact' do
       post_from_non_contact = bad_user.build_post( :status_message, :message => 'hi')
       salmon_xml = bad_user.salmon(post_from_non_contact).xml_for(user.person)
@@ -30,7 +30,7 @@ describe "attack vectors" do
       zord = Postzord::Receiver.new(user, :salmon_xml => salmon_xml)
       zord.perform
 
-      user.raw_visible_posts.include?(post_from_non_contact).should be false
+      user.raw_visible_posts.include?(post_from_non_contact).should be_false
       Post.count.should == post_count
     end
 
@@ -43,11 +43,13 @@ describe "attack vectors" do
 
     original_message.diaspora_handle = user.diaspora_handle
 
+    user3.activate_contact(user2.person, user3.aspects.first)
+
     salmon_xml = user.salmon(original_message).xml_for(user3.person)
     zord = Postzord::Receiver.new(user, :salmon_xml => salmon_xml)
     zord.perform
 
-    user3.reload.visible_posts.should_not include(original_message)
+    user3.reload.visible_posts.should_not include(StatusMessage.find(original_message.id))
   end
 
   context 'malicious contact attack vector' do
@@ -65,17 +67,14 @@ describe "attack vectors" do
         zord = Postzord::Receiver.new(user, :salmon_xml => salmon_xml)
         zord.perform
 
-        lambda {
-          malicious_message = Factory.build( :status_message, :id => original_message.id, :message => 'BAD!!!', :person => user3.person)
-          salmon_xml = user3.salmon(malicious_message).xml_for(user.person)
-          zord = Postzord::Receiver.new(user, :salmon_xml => salmon_xml)
-          zord.perform
-        }.should_not change{user.reload.raw_visible_posts.count}
+        malicious_message = Factory.build( :status_message, :id => original_message.id, :message => 'BAD!!!', :person => user3.person)
+        salmon_xml = user3.salmon(malicious_message).xml_for(user.person)
+        zord = Postzord::Receiver.new(user, :salmon_xml => salmon_xml)
+        zord.perform
 
         original_message.reload.message.should == "store this!"
-        user.raw_visible_posts.first.message.should == "store this!"
       end
-       
+
       it 'does not save a message over an old message with the same author' do
         original_message = user2.post :status_message, :message => 'store this!', :to => aspect2.id
 
@@ -119,10 +118,11 @@ describe "attack vectors" do
       zord = Postzord::Receiver.new(user, :salmon_xml => salmon_xml)
       zord.perform
 
-      user.raw_visible_posts.count.should be 1
+      user.raw_visible_posts.count.should == 1
+      StatusMessage.count.should == 1
 
       ret = Retraction.new
-      ret.post_id = original_message.id
+      ret.post_guid = original_message.guid
       ret.diaspora_handle = user3.person.diaspora_handle
       ret.type = original_message.class.to_s
 
@@ -130,8 +130,8 @@ describe "attack vectors" do
       zord = Postzord::Receiver.new(user, :salmon_xml => salmon_xml)
       zord.perform
 
-      StatusMessage.count.should be 1
-      user.reload.raw_visible_posts.count.should be 1
+      StatusMessage.count.should == 1
+      user.raw_visible_posts.count.should == 1
     end
 
     it "disregards retractions for non-existent posts that are from someone other than the post's author" do
@@ -139,14 +139,14 @@ describe "attack vectors" do
       id = original_message.reload.id
 
       ret = Retraction.new
-      ret.post_id = original_message.id
+      ret.post_guid = original_message.guid
       ret.diaspora_handle = user3.person.diaspora_handle
       ret.type = original_message.class.to_s
 
       original_message.delete
 
       StatusMessage.count.should be 0
-      proc { 
+      proc {
         salmon_xml = user3.salmon(ret).xml_for(user.person)
         zord = Postzord::Receiver.new(user, :salmon_xml => salmon_xml)
         zord.perform
@@ -161,10 +161,10 @@ describe "attack vectors" do
       zord.perform
 
 
-      user.raw_visible_posts.count.should be 1
+      user.raw_visible_posts.count.should == 1
 
       ret = Retraction.new
-      ret.post_id = original_message.id
+      ret.post_guid = original_message.guid
       ret.diaspora_handle = user2.person.diaspora_handle
       ret.type = original_message.class.to_s
 
@@ -175,16 +175,16 @@ describe "attack vectors" do
         zord.perform
 
       }.should_not change(StatusMessage, :count)
-      user.reload.raw_visible_posts.count.should be 1
+      user.reload.raw_visible_posts.count.should == 1
     end
 
     it 'it should not allow you to send retractions for other people' do
       ret = Retraction.new
-      ret.post_id = user2.person.id
+      ret.post_guid = user2.person.guid
       ret.diaspora_handle = user3.person.diaspora_handle
       ret.type = user2.person.class.to_s
 
-      proc{ 
+      proc{
         salmon_xml = user3.salmon(ret).xml_for(user.person)
 
         zord = Postzord::Receiver.new(user, :salmon_xml => salmon_xml)
@@ -195,11 +195,11 @@ describe "attack vectors" do
 
     it 'it should not allow you to send retractions with xml and salmon handle mismatch' do
       ret = Retraction.new
-      ret.post_id = user2.person.id
+      ret.post_guid = user2.person.guid
       ret.diaspora_handle = user2.person.diaspora_handle
       ret.type = user2.person.class.to_s
 
-      proc{ 
+      proc{
         salmon_xml = user3.salmon(ret).xml_for(user.person)
         zord = Postzord::Receiver.new(user, :salmon_xml => salmon_xml)
         zord.perform

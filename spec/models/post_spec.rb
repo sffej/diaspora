@@ -6,7 +6,7 @@ require 'spec_helper'
 
 describe Post do
   before do
-    @user = make_user
+    @user = Factory(:user)
     @aspect = @user.aspects.create(:name => "winners")
   end
 
@@ -15,8 +15,8 @@ describe Post do
       post = Factory.create(:status_message, :person => @user.person)
       @user.comment "hey", :on => post
       post.destroy
-      Post.all(:id => post.id).empty?.should == true
-      Comment.all(:text => "hey").empty?.should == true
+      Post.where(:id => post.id).empty?.should == true
+      Comment.where(:text => "hey").empty?.should == true
     end
   end
 
@@ -33,16 +33,16 @@ describe Post do
   describe '#mutable?' do
     it 'should be false by default' do
       post = @user.post :status_message, :message => "hello", :to => @aspect.id
-      post.mutable?.should == false   
+      post.mutable?.should == false
     end
   end
 
   describe '#subscribers' do
     it 'returns the people contained in the aspects the post appears in' do
-      
+
       post = @user.post :status_message, :message => "hello", :to => @aspect.id
 
-      post.subscribers(@user).should =~ []
+      post.subscribers(@user).should == []
     end
   end
 

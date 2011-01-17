@@ -5,7 +5,7 @@
 require 'spec_helper'
 
 describe Diaspora::UserModules::Connecting do
-  let(:user) { make_user }
+  let(:user) { Factory.create(:user) }
   let(:aspect) { user.aspects.create(:name => 'heroes') }
   let(:aspect1) { user.aspects.create(:name => 'other') }
   let(:person) { Factory.create(:person) }
@@ -14,7 +14,7 @@ describe Diaspora::UserModules::Connecting do
   let(:person_two) { Factory.create :person }
   let(:person_three) { Factory.create :person }
 
-  let(:user2) { make_user }
+  let(:user2) { Factory.create(:user) }
   let(:aspect2) { user2.aspects.create(:name => "aspect two") }
 
   describe '#send_contact_request_to' do
@@ -23,13 +23,13 @@ describe Diaspora::UserModules::Connecting do
 
       proc {
         user.send_contact_request_to(user2.person, aspect1)
-      }.should raise_error(MongoMapper::DocumentNotValid)
+      }.should raise_error(ActiveRecord::RecordInvalid)
     end
 
     it 'should not be able to contact request no-one' do
       proc {
         user.send_contact_request_to(nil, aspect)
-      }.should raise_error(MongoMapper::DocumentNotValid)
+      }.should raise_error(ActiveRecord::RecordInvalid)
     end
     it 'creates a pending contact' do
       proc {
@@ -41,19 +41,23 @@ describe Diaspora::UserModules::Connecting do
     it 'persists no request for requester' do
       proc {
         user.send_contact_request_to(user2.person, aspect1)
-      }.should_not change{Request.to(user).count}
+      }.should_not change{Request.where(:recipient_id => user.person.id).count}
+    end
+    it 'persists a request for the recipient' do
+      user.send_contact_request_to(user2.person, aspect1)
+      user2.request_from(user.person).should_not be_nil
     end
   end
 
   context 'contact requesting' do
     describe  '#receive_contact_request' do
       before do
-        @r = Request.instantiate(:to => user.person, :from => person)
+        @r = Request.diaspora_initialize(:to => user.person, :from => person)
       end
 
       it 'adds a request to pending if it was not sent by user' do
         user.receive_contact_request(@r)
-        Request.to(user).all.should include @r
+        Request.where(:recipient_id => user.person.id).all.should include @r
       end
 
       it 'enqueues a mail job' do
@@ -72,15 +76,9 @@ describe Diaspora::UserModules::Connecting do
         @acceptance.receive(user, user2.person)
         user.contact_for(user2.person).should_not be_nil
       end
-      it 'deletes the original request' do
-        @acceptance.receive(user, user2.person)
-        Request.to(user).all.include?(@original_request).should be_false
-        Request.find(@original_request.id).should be_nil
-      end
       it 'deletes the acceptance' do
         @acceptance.receive(user, user2.person)
-        Request.to(user).all.include?(@original_request).should be_false
-        Request.find(@acceptance.id).should be_nil
+        Request.where(:sender_id => user2.person.id, :recipient_id => user.person.id).should be_empty
       end
       it 'enqueues a mail job' do
         Resque.should_receive(:enqueue).with(Jobs::MailRequestAcceptance, user.id, user2.person.id).once
@@ -90,21 +88,31 @@ describe Diaspora::UserModules::Connecting do
     end
 
     context 'received a contact request' do
-      let(:request_for_user) {Request.instantiate(:to => user.person, :from => person)}
-      let(:request2_for_user) {Request.instantiate(:to => user.person, :from => person_one)}
-      let(:request_from_myself) {Request.instantiate(:to => user.person, :from => user.person)}
+      let(:request_for_user) {Request.diaspora_initialize(:to => user.person, :from => person)}
+      let(:request2_for_user) {Request.diaspora_initialize(:to => user.person, :from => person_one)}
+      let(:request_from_myself) {Request.diaspora_initialize(:to => user.person, :from => user.person)}
       before do
-        Request.instantiate(:from => person, :to => user.person).save
-        Request.instantiate(:from => person_one, :to => user.person).save
+        Request.diaspora_initialize(:from => person, :to => user.person).save
+        Request.diaspora_initialize(:from => person_one, :to => user.person).save
 
-        @received_request = Request.from(person).to(user.person).first
-        @received_request2 = Request.from(person_one).to(user.person).first
+        @received_request = Request.where(:sender_id => person.id, :recipient_id => user.person.id).first
+        @received_request2 = Request.where(:sender_id => person_one.id, :recipient_id => user.person.id).first
       end
 
       it "should delete an accepted contact request" do
         proc {
           user.accept_contact_request(@received_request, aspect)
         }.should change(Request, :count ).by(-1)
+      end
+
+      it "should mark the corresponding notification as 'read'" do
+        notification = Notification.create(:target_id => @received_request.id,
+                                           :target_type => 'new_request',
+                                           :unread => true)
+
+        Notification.where(:target_id=>@received_request.id).first.unread.should be_true
+        user.accept_contact_request(@received_request, aspect)
+        Notification.where(:target_id=>@received_request.id).first.unread.should be_false
       end
 
       it 'should be able to ignore a pending contact request' do
@@ -123,14 +131,14 @@ describe Diaspora::UserModules::Connecting do
     describe 'multiple users accepting/rejecting the same person' do
 
       before do
-        Request.to(user).count.should == 0
+        Request.where(:recipient_id => user.person.id).count.should == 0
         user.contacts.empty?.should be true
-        Request.to(user2).count.should == 0
+        Request.where(:recipient_id => user2.person.id).count.should == 0
         user2.contacts.empty?.should be true
 
-        @request1 = Request.instantiate(:to => user.person, :from => person_one)
-        @request2 = Request.instantiate(:to => user2.person, :from => person_one)
-        @request3 = Request.instantiate(:to => user2.person, :from => user.person)
+        @request1 = Request.diaspora_initialize(:to => user.person, :from => person_one)
+        @request2 = Request.diaspora_initialize(:to => user2.person, :from => person_one)
+        @request3 =  Request.diaspora_initialize(:to => user2.person, :from => user.person)
 
         @req1_xml = @request1.to_diaspora_xml
         @req2_xml = @request2.to_diaspora_xml
@@ -193,10 +201,10 @@ describe Diaspora::UserModules::Connecting do
 
 
         it 'should keep the person around if the users ignores them' do
-          user.ignore_contact_request Request.to(user).first.id
+          user.ignore_contact_request Request.where(:recipient_id => user.person.id).first.id
           user.contact_for(person_one).should be_nil
 
-          user2.ignore_contact_request Request.to(user2).first.id
+          user2.ignore_contact_request Request.where(:recipient_id => user2.person.id).first.id
           user2.contact_for(person_one).should be_nil
         end
       end
@@ -206,27 +214,27 @@ describe Diaspora::UserModules::Connecting do
 
     describe 'a user accepting rejecting multiple people' do
       before do
-        @request = Request.instantiate(:to => user.person, :from => person_one)
-        @request_two = Request.instantiate(:to => user.person, :from => person_two)
+        @request = Request.diaspora_initialize(:to => user.person, :from => person_one)
+        @request_two = Request.diaspora_initialize(:to => user.person, :from => person_two)
       end
 
       it "keeps the right counts of contacts" do
         received_req = @request.receive(user, person_one)
 
-        Request.to(user).count.should == 1
+        Request.where(:recipient_id => user.person.id).count.should == 1
         user.reload.contacts.size.should be 0
 
         received_req2 = @request_two.receive(user, person_two)
-        Request.to(user).count.should == 2
+        Request.where(:recipient_id => user.person.id).count.should == 2
         user.reload.contacts.size.should be 0
 
         user.accept_contact_request received_req, aspect
-        Request.to(user).count.should == 1
+        Request.where(:recipient_id => user.person.id).count.should == 1
         user.reload.contacts.size.should be 1
         user.contact_for(person_one).should_not be_nil
 
         user.ignore_contact_request received_req2.id
-        Request.to(user).count.should == 0
+        Request.where(:recipient_id => user.person.id).count.should == 0
         user.reload.contacts.size.should be 1
         user.contact_for(person_two).should be_nil
       end

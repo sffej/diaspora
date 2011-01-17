@@ -2,26 +2,24 @@
 #   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 
-class Invitation
-  include MongoMapper::Document
+class Invitation < ActiveRecord::Base
 
-  belongs_to :from, :class => User
-  belongs_to :to, :class => User
-  belongs_to :into, :class => Aspect
-  key :message, String
+  belongs_to :sender, :class_name => 'User'
+  belongs_to :recipient, :class_name => 'User'
+  belongs_to :aspect
 
-  validates_presence_of :from, :to, :into
+  validates_presence_of :sender, :recipient, :aspect
 
   def self.invite(opts = {})
     return false if opts[:email] == opts[:from].email
-    existing_user = User.find_by_email(opts[:email])
+    existing_user = User.where(:email => opts[:email]).first
     if existing_user
       if opts[:from].contact_for(opts[:from].person)
         raise "You are already connceted to this person"
       elsif not existing_user.invited?
         opts[:from].send_contact_request_to(existing_user.person, opts[:into])
         return
-      elsif Invitation.first(:from_id => opts[:from].id, :to_id => existing_user.id)
+      elsif Invitation.where(:sender_id => opts[:from].id, :recipient_id => existing_user.id).first
         raise "You already invited this person"
       end
     end
@@ -29,7 +27,7 @@ class Invitation
   end
 
   def self.new_or_existing_user_by_email(email)
-    existing_user = User.first(:email => email)
+    existing_user = User.where(:email => email).first
     if existing_user
       existing_user
     else
@@ -54,23 +52,22 @@ class Invitation
 
     if opts[:from]
       invitee.save(:validate => false)
-      Invitation.create!(:from => opts[:from],
-                         :to => invitee,
-                         :into => opts[:into],
+      Invitation.create!(:sender => opts[:from],
+                         :recipient => invitee,
+                         :aspect => opts[:into],
                          :message => opts[:message])
 
       opts[:from].invites -= 1 unless opts[:from].invites == 0
       opts[:from].save!
       invitee.reload
     end
-
-    invitee.invite! 
+    invitee.invite!
     Rails.logger.info("event=invitation_sent to=#{opts[:email]} #{"inviter=#{opts[:from].diaspora_handle}" if opts[:from]}")
     invitee
   end
 
   def to_request!
-    request = from.send_contact_request_to(to.person, into)
+    request = sender.send_contact_request_to(recipient.person, aspect)
     destroy if request
     request
   end

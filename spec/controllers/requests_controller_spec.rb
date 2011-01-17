@@ -7,7 +7,7 @@ require 'spec_helper'
 describe RequestsController do
   render_views
   before do
-    @user = make_user
+    @user = Factory.create(:user)
     @controller.stub!(:current_user).and_return(@user)
     sign_in :user, @user
     request.env["HTTP_REFERER"] = "http://test.host"
@@ -15,7 +15,7 @@ describe RequestsController do
     @user.aspects.create!(:name => "lame-os")
     @user.reload
 
-    @other_user = make_user
+    @other_user = Factory.create(:user)
     @other_user.aspects.create!(:name => "meh")
     @other_user.reload
   end
@@ -23,7 +23,7 @@ describe RequestsController do
   describe '#destroy' do
     before do
       @other_user.send_contact_request_to(@user.person, @other_user.aspects.first)
-      @friend_request = Request.to(@user.person).first
+      @friend_request = Request.where(:recipient_id => @user.person.id).first
     end
     describe 'when accepting a contact request' do
       it "succeeds" do
@@ -31,10 +31,10 @@ describe RequestsController do
           :accept    => "true",
           :aspect_id => @user.aspects.first.id.to_s,
           :id        => @friend_request.id.to_s
-        response.should redirect_to(aspect_path(@user.aspects.first))
+        response.should redirect_to(requests_path)
       end
       it "marks the notification as read" do
-        notification = Notification.where(:user_id => @user.id, :target_id=> @friend_request.id).first
+        notification = Notification.where(:recipient_id => @user.id, :target_id=> @friend_request.id).first
         notification.reload.unread.should == true
         xhr :delete, :destroy,
           :accept    => "true",
@@ -57,7 +57,7 @@ describe RequestsController do
       end
 
       it "marks the notification as read" do
-        notification = Notification.where(:user_id => @user.id, :target_id=> @friend_request.id).first
+        notification = Notification.where(:recipient_id => @user.id, :target_id=> @friend_request.id).first
         notification.reload.unread.should == true
           xhr :delete, :destroy,
             :id => @friend_request.id.to_s
@@ -96,9 +96,9 @@ describe RequestsController do
         :to => @other_user.diaspora_handle,
         :into => @user.aspects[0].id}
       )
-      Request.to(@user).first.should be_nil
+      Request.where(:recipient_id => @user.person.id).first.should be_nil
       @user.contact_for(@other_user.person).should be_true
-      @user.aspects[0].contacts.all(:person_id => @other_user.person.id).should be_true
+      @user.aspects[0].contacts.where(:person_id => @other_user.person.id).first.should be_true
     end
 
     it "redirects when requesting to be contacts with yourself" do

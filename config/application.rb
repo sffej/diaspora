@@ -4,14 +4,11 @@
 
 require File.expand_path('../boot', __FILE__)
 
-require 'action_controller/railtie'
-require 'action_mailer/railtie'
-require 'active_resource/railtie'
+require 'rails/all'
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
-require File.expand_path('../../lib/mongo_mapper/bson_id', __FILE__)
 require File.expand_path('../../lib/log_overrider', __FILE__)
 module Diaspora
   class Application < Rails::Application
@@ -40,7 +37,6 @@ module Diaspora
 
     # Configure generators values. Many other options are available, be sure to check the documentation.
      config.generators do |g|
-       g.orm             :mongo_mapper
        g.template_engine :haml
        g.test_framework  :rspec
      end

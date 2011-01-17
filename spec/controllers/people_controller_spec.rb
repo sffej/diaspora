@@ -7,7 +7,7 @@ require 'spec_helper'
 describe PeopleController do
   render_views
 
-  let(:user)    { make_user }
+  let(:user)    { Factory.create(:user) }
   let!(:aspect) { user.aspects.create(:name => "lame-os") }
 
   before do
@@ -120,17 +120,17 @@ describe PeopleController do
   describe '#index' do
     before do
       @eugene = Factory.create(:person,
-        :profile => {:first_name => "Eugene",
-                     :last_name => "w"})
+        :profile => Factory(:profile, :first_name => "Eugene",
+                     :last_name => "w"))
       @korth  = Factory.create(:person,
-        :profile => {:first_name => "Evan",
-                     :last_name => "Korth"})
+        :profile => Factory(:profile, :first_name => "Evan",
+                     :last_name => "Korth"))
     end
 
     it "assigns hashes" do
       eugene2 = Factory.create(:person,
-        :profile => {:first_name => "Eugene",
-                     :last_name => "w"})
+        :profile => Factory(:profile, :first_name => "Eugene",
+                     :last_name => "w"))
       get :index, :q => "Eu"
       people = assigns[:hashes].map{|h| h[:person]}
       people.should include @eugene
@@ -138,20 +138,20 @@ describe PeopleController do
     end
     it "assigns people" do
       eugene2 = Factory.create(:person,
-        :profile => {:first_name => "Eugene",
-                     :last_name => "w"})
+        :profile => Factory(:profile, :first_name => "Eugene",
+                     :last_name => "w"))
       get :index, :q => "Eu"
       assigns[:people].should =~ [@eugene, eugene2]
     end
     it 'shows a contact' do
-      user2 = make_user
+      user2 = Factory.create(:user)
       connect_users(user, aspect, user2, user2.aspects.create(:name => 'Neuroscience'))
       get :index, :q => user2.person.profile.first_name.to_s
       response.should redirect_to user2.person
     end
 
     it 'shows a non-contact' do
-      user2 = make_user
+      user2 = Factory.create(:user)
       user2.person.profile.searchable = true
       user2.save
       get :index, :q => user2.person.profile.first_name.to_s
@@ -199,23 +199,24 @@ describe PeopleController do
     end
 
     it "renders the show page of a contact" do
-      user2 = make_user
+      user2 = Factory.create(:user)
       connect_users(user, aspect, user2, user2.aspects.create(:name => 'Neuroscience'))
       get :show, :id => user2.person.id
       response.should be_success
     end
 
     it "renders the show page of a non-contact" do
-      user2 = make_user
+      user2 = Factory.create(:user)
       get :show, :id => user2.person.id
       response.should be_success
     end
 
     it "renders with public posts of a non-contact" do
-      user2 = make_user
+      user2 = Factory.create(:user)
       status_message = user2.post(:status_message, :message => "hey there", :to => 'all', :public => true)
 
       get :show, :id => user2.person.id
+      assigns[:posts].should include status_message
       response.body.should include status_message.message
     end
   end
@@ -253,21 +254,22 @@ describe PeopleController do
         image_url = user.person.profile.image_url
         put :update, @params
 
-        user.person.reload
-        user.person.profile.image_url.should == image_url
+        Person.find(user.person.id).profile.image_url.should == image_url
       end
     end
     it 'does not allow mass assignment' do
-      new_user = make_user
+      person = user.person
+      new_user = Factory.create(:user)
+      person.owner_id.should == user.id
       put :update, :id => user.person.id, :owner_id => new_user.id
-      user.person.reload.owner_id.should_not == new_user.id
+      Person.find(person.id).owner_id.should == user.id
     end
 
     it 'does not overwrite the profile diaspora handle' do
       handle_params = {:id => user.person.id,
                        :profile => {:diaspora_handle => 'abc@a.com'} }
       put :update, handle_params
-      user.person.reload.profile[:diaspora_handle].should_not == 'abc@a.com'
+      Person.find(user.person.id).profile[:diaspora_handle].should_not == 'abc@a.com'
     end
   end
 end

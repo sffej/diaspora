@@ -1,55 +1,36 @@
-#   Copyright (c) 2010, Diaspora Inc.  This file is
-#   licensed under the Affero General Public License version 3 or later.  See
-#   the COPYRIGHT file.
+# Copyright (c) 2010, Diaspora Inc.  This file is
+# licensed under the Affero General Public License version 3 or later.  See
+# the COPYRIGHT file.
 
-require File.join(Rails.root, 'lib/rake_helpers')
-include RakeHelpers
+require File.join(Rails.root, 'lib', 'data_conversion', 'base')
+require File.join(Rails.root, 'lib', 'data_conversion', 'export_from_mongo')
+require File.join(Rails.root, 'lib', 'data_conversion', 'import_to_mysql')
 
 namespace :migrations do
-
-  desc 'make old registered services into the new class specific services'
-  task :service_reclassify do
-    require File.join(Rails.root,"config/environment")
-    Service.all.each do |s|
-      provider = s.provider
-      if provider
-        s._type = "Services::#{provider.camelize}"
-        s.save
-      else
-        puts "no provider found for service #{s.id}"
-      end
-    end
-    puts "all done"
+  desc 'export data for mysql import'
+  task :export_for_mysql do
+    migrator = DataConversion::ExportFromMongo.new
+    migrator.full_path = "/tmp/data_conversion"
+    migrator.log("**** Starting export for MySQL ****")
+    migrator.clear_dir
+    migrator.write_json_export
+    migrator.convert_json_files
+    migrator.log("**** Export finished! ****")
+    migrator.log("total elapsed time")
   end
 
-  desc 'fix people with spaces in their diaspora handles'
-  task :fix_space_in_diaspora_handles do
-    RakeHelpers::fix_diaspora_handle_spaces(false)
+  desc 'import data to mysql'
+  task :import_to_mysql do
+    require 'config/environment'
+    migrator = DataConversion::ImportToMysql.new
+    migrator.full_path = "/tmp/data_conversion/csv"
+    migrator.log("**** Starting import to MySQL database #{ActiveRecord::Base.connection.current_database} ****")
+    migrator.import_raw
+    migrator.process_raw_tables
+    migrator.log("**** Import finished! ****")
+    migrator.log("total elapsed time")
   end
 
-  task :contacts_as_requests do
-    require File.join(Rails.root,"config/environment")
-    puts "Migrating contacts..."
-    MongoMapper.database.eval('
-      db.contacts.find({pending : null}).forEach(function(contact){
-        db.contacts.update({"_id" : contact["_id"]}, {"$set" : {"pending" : false}}); });')
-    puts "Deleting stale requests..."
-    Request.find_each(:sent => true){|request|
-      request.delete
-    }
-    puts "Done!"
-  end
-
-  desc 'allow to upgrade old image urls to use rel path'
-  task :switch_image_urls do
-  end
-
-  desc 'fix usernames with periods in them'
-  task :fix_periods_in_username do
-    RakeHelpers::fix_periods_in_usernames(false)
-  end
-
-  desc 'purge broken contacts'
-  task :purge_broken_contacts do
-  end
+  desc 'execute mongo to mysql migration.  Requires mongoexport to be accessible.'
+  task :migrate_to_mysql => [:export_for_mysql, :import_to_mysql]
 end

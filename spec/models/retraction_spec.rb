@@ -6,7 +6,7 @@ require 'spec_helper'
 
 describe Retraction do
 
-  let(:user) { make_user }
+  let(:user) { Factory.create(:user) }
   let(:person) { Factory(:person) }
   let(:aspect) { user.aspects.create(:name => "Bruisers") }
   let!(:activation) { user.activate_contact(person, aspect) }
@@ -16,7 +16,7 @@ describe Retraction do
     it 'should have a post id after serialization' do
       retraction = Retraction.for(post)
       xml = retraction.to_xml.to_s
-      xml.include?(post.id.to_s).should == true
+      xml.include?(post.guid.to_s).should == true
     end
   end
 
@@ -26,7 +26,7 @@ describe Retraction do
       obj = retraction.instance_variable_get(:@object)
       wanted_subscribers = obj.subscribers(user)
       obj.should_receive(:subscribers).with(user).and_return(wanted_subscribers)
-      retraction.subscribers(user).should =~ wanted_subscribers
+      retraction.subscribers(user).map{|s| s.id}.should =~ wanted_subscribers.map{|s| s.id}
     end
 
     context 'hax' do

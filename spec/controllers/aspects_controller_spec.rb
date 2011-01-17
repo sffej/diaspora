@@ -9,8 +9,8 @@ describe AspectsController do
   render_views
 
   before do
-    @user  = make_user
-    @user2 = make_user
+    @user  = Factory.create(:user)
+    @user2 = Factory.create(:user)
 
     @aspect0  = @user.aspects.create(:name => "lame-os")
     @aspect1  = @user.aspects.create(:name => "another aspect")
@@ -43,13 +43,8 @@ describe AspectsController do
 
   describe "#index" do
     it "assigns @contacts to all the user's contacts" do
-      Factory.create :person
-      begin
       get :index
-      rescue Exception => e
-        raise e.original_exception
-      end
-      assigns[:contacts].should == @user.contacts
+      assigns[:contacts].map{|c| c.id}.should == @user.contacts.map{|c| c.id}
     end
 
     context 'filtering' do
@@ -57,7 +52,7 @@ describe AspectsController do
         @posts = []
         @users = []
         8.times do |n|
-          user = make_user
+          user = Factory(:user)
           @users << user
           aspect = user.aspects.create(:name => 'people')
           connect_users(@user, @aspect0, user, aspect)
@@ -89,7 +84,7 @@ describe AspectsController do
         @posts = []
         @users = []
         8.times do |n|
-          user = make_user
+          user = Factory.create(:user)
           @users << user
           aspect = user.aspects.create(:name => 'people')
           connect_users(@user, @aspect0, user, aspect)
@@ -111,33 +106,6 @@ describe AspectsController do
     it "succeeds" do
       get :show, 'id' => @aspect0.id.to_s
       response.should be_redirect
-    end
-    it "assigns aspect, aspect_contacts, and posts" do
-      get :show, 'id' => @aspect0.id.to_s
-      assigns(:aspect).should == @aspect0
-      achash = @controller.send(:hashes_for_contacts, @aspect0.contacts).first
-      assigns(:aspect_contacts).first[:contact].should == achash[:contact]
-      assigns(:aspect_contacts).first[:person].should == achash[:person]
-      assigns(:posts).should == []
-    end
-    it "assigns contacts to only non-pending" do
-      @user.contacts.count.should == 1
-      @user.send_contact_request_to(make_user.person, @aspect0)
-      @user.contacts.count.should == 2
-
-      get :show, 'id' => @aspect0.id.to_s
-      contacts = assigns(:contacts)
-      contacts.count.should == 1
-      contacts.first.should == @contact
-    end
-    it "paginates" do
-      16.times { |i| @user2.post(:status_message, :to => @aspect2.id, :message => "hi #{i}") }
-
-      get :show, 'id' => @aspect0.id.to_s
-      assigns(:posts).count.should == 15
-
-      get :show, 'id' => @aspect0.id.to_s, 'page' => '2'
-      assigns(:posts).count.should == 1
     end
   end
 
@@ -181,7 +149,7 @@ describe AspectsController do
     end
     it "assigns contacts to only non-pending" do
       @user.contacts.count.should == 1
-      @user.send_contact_request_to(make_user.person, @aspect0)
+      @user.send_contact_request_to(Factory(:user).person, @aspect0)
       @user.contacts.count.should == 2
 
       get :manage
@@ -191,7 +159,7 @@ describe AspectsController do
     end
     context "when the user has pending requests" do
       before do
-        requestor        = make_user
+        requestor        = Factory.create(:user)
         requestor_aspect = requestor.aspects.create(:name => "Meh")
         requestor.send_contact_request_to(@user.person, requestor_aspect)
 
@@ -253,21 +221,27 @@ describe AspectsController do
       @hash[:person].should == @user.contacts.first.person
     end
     it "does not select the person's rsa key" do
+      pending "Don't select RSA keys for views"
       @hash[:person].serialized_public_key.should be_nil
     end
   end
   describe "#hashes_for_aspects" do
     before do
+      @aspect1 = @user.aspects.create(:name => "SecondAspect")
       @people = []
       10.times {@people << Factory.create(:person)}
-      @people.each{|p| @user.reload.activate_contact(p, @user.aspects.first.reload)}
+
+      @people.each do |p|
+        @user.reload.activate_contact(p, @user.aspects.first.reload)
+        @user.add_contact_to_aspect(@user.contact_for(p), @aspect1)
+      end
       @user.reload
       @hashes = @controller.send(:hashes_for_aspects, @user.aspects, @user.contacts, :limit => 9)
       @hash = @hashes.first
       @aspect0 = @user.aspects.first
     end
     it 'has aspects' do
-      @hashes.length.should == 2
+      @hashes.length.should == @user.aspects.count
       @hash[:aspect].should == @aspect0
     end
     it 'has a contact_count' do
@@ -280,10 +254,17 @@ describe AspectsController do
       @aspect0.contacts.map{|c| c.person}.include?(@hash[:contacts].first[:person]).should be_true
     end
     it "does not return the rsa key" do
+      pending "Don't select RSA keys for views"
       @hash[:contacts].first[:person].serialized_public_key.should be_nil
     end
     it 'has a contact in each hash' do
       @aspect0.contacts.include?(@hash[:contacts].first[:contact]).should be_true
+    end
+    it 'does not retreive duplicate contacts' do
+      @hashes = @controller.send(:hashes_for_aspects, @user.aspects, @user.contacts)
+      @hash = @hashes.first
+      flattened = @hash[:contacts].map{|c| c[:person].id}
+      flattened.uniq.should == flattened
     end
   end
 
@@ -303,7 +284,7 @@ describe AspectsController do
   describe "#add_to_aspect" do
     context 'with an incoming request' do
       before do
-        @user3 = make_user
+        @user3 = Factory.create(:user)
         @user3.send_contact_request_to(@user.person, @user3.aspects.create(:name => "Walruses"))
       end
       it 'deletes the request' do
@@ -311,7 +292,7 @@ describe AspectsController do
           :format => 'js',
           :person_id => @user3.person.id,
           :aspect_id => @aspect1.id
-        Request.from(@user3).to(@user).first.should be_nil
+        Request.where(:sender_id => @user3.person.id, :recipient_id => @user.person.id).first.should be_nil
       end
       it 'does not leave the contact pending' do
         post 'add_to_aspect',
@@ -319,7 +300,6 @@ describe AspectsController do
           :person_id => @user3.person.id,
           :aspect_id => @aspect1.id
         @user.contact_for(@user3.person).should_not be_pending
-
       end
     end
     context 'with a non-contact' do

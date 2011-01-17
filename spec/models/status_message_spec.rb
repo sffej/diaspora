@@ -7,10 +7,18 @@ require 'spec_helper'
 describe StatusMessage do
 
   before do
-    @user = make_user
+    @user = Factory(:user)
     @aspect = @user.aspects.create(:name => "losers")
   end
 
+  describe '#diaspora_handle=' do
+    it 'sets #person' do
+      person = Factory.create(:person)
+      post = Factory.create(:status_message, :person => @user.person)
+      post.diaspora_handle = person.diaspora_handle
+      post.person.should == person
+    end
+  end
   it "should have either a message or at least one photo" do
     n = Factory.build(:status_message, :message => nil)
     n.valid?.should be_false
@@ -26,11 +34,15 @@ describe StatusMessage do
     photo.save!
 
     n.photos << photo
-    n.valid?.should be_true
+    n.valid?
+    n.errors.full_messages.should == []
   end
 
   it 'should be postable through the user' do
-    status = @user.post(:status_message, :message => "Users do things", :to => @aspect.id)
+    message = "Users do things"
+    status = @user.post(:status_message, :message => message, :to => @aspect.id)
+    db_status = StatusMessage.find(status.id)
+    db_status.message.should == message
   end
 
   it 'should require status messages to be less than 1000 characters' do
@@ -39,20 +51,38 @@ describe StatusMessage do
     status = Factory.build(:status_message, :message => message)
 
     status.should_not be_valid
-    
+
   end
 
   describe "XML" do
-    it 'should serialize to XML' do
-      message = Factory.create(:status_message, :message => "I hate WALRUSES!", :person => @user.person)
-      message.to_xml.to_s.should include "<message>I hate WALRUSES!</message>"
+    before do
+      @message = Factory.create(:status_message, :message => "I hate WALRUSES!", :person => @user.person)
+      @xml = @message.to_xml.to_s
+    end
+    it 'serializes the message' do
+      @xml.should include "<message>I hate WALRUSES!</message>"
     end
 
-    it 'should marshal serialized XML to object' do
-      xml = "<statusmessage><message>I hate WALRUSES!</message></statusmessage>"
-      parsed = StatusMessage.from_xml(xml)
-      parsed.message.should == "I hate WALRUSES!"
-      parsed.valid?.should be_true
+    it 'serializes the author address' do
+      @xml.should include(@user.person.diaspora_handle)
+    end
+
+    describe '.from_xml' do
+      before do
+        @marshalled = StatusMessage.from_xml(@xml)
+      end
+      it 'marshals the message' do
+        @marshalled.message.should == "I hate WALRUSES!"
+      end
+      it 'marshals the guid' do
+        @marshalled.guid.should == @message.guid
+      end
+      it 'marshals the author' do
+        @marshalled.person.should == @message.person
+      end
+      it 'marshals the diaspora_handle' do
+        @marshalled.diaspora_handle.should == @message.diaspora_handle
+      end
     end
   end
 
@@ -68,9 +98,9 @@ describe StatusMessage do
         [nil, 'Foobar <title>'+expected_title+'</title> hallo welt <asd><dasdd><a>dsd</a>'])
 
       post = @user.build_post :status_message, :message => url, :to => @aspect.id
-      
+
       post.save!
-      post[:youtube_titles].should == {video_id => expected_title}
+      Post.find(post.id).youtube_titles.should == {video_id => expected_title}
     end
   end
 

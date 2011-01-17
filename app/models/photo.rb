@@ -3,22 +3,12 @@
 #   the COPYRIGHT file.
 
 class Photo < Post
-  require 'carrierwave/orm/mongomapper'
-  include MongoMapper::Document
+  require 'carrierwave/orm/activerecord'
   mount_uploader :image, ImageUploader
 
-  xml_accessor :remote_photo
-  xml_accessor :caption
-  xml_reader :status_message_id
-
-  key :caption,  String
-  key :remote_photo_path
-  key :remote_photo_name
-  key :random_string
-
-  key :status_message_id, ObjectId
-
-  timestamps!
+  xml_attr :remote_photo
+  xml_attr :caption
+  xml_attr :status_message_id
 
   belongs_to :status_message
 
@@ -37,7 +27,7 @@ class Photo < Post
     end
   end
 
-  def self.instantiate(params = {})
+  def self.diaspora_initialize(params = {})
     photo = super(params)
     image_file = params.delete(:user_file)
     photo.random_string = gen_random_string(10)
@@ -66,9 +56,10 @@ class Photo < Post
   end
 
   def ensure_user_picture
-    people = Person.all('profile.image_url' => absolute_url(:thumb_large) )
-    people.each{ |person|
-      person.profile.update_attributes(:image_url => nil)
+    profiles = Profile.where(:image_url => absolute_url(:thumb_large))
+    profiles.each { |profile|
+      profile.image_url = nil
+      profile.save
     }
   end
 
@@ -78,6 +69,11 @@ class Photo < Post
 
   def mutable?
     true
+  end
+
+  def save_update updated_post
+    self.caption = updated_post.caption
+    self.save
   end
 
   def absolute_url *args
@@ -117,7 +113,7 @@ class Photo < Post
     hash
   end
   scope :on_statuses, lambda { |post_ids|
-    where(:status_message_id.in => post_ids)
+    where(:status_message_id => post_ids)
   }
 
 end

@@ -6,7 +6,7 @@ require 'spec_helper'
 
 describe ApplicationHelper do
   before do
-    @user = make_user
+    @user = Factory(:user)
     @person = Factory.create(:person)
   end
 
@@ -93,6 +93,7 @@ describe ApplicationHelper do
           video_id = "0x__dDWdf23"
           url = "http://www.youtube.com/watch?v=" + video_id + "&a=GxdCwVVULXdvEBKmx_f5ywvZ0zZHHHDU&list=ML&playnext=1"
           res = markdownify(url)
+          res.should =~ /Youtube:/
           res.should =~ /data-host="youtube.com"/
           res.should =~ /data-video-id="#{video_id}"/
         end
@@ -101,6 +102,7 @@ describe ApplicationHelper do
           video_id = "ABYnqp-bxvg"
           url = "http://www.youtube.com/watch?v=" + video_id + "&a=GxdCwVVULXdvEBKmx_f5ywvZ0zZHHHDU&list=ML&playnext=1"
           res = markdownify(url)
+          res.should =~ /Youtube:/
           res.should =~ /data-host="youtube.com"/
           res.should =~ /data-video-id="#{video_id}"/
         end

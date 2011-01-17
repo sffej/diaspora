@@ -10,8 +10,8 @@ require File.join(Rails.root, 'lib/postzord/receiver')
 describe Postzord::Receiver do
 
   before do
-    @user = make_user
-    @user2 = make_user
+    @user = Factory(:user)
+    @user2 = Factory(:user)
     @person2 = @user2.person
 
     aspect1 = @user.aspects.create(:name => "hey")

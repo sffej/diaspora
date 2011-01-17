@@ -19,7 +19,7 @@ describe Contact do
     end
 
     it 'ensures user is not making a contact for himself' do
-      user = make_user
+      user = Factory.create(:user)
 
       contact.person = user.person
       contact.user = user
@@ -29,11 +29,11 @@ describe Contact do
     end
 
     it 'has many aspects' do
-      contact.associations[:aspects].type.should == :many
+      contact.aspects.should be_empty
     end
 
     it 'validates uniqueness' do
-      user = make_user
+      user = Factory.create(:user)
       person = Factory(:person)
 
       contact2 = Contact.create(:user => user,
@@ -51,7 +51,7 @@ describe Contact do
   context 'requesting' do
     before do
       @contact = Contact.new
-      @user = make_user
+      @user = Factory.create(:user)
       @person = Factory(:person)
 
       @contact.user = @user
@@ -63,8 +63,8 @@ describe Contact do
         @contact.stub(:user).and_return(@user)
         request = @contact.generate_request
 
-        request.from.should == @user
-        request.to.should == @person
+        request.sender.should == @user.person
+        request.recipient.should == @person
       end
     end
 
@@ -78,7 +78,7 @@ describe Contact do
       end
       it 'persists no request' do
         @contact.dispatch_request
-        Request.from(@user).to(@person).first.should be_nil
+        Request.where(:sender_id => @user.person.id, :recipient_id => @person.id).should be_empty
       end
     end
   end

@@ -8,14 +8,6 @@ GIT
       nokogiri (>= 1.3.3)
 
 GIT
-  remote: git://github.com/collectiveidea/devise-mongo_mapper
-  revision: fa2f20310e0988295adc192255d3b1cedee1b412
-  ref: fa2f20310e0988295adc
-  specs:
-    devise-mongo_mapper (0.0.1)
-      devise (~> 1.1.0)
-
-GIT
   remote: git://github.com/iain/http_accept_language.git
   revision: 0b78aa7849fc90cf9e12586af162fa4c408a795d
   ref: 0b78aa7849fc90cf9e12
@@ -30,17 +22,6 @@ GIT
     em-websocket (0.2.0)
       addressable (>= 2.1.1)
       eventmachine (>= 0.12.9)
-
-GIT
-  remote: git://github.com/jnunemaker/mongomapper.git
-  revision: 108510cc9b96bfbcf7f095ec037bce30cb6aa2c9
-  ref: 108510cc9b96bfbcf7f0
-  branch: rails3
-  specs:
-    mongo_mapper (0.8.6)
-      activemodel (~> 3.0.0)
-      activesupport (~> 3.0.0)
-      plucky (~> 0.3.6)
 
 GIT
   remote: git://github.com/jnunemaker/twitter.git
@@ -113,8 +94,6 @@ GEM
       uuidtools
       xml-simple
     bcrypt-ruby (2.1.4)
-    bson (1.1)
-    bson_ext (1.1)
     builder (2.1.2)
     bunny (0.6.0)
     capybara (0.3.9)
@@ -215,8 +194,6 @@ GEM
     mocha (0.9.10)
       rake
     moneta (0.6.0)
-    mongo (1.1)
-      bson (>= 1.0.5)
     mongrel (1.1.5)
       cgi_multipart_eof_fix (>= 2.4)
       daemons (>= 1.0.3)
@@ -225,6 +202,7 @@ GEM
     multi_json (0.0.5)
     multi_xml (0.2.0)
     multipart-post (1.1.0)
+    mysql2 (0.2.6)
     net-ldap (0.1.1)
     nokogiri (1.4.3.1)
     oa-basic (0.1.6)
@@ -267,8 +245,6 @@ GEM
       oa-enterprise (= 0.1.6)
       oa-oauth (= 0.1.6)
       oa-openid (= 0.1.6)
-    plucky (0.3.6)
-      mongo (~> 1.1)
     polyglot (0.3.1)
     pyu-ruby-sasl (0.0.3.2)
     rack (1.2.1)
@@ -370,8 +346,6 @@ DEPENDENCIES
   SystemTimer (= 1.2.1)
   addressable (= 2.2.2)
   aws (= 2.3.32)
-  bson (= 1.1)
-  bson_ext (= 1.1)
   bundler (>= 1.0.0)
   capybara (~> 0.3.9)
   carrierwave!
@@ -380,7 +354,6 @@ DEPENDENCIES
   cucumber-rails (= 0.3.2)
   database_cleaner (= 0.5.2)
   devise (= 1.1.3)
-  devise-mongo_mapper!
   devise_invitable (= 0.3.5)
   em-websocket!
   factory_girl_rails
@@ -393,8 +366,8 @@ DEPENDENCIES
   launchy
   mini_magick (= 3.2)
   mocha
-  mongo_mapper!
   mongrel
+  mysql2 (= 0.2.6)
   nokogiri (= 1.4.3.1)
   omniauth (= 0.1.6)
   rails (= 3.0.3)

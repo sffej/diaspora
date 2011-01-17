@@ -7,7 +7,7 @@ module ApplicationHelper
 
   def timeago(time, options = {})
     options[:class] ||= "timeago"
-    content_tag(:abbr, time.to_s, options.merge(:title => time.getutc.iso8601)) if time
+    content_tag(:abbr, time.to_s, options.merge(:title => time.iso8601)) if time
   end
 
   def modern_browser?
@@ -25,14 +25,14 @@ module ApplicationHelper
   end
 
   def aspects_with_post aspects, post
-    aspects.select do |a|
-      post.aspect_ids.include?(a.id)
+    aspects.select do |aspect|
+      aspect.posts.include?(post)
     end
   end
 
   def aspects_without_post aspects, post
-    aspects.reject do |a|
-      post.aspect_ids.include?(a.id)
+    aspects.reject do |aspect|
+      aspect.posts.include?(post)
     end
   end
 
@@ -100,7 +100,7 @@ module ApplicationHelper
   def mine?(post)
     current_user.owns? post
   end
- 
+
   def type_partial(post)
     class_name = post.class.name.to_s.underscore
     "#{class_name.pluralize}/#{class_name}"

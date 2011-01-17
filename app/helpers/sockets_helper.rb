@@ -7,7 +7,13 @@ module SocketsHelper
   include NotificationsHelper
 
   def obj_id(object)
-    object.respond_to?(:post_id) ? object.post_id : object.id
+    if object.respond_to?(:post_id)
+      object.post_id
+    elsif object.respond_to?(:post_guid)
+      object.post_guid
+    else
+      object.id
+    end
   end
 
   def action_hash(user, object, opts={})
@@ -37,7 +43,7 @@ module SocketsHelper
           :person => object,
           :all_aspects => user.aspects,
           :contact => user.contact_for(object),
-          :request => user.request_for(object),
+          :request => user.request_from(object),
           :current_user => user}
         v = render_to_string(:partial => 'people/person', :locals => person_hash)
 
@@ -45,14 +51,15 @@ module SocketsHelper
         v = render_to_string(:partial => 'comments/comment', :locals => {:hash => {:comment => object, :person => object.person}})
 
       elsif object.is_a? Notification
-        v = render_to_string(:partial => 'notifications/popup', :locals => {:note => object, :person => object.person})
+        v = render_to_string(:partial => 'notifications/popup', :locals => {:note => object, :person => object.actor})
 
       else
-        v = render_to_string(:partial => type_partial(object), :locals => {:post => object, :current_user => user}) unless object.is_a? Retraction
+        raise "#{object.inspect} with class #{object.class} is not actionhashable." unless object.is_a? Retraction
       end
     rescue Exception => e
       Rails.logger.error("event=socket_render status=fail user=#{user.diaspora_handle} object=#{object.id.to_s}")
-      raise e.original_exception
+      raise e.original_exception if e.respond_to?(:original_exception)
+      raise e
     end
     action_hash = {:class =>object.class.to_s.underscore.pluralize, :html => v, :post_id => obj_id(object)}
     action_hash.merge! opts
@@ -63,12 +70,12 @@ module SocketsHelper
     if object.is_a? Comment
       post = object.post
       action_hash[:comment_id] = object.id
-      action_hash[:my_post?] = (post.person.owner.id == uid)
-      action_hash[:post_guid] = post.id
+      action_hash[:my_post?] = (post.person.owner_id == uid)
+      action_hash[:post_guid] = post.guid
 
     end
 
-    action_hash[:mine?] = object.person && (object.person.owner.id == uid) if object.respond_to?(:person)
+    action_hash[:mine?] = object.person && (object.person.owner_id == uid) if object.respond_to?(:person)
 
     I18n.locale = old_locale unless user.nil?
 

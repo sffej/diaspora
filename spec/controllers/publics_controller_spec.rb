@@ -7,7 +7,7 @@ require 'spec_helper'
 describe PublicsController do
   render_views
 
-  let(:user)   { make_user }
+  let(:user)   { Factory.create(:user) }
   let(:person) { Factory(:person) }
 
   describe '#receive' do
@@ -27,7 +27,7 @@ describe PublicsController do
       aspect = user.aspects.create(:name => 'foo')
       post1 = user.post(:status_message, :message => 'moms', :to => [aspect.id])
       xml2 = post1.to_diaspora_xml
-      user2 = make_user
+      user2 = Factory(:user)
 
       salmon_factory = Salmon::SalmonSlap.create(user, xml2)
       enc_xml = salmon_factory.xml_for(user2.person)
@@ -68,7 +68,7 @@ describe PublicsController do
 
   describe '#webfinger' do
     it "succeeds when the person and user exist locally" do
-      user = make_user
+      user = Factory.create(:user)
       post :webfinger, 'q' => user.person.diaspora_handle
       response.should be_success
     end

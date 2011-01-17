@@ -1,5 +1,15 @@
 :javascript
-  $('.stream_element').live('mousedown', function(evt){
+  $('.mark_all_read').live('click', function(){
+    $.ajax({
+      url: 'notifications/read_all',
+      success: function(data, status, xhr) {
+        $('.stream_element').removeClass('unread');
+        $("#notification_badge_number").addClass("hidden");
+      }
+    });
+  });
+
+  $('.stream_element').live('click', function(evt){
     var note = $(this).closest('.stream_element'),
         note_id = note.attr('data-guid'),
         nBadge = $("#notification_badge_number");
@@ -23,9 +33,12 @@
 
 .span-1
   = image_tag 'icons/mail_big.png', :height => 30, :width => 30, :style=>"margin-top:3px;"
-.span-23.last
+.span-10
   %h2
     = t('.notifications')
+.span-13.last.left
+  .button.mark_all_read
+    = link_to "Mark All as Read", "#"
 
 .span-24.last
   %ul.stream.notifications
@@ -36,7 +49,7 @@
           - notes.each do |note|
             .stream_element{:data=>{:guid => note.id}, :class => "#{note.unread ? 'unread' : ''}"}
               %span.from
-                = link_to "#{note.person.name.titleize}", person_path(note.person)
+                = link_to "#{note.actor.name.titleize}", person_path(note.actor)
                 = object_link(note)
 
               %span.time= timeago(note.created_at)

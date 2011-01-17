@@ -6,7 +6,7 @@ class Retraction
   include ROXML
   include Diaspora::Webhooks
 
-  xml_accessor :post_id
+  xml_accessor :post_guid
   xml_accessor :diaspora_handle
   xml_accessor :type
 
@@ -24,50 +24,40 @@ class Retraction
   def self.for(object)
     retraction = self.new
     if object.is_a? User
-      retraction.post_id = object.person.id
+      retraction.post_guid = object.person.guid
       retraction.type = object.person.class.to_s
     else
-      retraction.post_id = object.id
+      retraction.post_guid = object.guid
       retraction.type = object.class.to_s
       retraction.object = object
     end
-    retraction.diaspora_handle = object.diaspora_handle 
+    retraction.diaspora_handle = object.diaspora_handle
     retraction
   end
 
-  def perform(receiving_user)
-    Rails.logger.debug "Performing retraction for #{post_id}"
-    if self.type.constantize.find_by_id(post_id) 
-      unless Post.first(:diaspora_handle => person.diaspora_handle, :id => post_id) 
-        Rails.logger.info("event=retraction status=abort reason='no post found authored by retractor' sender=#{person.diaspora_handle} post_id=#{post_id}")
-        return 
-      end
+  def target
+    @target ||= self.type.constantize.where(:guid => post_guid).first
+  end
 
-      begin
-        Rails.logger.debug("Retracting #{self.type} id: #{self.post_id}")
-        target = self.type.constantize.first(:id => self.post_id)
-        target.unsocket_from_uid(receiving_user, self) if target.respond_to? :unsocket_from_uid
-        target.delete
-      rescue NameError
-        Rails.logger.info("event=retraction status=abort reason='unknown type'")
-      end
-    end
+  def perform receiving_user
+    Rails.logger.debug "Performing retraction for #{post_guid}"
+    self.target.unsocket_from_user receiving_user if target.respond_to? :unsocket_from_user
+    self.target.delete
+    target.post_visibilities.delete_all
+    Rails.logger.info("event=retraction status=complete type=#{self.type} guid=#{self.post_guid}")
   end
 
   def receive(user, person)
     if self.type == 'Person'
-      unless self.person.id.to_s == self.post_id.to_s
+      unless self.person.guid.to_s == self.post_guid.to_s
         Rails.logger.info("event=receive status=abort reason='sender is not the person he is trying to retract' recipient=#{self.diaspora_handle} sender=#{self.person.diaspora_handle} payload_type=#{self.class} retraction_type=person")
         return
       end
-      user.disconnected_by(user.visible_person_by_id(self.post_id))
+      user.disconnected_by(self.target)
+    elsif self.target.nil? || self.target.person != self.person
+      Rails.logger.info("event=retraction status=abort reason='no post found authored by retractor' sender=#{person.diaspora_handle} post_guid=#{post_guid}")
     else
       self.perform(user)
-      aspects = user.aspects_with_person(self.person)
-      aspects.each do |aspect|
-        aspect.post_ids.delete(self.post_id.to_id)
-        aspect.save
-      end
     end
     self
   end

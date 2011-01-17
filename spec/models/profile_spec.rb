@@ -12,12 +12,12 @@ describe Profile do
         profile.should be_valid
         profile.first_name.should == "Shelly"
       end
-      
+
       it "can be 32 characters long" do
         profile = Factory.build(:profile, :first_name => "Hexagoooooooooooooooooooooooooon")
         profile.should be_valid
       end
-      
+
       it "cannot be 33 characters" do
         profile = Factory.build(:profile, :first_name => "Hexagooooooooooooooooooooooooooon")
         profile.should_not be_valid
@@ -29,12 +29,12 @@ describe Profile do
         profile.should be_valid
         profile.last_name.should == "Ohba"
       end
-      
+
       it "can be 32 characters long" do
         profile = Factory.build(:profile, :last_name => "Hexagoooooooooooooooooooooooooon")
         profile.should be_valid
       end
-      
+
       it "cannot be 33 characters" do
         profile = Factory.build(:profile, :last_name => "Hexagooooooooooooooooooooooooooon")
         profile.should_not be_valid
@@ -44,10 +44,7 @@ describe Profile do
 
   describe '#image_url=' do
     before do
-      @user = make_user
-      @profile = @user.person.profile
-      fixture_name = File.dirname(__FILE__) + '/../fixtures/button.png'
-      @photo = @user.post(:photo, :user_file => File.open(fixture_name), :to => 'all')
+      @profile = Factory.build(:profile)
       @profile.image_url = "http://tom.joindiaspora.com/images/user/tom.jpg"
       @pod_url = (AppConfig[:pod_url][-1,1] == '/' ? AppConfig[:pod_url].chop : AppConfig[:pod_url])
     end
@@ -55,41 +52,39 @@ describe Profile do
       lambda {@profile.image_url = ""}.should_not change(@profile, :image_url)
     end
     it 'makes relative urls absolute' do
-      @profile.image_url = @photo.url(:thumb_large)
-      @profile.image_url.should == "#{@pod_url}#{@photo.url(:thumb_large)}"
+      @profile.image_url = "/relative/url"
+      @profile.image_url.should == "#{@pod_url}/relative/url"
     end
-    it 'accepts absolute urls' do
-      @profile.image_url = "#{@pod_url}#{@photo.url(:thumb_large)}"
-      @profile.image_url.should == "#{@pod_url}#{@photo.url(:thumb_large)}"
+    it "doesn't change absolute urls" do
+      @profile.image_url = "http://not/a/relative/url"
+      @profile.image_url.should == "http://not/a/relative/url"
     end
   end
-  describe 'serialization' do
-    let(:person) {Factory.create(:person)} 
-   
-    it 'should include persons diaspora handle' do
-      xml = person.profile.to_diaspora_xml 
 
-      xml.should include person.diaspora_handle
-      xml.should_not include person.id.to_s
+  describe 'serialization' do
+    it "includes the person's diaspora handle if it doesn't have one" do
+      person = Factory(:person, :diaspora_handle => "foobar")
+      xml = person.profile.to_diaspora_xml
+      xml.should include "foobar"
     end
   end
 
   describe '#subscribers' do
     it 'returns all non-pending contacts for a user' do
-      user = make_user
+      user = Factory(:user)
       aspect = user.aspects.create(:name => "zord")
       person = Factory.create(:person)
-      user.activate_contact(person, Aspect.first(:id => aspect.id))
+      user.activate_contact(person, Aspect.where(:id => aspect.id).first)
 
       person2 = Factory.create(:person)
-      user.activate_contact(person2, Aspect.first(:id => aspect.id))
+      user.activate_contact(person2, Aspect.where(:id => aspect.id).first)
 
-      user.profile.subscribers(user).should =~ [person, person2]
+      user.profile.subscribers(user).map{|s| s.id}.should =~ [person, person2].map{|s| s.id}
     end
   end
 
   describe 'date=' do
-    let(:profile) { make_user.profile }
+    let(:profile) { Factory(:profile) }
 
     it 'accepts form data' do
       profile.birthday.should == nil

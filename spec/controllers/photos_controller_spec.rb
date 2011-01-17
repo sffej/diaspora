@@ -7,17 +7,16 @@ require 'spec_helper'
 describe PhotosController do
   render_views
 
-  let(:user1) {make_user}
-  let(:user2) {make_user}
+  let(:user1) {Factory.create(:user)}
+  let(:user2) {Factory.create(:user)}
 
   let(:aspect1) { user1.aspects.create(:name => 'winners') }
   let(:aspect2) { user2.aspects.create(:name => 'winners') }
 
   let(:filename)     { 'button.png' }
   let(:fixture_name) { File.join(File.dirname(__FILE__), '..', 'fixtures', filename) }
-  let(:image)        { File.open(fixture_name) }
-  let!(:photo1)      { user1.post(:photo, :user_file => image, :to => aspect1.id) }
-  let!(:photo2)      { user2.post(:photo, :user_file => image, :to => aspect2.id) }
+  let!(:photo1)      { user1.post(:photo, :user_file => File.open(fixture_name), :to => aspect1.id) }
+  let!(:photo2)      { user2.post(:photo, :user_file => File.open(fixture_name), :to => aspect2.id) }
 
   before do
     connect_users(user1, aspect1, user2, aspect2)
@@ -25,10 +24,17 @@ describe PhotosController do
     sign_in :user, user1
   end
 
+  it 'has working context' do
+    photo1.url.should_not be_nil
+    Photo.find(photo1.id).url.should_not be_nil
+    photo2.url.should_not be_nil
+    Photo.find(photo2.id).url.should_not be_nil
+  end
+
   describe '#create' do
     before do
-      @controller.stub!(:file_handler).and_return(image)
-      @params = {:photo => {:user_file => image, :aspect_ids => "all"} }
+      @controller.stub!(:file_handler).and_return(File.open(fixture_name))
+      @params = {:photo => {:user_file => File.open(fixture_name), :aspect_ids => "all"} }
     end
 
     it 'can make a photo' do
@@ -102,7 +108,7 @@ describe PhotosController do
     end
 
     it "doesn't overwrite random attributes" do
-      new_user = make_user
+      new_user = Factory.create(:user)
       params = { :caption => "now with lasers!", :person_id => new_user.id }
       put :update, :id => photo1.id, :photo => params
       photo1.reload.person_id.should == user1.person.id

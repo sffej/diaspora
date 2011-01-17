@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 
+gem 'mysql2', '0.2.6'
 gem 'rails', '3.0.3'
 
 gem 'bundler', '>= 1.0.0'
@@ -9,17 +10,11 @@ gem 'nokogiri', '1.4.3.1'
 
 #Security
 gem 'devise', '1.1.3'
-gem 'devise-mongo_mapper', :git => 'git://github.com/collectiveidea/devise-mongo_mapper', :ref => 'fa2f20310e0988295adc'
 gem 'devise_invitable','0.3.5'
 
 #Authentication
 gem 'omniauth', '0.1.6'
 gem 'twitter', :git => 'git://github.com/jnunemaker/twitter.git', :ref => 'ef122bbb280e229ed343'
-
-#Mongo
-gem 'mongo_mapper', :branch => 'rails3', :git => 'git://github.com/jnunemaker/mongomapper.git', :ref => '108510cc9b96bfbcf7f0'
-gem 'bson_ext', '1.1'
-gem 'bson', '1.1'
 
 #Views
 gem 'haml', '3.0.25'
@@ -51,13 +46,14 @@ gem 'resque', '1.10.0'
 gem 'SystemTimer', '1.2.1' unless RUBY_VERSION.include? '1.9'
 
 group :test, :development do
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', :require => false
   gem 'ruby-debug19' if RUBY_VERSION.include? '1.9'
   gem 'ruby-debug' if RUBY_VERSION.include? '1.8'
   gem 'launchy'
 end
 
 group :test do
+  gem 'factory_girl_rails'
   gem 'capybara', '~> 0.3.9'
   gem 'cucumber-rails', '0.3.2'
   gem 'rspec', '>= 2.0.0'

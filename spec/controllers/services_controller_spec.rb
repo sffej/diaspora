@@ -6,7 +6,7 @@ require 'spec_helper'
 
 describe ServicesController do
   render_views
-  let(:user)    { make_user }
+  let(:user)    { Factory.create(:user) }
   let!(:aspect) { user.aspects.create(:name => "lame-os") }
 
 
@@ -62,9 +62,11 @@ describe ServicesController do
 
 
     it 'creates a twitter service' do
+      Service.delete_all
       user.getting_started = false
       request.env['omniauth.auth'] = omniauth_auth
       post :create
+      user.reload
       user.services.first.class.name.should == "Services::Twitter"
     end
   end

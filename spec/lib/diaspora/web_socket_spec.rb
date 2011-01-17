@@ -25,7 +25,7 @@ end
 
 describe Diaspora::Socketable do
   before do
-    @user = make_user
+    @user = Factory.create(:user)
     @aspect = @user.aspects.create(:name => "losers")
     @post = @user.build_post(:status_message, :message => "hey", :to => @aspect.id)
     @post.save
@@ -33,6 +33,6 @@ describe Diaspora::Socketable do
 
   it 'sockets to a user' do
     Diaspora::WebSocket.should_receive(:queue_to_user)
-    @post.socket_to_uid(@user, :aspect_ids => @aspect.id)
+    @post.socket_to_user(@user, :aspect_ids => @aspect.id)
   end
 end

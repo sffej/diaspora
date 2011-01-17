@@ -20,40 +20,45 @@ module Diaspora
       end
 
       def accept_contact_request(request, aspect)
-        activate_contact(request.from, aspect)
+        activate_contact(request.sender, aspect)
+
+        if notification = Notification.where(:target_id=>request.id).first
+          notification.update_attributes(:unread=>false)
+        end
+
         request.destroy
         request.reverse_for(self)
       end
 
       def dispatch_contact_acceptance(request, requester)
-        Postzord::Dispatch.new(self, request).post 
+        Postzord::Dispatch.new(self, request).post
 
-        request.destroy unless request.from.owner
+        request.destroy unless request.sender.owner
       end
 
       def accept_and_respond(contact_request_id, aspect_id)
-        request          = Request.to(self.person).find!(contact_request_id)
-        requester        = request.from
-        reversed_request = accept_contact_request(request, aspect_by_id(aspect_id))
+        request          = Request.where(:recipient_id => self.person.id, :id => contact_request_id).first
+        requester        = request.sender
+        reversed_request = accept_contact_request(request, aspects.where(:id => aspect_id).first )
         dispatch_contact_acceptance reversed_request, requester
       end
 
       def ignore_contact_request(contact_request_id)
-        request = Request.to(self.person).find!(contact_request_id)
+        request = Request.where(:recipient_id => self.person.id, :id => contact_request_id).first
         request.destroy
       end
 
       def receive_contact_request(contact_request)
         #response from a contact request you sent
-        if original_contact = self.contact_for(contact_request.from)
+        if original_contact = self.contact_for(contact_request.sender)
           receive_request_acceptance(contact_request, original_contact)
         #this is a new contact request
-        elsif contact_request.from != self.person
+        elsif contact_request.sender != self.person
           if contact_request.save!
-            Rails.logger.info("event=contact_request status=received_new_request from=#{contact_request.from.diaspora_handle} to=#{self.diaspora_handle}")
+            Rails.logger.info("event=contact_request status=received_new_request from=#{contact_request.sender.diaspora_handle} to=#{self.diaspora_handle}")
           end
         else
-          Rails.logger.info "event=contact_request status=abort from=#{contact_request.from.diaspora_handle} to=#{self.diaspora_handle} reason=self-love"
+          Rails.logger.info "event=contact_request status=abort from=#{contact_request.sender.diaspora_handle} to=#{self.diaspora_handle} reason=self-love"
           return nil
         end
         contact_request
@@ -62,7 +67,7 @@ module Diaspora
       def receive_request_acceptance(received_request, contact)
         contact.pending = false
         contact.save
-        Rails.logger.info("event=contact_request status=received_acceptance from=#{received_request.from.diaspora_handle} to=#{self.diaspora_handle}")
+        Rails.logger.info("event=contact_request status=received_acceptance from=#{received_request.sender.diaspora_handle} to=#{self.diaspora_handle}")
 
         received_request.destroy
         self.save
@@ -76,28 +81,21 @@ module Diaspora
         remove_contact(bad_contact)
       end
 
-      def remove_contact(bad_contact)
-        contact = contact_for(bad_contact)
-        contact.aspects.each do |aspect|
-          contact.aspects.delete(aspect)
-          aspect.posts.each do |post|
-            aspect.post_ids.delete(post.id) if post.person == bad_contact
-          end
-          aspect.save
-        end
-
-        self.raw_visible_posts.find_all_by_person_id(bad_contact.id).each do |post|
-          self.visible_post_ids.delete(post.id)
-          post.user_refs -= 1
-          if (post.user_refs > 0) || post.person.owner.nil? == false
-            post.save
-          else
+      def remove_contact(bad_person)
+        contact = contact_for(bad_person)
+        posts = raw_visible_posts.where(:person_id => bad_person.id).all
+        visibilities = PostVisibility.joins(:post, :aspect).where(
+          :posts => {:person_id => bad_person.id},
+          :aspects => {:user_id => self.id}
+        )
+        visibility_ids = visibilities.map{|v| v.id}
+        PostVisibility.where(:id => visibility_ids).delete_all
+        posts.each do |post|
+          if post.post_visibilities(true).count < 1
             post.destroy
           end
         end
-        self.save
         raise "Contact not deleted" unless contact.destroy
-        bad_contact.save
       end
 
       def disconnected_by(bad_contact)
@@ -110,9 +108,6 @@ module Diaspora
           :person => person,
           :aspects => [aspect],
           :pending => false)
-        new_contact.aspects << aspect
-        save!
-        aspect.save!
       end
     end
   end

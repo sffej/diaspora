@@ -6,7 +6,7 @@ require 'spec_helper'
 
 describe Photo do
   before do
-    @user = make_user
+    @user = Factory.create(:user)
     @aspect = @user.aspects.create(:name => "losers")
 
     @fixture_filename  = 'button.png'
@@ -35,21 +35,21 @@ describe Photo do
     end
   end
 
-  it 'should be mutable' do
-    @photo.mutable?.should == true   
+  it 'is mutable' do
+    @photo.mutable?.should == true
   end
 
   it 'has a random string key' do
     @photo2.random_string.should_not be nil
   end
 
-  describe '#instantiate' do
+  describe '#diaspora_initialize' do
     it 'sets the persons diaspora handle' do
       @photo2.diaspora_handle.should == @user.person.diaspora_handle
     end
     it 'has a constructor' do
       image = File.open(@fixture_name)
-      photo = Photo.instantiate(
+      photo = Photo.diaspora_initialize(
                 :person => @user.person, :user_file => image)
       photo.created_at.nil?.should be_true
       photo.image.read.nil?.should be_false
@@ -130,12 +130,12 @@ describe Photo do
       thumb_url = @photo.url :thumb_medium
 
       xml = @photo.to_diaspora_xml
-      id = @photo.id
 
       @photo.destroy
-      @photo.receive(user2, @user.person)
+      zord = Postzord::Receiver.new(user2, :person => @photo.person)
+      zord.parse_and_receive(xml)
 
-      new_photo = Photo.first(:id => id)
+      new_photo = Photo.where(:guid => @photo.guid).first
       new_photo.url.nil?.should be false
       new_photo.url.include?(url).should be true
       new_photo.url(:thumb_medium).include?(thumb_url).should be true

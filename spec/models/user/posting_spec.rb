@@ -6,8 +6,8 @@ require 'spec_helper'
 
 describe User do
 
-  let!(:user) { make_user }
-  let!(:user2) { make_user }
+  let!(:user) { Factory.create(:user) }
+  let!(:user2) { Factory.create(:user) }
 
   let!(:aspect) { user.aspects.create(:name => 'heroes') }
   let!(:aspect1) { user.aspects.create(:name => 'other') }
@@ -28,7 +28,7 @@ describe User do
     it 'saves post into visible post ids' do
       proc {
         user.add_to_streams(@post, @aspects)
-      }.should change(user.raw_visible_posts, :count).by(1)
+      }.should change{user.raw_visible_posts.all.length}.by(1)
       user.reload.raw_visible_posts.should include @post
     end
 
@@ -39,7 +39,7 @@ describe User do
     end
 
     it 'sockets the post to the poster' do
-      @post.should_receive(:socket_to_uid).with(user, anything)
+      @post.should_receive(:socket_to_user).with(user, anything)
       user.add_to_streams(@post, @aspects)
     end
   end
@@ -47,7 +47,8 @@ describe User do
   describe '#aspects_from_ids' do
     it 'returns a list of all valid aspects a user can post to' do
       aspect_ids = Aspect.all.map(&:id)
-      user.aspects_from_ids(aspect_ids).should =~ [aspect, aspect1]
+      user.aspects_from_ids(aspect_ids).map{|a| a}.should ==
+        user.aspects.map{|a| a} #Rspec matchers ftw
     end
     it "lets you post to your own aspects" do
       user.aspects_from_ids([aspect.id]).should == [aspect]
@@ -59,6 +60,10 @@ describe User do
   end
 
   describe '#build_post' do
+    it 'sets status_message#message' do
+      post = user.build_post(:status_message, :message => "hey", :to => aspect.id)
+      post.message.should == "hey"
+    end
     it 'does not save a status_message' do
       post = user.build_post(:status_message, :message => "hey", :to => aspect.id)
       post.persisted?.should be_false
@@ -80,8 +85,5 @@ describe User do
 
       photo.caption.should match(/New/)
     end
-  end
-
-  context 'dispatching' do
   end
 end

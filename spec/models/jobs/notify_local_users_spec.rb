@@ -7,7 +7,7 @@ require 'spec_helper'
 describe Jobs::NotifyLocalUsers do
   describe '#perfom' do
     it 'should call Notification.notify on the object' do
-      user = make_user
+      user = Factory(:user)
       person = Factory :person
       object = Factory :status_message
 

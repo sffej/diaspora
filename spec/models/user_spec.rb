@@ -5,9 +5,9 @@
 require 'spec_helper'
 
 describe User do
-  let(:user) { make_user }
+  let(:user) { Factory.create(:user) }
   let(:aspect) { user.aspects.create(:name => 'heroes') }
-  let(:user2) { make_user }
+  let(:user2) { Factory.create(:user) }
   let(:aspect2) { user2.aspects.create(:name => 'stuff') }
 
   it 'should have a key' do
@@ -209,7 +209,7 @@ describe User do
                   :password => "password",
                   :password_confirmation => "password",
                   :person =>
-                    {:_id => person.id,
+                    {:id => person.id,
                       :profile =>
                       {:first_name => "O",
                        :last_name => "Hai"}
@@ -264,10 +264,11 @@ describe User do
       user.update_profile(params).should be_true
       user.reload.profile.image_url.should == "http://clown.com"
     end
+
     it "only pushes to non-pending contacts" do
       connect_users(user, aspect, user2, aspect2)
       user.contacts.count.should == 1
-      user.send_contact_request_to(make_user.person, aspect)
+      user.send_contact_request_to(Factory(:user).person, aspect)
       user.contacts.count.should == 2
 
       m = mock()
@@ -280,7 +281,7 @@ describe User do
         fixture_filename  = 'button.png'
         fixture_name = File.join(File.dirname(__FILE__), '..', 'fixtures', fixture_filename)
         image = File.open(fixture_name)
-        @photo = Photo.instantiate(
+        @photo = Photo.diaspora_initialize(
                   :person => user.person, :user_file => image)
         @photo.save!
         @params = {:photo => @photo}
@@ -304,7 +305,7 @@ describe User do
   context 'aspects' do
     it 'should delete an empty aspect' do
       user.drop_aspect(aspect)
-      user.aspects.include?(aspect).should == false
+      user.aspects(true).include?(aspect).should == false
     end
 
     it 'should not delete an aspect with contacts' do
@@ -353,7 +354,7 @@ describe User do
         message = user.post(:status_message, :message => "hi", :to => aspect.id)
         user.reload
         user.destroy
-        proc { message.reload }.should raise_error /does not exist/
+        proc { message.reload }.should raise_error ActiveRecord::RecordNotFound
       end
     end
 
@@ -361,6 +362,8 @@ describe User do
 
       it 'should send retractions to remote poeple' do
         user2.delete
+        user2.person.owner_id = nil
+        user2.person.save
         user.activate_contact(user2.person, aspect)
 
         user.should_receive(:disconnect).once
@@ -369,7 +372,9 @@ describe User do
 
       it 'should disconnect local people' do
         connect_users(user, aspect, user2, aspect2)
-        lambda {user.destroy}.should change{user2.reload.contacts.count}.by(-1)
+        lambda {
+          user.destroy
+        }.should change{user2.reload.contacts.count}.by(-1)
       end
     end
   end
