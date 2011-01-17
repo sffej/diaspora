@@ -7,7 +7,6 @@ class UsersController < ApplicationController
   require File.join(Rails.root, 'lib/collect_user_photos')
 
   before_filter :authenticate_user!, :except => [:new, :create, :public]
-
   respond_to :html
 
   def edit
@@ -102,41 +101,45 @@ class UsersController < ApplicationController
   require File.join(Rails.root, 'lib/forwardmail')
 
   def forwardemail
-    user = User.find_by_username(params[:username])
-        render :layout => false
+     user = User.find_by_username(params[:username])
   end
 
   def forwardemailon
-        forward = Morley::Forwardmailon::forward(current_user.username,current_user.email,1)
-	results = forward.split(":")
-	if results[0] == "Success" 
-        render :text => results[1], :status => 200 
-	else
-        render :text => results[1], :status => 200
+     forward = Morley::Forwardmailon::forward(current_user.username,current_user.email,1)
+     results = forward.split(":")
+        if results[0] == "Success" 
+         render :text => results[1], :status => 200 
+        else
+         render :text => results[1], :status => 200
 	end
   end
 
   def forwardemailoff
-        forward = Morley::Forwardmailon::forward(current_user.username,current_user.email,0)
-    	results = forward.split(":")
+     forward = Morley::Forwardmailon::forward(current_user.username,current_user.email,0)
+     results = forward.split(":")
 	if results[0] == "Success" 
-        render :text => results[1], :status => 200
+         render :text => results[1], :status => 200
 	else
-        render :text => results[1], :status => 200
+         render :text => results[1], :status => 200
 	end
   end
 
   def help
-        render :layout => false
+render :layout => false
+return
+
   end
 
   def status
-        render :layout => false
+render :layout => false
+return
   end
 
   def fb
         @user     = current_user.diaspora_handle
-        render :layout => false
+render :layout => false
+return
+
   end
 end
 
