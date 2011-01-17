@@ -103,34 +103,40 @@ class UsersController < ApplicationController
 
   def forwardemail
     user = User.find_by_username(params[:username])
-    flash[:notice] = 'Forward email page, please read all the rules!'
+        render :layout => false
   end
 
   def forwardemailon
-    forward = Morley::Forwardmailon::forward(current_user.username,current_user.email,1)
+        forward = Morley::Forwardmailon::forward(current_user.username,current_user.email,1)
 	results = forward.split(":")
 	if results[0] == "Success" 
-    flash[:notice] = results[1]
+        render :text => results[1], :status => 200 
 	else
-	flash[:error] = results[1]
+        render :text => results[1], :status => 200
 	end
   end
 
   def forwardemailoff
-    forward = Morley::Forwardmailon::forward(current_user.username,current_user.email,0)
+        forward = Morley::Forwardmailon::forward(current_user.username,current_user.email,0)
     	results = forward.split(":")
 	if results[0] == "Success" 
-    flash[:notice] = results[1]
+        render :text => results[1], :status => 200
 	else
-	flash[:error] = results[1]
+        render :text => results[1], :status => 200
 	end
   end
+
   def help
+        render :layout => false
   end
+
   def status
+        render :layout => false
   end
+
   def fb
         @user     = current_user.diaspora_handle
         render :layout => false
   end
 end
+

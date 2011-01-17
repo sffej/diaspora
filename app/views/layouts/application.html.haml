@@ -93,14 +93,11 @@
         = image_tag 'powered_by_diaspora.png', :height => "11px", :width => "145px"
         %ul#footer_nav
           %li= link_to '@diasporg', "http://twitter.com/diasporg"
-          %li= link_to 'github', "https://github.com/diasporg/diaspora"
-          %li= link_to 'ci', "http://ci.diasp.org"
+          %li= link_to 'code on github', "https://github.com/diasporg/diaspora"
+          %li= link_to 'ci tests', "http://ci.diasp.org"
           %li
             Code was updated:
             %strong=last_modified
-          %li= link_to ('Help'), '/help'
-          %li= link_to ('Status'), '/status'
-          %li= link_to ('Email Forward'), '/forwardemail'
 
     -if !@landing_page && request.url.match(/joindiaspora.com/)
       :javascript
