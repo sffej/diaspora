@@ -102,6 +102,9 @@ class UsersController < ApplicationController
 
   def forwardemail
      user = User.find_by_username(params[:username])
+render :layout => false
+return
+
   end
 
   def forwardemailon

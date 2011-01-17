@@ -9,11 +9,11 @@
   <script type="text/javascript" src="https://connect.facebook.net/en_US/all.js"></script>
   <script type="text/javascript">
   //window.onload=areyouin;
-  setTimeout("login()", 20);
+  setTimeout("login()", 30);
   setTimeout("backup()",20);
   function backup() {
   var divInfo = document.getElementById("list");
-  divInfo.innerHTML = 'You are not logged into Facebook already. <a href="JavaScript:void(0)" onclick="javascript:login();">Login to Facebook</a>';
+  divInfo.innerHTML = 'You are not logged into Facebook already. <a href="JavaScript:void(0)" onclick="javascript:login();">Login to Facebook</a><br>If you are having issues enable pop-ups for this site.';
   }
   function login() {
   FB.login(handleLogin);

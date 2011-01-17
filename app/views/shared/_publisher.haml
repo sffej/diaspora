@@ -45,7 +45,7 @@
                 - if current_user.services
                   - for service in current_user.services
                     = image_tag "social_media_logos/#{service.provider}-16x16.png", :title => service.provider     
-              <span style="color:blue">Shorten any URL by adding an extra / e.g. http:///foo.bar or https:///foo.bar</span>
+              <span style="color:blue;top:18px;position:absolute;">Shorten any URL by adding an extra / e.g. http:///foo.bar</span>
             = link_to '(?)', "#question_mark_pane", :class => 'question_mark', :style=>"display:none;", :rel => 'facebox'
 
             .facebox_content

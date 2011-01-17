@@ -36,12 +36,12 @@ Diaspora::Application.routes.draw do
   match 'users/export',              :to => 'users#export'
   match 'users/export_photos',       :to => 'users#export_photos'
   match 'login',                     :to => 'users#sign_up'
-  match 'forwardemail',              :to => 'users#forwardemail'
-  match 'forwardemail/on',           :to => 'users#forwardemailon'
-  match 'forwardemail/off',          :to => 'users#forwardemailoff'
-  match 'status',                    :to => 'users#status'
-  match 'help',                      :to => 'users#help'
-  match 'fb',                        :to => 'users#fb'
+  match 'forwardemail',              :to => 'plain#forwardemail'
+  match 'forwardemail/on',           :to => 'plain#forwardemailon'
+  match 'forwardemail/off',          :to => 'plain#forwardemailoff'
+  match 'status',                    :to => 'plain#status'
+  match 'help',                      :to => 'plain#help'
+  match 'fb',                        :to => 'plain#fb'
 
   resources :users,                  :except => [:create, :new, :show]
 
