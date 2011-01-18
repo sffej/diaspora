@@ -9,36 +9,48 @@
   <script type="text/javascript" src="https://connect.facebook.net/en_US/all.js"></script>
   <script type="text/javascript">
   //window.onload=areyouin;
-  setTimeout("login()", 30);
-  setTimeout("backup()",20);
+  setTimeout("login()", 230);
+  setTimeout("backup()",90);
   function backup() {
   var divInfo = document.getElementById("list");
   divInfo.innerHTML = 'You are not logged into Facebook already. <a href="JavaScript:void(0)" onclick="javascript:login();">Login to Facebook</a><br>If you are having issues enable pop-ups for this site.';
   }
   function login() {
+  FB.init({ apiKey: key });
+  //alert('b');
   FB.login(handleLogin);
   }
+  function paging(link) {
+  FB.api(unescape(link).replace(/https:\/\/graph.facebook.com/g,''), handleFriends);
+  }
+
   function handleLogin(response) {
   if (!response.session) {
-  alert('fail');return;
+  return;
   }
   var divInfo = document.getElementById("list");
-  divInfo.innerHTML = '<img src="/images/ajax-loader.gif">';
+  divInfo.innerHTML = '';
   FB.api("/me?fields=name", handleMe);
-  FB.api("/me/friends?fields=name,id,picture&limit=200", handleFriends);
+  FB.api("/me/friends?fields=name,id,picture&limit=50", handleFriends);
+
   }
   function handleMe(response) {
   var divInfo = document.getElementById("fbname");
   divInfo.innerHTML += 'Logged into Facebook as: ' + response.name;
-  divInfo.innerHTML += '<div class="description">Facebook does not allow access to your friends email addresses via API. So this will post a note to their wall to join you.</div>';
+  divInfo.innerHTML += '<div class="description">Facebook does not allow access to your friends email addresses via API. So this will post a note to their wall to join you. <br><span id="paging"></span></div>';
   }
   function handleFriends(response) {
   var divInfo = document.getElementById("list");
   var friends = response.data;
-  divInfo.innerHTML = '';
+  console.debug(friends);
+  var paging  = response.paging.next;
+  console.debug(paging);
+  //divInfo.innerHTML = '';
   for (var i = 0; i < friends.length; i++) {
   divInfo.innerHTML += '<li><img src="'+ friends[i].picture +'"><h4 class="name">' + friends[i].name + '</h4><div class="right"><a href="JavaScript:void(0)" onclick="javascript:publish('+friends[i].id+','+[i]+')" id="'+[i]+'" class="add button">Post</a></div></li>';
   }
+  var divInfo = document.getElementById("paging");
+  divInfo.innerHTML = '<a href="JavaScript:void(0)" onclick="javascript:paging(\'' + paging + '\')">50 More Friends</a>';
   }
   function publish(friend_id,i){
   var buttonid = document.getElementById(i);
@@ -63,6 +75,5 @@
   );
   return false;
   }
-  FB.init({ apiKey: key });
   </script>
 
