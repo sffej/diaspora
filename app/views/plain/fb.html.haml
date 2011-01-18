@@ -40,10 +40,11 @@
   function handleFriends(response) {
   var divInfo = document.getElementById("list");
   var friends = response.data;
-  console.debug(friends);
+  //console.debug(friends);
   if (response.paging) {var paging  = response.paging.next};
-  console.debug(paging);
+  //console.debug(paging);
   for (var i = 0; i < friends.length; i++) {
+  //alert("friend");
   divInfo.innerHTML += '<li><img src="'+ friends[i].picture +'"><h4 class="name">' + friends[i].name + '</h4><div class="right"><a href="JavaScript:void(0)" onclick="javascript:publish('+friends[i].id+','+[i]+')" id="'+[i]+'" class="add button">Post</a></div></li>';
   }
   var divInfo = document.getElementById("paging");
@@ -61,14 +62,14 @@
   buttonid.innerHTML = 'Failed';
   buttonid.setAttribute("class", "button added remove");
   buttonid.setAttribute("onclick", "");
-  console.debug(response);
+  //console.debug(response);
   }
   else
   {
   buttonid.innerHTML = 'Posted';
   buttonid.setAttribute("class", "button added");
   buttonid.setAttribute("onclick", "");
-  console.debug(response);
+  //console.debug(response);
   }
   }
   );
