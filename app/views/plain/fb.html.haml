@@ -55,7 +55,7 @@
   FB.api(
   '/' + friend_id + '/feed',
   'post',
-  { message: body, link: "#{AppConfig[:pod_url]}" },
+  { message: body, link: "#{AppConfig[:pod_url]}?diasporginvite" },
   function(response) {
   if (!response || response.error) {
   buttonid.innerHTML = 'Failed';
