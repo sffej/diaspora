@@ -60,10 +60,10 @@ describe Profile do
       @profile.image_url.should == "http://not/a/relative/url"
     end
   end
-
   describe 'serialization' do
-    it "includes the person's diaspora handle if it doesn't have one" do
-      person = Factory(:person, :diaspora_handle => "foobar")
+    let(:person) {Factory.create(:person,:diaspora_handle => "foobar" )}
+
+    it 'should include persons diaspora handle' do
       xml = person.profile.to_diaspora_xml
       xml.should include "foobar"
     end
