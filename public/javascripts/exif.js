@@ -895,10 +895,10 @@ jQuery.fn.exifPretty = function() {
 
 
   $(document).ready(function(){
-  $("#show_photo").hover(function(){$("#exif").slideDown(200);}, function() {$("#exif").slideUp(200);});
+  $("#show_photo").hover(function(){$("#exif").fadeIn(500);}, function() {$("#exif").fadeOut(200);});
   $(window).load(function() {
   $("#img1").exifLoad(function() {
-  $("#img1").before('<div id="exif" style="width:230px;z-index:2;position:absolute;background:#111;color:#ccc;text-align:left;">'+
+  $("#img1").before('<div id="exif" style="display:none;width:230px;z-index:2;position:absolute;background:#111;color:#ccc;text-align:left;">'+
   '<b>EXIF Data</b><br>'+
   '<b>Make:</b> '+$("#img1").exif('Make')+'<br>'+
   '<b>Model:</b> '+$("#img1").exif('Model')+'<br>'+
@@ -915,7 +915,6 @@ jQuery.fn.exifPretty = function() {
   '<b>Latitude:</b> '+$("#img1").exif('GPSLatitude')+'<br>'+
   '<b>Longitude:</b> '+$("#img1").exif('GPSLongitude')+'<br>'+
   '</div>');
-  $("#exif").delay(800).slideUp(900);
   });});
   });
 
