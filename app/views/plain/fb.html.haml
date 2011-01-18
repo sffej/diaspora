@@ -3,52 +3,54 @@
   var key  = "#{AppConfig[:fbapiKey]}"
 #aspect_edit_pane
 #facebox_header
-  <h4 id="fbname"></h4>
+  <h4 id="fbname"><div class="description">Facebook does not allow access to your friends email addresses via API. So this will post a note to their wall.</div>
+  </h4><span id="loading" style="position: absolute; right: 50%; top: 50%;"></span><span id="paging"></span>
 .contact_list
   <ul id="list"></ul><div id="fb-root"></div>
   <script type="text/javascript" src="https://connect.facebook.net/en_US/all.js"></script>
   <script type="text/javascript">
   setTimeout("login()", 230);
   setTimeout("backup()",90);
+  var divList = document.getElementById("list");
+  var divLoading = document.getElementById("loading");
+  var divfbname = document.getElementById("fbname");
+  var divPaging = document.getElementById("paging");
   function backup() {
-  var divInfo = document.getElementById("list");
-  divInfo.innerHTML = 'You are not logged into Facebook already. <a href="JavaScript:void(0)" onclick="javascript:login();">Login to Facebook</a><br>If you are having issues enable pop-ups for this site.';
+  divList.innerHTML = 'You are not logged into Facebook already. <a href="JavaScript:void(0)" onclick="javascript:login();">Login to Facebook</a><br>If you are having issues enable pop-ups for this site.';
   }
   function login() {
   FB.init({apiKey: key });
   FB.login(handleLogin, {perms:'publish_stream'});
   }
   function paging(link) {
+  var divLoading = document.getElementById("loading");
+  divLoading.innerHTML = '<img src="/images/ajax-loader.gif">';
   FB.api(unescape(link).replace(/https:\/\/graph.facebook.com/g,''), handleFriends);
   }
-
   function handleLogin(response) {
   if (!response.session) {
   return;
   }
-  var divInfo = document.getElementById("list");
-  divInfo.innerHTML = '';
+  var divLoading = document.getElementById("loading");
+  divList.innerHTML = '';  
+  divLoading.innerHTML = '<img src="/images/ajax-loader.gif">';
   FB.api("/me?fields=name", handleMe);
   FB.api("/me/friends?fields=name,id,picture&limit=50", handleFriends);
-
   }
   function handleMe(response) {
-  var divInfo = document.getElementById("fbname");
-  divInfo.innerHTML += 'Logged into Facebook as: ' + response.name;
-  divInfo.innerHTML += '<div class="description">Facebook does not allow access to your friends email addresses via API. So this will post a note to their wall to join you. <br><span id="paging"></span></div>';
+  divfbname.innerHTML += 'Logged into Facebook as: ' + response.name;
   }
   function handleFriends(response) {
-  var divInfo = document.getElementById("list");
   var friends = response.data;
-  //console.debug(friends);
   if (response.paging) {var paging  = response.paging.next};
-  //console.debug(paging);
   for (var i = 0; i < friends.length; i++) {
-  //alert("friend");
-  divInfo.innerHTML += '<li><img src="'+ friends[i].picture +'"><h4 class="name">' + friends[i].name + '</h4><div class="right"><a href="JavaScript:void(0)" onclick="javascript:publish('+friends[i].id+','+[i]+')" id="'+[i]+'" class="add button">Post</a></div></li>';
+  divList.innerHTML += '<li><img src="'+ friends[i].picture +'"><h4 class="name">' + friends[i].name + '</h4><div class="right"><a href="JavaScript:void(0)" onclick="javascript:publish('+friends[i].id+','+[i]+')" id="'+[i]+'" class="add button">Post</a></div></li>';
   }
-  var divInfo = document.getElementById("paging");
-  if (paging) {divInfo.innerHTML = '<a href="JavaScript:void(0)" onclick="javascript:paging(\'' + paging + '\')">50 More Friends</a>'};
+  var divPaging = document.getElementById("paging");
+  var divLoading = document.getElementById("loading");
+  if (paging) {divPaging.innerHTML = '<a href="JavaScript:void(0)" onclick="javascript:paging(\'' + paging + '\')">Get More Friends</a>'}
+  else {divPaging.innerHTML = ''}
+  divLoading.innerHTML = '';
   }
   function publish(friend_id,i){
   var buttonid = document.getElementById(i);
@@ -62,7 +64,6 @@
   buttonid.innerHTML = 'Failed';
   buttonid.setAttribute("class", "button added remove");
   buttonid.setAttribute("onclick", "");
-  //console.debug(response);
   }
   else
   {
