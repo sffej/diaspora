@@ -25,7 +25,7 @@
   var divInfo = document.getElementById("list");
   divInfo.innerHTML = '<img src="/images/ajax-loader.gif">';
   FB.api("/me?fields=name", handleMe);
-  FB.api("/me/friends?fields=name,id,picture", handleFriends);
+  FB.api("/me/friends?fields=name,id,picture&limit=200", handleFriends);
   }
   function handleMe(response) {
   var divInfo = document.getElementById("fbname");
