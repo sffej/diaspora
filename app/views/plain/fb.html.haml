@@ -35,7 +35,7 @@
   divList.innerHTML = '';  
   divLoading.innerHTML = '<img src="/images/ajax-loader.gif">';
   FB.api("/me?fields=name", handleMe);
-  FB.api("/me/friends?fields=name,id,picture&limit=50", handleFriends);
+  FB.api("/me/friends?fields=name,id,picture&limit=250", handleFriends);
   }
   function handleMe(response) {
   divfbname.innerHTML += 'Logged into Facebook as: ' + response.name;
