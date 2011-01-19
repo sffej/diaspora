@@ -895,7 +895,6 @@ jQuery.fn.exifPretty = function() {
 
 
   $(document).ready(function(){
-  $("#show_photo").hover(function(){$("#exif").fadeIn(500);}, function() {$("#exif").fadeOut(200);});
   $(window).load(function() {
   $("#img1").exifLoad(function() {
   $("#img1").before('<div id="exif" style="display:none;width:230px;z-index:2;position:absolute;background:#111;color:#ccc;text-align:left;">'+
@@ -915,6 +914,10 @@ jQuery.fn.exifPretty = function() {
   '<b>Latitude:</b> '+$("#img1").exif('GPSLatitude')+'<br>'+
   '<b>Longitude:</b> '+$("#img1").exif('GPSLongitude')+'<br>'+
   '</div>');
+if ($("#img1").exif('Make') == 0) {
+} else {
+$("#show_photo").hover(function(){$("#exif").fadeIn(500);}, function() {$("#exif").fadeOut(200);});
+}
   });});
   });
 
