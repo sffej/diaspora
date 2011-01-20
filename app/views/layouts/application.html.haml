@@ -90,7 +90,6 @@
       /=render :partial => 'layouts/debug.haml'
     %footer
       .container
-        = image_tag 'powered_by_diaspora.png', :height => "11px", :width => "145px"
         %ul#footer_nav
           %li= link_to '@diasporg', "http://twitter.com/diasporg"
           %li= link_to 'code on github', "https://github.com/diasporg/diaspora"
@@ -98,6 +97,9 @@
           %li
             Code was updated:
             %strong=last_modified
+        = image_tag 'powered_by_diaspora.png', :height => "11px", :width => "145px"
+        %br
+        = link_to t('.have_a_problem'), 'http://diaspora.shapado.com/'
 
     -if !@landing_page && request.url.match(/joindiaspora.com/)
       :javascript

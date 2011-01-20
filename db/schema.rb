@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110105051803) do
+ActiveRecord::Schema.define(:version => 20110119221746) do
 
   create_table "aspect_memberships", :force => true do |t|
     t.integer  "aspect_id"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(:version => 20110105051803) do
 
   add_index "comments", ["guid"], :name => "index_comments_on_guid", :unique => true
   add_index "comments", ["mongo_id"], :name => "index_comments_on_mongo_id"
+  add_index "comments", ["person_id"], :name => "index_comments_on_person_id"
   add_index "comments", ["post_id"], :name => "index_comments_on_post_id"
 
   create_table "contacts", :force => true do |t|
@@ -76,7 +77,9 @@ ActiveRecord::Schema.define(:version => 20110105051803) do
     t.string   "mongo_id"
   end
 
+  add_index "invitations", ["aspect_id"], :name => "index_invitations_on_aspect_id"
   add_index "invitations", ["mongo_id"], :name => "index_invitations_on_mongo_id"
+  add_index "invitations", ["recipient_id"], :name => "index_invitations_on_recipient_id"
   add_index "invitations", ["sender_id"], :name => "index_invitations_on_sender_id"
 
   create_table "mongo_aspect_memberships", :force => true do |t|
@@ -291,6 +294,8 @@ ActiveRecord::Schema.define(:version => 20110105051803) do
   end
 
   add_index "notifications", ["mongo_id"], :name => "index_notifications_on_mongo_id"
+  add_index "notifications", ["recipient_id"], :name => "index_notifications_on_recipient_id"
+  add_index "notifications", ["target_id"], :name => "index_notifications_on_target_id"
   add_index "notifications", ["target_type", "target_id"], :name => "index_notifications_on_target_type_and_target_id"
 
   create_table "people", :force => true do |t|
@@ -316,6 +321,7 @@ ActiveRecord::Schema.define(:version => 20110105051803) do
     t.datetime "updated_at"
   end
 
+  add_index "post_visibilities", ["aspect_id", "post_id"], :name => "index_post_visibilities_on_aspect_id_and_post_id"
   add_index "post_visibilities", ["aspect_id"], :name => "index_post_visibilities_on_aspect_id"
   add_index "post_visibilities", ["post_id"], :name => "index_post_visibilities_on_post_id"
 
@@ -342,6 +348,9 @@ ActiveRecord::Schema.define(:version => 20110105051803) do
   add_index "posts", ["guid"], :name => "index_posts_on_guid"
   add_index "posts", ["mongo_id"], :name => "index_posts_on_mongo_id"
   add_index "posts", ["person_id"], :name => "index_posts_on_person_id"
+  add_index "posts", ["status_message_id", "pending"], :name => "index_posts_on_status_message_id_and_pending"
+  add_index "posts", ["status_message_id"], :name => "index_posts_on_status_message_id"
+  add_index "posts", ["type", "pending", "id"], :name => "index_posts_on_type_and_pending_and_id"
   add_index "posts", ["type"], :name => "index_posts_on_type"
 
   create_table "profiles", :force => true do |t|

@@ -37,8 +37,8 @@ class Person < ActiveRecord::Base
 
   scope :searchable, joins(:profile).where(:profiles => {:searchable => true})
 
-  def self.search(query)
-    return [] if query.to_s.blank?
+  def self.search(query, user)
+    return [] if query.to_s.blank? || query.to_s.length < 3
 
     where_clause = <<-SQL
       profiles.first_name LIKE ? OR
@@ -55,8 +55,15 @@ class Person < ActiveRecord::Base
       sql << where_clause
       tokens.concat([token, token, token])
     end
-
-    Person.searchable.where(sql, *tokens).order("profiles.first_name")
+#SELECT `people`.* FROM people
+#  INNER JOIN `profiles` ON `profiles`.person_id = `people`.id
+#  LEFT OUTER JOIN `contacts` ON (`contacts`.user_id = #{user.id} AND `contacts`.person_id = `people`.id)
+#  WHERE `profiles`.searchable = true AND
+#  `profiles`.first_name LIKE '%Max%'
+#  ORDER BY `contacts`.user_id DESC
+    Person.searchable.where(sql, *tokens).joins(
+      "LEFT OUTER JOIN `contacts` ON `contacts`.user_id = #{user.id} AND `contacts`.person_id = `people`.id"
+    ).order("contacts.user_id DESC", "profiles.last_name ASC", "profiles.first_name ASC", "people.diaspora_handle ASC")
   end
 
   def name

@@ -15,7 +15,7 @@ class PublicsController < ApplicationController
   caches_page :host_meta
 
   def hcard
-    @person = Person.where(:guid => params[:guid])
+    @person = Person.where(:guid => params[:guid]).first
     unless @person.nil? || @person.owner.nil?
       render 'publics/hcard'
     else
@@ -57,7 +57,7 @@ class PublicsController < ApplicationController
     end
 
     @user = person.owner
-    Resque.enqueue(Jobs::ReceiveSalmon, @user.id, CGI::unescape(params[:xml]))
+    Resque.enqueue(Job::ReceiveSalmon, @user.id, CGI::unescape(params[:xml]))
 
     render :nothing => true, :status => 200
   end

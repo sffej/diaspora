@@ -9,14 +9,12 @@ describe AspectsController do
   render_views
 
   before do
-    @user  = Factory.create(:user)
-    @user2 = Factory.create(:user)
+    @user  = alice
+    @user2 = bob
 
-    @aspect0  = @user.aspects.create(:name => "lame-os")
+    @aspect0  = @user.aspects.first
     @aspect1  = @user.aspects.create(:name => "another aspect")
-    @aspect2  = @user2.aspects.create(:name => "party people")
-
-    connect_users(@user, @aspect0, @user2, @aspect2)
+    @aspect2  = @user2.aspects.first
 
     @contact = @user.contact_for(@user2.person)
     @user.getting_started = false
@@ -90,14 +88,16 @@ describe AspectsController do
           connect_users(@user, @aspect0, user, aspect)
           post =  @user.post(:status_message, :message => "hello#{n}", :to => @aspect1.id)
           @posts << post
-          user.comment "yo#{post.message}", :on => post
+          8.times do |n|
+            user.comment "yo#{post.message}", :on => post
+          end
         end
       end
 
       it 'takes time' do
         Benchmark.realtime{
           get :index
-        }.should < 1.5
+        }.should < 0.8
       end
     end
   end
@@ -105,6 +105,10 @@ describe AspectsController do
   describe "#show" do
     it "succeeds" do
       get :show, 'id' => @aspect0.id.to_s
+      response.should be_redirect
+    end
+    it 'redirects on an invalid id' do
+      get :show, 'id' => 4341029835
       response.should be_redirect
     end
   end
@@ -138,6 +142,19 @@ describe AspectsController do
     it "succeeds" do
       get :manage
       response.should be_success
+    end
+    it "performs reasonably" do
+        require 'benchmark'
+        8.times do |n|
+          aspect = @user.aspects.create(:name => "aspect#{n}")
+          8.times do |o|
+            person = Factory(:person)
+            @user.activate_contact(person, aspect)
+          end
+        end
+        Benchmark.realtime{
+          get :manage
+        }.should < 4.5
     end
     it "assigns aspect to manage" do
       get :manage
@@ -193,7 +210,7 @@ describe AspectsController do
         :person_id => @person.id,
         :from => @aspect0.id,
         :to =>
-          {:to => @aspect1.id}
+        {:to => @aspect1.id}
       }
     end
     it 'calls the move_contact_method' do
@@ -203,70 +220,6 @@ describe AspectsController do
     end
   end
 
-  describe "#hashes_for_contacts" do
-    before do
-      @people = []
-      10.times {@people << Factory.create(:person)}
-      @people.each{|p| @user.reload.activate_contact(p, @user.aspects.first.reload)}
-      @hashes = @controller.send(:hashes_for_contacts,@user.reload.contacts)
-      @hash = @hashes.first
-    end
-    it 'has as many hashes as contacts' do
-      @hashes.length.should == @user.contacts.length
-    end
-    it 'has a contact' do
-      @hash[:contact].should == @user.contacts.first
-    end
-    it 'has a person' do
-      @hash[:person].should == @user.contacts.first.person
-    end
-    it "does not select the person's rsa key" do
-      pending "Don't select RSA keys for views"
-      @hash[:person].serialized_public_key.should be_nil
-    end
-  end
-  describe "#hashes_for_aspects" do
-    before do
-      @aspect1 = @user.aspects.create(:name => "SecondAspect")
-      @people = []
-      10.times {@people << Factory.create(:person)}
-
-      @people.each do |p|
-        @user.reload.activate_contact(p, @user.aspects.first.reload)
-        @user.add_contact_to_aspect(@user.contact_for(p), @aspect1)
-      end
-      @user.reload
-      @hashes = @controller.send(:hashes_for_aspects, @user.aspects, @user.contacts, :limit => 9)
-      @hash = @hashes.first
-      @aspect0 = @user.aspects.first
-    end
-    it 'has aspects' do
-      @hashes.length.should == @user.aspects.count
-      @hash[:aspect].should == @aspect0
-    end
-    it 'has a contact_count' do
-      @hash[:contact_count].should == @aspect0.contacts.count
-    end
-    it 'takes a limit on contacts returned' do
-      @hash[:contacts].count.should == 9
-    end
-    it 'has a person in each hash' do
-      @aspect0.contacts.map{|c| c.person}.include?(@hash[:contacts].first[:person]).should be_true
-    end
-    it "does not return the rsa key" do
-      pending "Don't select RSA keys for views"
-      @hash[:contacts].first[:person].serialized_public_key.should be_nil
-    end
-    it 'has a contact in each hash' do
-      @aspect0.contacts.include?(@hash[:contacts].first[:contact]).should be_true
-    end
-    it 'does not retreive duplicate contacts' do
-      @hashes = @controller.send(:hashes_for_aspects, @user.aspects, @user.contacts)
-      @hash = @hashes.first
-      flattened = @hash[:contacts].map{|c| c[:person].id}
-      flattened.uniq.should == flattened
-    end
-  end
 
   describe "#update" do
     before do
