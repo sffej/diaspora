@@ -62,13 +62,9 @@ class Postzord::Dispatch
       deliver_to_hub
       if @object.respond_to?(:message)
         @sender.services.each do |service|
-<<<<<<< HEAD
 require File.join(Rails.root, 'lib/shorten')
 url = Morley::Shorten::short(url)
-          Resque.enqueue(Jobs::PostToService, service.id, @object.id, url)
-=======
           Resque.enqueue(Job::PostToService, service.id, @object.id, url)
->>>>>>> upstream/master
         end
       end
     end
