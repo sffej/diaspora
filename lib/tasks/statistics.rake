@@ -18,6 +18,26 @@ namespace :statistics do
     notification_off_per = notification_off.to_f / users
     no_invites           = User.where(:invites => 0).count
 
+    @sql = ActiveRecord::Base.connection();
+    
+    def users_with_x_posts(count)
+      @sql.execute(
+        "SELECT COUNT(*) FROM (SELECT `people`.guid, COUNT(*) AS posts_sum FROM `people` LEFT JOIN `posts` ON `people`.id = `posts`.person_id GROUP BY `people`.guid) AS t1 WHERE t1.posts_sum = #{count};"
+      ).first[0]
+    end
+    
+    def users_with_x_posts_today(count)
+      @sql.execute(
+        "SELECT COUNT(*) FROM (SELECT `people`.guid, COUNT(*) AS posts_sum FROM `people` LEFT JOIN `posts` ON `people`.id = `posts`.person_id AND `post`.created_at > '#{(Time.now - 1.days).to_date}' GROUP BY `people`.guid) AS t1 WHERE t1.posts_sum = #{count};"
+      ).first[0]
+    end
+
+    def users_with_x_contacts(count)
+      @sql.execute(
+        "SELECT COUNT(*) FROM (SELECT `users`.id, COUNT(*) AS contact_sum FROM `users` LEFT JOIN `contacts` ON `users`.id = `contacts`.person_id AND `contacts`.pending = 0 GROUP BY `users`.id) AS t1 WHERE t1.contact_sum = #{count};"
+      ).first[0]
+    end
+
     task :human => :environment do
       puts "Users: %i and %i incomplete" % [users, incomplete]
       puts "Invitations sent: %i" % invitations
@@ -25,6 +45,23 @@ namespace :statistics do
       puts "Aspects: %i" % aspects
       puts "Users signed in in last 24h: %i" % last_24_hrs
       puts "Users signed in in last 7d: %i" % last_7_d
+
+      puts "Users with more than one post: %i" % users_with_x_posts(1)
+      puts "Users with more than five post: %i" % users_with_x_posts(5)
+      puts "Users with more than ten post: %i" % users_with_x_posts(10)
+
+      puts "Users with 1 or more contacts: %i" % users_with_x_contacts(0)
+      puts "Users with 5 or more contacts: %i" % users_with_x_contacts(4)
+      puts "Users with 10 or more contacts: %i" % users_with_x_contacts(9)
+    end
+
+    task :model => :environment do
+      stat = Statistic.new(:type => "posts_per_day")
+      [0..15].each do |n|
+        stat.data_points << DataPoint.posts_per_day(n)
+      end
+      stat.compute_average
+      stat.save
     end
 
     task :splunk => :environment do
@@ -35,6 +72,7 @@ namespace :statistics do
       "notification_off=#{notification_off}, "+
       "notification_off_%=#{notification_off_per}, "+
       "no_invites=#{no_invites}"
+
       
       puts "event=statistic, type=invitations, count=#{invitations}"
       puts "event=statistic, type=contacts, active_count=#{contacts_active}"
