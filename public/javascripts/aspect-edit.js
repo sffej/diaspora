@@ -70,8 +70,9 @@ var AspectEdit = {
             "to": dropzone.attr('data-aspect_id')
           }
         },
-        success: function() {
+        success: function(data) {
           AspectEdit.onMovePersonSuccess(person, dropzone);
+          View.flashes.render($.parseJSON(data));
         }
       });
     }

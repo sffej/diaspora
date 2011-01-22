@@ -216,7 +216,7 @@ describe AspectsController do
     it 'calls the move_contact_method' do
       @controller.stub!(:current_user).and_return(@user)
       @user.should_receive(:move_contact)
-      post :move_contact, @opts
+      post "move_contact", @opts
     end
   end
 
