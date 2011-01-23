@@ -4,6 +4,8 @@ default:
   port: 6379
 
 development:
+  host: ci.diasp.org
+  port: 6379
 test:
 staging:
 production:
