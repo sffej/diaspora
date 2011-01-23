@@ -13,7 +13,7 @@ class Services::Identica < Service
       Rails.logger.info "you have a blank identica key or secret.... you should look into that"
     end
 
-    Twitter.configure do |config|
+    Identica.configure do |config|
       config.consumer_key = identica_key
       config.consumer_secret = identica_consumer_secret
       config.oauth_token = self.access_token
@@ -22,7 +22,7 @@ class Services::Identica < Service
     end
 
     begin
-      Twitter.update(message)
+      Identica.update(message)
     rescue Exception => e
       Rails.logger.info e.message
     end
