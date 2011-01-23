@@ -4,3 +4,8 @@ twitter:
 facebook:
   app_id: ""
   app_secret: ""
+identica:
+  consumer_key: ""
+  consumer_secret: ""
+  endpoint: "http://identi.ca/api/"
+
