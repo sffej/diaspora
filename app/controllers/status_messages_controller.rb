@@ -6,6 +6,7 @@ class StatusMessagesController < ApplicationController
   before_filter :authenticate_user!
 
   respond_to :html
+  respond_to :mobile
   respond_to :json, :only => :show
 
   def create
@@ -35,6 +36,7 @@ message = Morley::Shorty::swap(params[:status_message][:message])
           current_user.dispatch_post(photo)
         end
       end
+
       respond_to do |format|
         format.js { render :json => {:post_id => @status_message.id,
                                      :html => render_to_string(
@@ -51,6 +53,7 @@ message = Morley::Shorty::swap(params[:status_message][:message])
         },
                            :status => 201 }
         format.html { respond_with @status_message }
+        format.mobile{ redirect_to aspects_path('a_ids' => params[:aspect_ids]) }
       end
     else
       respond_to do |format|
