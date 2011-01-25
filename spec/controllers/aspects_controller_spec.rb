@@ -97,7 +97,7 @@ describe AspectsController do
       it 'takes time' do
         Benchmark.realtime{
           get :index
-        }.should < 1.0
+        }.should < 1.5
       end
     end
   end
@@ -301,6 +301,11 @@ describe AspectsController do
       response.should be_success
       @aspect0.reload
       @aspect0.contacts.include?(@contact).should be false
+    end
+  end
+
+  describe "#hashes_for_posts" do
+    it 'returns only distinct people' do
     end
   end
 end
