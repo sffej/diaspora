@@ -22,7 +22,7 @@
     function backup() {
     var divFBM = document.getElementById("fbmessage");
     divFBM.innerHTML += user;
-    divList.innerHTML = 'You are not logged into Facebook already. <a href="JavaScript:void(0)" onclick="javascript:login();">Login to Facebook</a><br>If you are having issues enable pop-ups for this site.';
+    divList.innerHTML = 'Could not auto-login to Facebook, prob a pop-up blocker. <a href="JavaScript:void(0)" onclick="javascript:login();">Login to Facebook</a>';
     }
     function login() {
     FB.init({apiKey: key });
@@ -62,6 +62,10 @@
     }
     function publish(friend_id,i){
     var buttonid = document.getElementById(i);
+    buttonid.innerHTML = 'Working';
+    buttonid.setAttribute("onclick", "");
+    var divLoading = document.getElementById("loading");
+    divLoading.innerHTML = '<img src="/images/ajax-loader.gif">';
     var body = document.getElementById("fbmessage").value;
     FB.api(
     '/' + friend_id + '/feed',
@@ -71,14 +75,14 @@
     if (!response || response.error) {
     buttonid.innerHTML = 'Failed';
     buttonid.setAttribute("class", "button added remove");
-    buttonid.setAttribute("onclick", "");
     alert('Facebook API errored with:'+response.error.message); 
+    divLoading.innerHTML = '';
     }
     else
     {
     buttonid.innerHTML = 'Posted';
     buttonid.setAttribute("class", "button added");
-    buttonid.setAttribute("onclick", "");
+    divLoading.innerHTML = '';
     }
     }
     );
