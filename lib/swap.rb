@@ -1,7 +1,6 @@
 module Morley
 module Shorty
  def self.swap(message)
-#Rails.logger.info("message=#{message}")
 require 'net/http'
 require 'uri'
 require 'rubygems'
@@ -12,8 +11,8 @@ require 'rubygems'
       else
         #do
         apikey = AppConfig[:yourlsapi]
-Rails.logger.info("message=#{apikey}")
-        newurl = Net::HTTP.get(URI.parse("http://boun.cc/yourls-api.php?action=shorturl&url=#{$2}://#{$3}&signature=#{apikey}&format=simple"))
+        oldurl = CGI::escape("#{$2}://#{$3}")
+        newurl = Net::HTTP.get(URI.parse("http://boun.cc/yourls-api.php?action=shorturl&url=#{oldurl}&signature=#{apikey}&format=simple"))
         res = %{#{newurl}}
         res.gsub!(/(\*|_)/) { |m| "\\#{$1}" }
         res

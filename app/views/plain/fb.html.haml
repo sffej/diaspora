@@ -22,7 +22,7 @@
     function backup() {
     var divFBM = document.getElementById("fbmessage");
     divFBM.innerHTML += user;
-    divList.innerHTML = 'Could not auto-login to Facebook, prob a pop-up blocker. <a href="JavaScript:void(0)" onclick="javascript:login();">Login to Facebook</a>';
+    divList.innerHTML = 'Could not auto-login to Facebook, usually a pop-up blocker. <a href="JavaScript:void(0)" onclick="javascript:login();">Login to Facebook</a>';
     }
     function login() {
     FB.init({apiKey: key });
