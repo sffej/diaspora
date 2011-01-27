@@ -47,7 +47,8 @@ Diaspora::Application.routes.draw do
   match 'status',                    :to => 'plain#status'
   match 'help',                      :to => 'plain#help'
   match 'fb',                        :to => 'plain#fb'
-
+  match 'shorten/show',              :to => 'plain#shortenshow'
+   
   resources :plain
 
   match 'aspects/move_contact',      :to => 'aspects#move_contact', :as => 'move_contact'

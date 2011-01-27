@@ -2,9 +2,11 @@
 #   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 class PlainController < ApplicationController
-  respond_to :html
+before_filter :authenticate_user!, :except => [:public]
+respond_to :html
 layout nil
-  require File.join(Rails.root, 'lib/forwardmail')
+require File.join(Rails.root, 'lib/forwardmail')
+require File.join(Rails.root, 'lib/shorten')
 
   def forwardemail
      user = User.find_by_username(params[:username])
@@ -50,5 +52,16 @@ render :layout => false
 return
 
   end
+
+  def shortenshow
+
+@longurl = Morley::Expand::long(params[:url])
+buffer = Morley::Stats::stats(params[:url])
+result = JSON.parse(buffer)
+@stats = result['link']['clicks']
+Rails.logger.info("json=#{buffer} clicks=#{result['link']['clicks']}")
+  end
+
+
 end
 

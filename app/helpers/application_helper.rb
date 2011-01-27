@@ -230,13 +230,17 @@ module ApplicationHelper
     return message
   end
 
-  def process_autolinks(message)
+   def process_autolinks(message)
     message.gsub!(/( |^)(www\.[^\s]+\.[^\s])/, '\1http://\2')
     message.gsub!(/(<a target="\\?_blank" href=")?(https|http|ftp):\/\/([^\s]+)/) do |m|
       if !$1.nil?
         m
       else
+        if $3.include? "boun.cc" 
+        res = %{<a target="_blank" href="#{$2}://#{$3}">#{$3}</a><a rel="facebox" href="/shorten/show?url=#{$2}://#{$3}">+</a>}
+        else
         res = %{<a target="_blank" href="#{$2}://#{$3}">#{$3}</a>}
+        end
         res.gsub!(/(\*|_)/) { |m| "\\#{$1}" }
         res
       end
