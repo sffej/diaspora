@@ -10,11 +10,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110125190034) do
+ActiveRecord::Schema.define(:version => 20110127000953) do
 
   create_table "aspect_memberships", :force => true do |t|
-    t.integer  "aspect_id"
-    t.integer  "contact_id"
+    t.integer  "aspect_id",  :null => false
+    t.integer  "contact_id", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -24,22 +24,24 @@ ActiveRecord::Schema.define(:version => 20110125190034) do
   add_index "aspect_memberships", ["contact_id"], :name => "index_aspect_memberships_on_contact_id"
 
   create_table "aspects", :force => true do |t|
-    t.string   "name"
-    t.integer  "user_id"
+    t.string   "name",                               :null => false
+    t.integer  "user_id",                            :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "mongo_id"
     t.string   "user_mongo_id"
+    t.boolean  "contacts_visible", :default => true, :null => false
   end
 
   add_index "aspects", ["mongo_id"], :name => "index_aspects_on_mongo_id"
+  add_index "aspects", ["user_id", "contacts_visible"], :name => "index_aspects_on_user_id_and_contacts_visible"
   add_index "aspects", ["user_id"], :name => "index_aspects_on_user_id"
 
   create_table "comments", :force => true do |t|
-    t.text     "text"
-    t.integer  "post_id"
-    t.integer  "person_id"
-    t.string   "guid"
+    t.text     "text",                   :null => false
+    t.integer  "post_id",                :null => false
+    t.integer  "person_id",              :null => false
+    t.string   "guid",                   :null => false
     t.text     "creator_signature"
     t.text     "post_creator_signature"
     t.text     "youtube_titles"
@@ -54,9 +56,9 @@ ActiveRecord::Schema.define(:version => 20110125190034) do
   add_index "comments", ["post_id"], :name => "index_comments_on_post_id"
 
   create_table "contacts", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "person_id"
-    t.boolean  "pending",    :default => true
+    t.integer  "user_id",                      :null => false
+    t.integer  "person_id",                    :null => false
+    t.boolean  "pending",    :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "mongo_id"
@@ -68,9 +70,9 @@ ActiveRecord::Schema.define(:version => 20110125190034) do
   add_index "contacts", ["user_id", "person_id"], :name => "index_contacts_on_user_id_and_person_id", :unique => true
 
   create_table "data_points", :force => true do |t|
-    t.string   "key"
-    t.integer  "value"
-    t.integer  "statistic_id"
+    t.string   "key",          :null => false
+    t.integer  "value",        :null => false
+    t.integer  "statistic_id", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -79,8 +81,8 @@ ActiveRecord::Schema.define(:version => 20110125190034) do
 
   create_table "invitations", :force => true do |t|
     t.text     "message"
-    t.integer  "sender_id"
-    t.integer  "recipient_id"
+    t.integer  "sender_id",    :null => false
+    t.integer  "recipient_id", :null => false
     t.integer  "aspect_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -294,10 +296,10 @@ ActiveRecord::Schema.define(:version => 20110125190034) do
   create_table "notifications", :force => true do |t|
     t.string   "target_type"
     t.integer  "target_id"
-    t.integer  "recipient_id"
-    t.integer  "actor_id"
-    t.string   "action"
-    t.boolean  "unread",       :default => true
+    t.integer  "recipient_id",                   :null => false
+    t.integer  "actor_id",                       :null => false
+    t.string   "action",                         :null => false
+    t.boolean  "unread",       :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "mongo_id"
@@ -309,10 +311,10 @@ ActiveRecord::Schema.define(:version => 20110125190034) do
   add_index "notifications", ["target_type", "target_id"], :name => "index_notifications_on_target_type_and_target_id"
 
   create_table "people", :force => true do |t|
-    t.string   "guid"
-    t.text     "url"
-    t.string   "diaspora_handle"
-    t.text     "serialized_public_key"
+    t.string   "guid",                  :null => false
+    t.text     "url",                   :null => false
+    t.string   "diaspora_handle",       :null => false
+    t.text     "serialized_public_key", :null => false
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -325,8 +327,8 @@ ActiveRecord::Schema.define(:version => 20110125190034) do
   add_index "people", ["owner_id"], :name => "index_people_on_owner_id", :unique => true
 
   create_table "post_visibilities", :force => true do |t|
-    t.integer  "aspect_id"
-    t.integer  "post_id"
+    t.integer  "aspect_id",  :null => false
+    t.integer  "post_id",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -336,12 +338,12 @@ ActiveRecord::Schema.define(:version => 20110125190034) do
   add_index "post_visibilities", ["post_id"], :name => "index_post_visibilities_on_post_id"
 
   create_table "posts", :force => true do |t|
-    t.integer  "person_id"
-    t.boolean  "public",            :default => false
+    t.integer  "person_id",                            :null => false
+    t.boolean  "public",            :default => false, :null => false
     t.string   "diaspora_handle"
-    t.string   "guid"
-    t.boolean  "pending",           :default => false
-    t.string   "type"
+    t.string   "guid",                                 :null => false
+    t.boolean  "pending",           :default => false, :null => false
+    t.string   "type",                                 :null => false
     t.text     "message"
     t.integer  "status_message_id"
     t.text     "caption"
@@ -373,8 +375,8 @@ ActiveRecord::Schema.define(:version => 20110125190034) do
     t.date     "birthday"
     t.string   "gender"
     t.text     "bio"
-    t.boolean  "searchable",       :default => true
-    t.integer  "person_id"
+    t.boolean  "searchable",       :default => true, :null => false
+    t.integer  "person_id",                          :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "mongo_id"
@@ -387,8 +389,8 @@ ActiveRecord::Schema.define(:version => 20110125190034) do
   add_index "profiles", ["person_id"], :name => "index_profiles_on_person_id", :unique => true
 
   create_table "requests", :force => true do |t|
-    t.integer  "sender_id"
-    t.integer  "recipient_id"
+    t.integer  "sender_id",    :null => false
+    t.integer  "recipient_id", :null => false
     t.integer  "aspect_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -401,9 +403,8 @@ ActiveRecord::Schema.define(:version => 20110125190034) do
   add_index "requests", ["sender_id"], :name => "index_requests_on_sender_id"
 
   create_table "services", :force => true do |t|
-    t.string   "type"
-    t.integer  "user_id"
-    t.string   "provider"
+    t.string   "type",          :null => false
+    t.integer  "user_id",       :null => false
     t.string   "uid"
     t.string   "access_token"
     t.string   "access_secret"
@@ -419,8 +420,7 @@ ActiveRecord::Schema.define(:version => 20110125190034) do
 
   create_table "statistics", :force => true do |t|
     t.integer  "average"
-    t.string   "type"
-    t.datetime "time"
+    t.datetime "time",       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -428,9 +428,9 @@ ActiveRecord::Schema.define(:version => 20110125190034) do
   create_table "users", :force => true do |t|
     t.string   "username"
     t.text     "serialized_private_key"
-    t.integer  "invites",                               :default => 0
-    t.boolean  "getting_started",                       :default => true
-    t.boolean  "disable_mail",                          :default => false
+    t.integer  "invites",                               :default => 0,     :null => false
+    t.boolean  "getting_started",                       :default => true,  :null => false
+    t.boolean  "disable_mail",                          :default => false, :null => false
     t.string   "language"
     t.string   "email",                                 :default => "",    :null => false
     t.string   "encrypted_password",     :limit => 128, :default => "",    :null => false
@@ -448,9 +448,12 @@ ActiveRecord::Schema.define(:version => 20110125190034) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "mongo_id"
+    t.string   "invitation_service"
+    t.string   "invitation_identifier"
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["email"], :name => "index_users_on_email"
+  add_index "users", ["invitation_service", "invitation_identifier"], :name => "index_users_on_invitation_service_and_invitation_identifier", :unique => true
   add_index "users", ["invitation_token"], :name => "index_users_on_invitation_token"
   add_index "users", ["mongo_id"], :name => "index_users_on_mongo_id"
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true

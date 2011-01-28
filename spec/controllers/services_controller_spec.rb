@@ -19,6 +19,8 @@ describe ServicesController do
   before do
     @user   = alice
     @aspect = @user.aspects.first
+    @user.invites = 100
+    @user.save
 
     sign_in :user, @user
     @controller.stub!(:current_user).and_return(@user)
@@ -28,7 +30,7 @@ describe ServicesController do
   describe '#index' do
     it 'displays all connected serivices for a user' do
       4.times do
-        @user.services << Factory(:service)
+        Factory(:service, :user => @user)
       end
 
       get :index
@@ -70,8 +72,7 @@ describe ServicesController do
 
   describe '#destroy' do
     before do
-      @service1 = Factory.create(:service)
-      @user.services << @service1
+      @service1 = Factory.create(:service, :user => @user)
     end
     it 'destroys a service selected by id' do
       lambda{
@@ -79,4 +80,56 @@ describe ServicesController do
       }.should change(@user.services, :count).by(-1)
     end
   end
+
+  describe '#finder' do
+    before do
+      @service1 = Services::Facebook.new
+      @user.services << @service1
+    end
+
+    it 'calls the finder method for the service for that user' do
+      @user.services.stub!(:where).and_return([@service1])
+      @service1.should_receive(:finder).and_return({})
+      get :finder, :provider => @service1.provider
+    end
+  end
+
+  describe '#invite' do
+    
+    before do
+      @uid = "abc"
+      @invite_params = {:provider => 'facebook', :uid => @uid, :aspect_id => @user.aspects.first.id}
+    end
+
+    it 'sets the subject' do
+      put :inviter, @invite_params
+      assigns[:subject].should_not be_nil
+    end
+
+    it 'sets a message containing the invitation link' do
+      put :inviter, @invite_params
+      assigns[:message].should include(User.last.invitation_token)
+    end
+
+    it 'redirects to a prefilled facebook message url' do 
+      put :inviter, @invite_params
+      response.location.should match(/https:\/\/www\.facebook\.com\/\?compose=1&id=.*&subject=.*&message=.*&sk=messages/)
+    end
+
+    it 'creates an invitation' do
+      lambda {
+        put :inviter, @invite_params
+      }.should change(Invitation, :count).by(1)
+    end
+
+    it 'does not create a duplicate invitation' do
+      inv = Invitation.create!(:sender_id => @user.id, :recipient_id => eve.id, :aspect_id => @user.aspects.first.id)
+      @invite_params[:invitation_id] = inv.id
+
+      lambda {
+        put :inviter, @invite_params
+      }.should_not change(Invitation, :count)
+    end
+  end
 end
+

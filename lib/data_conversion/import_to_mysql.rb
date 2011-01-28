@@ -60,7 +60,12 @@ module DataConversion
       log "Importing users to main table..."
       User.connection.execute <<-SQL
         INSERT INTO users
-        SELECT mongo_users.* from mongo_users
+        SELECT mongo_users.*, 'email', mongo_users.email from mongo_users
+      SQL
+      User.connection.execute <<-SQL
+        UPDATE users
+        SET users.invitation_service = NULL, users.invitation_identifier = NULL
+        WHERE users.invitation_token IS NULL AND users.mongo_id IS NOT NULL
       SQL
       log "Imported #{User.count} users."
     end
@@ -111,7 +116,8 @@ module DataConversion
                mongo_aspects.created_at,
                mongo_aspects.updated_at,
                mongo_aspects.mongo_id,
-               mongo_aspects.user_mongo_id
+               mongo_aspects.user_mongo_id,
+               false
           FROM mongo_aspects
           INNER JOIN users ON (users.mongo_id = mongo_aspects.user_mongo_id)
       SQL
@@ -216,7 +222,6 @@ module DataConversion
         SELECT mongo_services.id,
                mongo_services.type,
                users.id,
-               mongo_services.provider,
                mongo_services.uid,
                mongo_services.access_token,
                mongo_services.access_secret,

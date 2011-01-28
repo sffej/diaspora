@@ -12,7 +12,7 @@ gem "fog"
 
 #Security
 gem 'devise', '1.1.3'
-gem 'devise_invitable','0.3.5'
+gem 'devise_invitable', :git => 'git://github.com/zhitomirskiyi/devise_invitable.git', :branch => '0.3.5'
 
 #Authentication
 gem 'omniauth', '0.1.6'
