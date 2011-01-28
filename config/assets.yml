@@ -22,7 +22,7 @@ javascripts:
     - public/javascripts/jcount.js
     - public/javascripts/diaspora.js
     - public/javascripts/widgets/alert.js
-
+    - public/javascripts/jquery.qtip.js
   mobile:
     - public/javascripts/vendor/jquery144.min.js
     - public/javascripts/custom-mobile-scripting.js

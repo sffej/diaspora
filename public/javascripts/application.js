@@ -25,5 +25,40 @@ $(document).ready(function() {
   $("a.paginate").live("click", function() {
     $(document).trigger("retrieve.infscr");
   });
+  $('span#shorten').qtip({
+   content: 'Shorten your URL by adding an extra / in it!<br>E.g. http:<b>///</b>www.com or https:<b>///</b>www.com',
+   style: { 
+      width: 200,
+      padding: 5,
+      background: '#444',
+      color: 'white',
+      textAlign: 'center',
+      border: {
+         width: 7,
+         radius: 5,
+         color: '#000'
+      },
+      tip: 'topLeft',
+      name: 'dark' // Inherit the rest of the attributes from the preset dark style
+   }
+  })
+$(".expand").each(function() {
+ $(this).qtip({ 
+content: { url: "/shorten/show/?url="+this.id },
+   style: {
+      width: 200,
+      padding: 5,
+      background: '#444',
+      color: 'white',
+      textAlign: 'center',
+      border: {
+         width: 7,
+         radius: 5,
+         color: '#000'
+      },
+      tip: 'topLeft'
+}
+ });
+});
 });
 

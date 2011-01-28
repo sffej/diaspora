@@ -10,7 +10,7 @@
     <ul id="list"></ul><div id="fb-root"></div>
   #rename_aspect
     Wall message, will already link them back to the pod:
-    <textarea id="fbmessage" style="width: 385px; height: 100px;">Diaspora* is the social network that puts you in control of your information. You decide what you'd like to share, and with whom. You retain full ownership of all your information, including friend lists, messages, photos, and profile details. Find me as: </textarea>
+    <textarea id="fbmessage" style="width: 385px; height: 100px;">Come join me on Diaspora* the social network. You retain full ownership of all your information, including friend lists, messages, photos, and profile details. Find me as: </textarea>
     <script type="text/javascript" src="https://connect.facebook.net/en_US/all.js"></script>
   :javascript
     setTimeout("login()", 230);
@@ -70,7 +70,7 @@
     FB.api(
     '/' + friend_id + '/feed',
     'post',
-    { message: body, link: "#{AppConfig[:pod_url]}?diasporainvite" },
+    { message: body, link: "#{AppConfig[:pod_url]}users/sign_up/?diasporainvite" },
     function(response) {
     if (!response || response.error) {
     buttonid.innerHTML = 'Failed';

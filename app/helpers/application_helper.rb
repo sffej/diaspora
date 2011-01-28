@@ -237,7 +237,7 @@ module ApplicationHelper
         m
       else
         if $3.include? "boun.cc" 
-        res = %{<a target="_blank" href="#{$2}://#{$3}">#{$3}</a><a rel="facebox" href="/shorten/show?url=#{$2}://#{$3}">+</a>}
+        res = %{<a class="expand" id="#{$2}://#{$3}" target="_blank" href="#{$2}://#{$3}">#{$3}</a>}
         else
         res = %{<a target="_blank" href="#{$2}://#{$3}">#{$3}</a>}
         end
