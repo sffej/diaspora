@@ -28,7 +28,7 @@ $(document).ready(function() {
   $('span#shorten').qtip({
    content: 'Shorten your URL by adding an extra / in it!<br>E.g. http:<b>///</b>www.com or https:<b>///</b>www.com',
    style: { 
-      width: 200,
+      width: 400,
       padding: 5,
       background: '#444',
       color: 'white',
@@ -46,7 +46,7 @@ $(".expand").each(function() {
  $(this).qtip({ 
 content: { url: "/shorten/show/?url="+this.id },
    style: {
-      width: 200,
+      width: 600,
       padding: 5,
       background: '#444',
       color: 'white',
