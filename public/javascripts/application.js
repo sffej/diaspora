@@ -42,11 +42,11 @@ $(document).ready(function() {
       name: 'dark' // Inherit the rest of the attributes from the preset dark style
    }
   })
-$(".expand").each(function() {
- $(this).qtip({ 
-content: { url: "/shorten/show/?url="+this.id },
+   $(".expand").each(function() {
+   $(this).qtip({ 
+   content: { url: "/shorten/show/?url="+this.id },
    style: {
-      width: 600,
+      // width: 600,
       padding: 5,
       background: '#444',
       color: 'white',
@@ -57,8 +57,34 @@ content: { url: "/shorten/show/?url="+this.id },
          color: '#000'
       },
       tip: 'topLeft'
-}
- });
-});
+   }
+   });
+   });
+   $(".qtipimage").each(function() {
+   $(this).qtip({
+   content:  '<img src='+ this.href +'>' ,
+   style: {
+      // width: 600,
+      padding: 1,
+      background: '#fff',
+      color: 'white',
+      textAlign: 'center',
+      border: {
+         width: 1,
+         radius: 5,
+         color: '#444'
+      },
+      tip: 'bottomLeft'
+   },
+   position: {
+      corner: {
+         target: 'bottomRight',
+         tooltip: 'bottomLeft'
+      }
+   }
+
+   });
+   });
+
 });
 
