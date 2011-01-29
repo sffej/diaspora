@@ -40,7 +40,7 @@ $(document).ready(function() {
       },
       style: 'ui-tooltip-dark'
    });
- $(".expand").each(function() {
+ $(".expand").live('mouseover', function() {
    $(this).qtip({
       content: { 
            // Set the text to an image HTML string with the correct src URL to the loading image you want to use
@@ -50,9 +50,11 @@ $(document).ready(function() {
             },
             title: {
                text: 'Expanded URL and Stats: ' + $(this).text(), // Give the tooltip a title using each elements text
-               button: true
-            }
-
+               button: false
+            },
+      },
+      show: {
+         ready: true // Needed to make it show on first mouseover event
       },
       position: {
          my: 'top left',
@@ -68,9 +70,15 @@ $(document).ready(function() {
       style: 'ui-tooltip-dark'
    });
 });
-   $(".qtipimage").each(function() {
+
+
+   $(".qtipimage").live('mouseover', function() {
    $(this).qtip({
       content: '<img style="max-width:150px;max-height:150px;"src='+ this.href +'>',
+      show: {
+         ready: true // Needed to make it show on first mouseover event
+      },
+
       position: {
          my: 'top left',
          target: 'mouse',
