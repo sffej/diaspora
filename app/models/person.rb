@@ -168,14 +168,6 @@ class Person < ActiveRecord::Base
     }
   end
 
-  def self.from_post_comment_hash(hash)
-    person_ids = hash.values.flatten.map!{|c| c.person_id}.uniq
-    people = where(:id => person_ids)
-    people_hash = {}
-    people.each{|p| people_hash[p.id] = p}
-    people_hash
-  end
-
   protected
 
   def clean_url
@@ -189,6 +181,7 @@ class Person < ActiveRecord::Base
   private
   def remove_all_traces
     Post.where(:person_id => id).delete_all
+    Comment.where(:person_id => id).delete_all
     Contact.where(:person_id => id).delete_all
     Notification.where(:actor_id => id).delete_all
   end
