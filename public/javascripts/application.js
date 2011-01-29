@@ -62,7 +62,7 @@ $(document).ready(function() {
    });
    $(".qtipimage").each(function() {
    $(this).qtip({
-   content:  '<img src='+ this.href +'>' ,
+   content:  '<img style="max-width:150px;max-height:150px;"src='+ this.href +'>' ,
    style: {
       // width: 600,
       padding: 1,
