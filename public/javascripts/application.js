@@ -25,66 +25,66 @@ $(document).ready(function() {
   $("a.paginate").live("click", function() {
     $(document).trigger("retrieve.infscr");
   });
-  $('span#shorten').qtip({
-   content: 'Shorten your URL by adding an extra / in it!<br>E.g. http:<b>///</b>www.com or https:<b>///</b>www.com',
-   style: { 
-      width: 400,
-      padding: 5,
-      background: '#444',
-      color: 'white',
-      textAlign: 'center',
-      border: {
-         width: 7,
-         radius: 5,
-         color: '#000'
+   $('#shorten').qtip({
+      content: 'Shorten your URL by adding an extra / in it!<br>E.g. http:<b>///</b>www.com or https:<b>///</b>www.com',
+      position: {
+         my: 'top left',
+         target: 'mouse',
+         viewport: $(window), // Keep it on-screen at all times if possible
+         adjust: {
+            x: 10,  y: 10
+         }
       },
-      tip: 'topLeft',
-      name: 'dark' // Inherit the rest of the attributes from the preset dark style
-   }
-  })
-   $(".expand").each(function() {
-   $(this).qtip({ 
-   content: { url: "/shorten/show/?url="+this.id },
-   style: {
-      // width: 600,
-      padding: 5,
-      background: '#444',
-      color: 'white',
-      textAlign: 'center',
-      border: {
-         width: 7,
-         radius: 5,
-         color: '#000'
+      hide: {
+         fixed: true // Helps to prevent the tooltip from hiding ocassionally when tracking!
       },
-      tip: 'topLeft'
-   }
+      style: 'ui-tooltip-dark'
    });
+ $(".expand").each(function() {
+   $(this).qtip({
+      content: { 
+           // Set the text to an image HTML string with the correct src URL to the loading image you want to use
+            text: '<img class="throbber" src="/images/ajax-loader.gif" alt="Loading..." />',
+            ajax: {
+               url: "/shorten/show/?url="+this.id
+            },
+            title: {
+               text: 'Expanded URL and Stats: ' + $(this).text(), // Give the tooltip a title using each elements text
+               button: true
+            }
+
+      },
+      position: {
+         my: 'top left',
+         target: 'mouse',
+         viewport: $(window), // Keep it on-screen at all times if possible
+         adjust: {
+            x: 10,  y: 10
+         }
+      },
+      hide: {
+         fixed: true // Helps to prevent the tooltip from hiding ocassionally when tracking!
+      },
+      style: 'ui-tooltip-dark'
    });
+});
    $(".qtipimage").each(function() {
    $(this).qtip({
-   content:  '<img style="max-width:150px;max-height:150px;"src='+ this.href +'>' ,
-   style: {
-      // width: 600,
-      padding: 1,
-      background: '#fff',
-      color: 'white',
-      textAlign: 'center',
-      border: {
-         width: 1,
-         radius: 5,
-         color: '#444'
+      content: '<img style="max-width:150px;max-height:150px;"src='+ this.href +'>',
+      position: {
+         my: 'top left',
+         target: 'mouse',
+         viewport: $(window), // Keep it on-screen at all times if possible
+         adjust: {
+            x: 10,  y: 10
+         }
       },
-      tip: 'bottomLeft'
-   },
-   position: {
-      corner: {
-         target: 'bottomRight',
-         tooltip: 'bottomLeft'
-      }
-   }
-
+      hide: {
+         fixed: true // Helps to prevent the tooltip from hiding ocassionally when tracking!
+      },
+      style: 'ui-tooltip-dark'
    });
-   });
+});
 
 });
 
