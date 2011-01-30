@@ -70,15 +70,38 @@ $(document).ready(function() {
       style: 'ui-tooltip-dark'
    });
 });
-
-
    $(".qtipimage").live('mouseover', function() {
    $(this).qtip({
       content: '<img style="max-width:150px;max-height:150px;"src='+ this.href +'>',
       show: {
          ready: true // Needed to make it show on first mouseover event
       },
-
+      position: {
+         my: 'top left',
+         target: 'mouse',
+         viewport: $(window), // Keep it on-screen at all times if possible
+         adjust: {
+            x: 10,  y: 10
+         }
+      },
+      hide: {
+         fixed: true // Helps to prevent the tooltip from hiding ocassionally when tracking!
+      },
+      style: 'ui-tooltip-dark'
+   });
+});
+   $(".avatar").live('mouseover', function() {
+   $(this).qtip({
+      content: {
+            text: '<img style="max-width:200px;max-height:200px;" src="'+ this.src.replace(/small/i, "large") +'">',
+            title: {
+               text: this.alt+'\'s pod is '+ this.src.split(/\/+/g)[1].replace(new RegExp(/^www\./i),"").replace(new RegExp(/.s3.amazonaws.com/i),""), // Give the tooltip a title using each elements text
+               button: false
+            },
+      },
+      show: {
+         ready: true // Needed to make it show on first mouseover event
+      },
       position: {
          my: 'top left',
          target: 'mouse',
