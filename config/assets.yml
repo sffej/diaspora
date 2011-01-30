@@ -26,7 +26,6 @@ javascripts:
     - public/javascripts/jcount.js
     - public/javascripts/jquery.qtip.js
     - public/javascripts/diasporg.js
-
   mobile:
     - public/javascripts/vendor/jquery144.min.js
     - public/javascripts/custom-mobile-scripting.js

@@ -63,12 +63,8 @@ class Postzord::Dispatch
     if @object.respond_to?(:public) && @object.public
       deliver_to_hub
       if @object.respond_to?(:message)
- Rails.logger.info("url=#{url}")
-require File.join(Rails.root, 'lib/shorten')
-newurl = Morley::Shorten::short(url)
- Rails.logger.info("newurl=#{newurl}")
         @sender.services.each do |service|
-          Resque.enqueue(Job::PostToService, service.id, @object.id, newurl)
+          Resque.enqueue(Job::PostToService, service.id, @object.id, url)
         end
       end
     end

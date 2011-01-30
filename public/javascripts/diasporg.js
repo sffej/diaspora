@@ -73,8 +73,5 @@ $(document).ready(function() {
    $('img.avatar').each(function() {
    $(this).attr('title', this.alt+'\'s pod is '+ this.src.split(/\/+/g)[1].replace(new RegExp(/^www\./i),"").replace(new RegExp(/.s3.amazonaws.com/i),""));
    });
-
-
-
 });
 
