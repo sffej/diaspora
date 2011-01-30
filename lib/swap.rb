@@ -12,7 +12,9 @@ require 'rubygems'
         #do
         apikey = AppConfig[:yourlsapi]
         oldurl = CGI::escape("#{$2}://#{$3}")
+        if message
         newurl = Net::HTTP.get(URI.parse("http://boun.cc/yourls-api.php?action=shorturl&url=#{oldurl}&signature=#{apikey}&format=simple"))
+        end
         res = %{#{newurl}}
         res.gsub!(/(\*|_)/) { |m| "\\#{$1}" }
         res
