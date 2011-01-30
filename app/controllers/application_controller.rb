@@ -49,4 +49,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def get_javascript_strings_for(language)
+    Il8n.t('javascripts').to_json
+  end
 end

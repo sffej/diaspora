@@ -65,6 +65,9 @@ Diaspora::Application.routes.draw do
   match '.well-known/host-meta',:to => 'publics#host_meta'
   match 'receive/users/:guid',    :to => 'publics#receive'
   match 'hub',                  :to => 'publics#hub'
+
+  match 'localize', :to => "localize#show"
+
   #root
   root :to => 'home#show'
 end
