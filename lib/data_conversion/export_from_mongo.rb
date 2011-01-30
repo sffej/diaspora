@@ -6,7 +6,7 @@ require 'json'
 require 'csv'
 
 module DataConversion
-  class ExportFromMongo < DataConversion::Base
+#  class ExportFromMongo < DataConversion::Base
     def csv_options
       {:col_sep => ",",
        :row_sep => :auto,
@@ -222,5 +222,5 @@ module DataConversion
       main_csv.close
       join_csv.close
     end
-  end
+ # end
 end

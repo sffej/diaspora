@@ -42,7 +42,7 @@ var View = {
     /* Autoexpand textareas */
     $('textarea')
       .autoResize({
-        'animate': true,
+        'animate': false,
         'extraSpace': 50
       });
 
