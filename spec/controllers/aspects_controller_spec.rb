@@ -167,7 +167,7 @@ describe AspectsController do
         end
         Benchmark.realtime{
           get :manage
-        }.should < 4.5
+        }.should < 6.5
     end
     it "assigns aspect to manage" do
       get :manage
