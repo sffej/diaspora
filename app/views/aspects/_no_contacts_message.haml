@@ -1,8 +1,22 @@
 -#   Copyright (c) 2010, Diaspora Inc.  This file is
 -#   licensed under the Affero General Public License version 3 or later.  See
 -#   the COPYRIGHT file.
-
+:javascript
+  function getCookie( name ) {
+  var start = document.cookie.indexOf( name + "=" );
+  var len = start + name.length + 1;
+  if ( ( !start ) && ( name != document.cookie.substring( 0, name.length ) ) ) {
+  return null;
+  }
+  if ( start == -1 ) return null;
+  var end = document.cookie.indexOf( ';', len );
+  if ( end == -1 ) end = document.cookie.length;
+  return unescape( document.cookie.substring( len, end ) );
+  }
+  var friend = getCookie ( "friend" );
 #no_contacts.floating.empty_message{:style => ("display:none" unless contact_count == 0)}
+  %h3
+    You were invited by <script LANGUAGE="JavaScript">document.write(friend+'. <a href="/people?q='+friend+'">View</a>');</script> their profile now to connect.
   %h3=t('.nobody')
   - if current_user.invites > 0
     %h4= link_to t('.invite'), new_user_invitation_path

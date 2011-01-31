@@ -70,7 +70,7 @@
     FB.api(
     '/' + friend_id + '/feed',
     'post',
-    { message: body, link: "#{AppConfig[:pod_url]}users/sign_up/?diasporainvite" },
+    { message: body, link: "#{AppConfig[:pod_url]}users/sign_up/?diasporainvite&friend=#{@user}" },
     function(response) {
     if (!response || response.error) {
     buttonid.innerHTML = 'Failed';

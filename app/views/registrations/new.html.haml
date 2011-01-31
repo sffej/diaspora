@@ -2,6 +2,8 @@
 
 :javascript
   $(function() {
+    var friend = new RegExp('[\\?&]friend=([^&#]*)').exec(document.URL);
+    document.cookie = 'friend='+friend[1]+'; path=/';
     $('#user_new [title]').tipsy({trigger: 'focus', gravity: 'w'});
     $("#user_username").focus();
   });
@@ -24,7 +26,6 @@
       %p
         = f.label :password_confirmation , t('password_confirmation')
         = f.password_field :password_confirmation, :title => t('.enter_password_again') 
-
       = f.submit t('.sign_up')
       %p
         = link_to ('Privacy Policy'), 'http://b.diasp.org/2011/01/pod-privacy-policy/'
