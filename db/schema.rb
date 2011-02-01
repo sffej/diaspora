@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110130072907) do
+ActiveRecord::Schema.define(:version => 20110201013408) do
 
   create_table "aspect_memberships", :force => true do |t|
     t.integer  "aspect_id",  :null => false
@@ -458,6 +458,7 @@ ActiveRecord::Schema.define(:version => 20110130072907) do
     t.string   "mongo_id"
     t.string   "invitation_service"
     t.string   "invitation_identifier"
+    t.text     "open_aspects"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
