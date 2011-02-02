@@ -87,6 +87,14 @@ default:
   admins:
     - 'example_user1dsioaioedfhgoiesajdigtoearogjaidofgjo'
 
+  #yourlsapikey
+  yourlsapi: 1234567
+  yourlsurl: domain.com
+
+  #facebook api for wall post inviter
+  fbapiKey: '123xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+
+
 development:
 
 test:
