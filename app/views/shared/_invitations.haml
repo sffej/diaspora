@@ -4,11 +4,17 @@
   -if invites > 0
     - if SERVICES['facebook']['app_id'] !=""
       %h4{:style => 'text-align:center;'}
+        = ('Via Private Message')
         = link_to t('.from_facebook'), friend_finder_path('facebook'), :rel => 'facebox'
+        = t('or Via Public Wall Post')
+        = link_to t('.from_facebook'), '/fb', :rel => 'facebox'
         = t('or')
         = link_to t('.by_email'), new_user_invitation_path, :title => t('.invite_someone')
     - else
       %h4
+        = ('Via Private Message')
+        = link_to t('.from_facebook'), friend_finder_path('facebook'), :rel => 'facebox'
+        = t('or')
         = link_to t('.by_email'), new_user_invitation_path, :title => t('.invite_someone')
     = t('.invitations_left', :count => invites) 
   - else
