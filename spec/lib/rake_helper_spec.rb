@@ -32,7 +32,7 @@ describe RakeHelpers do
         process_emails(@csv, 1, 1, 10, false)
       }.should change(User, :count).by(1)
 
-      User.last.invites.should == 50
+      User.last.invites.should == 5
     end
   end
 end
