@@ -82,6 +82,7 @@ default:
   cloudfiles_username: 'example'
   cloudfiles_api_key:  'abc123'
   invites_off: false
+  invite_count: 5
 
   #list of users who have admin privilages
   admins:
