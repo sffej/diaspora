@@ -44,3 +44,7 @@ nbproject
 patches-*
 capybara-*.html
 dump.rdb
+
+#addons
+app/views/plain/_help.html.haml
+app/views/plain/_status.html.haml
