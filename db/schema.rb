@@ -459,7 +459,6 @@ ActiveRecord::Schema.define(:version => 20110202015222) do
     t.string   "mongo_id"
     t.string   "invitation_service"
     t.string   "invitation_identifier"
-    t.text     "open_aspects"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
