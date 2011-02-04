@@ -457,9 +457,8 @@ ActiveRecord::Schema.define(:version => 20110202015222) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "mongo_id"
-    t.string   "invitation_service"
-    t.string   "invitation_identifier"
-    t.text     "open_aspects"
+    t.string   "invitation_service", :limit => 127
+    t.string   "invitation_identifier", :limit => 127
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
