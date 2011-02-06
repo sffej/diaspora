@@ -74,4 +74,15 @@ $(document).ready(function() {
    $(this).attr('title', this.alt+'\'s pod is '+ this.src.split(/\/+/g)[1].replace(new RegExp(/^www\./i),"").replace(new RegExp(/.s3.amazonaws.com/i),""));
    });
 });
+  $(function() {
+  $( "#chatresizable" ).resizable();
+  });
+
+  (function() {
+  var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+  s.type = 'text/javascript';
+  s.async = true;
+  s.src = 'https://api.flattr.com/js/0.6/load.js?mode=auto';
+  t.parentNode.insertBefore(s, t);
+  })();
 

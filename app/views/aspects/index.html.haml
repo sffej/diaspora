@@ -2,18 +2,18 @@
 -#   licensed under the Affero General Public License version 3 or later.  See
 -#   the COPYRIGHT file.
 
-:javascript
-  (function() {
-  var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
-  s.type = 'text/javascript';
-  s.async = true;
-  s.src = 'https://api.flattr.com/js/0.6/load.js?mode=auto';
-  t.parentNode.insertBefore(s, t);
-  })();
 .left{:style=>"float:left;display:inline;position:absolute;top:59px;left:15px;opacity:0.8;"}
   <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="https://diasp.org"></a>
+:javascript
+  var username = '#{current_user.diaspora_handle}';
+  var name = username.split('@');
+  function chat()
+  {
+  mywindow = window.open("http://www.diasp.org:9090/?channels=diasporg&nick="+name[0]+"_diasp_org", "chat", "toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,scrollbars=1, width=700, height=600");
+  mywindow.moveTo(0, 0);
+  }
 .right{:style=>"float:right;display:inline;position:absolute;top:59px;right:15px;opacity:0.8;"}
-  Diasp.org pod addons and links: <a rel="facebox" href="/status">News | Donations</a>  <a rel="facebox" href="/forwardemail">Forward Email</a>  <a rel="facebox" href="/help">Help | Support</a>
+  Diasp.org pod addons and links: <a style="color: red; font-weight: bold;" onclick="chat();">Chat</a> <a rel="facebox" href="/status">News | Donations</a>  <a rel="facebox" href="/forwardemail">Forward Email</a>  <a rel="facebox" href="/help">Help | Support</a>
   <a rel="facebox" href="/fb">Facebook Inviter</a>
 
 - content_for :head do
