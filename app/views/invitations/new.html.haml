@@ -15,7 +15,7 @@
         = t('.if_they_accept_info')
         %br
 
-  .span-15.append-1
+  .span-13.append-1
     = form_for User.new, :url => invitation_path(User) do |invite|
       %h4
         = t('email')
@@ -36,10 +36,11 @@
       %p
         = invite.submit t('.send_an_invitation')
 
-  - if !@emails_delivered.empty?
-    .span-4.last
+  - if !@sent_invitations.empty?
+    .span-6.last
       #already_invited_pane
         %h4
           = t('.already_invited')
-        - for email in @emails_delivered
-          = email
+        - for invitation in @sent_invitations
+          = invitation.recipient.email
+          = link_to "Resend", invitation_resend_path(invitation), :confirm => t('are_you_sure')

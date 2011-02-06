@@ -7,8 +7,8 @@ class InvitationsController < Devise::InvitationsController
   before_filter :check_token, :only => [:edit]
 
   def new
-    sent_invitations = current_user.invitations_from_me.includes(:recipient)
-    @emails_delivered = sent_invitations.map!{ |i| i.recipient.email }
+    @sent_invitations = current_user.invitations_from_me.includes(:recipient)
+    #emails_delivered = sent_invitations.map!{ |i| i.recipient.email }
   end
 
   def create
@@ -55,6 +55,15 @@ class InvitationsController < Devise::InvitationsController
       redirect_to accept_user_invitation_path(
         :invitation_token => params[:user][:invitation_token])
     end
+  end
+
+  def resend
+    invitation = current_user.invitations_from_me.where(:id => params[:id]).first
+    if invitation
+      Resque.enqueue(Job::ResendInvitation, invitation.id)
+      flash[:notice] = I18n.t('invitations.create.sent') + invitation.recipient.email 
+    end
+    redirect_to :back
   end
 
   protected

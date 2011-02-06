@@ -57,7 +57,7 @@ class Invitation < ActiveRecord::Base
     invitee.invites = AppConfig[:invite_count] || 5
     if invitee.new_record?
       invitee.errors.clear
-      invitee.serialized_private_key ||= User.generate_key
+      invitee.serialized_private_key = User.generate_key if invitee.serialized_private_key.blank?
       invitee.send(:generate_invitation_token)
     elsif invitee.invitation_token.nil?
       return invitee
@@ -77,6 +77,10 @@ class Invitation < ActiveRecord::Base
     invitee.invite!(:email => (opts[:service] == 'email'))
     Rails.logger.info("event=invitation_sent to=#{opts[:identifier]} #{"inviter=#{opts[:from].diaspora_handle}" if opts[:from]}")
     invitee
+  end
+
+  def resend
+    recipient.invite!
   end
 
   def to_request!

@@ -298,6 +298,18 @@ describe Invitation do
     end
   end
 
+  describe '.resend' do
+    before do
+      aspect
+      user.invite_user(aspect.id, 'email', "a@a.com", "")
+      @invitation = user.reload.invitations_from_me.first
+    end
+
+    it 'sends another email' do
+      lambda{@invitation.resend}.should change(Devise.mailer.deliveries, :count).by(1)
+    end
+  end
+
   describe '#to_request!' do
     before do
       @new_user = Invitation.invite(:from => user, :service => 'email', :identifier => @email, :into => aspect)

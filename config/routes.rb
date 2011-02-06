@@ -31,9 +31,15 @@ Diaspora::Application.routes.draw do
   match 'photos/make_profile_photo' => 'photos#make_profile_photo'
   resources :photos, :except => [:index]
 
+
   devise_for :users, :controllers => {:registrations => "registrations",
                                       :password      => "devise/passwords",
-                                      :invitations   => "invitations"}
+                                      :invitations   => "invitations"} do
+                                      
+    get 'invitations/resend/:id' => 'invitations#resend', :as => 'invitation_resend'
+                                      end
+
+
   # added public route to user
   match 'public/:username',          :to => 'users#public'
   match 'getting_started',           :to => 'users#getting_started', :as => 'getting_started'
