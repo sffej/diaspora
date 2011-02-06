@@ -5,10 +5,10 @@
 .left{:style=>"float:left;display:inline;position:absolute;top:59px;left:15px;opacity:0.8;"}
   <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="https://diasp.org"></a>
 :javascript
-  var username = '#{current_user.diaspora_handle}';
-  var name = username.split('@');
   function chat()
   {
+  var username = '#{current_user.diaspora_handle}';
+  var name = username.split('@');
   mywindow = window.open("http://www.diasp.org:9090/?channels=diasporg&nick="+name[0], "chat", "toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,scrollbars=1, width=700, height=600");
   mywindow.moveTo(0, 0);
   }
