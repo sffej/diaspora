@@ -54,12 +54,17 @@ return
   end
 
   def shortenshow
-
-@longurl = Morley::Expand::long(params[:url])
 buffer = Morley::Stats::stats(params[:url])
 result = JSON.parse(buffer)
+Rails.logger.info("json=#{buffer} link=#{result['link']}")
+if result['link']
 @stats = result['link']['clicks']
-Rails.logger.info("json=#{buffer} clicks=#{result['link']['clicks']}")
+@longurl = result['link']['url']
+elsif result['long-url']
+@stats = 'none ava'
+@longurl = result['long-url']
+end
+Rails.logger.info("json=#{buffer} clicks=#{result['long-url']}")
   end
 
 

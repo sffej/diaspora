@@ -21,13 +21,12 @@ $(document).ready(function() {
    $(".expand").live('mouseover', function() {
    $(this).qtip({
       content: { 
-           // Set the text to an image HTML string with the correct src URL to the loading image you want to use
             text: '<img class="throbber" src="/images/ajax-loader.gif" alt="Loading..." />',
             ajax: {
-               url: "/shorten/show/?url="+this.id
+               url: "/shorten/show/?url="+this.href
             },
             title: {
-               text: 'Expanded URL and Stats: ' + $(this).text(), // Give the tooltip a title using each elements text
+               text: 'Expanded URL and Stats: ' + $(this).text(),
                button: false
             },
       },

@@ -228,8 +228,8 @@ module ApplicationHelper
       if !$1.nil?
         m
       else
-        if $3.include? "boun.cc" 
-        res = %{<a class="expand" id="#{$2}://#{$3}" target="_blank" href="#{$2}://#{$3}">#{$3}</a>}
+        if $3.include? ".cc"  or $3.include? ".ly" or $3.include? ".gd" or $3.include? ".gl" or $3.include? ".me"  or $3.include? ".tl"
+        res = %{<a class="expand" target="_blank" href="#{$2}://#{$3}">#{$3}</a>}
         elsif $3.include? ".png" or $3.include? ".jpg" or $3.include? ".jpeg" or $3.include? ".gif"
         res = %{<a class="qtipimage" target="_blank" title="#{$2}://#{$3}" href="#{$2}://#{$3}">Image Link</a>}
         else
