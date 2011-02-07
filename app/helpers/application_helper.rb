@@ -108,7 +108,6 @@ module ApplicationHelper
 
   def how_long_ago(obj)
     timeago(obj.created_at)
-    #I18n.t('ago', :time => time_ago_in_words(obj.created_at, true))
   end
 
   def person_url(person)
