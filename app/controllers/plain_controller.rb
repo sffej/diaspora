@@ -61,8 +61,11 @@ if result['link']
 @stats = result['link']['clicks']
 @longurl = result['link']['url']
 elsif result['long-url']
-@stats = 'none ava'
+@stats = 'Stats only on boun.cc URLs, Try it!'
 @longurl = result['long-url']
+else
+@stats = 'Stats only on boun.cc URLs, Try it!'
+@longurl = 'Nothing found, must not be shortened'
 end
 Rails.logger.info("json=#{buffer} clicks=#{result['long-url']}")
   end
