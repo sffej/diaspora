@@ -1,3 +1,7 @@
+#   Copyright (c) 2011, David Morley.  This file is
+#   licensed under the Affero General Public License version 3 or later.  See
+#   the COPYRIGHT file.
+
 module Morley
 module Shorty
  def self.swap(message)
