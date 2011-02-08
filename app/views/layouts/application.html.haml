@@ -26,7 +26,7 @@
     <!--[if IE]>
     = javascript_include_tag "/javascripts/ie.js"
     <![endif]-->
-    = javascript_include_tag  AppConfig[:pod_uri].scheme.to_s + "://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
+    = javascript_include_tag "/javascripts/vendor/jquery.min.js"
 
     :javascript
       !window.jQuery && document.write(unescape('%3Cscript src="/javascripts/vendor/jquery144.min.js"%3E%3C/script%3E'))
@@ -66,6 +66,7 @@
         document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
         try {
         var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", #{AppConfig[:piwik_id]});
+        piwikTracker.setDocumentTitle(document.title);
         piwikTracker.trackPageView();
         piwikTracker.enableLinkTracking();
         } catch( err ) {}
@@ -105,6 +106,17 @@
         %br
         = link_to t('.have_a_problem'), 'http://diaspora.shapado.com/'
 
+        <script type="text/javascript">
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://stats.diasp.org/" : "http://stats.diasp.org/");
+        document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+        </script><script type="text/javascript">
+        try {
+        var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
+        piwikTracker.trackPageView();
+        piwikTracker.enableLinkTracking();
+        } catch( err ) {}
+        </script><noscript><p><img src="http://stats.diasp.org/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
+
     -if !@landing_page && request.url.match(/joindiaspora.com/)
       :javascript
           var is_ssl = ("https:" == document.location.protocol);
@@ -121,3 +133,4 @@
           feedback_widget_options.style = "idea";
           var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
 
+ 
