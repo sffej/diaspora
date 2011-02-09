@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
   before_filter :set_invites
   before_filter :set_locale
   before_filter :which_action_and_user
-
   def set_contacts_notifications_and_status
     if user_signed_in?
       @aspect = nil

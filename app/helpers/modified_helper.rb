@@ -1,24 +1,23 @@
-#from https://github.com/jopper/diaspora/tree/master/app/helpers
-#require 'ftools'
+#original from https://github.com/jopper/diaspora
+#modified by David Morley
 require 'time'
 
 module ModifiedHelper
   def last_modified
-    git_last='git log -1 --pretty=format:"%ar"'
+#    git_last='git log -1 --pretty=format:"%ar"'
     git_last='git log -1 --pretty=format:"%cd"'
     filepath = Rails.root.join('tmp', '.last_pull')
     time_min = 60
-
+    @header_name = "X-Git-Update"
     if File.writable?(filepath)
       begin
         mtime = File.mtime(filepath)
         last = IO.readlines(filepath).at(0)
+        headers[@header_name] = "#{mtime}"
       rescue Exception => e
         Rails.logger.info("Failed to read git status #{filepath}: #{e}")
       end
-
     end
-
     if (mtime.nil? || mtime < Time.now-time_min)
       last = `#{git_last}`
       begin
@@ -29,8 +28,7 @@ module ModifiedHelper
         Rails.logger.info("Failed to log git status #{filepath}: #{e}")
       end
     end
-
     last
-  end
+    end
 end
 
