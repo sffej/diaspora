@@ -4,7 +4,6 @@ require 'time'
 
 module ModifiedHelper
   def last_modified
-#    git_last='git log -1 --pretty=format:"%ar"'
     git_last='git log -1 --pretty=format:"%cd"'
     filepath = Rails.root.join('tmp', '.last_pull')
     time_min = 60
@@ -13,7 +12,6 @@ module ModifiedHelper
       begin
         mtime = File.mtime(filepath)
         last = IO.readlines(filepath).at(0)
-        headers[@header_name] = "#{mtime}"
       rescue Exception => e
         Rails.logger.info("Failed to read git status #{filepath}: #{e}")
       end
@@ -29,6 +27,7 @@ module ModifiedHelper
       end
     end
     last
+      headers[@header_name] = "#{last}"
     end
 end
 
