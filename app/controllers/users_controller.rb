@@ -45,7 +45,14 @@ class UsersController < ApplicationController
       end
     end
 
-    redirect_to edit_user_path(@user)
+    respond_to do |format|
+      format.js{
+        render :nothing => true, :status => 204
+      }
+      format.all{
+        redirect_to edit_user_path(@user)
+      }
+    end
   end
 
   def destroy

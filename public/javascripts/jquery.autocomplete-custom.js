@@ -52,18 +52,7 @@ $.fn.extend({
 
 $.Autocompleter = function(input, options) {
 
-	var KEY = {
-		UP: 38,
-		DOWN: 40,
-		DEL: 46,
-		TAB: 9,
-		RETURN: 13,
-		ESC: 27,
-		COMMA: 188,
-		PAGEUP: 33,
-		PAGEDOWN: 34,
-		BACKSPACE: 8
-	};
+	var KEY = KEYCODES;
 
 	// Create $ object for input element
 	var $input = $(input).attr("autocomplete", "off").addClass(options.inputClass);
@@ -94,9 +83,15 @@ $.Autocompleter = function(input, options) {
 		lastKeyPressCode = event.keyCode;
 		switch(event.keyCode) {
 
+			case KEY.LEFT:
+      case KEY.RIGHT:
+        if( options.disableRightAndLeft && select.visible()){
+          event.preventDefault();
+        }
+        break;
 			case KEY.UP:
-				event.preventDefault();
 				if ( select.visible() ) {
+          event.preventDefault();
 					select.prev();
 				} else {
 					onChange(0, true);
@@ -104,8 +99,8 @@ $.Autocompleter = function(input, options) {
 				break;
 
 			case KEY.DOWN:
-				event.preventDefault();
 				if ( select.visible() ) {
+          event.preventDefault();
 					select.next();
 				} else {
 					onChange(0, true);
@@ -113,8 +108,8 @@ $.Autocompleter = function(input, options) {
 				break;
 
 			case KEY.PAGEUP:
-				event.preventDefault();
 				if ( select.visible() ) {
+          event.preventDefault();
 					select.pageUp();
 				} else {
 					onChange(0, true);
@@ -122,8 +117,8 @@ $.Autocompleter = function(input, options) {
 				break;
 
 			case KEY.PAGEDOWN:
-				event.preventDefault();
 				if ( select.visible() ) {
+          event.preventDefault();
 					select.pageDown();
 				} else {
 					onChange(0, true);
@@ -147,6 +142,7 @@ $.Autocompleter = function(input, options) {
 				break;
 
 			default:
+        options.onLetterTyped(event, $input);
 				clearTimeout(timeout);
 				timeout = setTimeout(onChange, options.delay);
 				break;
@@ -214,9 +210,8 @@ $.Autocompleter = function(input, options) {
 			v += options.multipleSeparator;
 		}
 
-		$input.val(v);
 		hideResultsNow();
-		$input.trigger("result", [selected.data, selected.value]);
+    options.onSelect($input, selected.data, selected.value);
 		return true;
 	}
 
@@ -233,7 +228,7 @@ $.Autocompleter = function(input, options) {
 
 		previousValue = currentValue;
 
-		currentValue = lastWord(currentValue);
+		currentValue = options.searchTermFromValue(currentValue, $input[0].selectionStart);
 		if ( currentValue.length >= options.minChars) {
 			$input.addClass(options.loadingClass);
 			if (!options.matchCase)
@@ -258,22 +253,15 @@ $.Autocompleter = function(input, options) {
 		return result;
 	}
 
-	function lastWord(value) {
-		if ( !options.multiple )
-			return value;
-		var words = trimWords(value);
-		return words[words.length - 1];
-	}
-
 	// fills in the input box w/the first match (assumed to be the best match)
 	// q: the term entered
 	// sValue: the first matching result
 	function autoFill(q, sValue){
 		// autofill in the complete box w/the first match as long as the user hasn't entered in more data
 		// if the last user key pressed was backspace, don't autofill
-		if( options.autoFill && (lastWord($input.val()).toLowerCase() == q.toLowerCase()) && lastKeyPressCode != KEY.BACKSPACE ) {
+		if( options.autoFill && (options.lastWord($input.val(), null, options.multiple).toLowerCase() == q.toLowerCase()) && lastKeyPressCode != KEY.BACKSPACE ) {
 			// fill in the value (keep the case the user has typed)
-			$input.val($input.val() + sValue.substring(lastWord(previousValue).length));
+			$input.val($input.val() + sValue.substring(options.lastWord(previousValue, null, options.multiple).length));
 			// select the portion of the value not typed by the user (so the next character will erase)
 			$.Autocompleter.Selection(input, previousValue.length, previousValue.length + sValue.length);
 		}
@@ -285,7 +273,6 @@ $.Autocompleter = function(input, options) {
 	};
 
 	function hideResultsNow() {
-		var wasVisible = select.visible();
 		select.hide();
 		clearTimeout(timeout);
 		stopLoading();
@@ -305,9 +292,6 @@ $.Autocompleter = function(input, options) {
 				}
 			);
 		}
-		if (wasVisible)
-			// position cursor at end of input field
-			$.Autocompleter.Selection(input, input.value.length, input.value.length);
 	};
 
 	function receiveData(q, data) {
@@ -346,7 +330,7 @@ $.Autocompleter = function(input, options) {
 				dataType: options.dataType,
 				url: options.url,
 				data: $.extend({
-					q: lastWord(term),
+					q: options.lastWord(term, null, options.multiple),
 					limit: options.max
 				}, extraParams),
 				success: function(data) {
@@ -386,9 +370,22 @@ $.Autocompleter = function(input, options) {
 };
 
 $.Autocompleter.defaults = {
+  onLetterTyped : function(event){},
+  lastWord : function(value, crap, multiple) {
+		if ( !multiple )
+			return value;
+		var words = trimWords(value);
+		return words[words.length - 1];
+	},
 	inputClass: "ac_input",
 	resultsClass: "ac_results",
 	loadingClass: "ac_loading",
+  onSelect: function(input, data, formatted){
+		if (select.visible())
+			// position cursor at end of input field
+			$.Autocompleter.Selection(input, input.value.length, input.value.length);
+    input.val(formatted);
+  },
 	minChars: 1,
 	delay: 400,
 	matchCase: false,
@@ -406,12 +403,14 @@ $.Autocompleter.defaults = {
 	width: 0,
 	multiple: false,
 	multipleSeparator: ", ",
+  disableRightAndLeft: false,
 	highlight: function(value, term) {
 		return value.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + term.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1") + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
 	},
     scroll: true,
     scrollHeight: 180
 };
+$.Autocompleter.defaults.searchTermFromValue = $.Autocompleter.defaults.lastWord;
 
 $.Autocompleter.Cache = function(options) {
 

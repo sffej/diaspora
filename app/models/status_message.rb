@@ -10,7 +10,7 @@ class StatusMessage < Post
 
   validates_length_of :message, :maximum => 1000, :message => "please make your status messages less than 1000 characters"
   xml_name :status_message
-  xml_attr :message
+  xml_attr :raw_message
 
   has_many :photos, :dependent => :destroy
   validate :message_or_photos_present?
@@ -20,6 +20,55 @@ class StatusMessage < Post
   serialize :youtube_titles, Hash
   before_save do
     get_youtube_title message
+  end
+
+  def message
+    self.formatted_message
+  end
+
+  def raw_message
+    read_attribute(:message)
+  end
+  def raw_message=(text)
+    write_attribute(:message, text)
+  end
+
+  def formatted_message
+    return self.raw_message unless self.raw_message
+    people = self.mentioned_people
+    regex = /@\{([^;]+); ([^\}]+)\}/
+    escaped_message = ERB::Util.h(raw_message)
+    form_message = escaped_message.gsub(regex) do |matched_string|
+      inner_captures = matched_string.match(regex).captures
+      person = people.detect{ |p|
+        p.diaspora_handle == inner_captures.last
+      }
+      person ? "<a href=\"/people/#{person.id}\" class=\"mention\">#{ERB::Util.h(person.name)}</a>" : ERB::Util.h(inner_captures.first)
+    end
+    form_message
+  end
+
+  def mentioned_people
+    if self.persisted?
+      create_mentions if self.mentions.empty?
+      self.mentions.includes(:person => :profile).map{ |mention| mention.person }
+    else
+      mentioned_people_from_string
+    end
+  end
+
+  def create_mentions
+    mentioned_people_from_string.each do |person|
+      self.mentions.create(:person => person)
+    end
+  end
+
+  def mentioned_people_from_string
+    regex = /@\{([^;]+); ([^\}]+)\}/
+    identifiers = self.raw_message.scan(regex).map do |match|
+      match.last
+    end
+    identifiers.empty? ? [] : Person.where(:diaspora_handle => identifiers)
   end
 
   def to_activity

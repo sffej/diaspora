@@ -4,6 +4,7 @@
 
 require 'spec_helper'
 
+
 describe StatusMessage do
 
   before do
@@ -51,16 +52,96 @@ describe StatusMessage do
     status = Factory.build(:status_message, :message => message)
 
     status.should_not be_valid
-
   end
 
+  describe 'mentions' do
+    def controller
+      mock()
+    end
+
+    include ActionView::Helpers::UrlHelper
+    include Rails.application.routes.url_helpers
+    before do
+      @people = [alice, bob, eve].map{|u| u.person}
+      @test_string = <<-STR
+@{Raphael; #{@people[0].diaspora_handle}} can mention people like Raphael @{Ilya; #{@people[1].diaspora_handle}}
+can mention people like Raphaellike Raphael @{Daniel; #{@people[2].diaspora_handle}} can mention people like Raph
+STR
+      @sm = Factory.create(:status_message, :message => @test_string )
+    end
+
+    describe '#formatted_message' do
+      it 'adds the links in the formated message text' do
+        @sm.formatted_message.should == <<-STR
+#{link_to(@people[0].name, person_path(@people[0]), :class => 'mention')} can mention people like Raphael #{link_to(@people[1].name, person_path(@people[1]), :class => 'mention')}
+can mention people like Raphaellike Raphael #{link_to(@people[2].name, person_path(@people[2]), :class => 'mention')} can mention people like Raph
+STR
+      end
+      it 'leaves the name of people that cannot be found' do
+        @sm.stub(:mentioned_people).and_return([])
+        @sm.formatted_message.should == <<-STR
+Raphael can mention people like Raphael Ilya
+can mention people like Raphaellike Raphael Daniel can mention people like Raph
+STR
+      end
+      it 'escapes the link title' do
+        p = @people[0].profile
+        p.first_name="</a><script>alert('h')</script>"
+        p.save!
+
+        @sm.formatted_message.should_not include(@people[0].profile.first_name)
+      end
+      it 'escapes the message' do
+        xss = "</a> <script> alert('hey'); </script>"
+        @sm.message << xss
+
+        @sm.formatted_message.should_not include xss
+      end
+      it 'is html_safe' do
+        @sm.formatted_message.html_safe?.should be_true
+      end
+    end
+
+    describe '#mentioned_people_from_string' do
+      it 'extracts the mentioned people from the message' do
+        @sm.mentioned_people_from_string.to_set.should == @people.to_set
+      end
+    end
+    describe '#create_mentions' do
+      it 'creates a mention for everyone mentioned in the message' do
+        @sm.should_receive(:mentioned_people_from_string).and_return(@people)
+        @sm.mentions.delete_all
+        @sm.create_mentions
+        @sm.mentions(true).map{|m| m.person}.to_set.should == @people.to_set
+      end
+    end
+    describe '#mentioned_people' do
+      it 'calls create_mentions if there are no mentions in the db' do
+        @sm.mentions.delete_all
+        @sm.should_receive(:create_mentions)
+        @sm.mentioned_people
+      end
+      it 'returns the mentioned people' do
+        @sm.mentions.delete_all
+        @sm.mentioned_people.to_set.should == @people.to_set
+      end
+      it 'does not call create_mentions if there are mentions in the db' do
+        @sm.should_not_receive(:create_mentions)
+        @sm.mentioned_people
+      end
+    end
+  end
   describe "XML" do
     before do
       @message = Factory.create(:status_message, :message => "I hate WALRUSES!", :person => @user.person)
       @xml = @message.to_xml.to_s
     end
+    it 'serializes the unescaped, unprocessed message' do
+      @message.message = "<script> alert('xss should be federated');</script>"
+      @message.to_xml.to_s.should include @message.message
+    end
     it 'serializes the message' do
-      @xml.should include "<message>I hate WALRUSES!</message>"
+      @xml.should include "<raw_message>I hate WALRUSES!</raw_message>"
     end
 
     it 'serializes the author address' do
