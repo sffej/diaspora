@@ -12,6 +12,14 @@ describe StatusMessage do
     @aspect = @user.aspects.first
   end
 
+  describe '.before_create' do
+    it 'calls create_mentions' do
+      status = Factory.build(:status_message)
+      status.should_receive(:create_mentions)
+      status.save
+    end
+  end
+  
   describe '#diaspora_handle=' do
     it 'sets #person' do
       person = Factory.create(:person)
@@ -77,6 +85,14 @@ STR
 can mention people like Raphaellike Raphael #{link_to(@people[2].name, person_path(@people[2]), :class => 'mention')} can mention people like Raph
 STR
       end
+
+      context 'with :plain_text option' do
+        it 'removes the mention syntax and displays the unformatted name' do 
+          status  = Factory(:status_message, :message => "@{Barack Obama; barak@joindiaspora.com } is so cool @{Barack Obama; barak@joindiaspora.com } ")
+          status.formatted_message(:plain_text => true).should == 'Barack Obama is so cool Barack Obama '
+        end
+      end
+
       it 'leaves the name of people that cannot be found' do
         @sm.stub(:mentioned_people).and_return([])
         @sm.formatted_message.should == <<-STR
@@ -108,6 +124,7 @@ STR
       end
     end
     describe '#create_mentions' do
+
       it 'creates a mention for everyone mentioned in the message' do
         @sm.should_receive(:mentioned_people_from_string).and_return(@people)
         @sm.mentions.delete_all
