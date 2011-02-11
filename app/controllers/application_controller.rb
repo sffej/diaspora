@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_invites
   before_filter :set_locale
   before_filter :which_action_and_user
+  prepend_before_filter :clear_gc_stats
   def set_contacts_notifications_and_status
     if user_signed_in?
       @aspect = nil
@@ -35,7 +36,7 @@ class ApplicationController < ActionController::Base
     str = "event=request_with_user controller=#{self.class} action=#{self.action_name} "
     if current_user
       str << "uid=#{current_user.id} "
-      str << "user_created_at=#{current_user.created_at.to_date.to_s} " if current_user.created_at
+      str << "user_created_at='#{current_user.created_at.to_date.to_s}' user_created_at_unix=#{current_user.created_at.to_i} " if current_user.created_at
     else
       str << 'uid=nil'
     end
@@ -48,5 +49,8 @@ class ApplicationController < ActionController::Base
     else
       I18n.locale = request.compatible_language_from AVAILABLE_LANGUAGE_CODES
     end
+  end
+  def clear_gc_stats
+    GC.clear_stats if GC.respond_to?(:clear_stats)
   end
 end
