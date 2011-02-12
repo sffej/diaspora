@@ -1,7 +1,7 @@
 $(document).ready(function() { 
 
    $('#status_message_fake_message').jqEasyCounter({'maxChars': 1000,'maxCharsWarning': 140});
-
+   $("textarea[id*='comment_text_on_']").jqEasyCounter({'maxChars': 1000,'maxCharsWarning': 140});
    $('#shorten').qtip({
       content: 'Shorten your URL by adding an extra / in it!<br>E.g. http:<b>///</b>www.com or https:<b>///</b>www.com',
       position: {
