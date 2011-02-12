@@ -43,6 +43,12 @@ describe StatusMessagesController do
         note.reload
       }.should change(note, :unread).from(true).to(false)
     end
+
+
+    it 'redirects to back if there is no status message' do
+      get :show, :id => 2345
+      response.status.should == 302
+    end
   end
 
   describe '#create' do
@@ -77,8 +83,8 @@ describe StatusMessagesController do
         fixture_filename  = 'button.png'
         fixture_name      = File.join(File.dirname(__FILE__), '..', 'fixtures', fixture_filename)
 
-        @photo1 = @user1.build_post(:photo, :user_file=> File.open(fixture_name), :to => @aspect1.id)
-        @photo2 = @user1.build_post(:photo, :user_file=> File.open(fixture_name), :to => @aspect1.id)
+        @photo1 = @user1.build_post(:photo, :pending => true, :user_file=> File.open(fixture_name), :to => @aspect1.id)
+        @photo2 = @user1.build_post(:photo, :pending => true, :user_file=> File.open(fixture_name), :to => @aspect1.id)
 
         @photo1.save!
         @photo2.save!

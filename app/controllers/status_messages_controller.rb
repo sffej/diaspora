@@ -24,16 +24,19 @@ message = Morley::Shorty::swap(params[:status_message][:message])
     aspects = current_user.aspects_from_ids(params[:aspect_ids])
 
     if @status_message.save
-      current_user.add_to_streams(@status_message, aspects)
       current_user.dispatch_post(@status_message, :url => post_url(@status_message))
+      current_user.add_to_streams(@status_message, aspects)
       if !photos.empty?
         @status_message.photos += photos
         for photo in photos
+          was_pending = photo.pending
           photo.public = public_flag
           photo.pending = false
           photo.save
-          current_user.add_to_streams(photo, aspects)
-          current_user.dispatch_post(photo)
+          if was_pending
+            current_user.add_to_streams(photo, aspects)
+            current_user.dispatch_post(photo)
+          end
         end
       end
 
@@ -52,7 +55,7 @@ message = Morley::Shorty::swap(params[:status_message][:message])
                                      )
         },
                            :status => 201 }
-        format.html { respond_with @status_message }
+        format.html { redirect_to :back}
         format.mobile{ redirect_to :back}
       end
     else
@@ -75,15 +78,19 @@ message = Morley::Shorty::swap(params[:status_message][:message])
 
   def show
     @status_message = current_user.find_visible_post_by_id params[:id]
-    @object_aspect_ids = @status_message.aspects.map{|a| a.id}
+    if @status_message
+      @object_aspect_ids = @status_message.aspects.map{|a| a.id}
 
-    # mark corresponding notification as read
-    if notification = Notification.where(:recipient_id => current_user.id, :target_id => @status_message.id).first
-      notification.unread = false
-      notification.save
+      # mark corresponding notification as read
+      if notification = Notification.where(:recipient_id => current_user.id, :target_id => @status_message.id).first
+        notification.unread = false
+        notification.save
+      end
+
+      respond_with @status_message
+    else
+      redirect_to :back
     end
-
-    respond_with @status_message
   end
 
 end

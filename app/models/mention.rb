@@ -10,12 +10,19 @@ class Mention < ActiveRecord::Base
 
   after_create :notify_recipient
 
+  after_destroy :delete_notification
+
   def notify_recipient
+    Rails.logger.info "event=mention_sent id=#{self.id} to=#{person.diaspora_handle} from=#{post.person.diaspora_handle}"
     Notification.notify(person.owner, self, post.person) unless person.remote?
   end
 
 
   def notification_type(*args)
     'mentioned'
+  end
+
+  def delete_notification
+    Notification.where(:target_type => self.class.name, :target_id => self.id).delete_all
   end
 end
