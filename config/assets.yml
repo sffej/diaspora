@@ -1,8 +1,7 @@
-package_assets: on # (on, off, always)
-embed_assets: on # (on, off, datauri)
-compress_assets: on # (on, off)
-gzip_assets: off # (on, off)
-
+package_assets: on
+embed_assets: on
+compress_assets: on
+gzip_assets: off
 javascripts:
   flash_socket:
     - public/javascripts/vendor/FABridge.js
