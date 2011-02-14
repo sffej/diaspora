@@ -170,7 +170,7 @@ module ApplicationHelper
     end
 
     message = process_links(message)
-    if !session[:mobile_view]
+    if !is_mobile_device?
       message = process_youtube(message, options[:youtube_maps])
       message = process_vimeo(message, options[:vimeo_maps])
     end
