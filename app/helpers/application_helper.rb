@@ -170,10 +170,8 @@ module ApplicationHelper
     end
 
     message = process_links(message)
-unless is_mobile_device?
-    message = process_youtube(message, options[:youtube_maps])
-    message = process_vimeo(message, options[:vimeo_maps])
-end
+    message = process_youtube(message, options[:youtube_maps], options[:mobile])
+    message = process_vimeo(message, options[:vimeo_maps], options[:mobile])
     message = process_autolinks(message)
     message = process_emphasis(message)
 
@@ -210,7 +208,7 @@ end
     return message
   end
 
-  def process_youtube(message, youtube_maps)
+  def process_youtube(message, youtube_maps, mobile)
     regex = /( |^)(http:\/\/)?www\.youtube\.com\/watch[^ ]*v=([A-Za-z0-9_\-]+)(&[^ ]*|)/
     while youtube = message.match(regex)
       video_id = youtube[3]
@@ -219,7 +217,11 @@ end
       else
         title = I18n.t 'application.helper.video_title.unknown'
       end
+      if mobile
+      message.gsub!(youtube[0], 'http://m.youtube.com/watch?v=' + video_id )
+      else
       message.gsub!(youtube[0], '<a class="video-link" data-host="youtube.com" data-video-id="' + video_id + '" href="#video">Youtube: ' + title + '</a>')
+      end
     end
     return message
   end
@@ -259,7 +261,7 @@ end
     return message
   end
 
-  def process_vimeo(message, vimeo_maps)
+  def process_vimeo(message, vimeo_maps, mobile)
     regex = /https?:\/\/(?:w{3}\.)?vimeo.com\/(\d{6,})/
     while vimeo = message.match(regex)
       video_id = vimeo[1]
@@ -268,7 +270,11 @@ end
       else
         title = I18n.t 'application.helper.video_title.unknown'
       end
+      if mobile
+      message.gsub!(vimeo[0], 'http://vimeo.com/m/#/' + video_id)
+      else
       message.gsub!(vimeo[0], '<a class="video-link" data-host="vimeo.com" data-video-id="' + video_id + '" href="#video">Vimeo: ' + title + '</a>')
+      end
     end
     return message
   end

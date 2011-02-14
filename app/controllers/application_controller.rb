@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
       @user_id = current_user.id
     end
   end
-
+  
   def count_requests
     @request_count = Request.where(:recipient_id => current_user.person.id).count if current_user
   end

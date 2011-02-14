@@ -8,7 +8,7 @@ module Shorty
 require 'net/http'
 require 'uri'
 require 'rubygems'
-    message.gsub!(/( |^)(www\.[^\s]+\.[^\s])/, '\1http:///\2')
+    message.gsub!(/( |^)(www\.[^\s]+\.[^\s])/, '\1http://\2')
     message.gsub!(/(<a target="\\?_blank" href=")?(https|http|ftp):\/\/\/([^\s]+)/) do |m|
       if !$1.nil?
         m

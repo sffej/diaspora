@@ -2,7 +2,7 @@
 -#   licensed under the Affero General Public License version 3 or later.  See
 -#   the COPYRIGHT file.
 
-= markdownify(post.message, :youtube_maps => post[:youtube_titles])
+= markdownify(post.message, :youtube_maps => post[:youtube_titles], :mobile => is_mobile_device?)
 
 - if photos.count > 0
   .photo_attachments
