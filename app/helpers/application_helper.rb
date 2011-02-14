@@ -169,11 +169,9 @@ module ApplicationHelper
       options[:newlines] = true
     end
 
+    message = process_youtube(message, options[:youtube_maps])
+    message = process_vimeo(message, options[:vimeo_maps])
     message = process_links(message)
-    if !is_mobile_device?
-      message = process_youtube(message, options[:youtube_maps])
-      message = process_vimeo(message, options[:vimeo_maps])
-    end
     message = process_autolinks(message)
     message = process_emphasis(message)
 
@@ -219,7 +217,11 @@ module ApplicationHelper
       else
         title = I18n.t 'application.helper.video_title.unknown'
       end
+      if is_mobile_device?
+      message.gsub!(youtube[0], '<a href=//www.youtube.com/watch?v=' + video_id + '>Youtube: ' + title + '</a>')
+      else
       message.gsub!(youtube[0], '<a class="video-link" data-host="youtube.com" data-video-id="' + video_id + '" href="#video">Youtube: ' + title + '</a>')
+      end
     end
     return message
   end
@@ -268,7 +270,11 @@ module ApplicationHelper
       else
         title = I18n.t 'application.helper.video_title.unknown'
       end
+      if is_mobile_device?
+      message.gsub!(vimeo[0], '<a href="//vimeo.com/' + video_id + '">Vimeo: ' + title + '</a>')
+      else
       message.gsub!(vimeo[0], '<a class="video-link" data-host="vimeo.com" data-video-id="' + video_id + '" href="#video">Vimeo: ' + title + '</a>')
+      end
     end
     return message
   end
