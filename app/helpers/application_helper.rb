@@ -169,9 +169,11 @@ module ApplicationHelper
       options[:newlines] = true
     end
 
+    message = process_links(message)
+unless is_mobile_device?
     message = process_youtube(message, options[:youtube_maps])
     message = process_vimeo(message, options[:vimeo_maps])
-    message = process_links(message)
+end
     message = process_autolinks(message)
     message = process_emphasis(message)
 
@@ -217,11 +219,7 @@ module ApplicationHelper
       else
         title = I18n.t 'application.helper.video_title.unknown'
       end
-      if is_mobile_device?
-      message.gsub!(youtube[0], '<a href=//www.youtube.com/watch?v=' + video_id + '>Youtube: ' + title + '</a>')
-      else
       message.gsub!(youtube[0], '<a class="video-link" data-host="youtube.com" data-video-id="' + video_id + '" href="#video">Youtube: ' + title + '</a>')
-      end
     end
     return message
   end
@@ -231,7 +229,7 @@ module ApplicationHelper
     message.gsub!(/(<a target="\\?_blank" href=")?(https|http|ftp):\/\/([^\s]+)/) do |m|
       if !$1.nil?
         m
-      else
+      else        
         if $3.include? ".cc" or $3.include? ".ly" or $3.include? ".gd" or $3.include? ".gl" or $3.include? ".me" or $3.include? ".tl" or $3.include? "ur1.ca" or $3.include? "t.co"
         res = %{<b><a class="expand" target="_blank" href="#{$2}://#{$3}">#{$3}</a></b>}
         elsif $3.include? ".png" or $3.include? ".jpg" or $3.include? ".jpeg" or $3.include? ".gif"
@@ -270,11 +268,7 @@ module ApplicationHelper
       else
         title = I18n.t 'application.helper.video_title.unknown'
       end
-      if is_mobile_device?
-      message.gsub!(vimeo[0], '<a href="//vimeo.com/' + video_id + '">Vimeo: ' + title + '</a>')
-      else
       message.gsub!(vimeo[0], '<a class="video-link" data-host="vimeo.com" data-video-id="' + video_id + '" href="#video">Vimeo: ' + title + '</a>')
-      end
     end
     return message
   end
