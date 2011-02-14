@@ -170,8 +170,10 @@ module ApplicationHelper
     end
 
     message = process_links(message)
-    message = process_youtube(message, options[:youtube_maps])
-    message = process_vimeo(message, options[:vimeo_maps])
+    if !session[:mobile_view]
+      message = process_youtube(message, options[:youtube_maps])
+      message = process_vimeo(message, options[:vimeo_maps])
+    end
     message = process_autolinks(message)
     message = process_emphasis(message)
 
