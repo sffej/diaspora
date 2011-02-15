@@ -15,7 +15,7 @@ cs:
   _photos: "fotky"
   _services: "Služby"
   account: "Účet"
-  activemodel: 
+  activerecord: 
     errors: 
       models: 
         contact: 
@@ -25,17 +25,17 @@ cs:
         person: 
           attributes: 
             diaspora_handle: 
-              taken: "je již obsazeno"
+              taken: "je již obsazen."
         request: 
           attributes: 
             from_id: 
-              taken: "je duplicitní k již existující žádosti."
+              taken: "je duplicitní k dříve existující žádosti."
         user: 
           attributes: 
             email: 
-              taken: "je již obsazeno"
+              taken: "je již obsazen."
             person: 
-              invalid: "je neplatné."
+              invalid: "je neplatný."
             username: 
               taken: "je již obsazeno."
   ago: "před %{time}"
@@ -324,7 +324,7 @@ cs:
       edit: "upravit"
       edit_delete_photo: "Upravit popis fotky / smazat fotku"
       make_profile_photo: "vytvořit profilovou fotku"
-      original_post: "Original Post"
+      original_post: "Původní příspěvek"
       permalink: "trvalý odkaz"
       update_photo: "Aktualizovat fotku"
       view: "zobrazit"
