@@ -53,18 +53,15 @@ class AspectsController < ApplicationController
       elsif params[:aspect][:share_with]
         @contact = Contact.where(:id => params[:aspect][:contact_id]).first
         @person = Person.where(:id => params[:aspect][:person_id]).first
-        @contact = current_user.contact_for(@person)
+        @contact = current_user.contact_for(@person) || Contact.new
 
-        invite_or_add_contact_to_aspect(@aspect, @person, @contact)
-
-        @contact = current_user.contact_for(@person)
         respond_to do |format|
           format.js { render :json => {:html => render_to_string(
               :partial => 'aspects/aspect_list_item',
               :locals => {:aspect => @aspect,
                             :person => @person,
                             :contact => @contact}
-                                      )},:status => 201 }
+                                      ), :aspect_id => @aspect.id},:status => 201 }
               end
       else
         respond_with @aspect
@@ -154,71 +151,5 @@ class AspectsController < ApplicationController
     end
 
     render :text => response_hash.to_json
-  end
-
-  def add_to_aspect
-    @person = Person.find(params[:person_id])
-    @aspect = current_user.aspects.find(params[:aspect_id])
-    @contact = current_user.contact_for(@person)
-
-    invite_or_add_contact_to_aspect(@aspect, @person, @contact)
-
-    flash.now[:notice] =  I18n.t 'aspects.add_to_aspect.success'
-
-    respond_to do |format|
-      format.js { render :json => {
-        :button_html => render_to_string(:partial => 'aspects/add_to_aspect',
-                         :locals => {:aspect_id => @aspect.id,
-                                     :person_id => @person.id}),
-        :badge_html =>  render_to_string(:partial => 'aspects/aspect_badge',
-                            :locals => {:aspect => @aspect})
-        }}
-      format.html{ redirect_to aspect_path(@aspect.id)}
-    end
-  end
-
-  def remove_from_aspect
-    begin current_user.delete_person_from_aspect(params[:person_id], params[:aspect_id])
-      @person_id = params[:person_id]
-      @aspect_id = params[:aspect_id]
-      flash.now[:notice] = I18n.t 'aspects.remove_from_aspect.success'
-
-      respond_to do |format|
-        format.js { render :json => {:button_html =>
-          render_to_string(:partial => 'aspects/remove_from_aspect',
-                           :locals => {:aspect_id => @aspect_id,
-                                       :person_id => @person_id}),
-          :aspect_id => @aspect_id
-        }}
-        format.html{
-          redirect_to :back
-        }
-      end
-    rescue Exception => e
-      flash.now[:error] = I18n.t 'aspects.remove_from_aspect.failure'
-
-      respond_to do |format|
-        format.js  { render :text => e, :status => 403 }
-        format.html{
-          redirect_to :back
-        }
-      end
-    end
-  end
-
-  private
-  def invite_or_add_contact_to_aspect( aspect, person, contact)
-    if contact
-      current_user.add_contact_to_aspect(contact, aspect)
-    else
-      current_user.send_contact_request_to(person, aspect)
-      contact = current_user.contact_for(person)
-
-      if request = Request.where(:sender_id => person.id, :recipient_id => current_user.person.id).first
-        request.destroy
-        contact.update_attributes(:pending => false)
-      end
-    end
-
   end
 end

@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
 
   before_destroy :disconnect_everyone, :remove_person
   before_save do
-    person.save if person
+    person.save if person && person.changed?
   end
 
   attr_accessible :getting_started, :password, :password_confirmation, :language, :disable_mail
@@ -74,11 +74,13 @@ class User < ActiveRecord::Base
   end
 
   def move_contact(person, to_aspect, from_aspect)
+    return true if to_aspect == from_aspect
     contact = contact_for(person)
-    if to_aspect == from_aspect
-      true
-    elsif add_contact_to_aspect(contact, to_aspect)
-      delete_person_from_aspect(person.id, from_aspect.id)
+    if add_contact_to_aspect(contact, to_aspect)
+      membership = contact ? contact.aspect_memberships.where(:aspect_id => from_aspect.id).first : nil
+      return ( membership && membership.destroy )
+    else 
+      false
     end
   end
 
@@ -90,18 +92,6 @@ class User < ActiveRecord::Base
   def add_contact_to_aspect(contact, aspect)
     return true if contact.aspect_memberships.where(:aspect_id => aspect.id).count > 0
     contact.aspect_memberships.create!(:aspect => aspect)
-  end
-
-  def delete_person_from_aspect(person_id, aspect_id, opts = {})
-    aspect = Aspect.find(aspect_id)
-    raise "Can not delete a person from an aspect you do not own" unless aspect.user == self
-    contact = contact_for Person.find(person_id)
-
-    if opts[:force] || contact.aspect_ids.count > 1
-      contact.aspects.delete(aspect)
-    else
-      raise "Can not delete a person from last aspect"
-    end
   end
 
   ######## Posting ########

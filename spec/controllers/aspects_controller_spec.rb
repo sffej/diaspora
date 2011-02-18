@@ -156,14 +156,6 @@ describe AspectsController do
         response.should redirect_to(:back)
       end
     end
-    it "adds to aspect if the person_id is present" do
-      @aspect = @user.aspects.create(:name => "new aspect")
-      @user.aspects.stub!(:create).and_return(@aspect)
-      @controller.should_receive(:invite_or_add_contact_to_aspect).with(
-                            anything(), @user2.person, @user.contact_for(@user2.person))
-
-      post :create, "aspect" => {"name" => "new aspect", :person_id => @user2.person.id, :share_with => true}
-    end
   end
 
   describe "#manage" do
@@ -262,73 +254,10 @@ describe AspectsController do
     end
   end
 
-  describe "#add_to_aspect" do
-    context 'with an incoming request' do
-      before do
-        @user3 = Factory.create(:user)
-        @user3.send_contact_request_to(@user.person, @user3.aspects.create(:name => "Walruses"))
-      end
-      it 'deletes the request' do
-        post 'add_to_aspect',
-          :format => 'js',
-          :person_id => @user3.person.id,
-          :aspect_id => @aspect1.id
-        Request.where(:sender_id => @user3.person.id, :recipient_id => @user.person.id).first.should be_nil
-      end
-      it 'does not leave the contact pending' do
-        post 'add_to_aspect',
-          :format => 'js',
-          :person_id => @user3.person.id,
-          :aspect_id => @aspect1.id
-        @user.contact_for(@user3.person).should_not be_pending
-      end
-    end
-    context 'with a non-contact' do
-      before do
-        @person = Factory(:person)
-      end
-      it 'calls send_contact_request_to' do
-        @user.should_receive(:send_contact_request_to).with(@person, @aspect1)
-        post 'add_to_aspect',
-          :format => 'js',
-          :person_id => @person.id,
-          :aspect_id => @aspect1.id
-      end
-      it 'does not call add_contact_to_aspect' do
-        @user.should_not_receive(:add_contact_to_aspect)
-        post 'add_to_aspect',
-          :format => 'js',
-          :person_id => @person.id,
-          :aspect_id => @aspect1.id
-      end
-    end
-    it 'adds the users to the aspect' do
-      @user.should_receive(:add_contact_to_aspect)
-      post 'add_to_aspect',
-        :format => 'js',
-        :person_id => @user2.person.id,
-        :aspect_id => @aspect1.id
-      response.should be_success
-    end
-  end
-
   describe '#edit' do
     it 'renders' do
       get :edit, :id => @aspect0.id
       response.should be_success
-    end
-  end
-
-  describe "#remove_from_aspect" do
-    it 'removes contacts from an aspect' do
-      @user.add_contact_to_aspect(@contact, @aspect1)
-      post 'remove_from_aspect',
-        :format => 'js',
-        :person_id => @user2.person.id,
-        :aspect_id => @aspect0.id
-      response.should be_success
-      @aspect0.reload
-      @aspect0.contacts.include?(@contact).should be false
     end
   end
 
