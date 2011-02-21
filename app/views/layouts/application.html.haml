@@ -100,7 +100,7 @@
           %li= link_to 'ci tests', "http://ci.diasp.org"
           %li
             Code was updated:
-            %strong=last_modified
+            %strong=GIT_UPDATE
           %li= link_to(t('layouts.application.toggle'), toggle_mobile_path)  if is_mobile_device?
         = image_tag 'powered_by_diaspora.png', :height => "11px", :width => "145px"
         %br
