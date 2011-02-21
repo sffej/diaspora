@@ -74,9 +74,10 @@ describe AspectsController do
           @users << user
           aspect = user.aspects.create(:name => 'people')
           connect_users(@user, @aspect0, user, aspect)
-          post =  @user.post(:status_message, :message => "hello#{n}", :to => eval("@aspect#{(n%2)}.id"))
+          post = @user.post(:status_message, :message => "hello#{n}", :to => eval("@aspect#{(n%2)}.id"))
+          post.created_at = Time.now - (4 - n).seconds
+          post.save!
           @posts << post
-          sleep(1)
         end
         @user.build_comment('lalala', :on => @posts.first ).save
       end
@@ -103,13 +104,13 @@ describe AspectsController do
         assigns(:posts).should_not == @posts.reverse
       end
 
-      it 'return posts by created at if passed created_at=true' do
-        get :index, :a_ids => [@aspect0.id.to_s, @aspect1.id.to_s], :created_at => true
+      it 'return posts by created at if passed sort_order=created_at' do
+        get :index, :a_ids => [@aspect0.id.to_s, @aspect1.id.to_s], :sort_order => 'created_at'
         assigns(:posts).should == @posts.reverse
       end
     end
 
-    context 'performance' do
+    context 'performance', :performance => true do
       before do
         require 'benchmark'
         @posts = []
@@ -176,7 +177,7 @@ describe AspectsController do
       get :manage
       response.should be_success
     end
-    it "performs reasonably" do
+    it "performs reasonably", :performance => true do
         require 'benchmark'
         8.times do |n|
           aspect = @user.aspects.create(:name => "aspect#{n}")

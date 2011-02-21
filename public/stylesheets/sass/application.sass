@@ -1318,8 +1318,9 @@ ul#settings_nav
   :padding 0
   :font
     :size large
-  :margin
-    :left 5.68em
+  :position absolute
+  :left 198px
+  :top 5px
 
   > li
     :display inline
@@ -2396,6 +2397,7 @@ ul.show_comments
 
       &.submit
         :width auto
+        :bottom 15px
 
         input
           :width auto
@@ -2459,3 +2461,15 @@ ul.show_comments
 .webfinger_form
   input[type='search']
     :width 100%
+
+#sort_by
+  :text-align right
+
+#remember_me
+  input[type='checkbox']
+    :display inline
+    :height auto !important
+    :top 2px !important
+  label
+    :font-size inherit !important
+    :position static
