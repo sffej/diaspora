@@ -7,7 +7,7 @@ require 'time'
     git_last='git log -1 --pretty=format:"%cd"'
     filepath = Rails.root.join('tmp', '.last_pull')
     time_min = 60
-    @header_name = "X-Git-Update"
+#    @header_name = "X-Git-Update"
     if File.writable?(filepath)
       begin
         mtime = File.mtime(filepath)
@@ -27,7 +27,7 @@ require 'time'
       end
     end
     last
-      headers[@header_name] = "#{last}"
+#      headers[@header_name] = "#{last}"
     end
 #end
 
