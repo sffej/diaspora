@@ -6,4 +6,4 @@ echo "**************************************************************************
 echo "" &&
 bundle install &&
 RAILS_ENV=test rake db:migrate
-bundle exec rake spec
+bundle exec rake spec SPEC_OPTS="--tag ~performance"

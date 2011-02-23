@@ -38,7 +38,7 @@ gem 'thin', '1.2.7', :require => false
 gem 'em-websocket', :git => 'git://github.com/igrigorik/em-websocket', :ref => 'e278f5a1c4db60be7485'
 
 #File uploading
-gem 'carrierwave', :git => 'git://github.com/recruitmilitary/carrierwave.git' , :branch => 'master'
+gem 'carrierwave', '0.5.2'
 gem 'mini_magick', '3.2'
 gem 'aws', '2.3.32' # upgrade to 2.4 breaks 1.8 >.<
 gem 'fastercsv', '1.5.4', :require => false
@@ -60,7 +60,7 @@ group :test, :development do
   gem 'factory_girl_rails', :require => false
   gem 'ruby-debug-base19', '0.11.23' if RUBY_VERSION.include? '1.9.1'
   gem 'ruby-debug19' if RUBY_VERSION.include? '1.9'
-  gem 'ruby-debug' if RUBY_VERSION.include? '1.8'
+  gem 'ruby-debug' if defined?(Rubinius).nil? && RUBY_VERSION.include?('1.8')
   gem 'launchy'
 end
 

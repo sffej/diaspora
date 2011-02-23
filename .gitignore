@@ -48,3 +48,6 @@ dump.rdb
 #addons
 app/views/plain/_help.html.haml
 app/views/plain/_status.html.haml
+
+#Rubinius's JIT
+*.rbc

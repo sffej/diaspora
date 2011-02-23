@@ -10,10 +10,6 @@ module ApplicationHelper
     content_tag(:abbr, time.to_s, options.merge(:title => time.iso8601)) if time
   end
 
-  def modern_browser?
-    false
-  end
-
   def page_title text=nil
     title = ""
     if text.blank?
@@ -68,7 +64,7 @@ module ApplicationHelper
         param_string << "#{k}=#{v}"
       end
     end
-    "<li>
+"<li>
   <a href='/aspects/#{aspect.id}#{param_string}'>
     #{aspect.name}
   </a>
@@ -174,6 +170,7 @@ module ApplicationHelper
     message = process_vimeo(message, options[:vimeo_maps], options[:mobile])
     message = process_autolinks(message)
     message = process_emphasis(message)
+    message.gsub!(/&lt;3/, "&hearts;")
 
     if options[:newlines]
       message.gsub!(/\n+/, '<br />')
@@ -181,6 +178,7 @@ module ApplicationHelper
 
     return message
   end
+
 
   def process_links(message)
     message.gsub!(/\[([^\[]+)\]\(([^ ]+) \&quot;(([^&]|(&[^q])|(&q[^u])|(&qu[^o])|(&quo[^t])|(&quot[^;]))+)\&quot;\)/) do |m|
@@ -210,8 +208,9 @@ module ApplicationHelper
 
   def process_youtube(message, youtube_maps, mobile)
     regex = /( |^)(http:\/\/)?www\.youtube\.com\/watch[^ ]*v=([A-Za-z0-9_\-]+)(&[^ ]*|)/
-    while youtube = message.match(regex)
-      video_id = youtube[3]
+    processed_message = message.gsub(regex) do |matched_string|
+      match_data = matched_string.match(regex)
+      video_id = match_data[3]
       if youtube_maps && youtube_maps[video_id]
         title = h(CGI::unescape(youtube_maps[video_id]))
       else
@@ -220,24 +219,27 @@ module ApplicationHelper
       if mobile
       message.gsub!(youtube[0], 'http://m.youtube.com/watch?v=' + video_id )
       else
-      message.gsub!(youtube[0], '<a class="video-link" data-host="youtube.com" data-video-id="' + video_id + '" href="#video">Youtube: ' + title + '</a>')
+      message.gsub!(youtube[0], '<a class="video-link" data-host="youtube.com" data-video-id="' + video_id + '" href="'+ match_data[0].strip + '">Youtube: ' + title + '</a>')
       end
     end
-    return message
+    return processed_message
   end
 
    def process_autolinks(message)
     message.gsub!(/( |^)(www\.[^\s]+\.[^\s])/, '\1http://\2')
     message.gsub!(/(<a target="\\?_blank" href=")?(https|http|ftp):\/\/([^\s]+)/) do |m|
-      if !$1.nil?
+      captures = [$1,$2,$3]
+      if !captures[0].nil?
         m
+      elsif m.match(/(youtube|vimeo)/)
+        m.gsub(/(\*|_)/) { |m| "\\#{$1}" } #remove markers on markdown chars to not markdown inside links
       else        
         if $3.include? ".cc" or $3.include? ".ly" or $3.include? ".gd" or $3.include? ".gl" or $3.include? ".me" or $3.include? ".tl" or $3.include? "ur1.ca" or $3.include? "t.co"
         res = %{<b><a class="expand" target="_blank" href="#{$2}://#{$3}">#{$3}</a></b>}
         elsif $3.include? ".png" or $3.include? ".jpg" or $3.include? ".jpeg" or $3.include? ".gif"
         res = %{<a class="qtipimage" target="_blank" title="#{$2}://#{$3}" href="#{$2}://#{$3}">Image Link</a>}
         else
-        res = %{<a target="_blank" href="#{$2}://#{$3}">#{$3}</a>}
+        res = %{<a target="_blank" href="#{captures[1]}://#{captures[2]}">#{captures[2]}</a>}
         end
         res.gsub!(/(\*|_)/) { |m| "\\#{$1}" }
         res
@@ -263,8 +265,9 @@ module ApplicationHelper
 
   def process_vimeo(message, vimeo_maps, mobile)
     regex = /https?:\/\/(?:w{3}\.)?vimeo.com\/(\d{6,})/
-    while vimeo = message.match(regex)
-      video_id = vimeo[1]
+    processed_message = message.gsub(regex) do |matched_string|
+      match_data = message.match(regex)
+      video_id = match_data[1]
       if vimeo_maps && vimeo_maps[video_id]
         title = h(CGI::unescape(vimeo_maps[video_id]))
       else
@@ -273,16 +276,15 @@ module ApplicationHelper
       if mobile
       message.gsub!(vimeo[0], 'http://vimeo.com/m/#/' + video_id)
       else
-      message.gsub!(vimeo[0], '<a class="video-link" data-host="vimeo.com" data-video-id="' + video_id + '" href="#video">Vimeo: ' + title + '</a>')
+      message.gsub!(vimeo[0],  '<a class="video-link" data-host="vimeo.com" data-video-id="' + video_id + '" href="' + match_data[0] + '">Vimeo: ' + title + '</a>')
       end
     end
-    return message
+    return processed_message
   end
 
   def info_text(text)
     image_tag 'icons/monotone_question.png', :class => 'what_is_this', :title => text
   end
-
 
   def get_javascript_strings_for(language)
     defaults = I18n.t('javascripts', :locale => DEFAULT_LANGUAGE)
