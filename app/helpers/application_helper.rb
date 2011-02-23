@@ -217,9 +217,9 @@ module ApplicationHelper
         title = I18n.t 'application.helper.video_title.unknown'
       end
       if mobile
-      message.gsub!(youtube[0], 'http://m.youtube.com/watch?v=' + video_id )
+      'http://m.youtube.com/watch?v=' + video_id
       else
-      message.gsub!(youtube[0], '<a class="video-link" data-host="youtube.com" data-video-id="' + video_id + '" href="'+ match_data[0].strip + '">Youtube: ' + title + '</a>')
+      '<a class="video-link" data-host="youtube.com" data-video-id="' + video_id + '" href="'+ match_data[0].strip + '">Youtube: ' + title + '</a>'
       end
     end
     return processed_message
@@ -233,14 +233,12 @@ module ApplicationHelper
         m
       elsif m.match(/(youtube|vimeo)/)
         m.gsub(/(\*|_)/) { |m| "\\#{$1}" } #remove markers on markdown chars to not markdown inside links
-      else        
-        if $3.include? "boun.cc" or $3.include? ".ly" or $3.include? ".gd" or $3.include? ".gl" or $3.include? ".me" or $3.include? ".tl" or $3.include? "ur1.ca" or $3.include? "/t.co/"
-        res = %{<b><a class="expand" target="_blank" href="#{$2}://#{$3}">#{$3}</a></b>}
-        elsif $3.include? ".png" or $3.include? ".jpg" or $3.include? ".jpeg" or $3.include? ".gif"
-        res = %{<a class="qtipimage" target="_blank" title="#{$2}://#{$3}" href="#{$2}://#{$3}">Image Link</a>}
-        else
-        res = %{<a target="_blank" href="#{captures[1]}://#{captures[2]}">#{captures[2]}</a>}
-        end
+      elsif m.match(/(boun.cc|bit.ly|.gd|goo.gl|.me|tl|url1.ca|\/t.co)/)
+        res = %{<b><a class="expand" target="_blank" href="#{captures[1]}://#{captures[2]}">#{captures[2]}</a></b>}
+       elsif m.match(/(.jpg|.gif|.png|.jpeg)/)
+        res = %{<a class="qtipimage" target="_blank" title="#{captures[1]}://#{captures[2]}" href="#{captures[1]}://#{captures[2]}">Image Link</a>}
+         else
+          res = %{<a target="_blank" href="#{captures[1]}://#{captures[2]}">#{captures[2]}</a>}
         res.gsub!(/(\*|_)/) { |m| "\\#{$1}" }
         res
       end
@@ -274,9 +272,9 @@ module ApplicationHelper
         title = I18n.t 'application.helper.video_title.unknown'
       end
       if mobile
-      message.gsub!(vimeo[0], 'http://vimeo.com/m/#/' + video_id)
+      'http://vimeo.com/m/#/' + video_id
       else
-      message.gsub!(vimeo[0],  '<a class="video-link" data-host="vimeo.com" data-video-id="' + video_id + '" href="' + match_data[0] + '">Vimeo: ' + title + '</a>')
+      '<a class="video-link" data-host="vimeo.com" data-video-id="' + video_id + '" href="' + match_data[0] + '">Vimeo: ' + title + '</a>'
       end
     end
     return processed_message
