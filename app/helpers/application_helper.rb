@@ -233,7 +233,7 @@ module ApplicationHelper
         m
       elsif m.match(/(youtube|vimeo)/)
         m.gsub(/(\*|_)/) { |m| "\\#{$1}" } #remove markers on markdown chars to not markdown inside links
-      elsif m.match(/(boun.cc|bit.ly|.gd|goo.gl|.me|tl|url1.ca|\/t.co)/)
+      elsif m.match(/(boun.cc|bit.ly|.gd|goo.gl|.me|.tl|url1.ca|\/t.co)/)
         res = %{<b><a class="expand" target="_blank" href="#{captures[1]}://#{captures[2]}">#{captures[2]}</a></b>}
        elsif m.match(/(.jpg|.gif|.png|.jpeg)/)
         res = %{<a class="qtipimage" target="_blank" title="#{captures[1]}://#{captures[2]}" href="#{captures[1]}://#{captures[2]}">Image Link</a>}
