@@ -11,5 +11,5 @@
   .content
     .from
       = person_link(comment.person)
-    = markdownify(comment.text, :youtube_maps => comment[:youtube_titles], :mobile => is_mobile_device?)
+    = markdownify(comment.text, :youtube_maps => comment[:youtube_titles])
 

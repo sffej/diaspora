@@ -166,8 +166,8 @@ module ApplicationHelper
     end
 
     message = process_links(message)
-    message = process_youtube(message, options[:youtube_maps], options[:mobile])
-    message = process_vimeo(message, options[:vimeo_maps], options[:mobile])
+    message = process_youtube(message, options[:youtube_maps])
+    message = process_vimeo(message, options[:vimeo_maps])
     message = process_autolinks(message)
     message = process_emphasis(message)
     message.gsub!(/&lt;3/, "&hearts;")
@@ -206,7 +206,7 @@ module ApplicationHelper
     return message
   end
 
-  def process_youtube(message, youtube_maps, mobile)
+  def process_youtube(message, youtube_maps)
     regex = /( |^)(http:\/\/)?www\.youtube\.com\/watch[^ ]*v=([A-Za-z0-9_\-]+)(&[^ ]*|)/
     processed_message = message.gsub(regex) do |matched_string|
       match_data = matched_string.match(regex)
@@ -216,11 +216,7 @@ module ApplicationHelper
       else
         title = I18n.t 'application.helper.video_title.unknown'
       end
-      if mobile
-      'http://m.youtube.com/watch?v=' + video_id
-      else
       '<a class="video-link" data-host="youtube.com" data-video-id="' + video_id + '" href="'+ match_data[0].strip + '">Youtube: ' + title + '</a>'
-      end
     end
     return processed_message
   end
@@ -233,10 +229,12 @@ module ApplicationHelper
         m
       elsif m.match(/(youtube|vimeo)/)
         m.gsub(/(\*|_)/) { |m| "\\#{$1}" } #remove markers on markdown chars to not markdown inside links
-      elsif m.match(/(boun.cc|bit.ly|.gd|goo.gl|.me|.tl|url1.ca|\/t.co)/)
+      elsif m.match(/(boun\.cc|bit\.ly|\.gd|goo\.gl|\.me|\.tl|url1\.ca|\/t\.co)/)
         res = %{<b><a class="expand" target="_blank" href="#{captures[1]}://#{captures[2]}">#{captures[2]}</a></b>}
+        res.gsub!(/(\*|_)/) { |m| "\\#{$1}" }
        elsif m.match(/(.jpg|.gif|.png|.jpeg)/)
         res = %{<a class="qtipimage" target="_blank" title="#{captures[1]}://#{captures[2]}" href="#{captures[1]}://#{captures[2]}">Image Link</a>}
+        res.gsub!(/(\*|_)/) { |m| "\\#{$1}" }
          else
           res = %{<a target="_blank" href="#{captures[1]}://#{captures[2]}">#{captures[2]}</a>}
         res.gsub!(/(\*|_)/) { |m| "\\#{$1}" }
@@ -261,7 +259,7 @@ module ApplicationHelper
     return message
   end
 
-  def process_vimeo(message, vimeo_maps, mobile)
+  def process_vimeo(message, vimeo_maps)
     regex = /https?:\/\/(?:w{3}\.)?vimeo.com\/(\d{6,})/
     processed_message = message.gsub(regex) do |matched_string|
       match_data = message.match(regex)
@@ -271,11 +269,7 @@ module ApplicationHelper
       else
         title = I18n.t 'application.helper.video_title.unknown'
       end
-      if mobile
-      'http://vimeo.com/m/#/' + video_id
-      else
       '<a class="video-link" data-host="vimeo.com" data-video-id="' + video_id + '" href="' + match_data[0] + '">Vimeo: ' + title + '</a>'
-      end
     end
     return processed_message
   end
