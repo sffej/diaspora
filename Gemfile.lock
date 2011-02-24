@@ -194,6 +194,12 @@ GEM
     highline (1.6.1)
     http_connection (1.4.0)
     i18n (0.5.0)
+    i18n-inflector (2.5.0)
+      i18n (>= 0.4.1)
+    i18n-inflector-rails (1.0.3)
+      actionpack (~> 3.0)
+      i18n-inflector (~> 2.5)
+      railties (~> 3.0)
     jammit (0.5.4)
       closure-compiler (>= 0.1.0)
       yui-compressor (>= 0.9.1)
@@ -358,8 +364,9 @@ GEM
     tilt (1.2.2)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
-    tzinfo (0.3.24)
-    uuidtools (2.1.2)
+    typhoeus (0.2.0)
+    tzinfo (0.3.23)
+    uuidtools (2.1.1)
     vegas (0.1.8)
       rack (>= 1.0.0)
     warden (0.10.7)
@@ -399,6 +406,7 @@ DEPENDENCIES
   googlecharts
   haml (= 3.0.25)
   http_accept_language!
+  i18n-inflector-rails (~> 1.0)
   jammit (= 0.5.4)
   jasmine!
   json (= 1.4.6)
@@ -418,5 +426,6 @@ DEPENDENCIES
   ruby-debug
   thin (= 1.2.7)
   twitter!
+  typhoeus
   webmock
   will_paginate (= 3.0.pre2)

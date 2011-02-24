@@ -26,6 +26,9 @@ gem 'will_paginate', '3.0.pre2'
 #Statistics
 gem 'googlecharts'
 
+#Inflected translations
+gem 'i18n-inflector-rails', '~> 1.0'
+
 #Uncatagorized
 gem 'roxml', :git => 'git://github.com/Empact/roxml.git', :ref => '7ea9a9ffd2338aaef5b0'
 gem 'addressable', '2.2.2', :require => 'addressable/uri'
@@ -44,6 +47,7 @@ gem 'aws', '2.3.32' # upgrade to 2.4 breaks 1.8 >.<
 gem 'fastercsv', '1.5.4', :require => false
 gem 'jammit', '0.5.4'
 gem 'rest-client', '1.6.1'
+gem 'typhoeus'
 #Backups
 gem 'cloudfiles', '1.4.10', :require => false
 
