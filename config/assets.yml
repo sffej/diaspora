@@ -8,7 +8,7 @@ javascripts:
     - public/javascripts/vendor/swfobject.js
     - public/javascripts/vendor/web_socket.js
   jquery:
-    - public/javascripts/vendor/jquery144.min.js
+    - public/javascripts/vendor/jquery.min.js
   main:
     - public/javascripts/rails.js
     - public/javascripts/vendor/jquery.infieldlabel.js

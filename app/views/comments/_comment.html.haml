@@ -8,7 +8,7 @@
     %strong
       = person_link(comment.person)
 
-    .message= markdownify(comment.text, :youtube_maps => comment.youtube_titles)
+    = markdownify(comment.text, :youtube_maps => comment.youtube_titles)
 
     .info
       %span.time
