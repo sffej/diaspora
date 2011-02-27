@@ -62,26 +62,4 @@ $(document).ready(function() {
    });
    });
 
-   $(".avatar").live('mouseover', function() {
-   $(this).qtip({
-      content: this.alt+'\'s pod is '+ this.src.split(/\/+/g)[1].replace(new RegExp(/^www\./i),"").replace(new RegExp(/.s3.amazonaws.com/i),""),
-      show: {
-         ready: true // Needed to make it show on first mouseover event
-      },
-      position: {
-         my: 'bottom left',
-         target: $(this),
-         viewport: $(window), // Keep it on-screen at all times if possible
-         adjust: {
-            x: -10,  y: -40
-         }
-      },
-      hide: {
-         fixed: true // Helps to prevent the tooltip from hiding ocassionally when tracking!
-      },
-      style: 'ui-tooltip-dark'
-   });
-   });
-
-
 });
