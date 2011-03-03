@@ -35,8 +35,8 @@ SQL
       delete_disconnected_records array[0], array[1], array[2]
     end
 
-    add_foreign_key(:aspect_memberships, :contacts, :dependent => :delete)
-    add_foreign_key(:aspect_memberships, :aspects, :dependent => :restrict)
+#    add_foreign_key(:aspect_memberships, :contacts, :dependent => :delete)
+#    add_foreign_key(:aspect_memberships, :aspects, :dependent => :restrict)
 
     add_foreign_key(:comments, :posts, :dependent => :delete)
     add_foreign_key(:comments, :people, :dependent => :delete)

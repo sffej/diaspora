@@ -37,11 +37,12 @@
         = hidden_field_tag 'aspect_ids[]', aspect_id.to_s
 
       .options_and_submit
-        %div
+        %div.mention_helper
           %span#shorten=(' Shorten URL ')
           %span#mention=(' Mention Users ')
           %span#public=(' Public Services ')
           %span#aspects=(' Aspects ')
+
         .right
           #fileInfo
           = image_tag 'ajax-loader.gif', :class => 'hidden', :id => "publisher_spinner"
