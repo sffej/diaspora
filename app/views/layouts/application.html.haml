@@ -96,9 +96,6 @@
           %li= link_to '@diasporg', "http://twitter.com/diasporg"
           %li= link_to 'code on github', "https://github.com/diasporg/diaspora"
           %li= link_to 'ci tests', "http://ci.diasp.org"
-          %li
-            Code was updated:
-            %strong=GIT_UPDATE
           %li= link_to(t('layouts.application.toggle'), toggle_mobile_path)  if is_mobile_device?
         = image_tag 'powered_by_diaspora.png', :height => "11px", :width => "145px"
         %br
