@@ -23,6 +23,9 @@ require File.join(Rails.root, 'lib/swap')
 message = Morley::Shorty::swap(params[:status_message][:message])
     aspects = current_user.aspects_from_ids(params[:aspect_ids])
 
+    if !photos.empty?
+      @status_message.photos << photos
+    end
     if @status_message.save
       Rails.logger.info("event=create type=status_message chars=#{params[:status_message][:message].length}")
 
@@ -33,14 +36,12 @@ message = Morley::Shorty::swap(params[:status_message][:message])
       if !photos.empty?
         for photo in photos
           was_pending = photo.pending
-          photo.public = public_flag
-          photo.pending = false
-          @status_message.photos << photo
           if was_pending
             current_user.add_to_streams(photo, aspects)
             current_user.dispatch_post(photo)
           end
         end
+        photos.update_all(:pending => false, :public => public_flag)
       end
 
       respond_to do |format|
@@ -49,6 +50,9 @@ message = Morley::Shorty::swap(params[:status_message][:message])
         format.mobile{ redirect_to :back}
       end
     else
+      if !photos.empty?
+        photos.update_all(:status_message_id => nil)
+      end
       respond_to do |format|
         format.js { render :json =>{:errors =>   @status_message.errors.full_messages}, :status => 406 }
         format.html {redirect_to :back}

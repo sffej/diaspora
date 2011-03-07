@@ -43,7 +43,7 @@ describe StatusMessage do
     photo.save!
 
     n.photos << photo
-    n.valid?
+    n.valid?.should be_true
     n.errors.full_messages.should == []
   end
 
@@ -145,6 +145,23 @@ STR
       it 'does not call create_mentions if there are mentions in the db' do
         @sm.should_not_receive(:create_mentions)
         @sm.mentioned_people
+      end
+    end
+
+    describe "#mentions?" do
+      it 'returns true if the person was mentioned' do
+        @sm.mentions?(@people[0]).should be_true
+      end
+
+      it 'returns false if the person was not mentioned' do
+        @sm.mentions?(Factory.create(:person)).should be_false
+      end
+    end
+
+    describe "#notify_person" do
+      it 'notifies the person mentioned' do
+        Notification.should_receive(:notify).with(alice, anything, anything)
+        @sm.notify_person(alice.person)
       end
     end
   end
