@@ -56,10 +56,13 @@ javascripts:
     - public/javascripts/aspect-filters.js
     - public/javascripts/contact-list.js
   people:
-    - public/javascripts/contact-list.js
+    - public/javascripts/vendor/jquery.autoSuggest.js
   photos:
     - public/javascripts/photo-show.js
     - public/javascripts/exif.js
+  inbox:
+    - public/javascripts/vendor/jquery.autoSuggest.js
+    - public/javascripts/inbox.js
 
 stylesheets:
   default:
@@ -70,3 +73,4 @@ stylesheets:
     - public/stylesheets/vendor/fileuploader.css
     - public/stylesheets/vendor/tipsy.css
     - public/stylesheets/qtip.css
+    - public/stylesheets/vendor/autoSuggest.css
