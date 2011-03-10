@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery :except => :receive
 
   before_filter :ensure_http_referer_is_set
-  before_filter :set_contacts_notifications_unread_count_and_status, :except => [:create, :update]
+  before_filter :set_header_data, :except => [:create, :update]
   before_filter :count_requests
   before_filter :set_invites
   before_filter :set_locale
@@ -17,20 +17,20 @@ class ApplicationController < ActionController::Base
   before_filter :set_grammatical_gender
 
   inflection_method :grammatical_gender => :gender
-  #include Oink::InstanceTypeCounter
 
   def ensure_http_referer_is_set
     request.env['HTTP_REFERER'] ||= '/aspects'
   end
 
-  def set_contacts_notifications_unread_count_and_status
+  def set_header_data
     if user_signed_in?
-      @aspect = nil
-      @object_aspect_ids = []
-      @all_aspects = current_user.aspects.includes(:aspect_memberships, :post_visibilities)
-      @notification_count = Notification.for(current_user, :unread =>true).count
-      @unread_message_count = ConversationVisibility.sum(:unread, :conditions => "person_id = #{current_user.person.id}")
-      @user_id = current_user.id
+      if request.format.html?
+        @aspect = nil
+        @object_aspect_ids = []
+        @notification_count = Notification.for(current_user, :unread =>true).count
+        @unread_message_count = ConversationVisibility.sum(:unread, :conditions => "person_id = #{current_user.person.id}")
+      end
+      @all_aspects = current_user.aspects
     end
   end
   
@@ -99,19 +99,5 @@ class ApplicationController < ActionController::Base
 
   def grammatical_gender
     @grammatical_gender || nil
-  end
-
-  def similar_people contact, opts={}
-    opts[:limit] ||= 5
-    aspect_ids = contact.aspect_ids
-    count = Contact.count(:user_id => current_user.id,
-                          :person_id.ne => contact.person.id,
-                          :aspect_ids.in => aspect_ids)
-
-    if count > opts[:limit]
-      offset = rand(count-opts[:limit])
-    else
-      offset = 0
-    end
   end
 end

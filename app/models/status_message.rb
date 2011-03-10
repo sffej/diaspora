@@ -88,21 +88,15 @@ class StatusMessage < Post
     <<-XML
   <entry>
     <title>#{x(self.formatted_message(:plain_text => true))}</title>
+    <content>#{x(self.formatted_message(:plain_text => true))}</content>
     <link rel="alternate" type="text/html" href="#{self.author.url}status_messages/#{self.id}"/>
-    <id>#{person.url}posts/#{self.id}</id>
+    <id>#{self.author.url}posts/#{self.id}</id>
     <published>#{self.created_at.xmlschema}</published>
     <updated>#{self.updated_at.xmlschema}</updated>
     <activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
     <activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
   </entry>
       XML
-  end
-
-  def public_message(length, url = "")
-    space_for_url = url.blank? ? 0 : (url.length + 1)
-    truncated = truncate(self.message, :length => (length - space_for_url))
-    truncated = "#{truncated} #{url}" unless url.blank?
-    return truncated
   end
 
   protected

@@ -21,13 +21,13 @@ module ApplicationHelper
 
   def aspects_with_post aspects, post
     aspects.select do |aspect|
-      aspect.post_visibilities.detect{|pv| pv.post_id == post.id}
+      PostVisibility.exists?(:aspect_id => aspect.id, :post_id => post.id)
     end
   end
 
   def aspects_without_post aspects, post
     aspects.reject do |aspect|
-      aspect.post_visibilities.detect{|pv| pv.post_id == post.id}
+      PostVisibility.exists?(:aspect_id => aspect.id, :post_id => post.id)
     end
   end
 
@@ -129,7 +129,7 @@ module ApplicationHelper
   end
 
   def person_image_tag(person, size=:thumb_small)
-    "<img alt=\"#{h(person.name)}\" class=\"avatar\" #{("data-owner_id="+@user_id.to_s) if @user_id} data-person_id=\"#{person.id}\" src=\"#{person.profile.image_url(size)}\" title=\"#{h(person.name)} is #{h(person.diaspora_handle)}\">".html_safe
+    "<img alt=\"#{h(person.name)}\" class=\"avatar\" data-person_id=\"#{person.id}\" src=\"#{person.profile.image_url(size)}\" title=\"#{h(person.name)} is #{h(person.diaspora_handle)}\">".html_safe
   end
 
   def person_link(person, opts={})
