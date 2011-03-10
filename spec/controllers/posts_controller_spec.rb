@@ -9,7 +9,33 @@ describe PostsController do
 
   before do
     @user = alice
-    @controller.stub!(:current_user).and_return(nil)
+  end
+  describe '#index' do
+    context 'signed in' do
+      before do
+        sign_in :user, @user
+      end
+      it 'works' do
+        get :index
+        response.status.should == 200
+      end
+    end
+    it 'shows the most recent public posts' do
+      posts = []
+      10.times do
+        posts << @user.post(:status_message, :message => "hello", :public => true, :to => 'all')
+      end
+      get :index
+      assigns[:posts].should =~ posts
+    end
+    it' shows only local posts' do
+      10.times do
+        @user.post(:status_message, :message => "hello", :public => true, :to => 'all')
+      end
+      @user.person.update_attributes(:owner_id => nil)
+      get :index
+      assigns[:posts].should == []
+    end
   end
   describe '#show' do
     it 'shows a public post' do
