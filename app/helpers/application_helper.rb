@@ -165,10 +165,11 @@ module ApplicationHelper
     end
 
     message = process_links(message)
-    message = process_youtube(message, options[:youtube_maps])
-    message = process_vimeo(message, options[:vimeo_maps])
     message = process_autolinks(message)
     message = process_emphasis(message)
+    message = process_youtube(message, options[:youtube_maps])
+    message = process_vimeo(message, options[:vimeo_maps])
+    
     message.gsub!(/&lt;3/, "&hearts;")
 
     if options[:newlines]
@@ -215,7 +216,7 @@ module ApplicationHelper
       else
         title = I18n.t 'application.helper.video_title.unknown'
       end
-      '<a class="video-link" data-host="youtube.com" data-video-id="' + video_id + '" href="'+ match_data[0].strip + '">Youtube: ' + title + '</a>'
+      ' <a class="video-link" data-host="youtube.com" data-video-id="' + video_id + '" href="http://'+ match_data[0].strip + '" target="_blank">Youtube: ' + title + '</a>'
     end
     return processed_message
   end
@@ -268,7 +269,7 @@ module ApplicationHelper
       else
         title = I18n.t 'application.helper.video_title.unknown'
       end
-      '<a class="video-link" data-host="vimeo.com" data-video-id="' + video_id + '" href="' + match_data[0] + '">Vimeo: ' + title + '</a>'
+      ' <a class="video-link" data-host="vimeo.com" data-video-id="' + video_id + '" href="http://' + match_data[0] + '" target="_blank">Vimeo: ' + title + '</a>'
     end
     return processed_message
   end
