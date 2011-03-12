@@ -9,7 +9,7 @@
 *   http://en.wikipedia.org/wiki/MIT_License
 *   http://en.wikipedia.org/wiki/GNU_General_Public_License
 *
-* Date: Thu Feb 24 23:26:34 2011 +0000
+* Date: Wed Mar 9 10:39:15 2011 +0000
 */
 
 "use strict"; // Enable ECMAScript "strict" operation for this function. See more: http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/
@@ -391,7 +391,10 @@ function QTip(target, options, id, attr)
 				container: posOptions.container[0] === docBody ? $(document) : posOptions.container,
 				doc: $(document)
 			},
-			events = { show: String(options.show.event).split(' '), hide: String(options.hide.event).split(' ') },
+			events = {
+				show: $.trim('' + options.show.event).split(' '),
+				hide: $.trim('' + options.hide.event).split(' ')
+			},
 			IE6 = $.browser.msie && parseInt($.browser.version, 10) === 6;
 
 		// Define show event method
@@ -696,16 +699,17 @@ function QTip(target, options, id, attr)
 						'aria-atomic': TRUE
 					})
 				);
+			self.rendered = -1;
 
-			// Set rendered status
-			self.rendered = TRUE;
-
-			// Update title and content
+			// Update title
 			if(title) { 
 				createTitle();
 				updateTitle(title);
 			}
+
+			// Set proper rendered flag and update content
 			updateContent(content);
+			self.rendered = TRUE;
 
 			// Setup widget classes
 			setWidget();
@@ -742,7 +746,8 @@ function QTip(target, options, id, attr)
 					self.show(cache.event);
 				}
 
-				next(); // Move on
+				// Move on and redraw the tooltip properly
+				next(); self.redraw();
 			});
 
 			return self;
@@ -1194,20 +1199,21 @@ function QTip(target, options, id, attr)
 		// IE max/min height/width simulartor function
 		redraw: function()
 		{
-			// Make sure tooltip is rendered and the browser needs the redraw
-			if(!self.rendered || !($.browser.msie && $.browser.version < 8)) { return FALSE; }
+			var fluid = uitooltip + '-fluid',
+			 auto = 'auto', dimensions;
 
-			var fluid = uitooltip + '-fluid', dimensions;
+			// Return if tooltip is not rendered
+			if(self.rendered < 1) { return FALSE; }
 
 			// Reset the height and width and add the fluid class to reset max/min widths
-			tooltip.css({ width: 'auto', height: 'auto' }).addClass(fluid);
+			tooltip.css({ width: auto, height: auto }).addClass(fluid);
 
 			// Grab our tooltip dimensions
 			dimensions = {
 				height: tooltip.outerHeight(),
 				width: tooltip.outerWidth()
 			};
-			
+
 			// Determine actual width
 			$.each(['width', 'height'], function(i, prop) {
 				// Parse our max/min properties
@@ -1369,7 +1375,7 @@ function init(id, opts)
 // jQuery $.fn extension method
 QTIP = $.fn.qtip = function(options, notation, newValue)
 {
-	var command = String(options).toLowerCase(), // Parse command
+	var command = ('' + options).toLowerCase(), // Parse command
 		returned = NULL,
 		args = command === 'disable' ? [TRUE] : $.makeArray(arguments).slice(1, 10),
 		event = args[args.length - 1],
@@ -1426,10 +1432,10 @@ QTIP.bind = function(opts, event)
 {
 	return this.each(function(i) {
 		var options, targets, events,
-			
+
 		// Find next available ID, or use custom ID if provided
 		id = (!opts.id || opts.id === FALSE || opts.id.length < 1 || $('#'+uitooltip+'-'+opts.id).length) ? QTIP.nextid++ : opts.id,
-		
+
 		// Setup events namespace
 		namespace = '.qtip-'+id+'-create',
 
@@ -1446,8 +1452,8 @@ QTIP.bind = function(opts, event)
 		// Determine hide and show targets
 		targets = { show: options.show.target, hide: options.hide.target };
 		events = {
-			show: String(options.show.event).replace(' ', namespace+' ') + namespace,
-			hide: String(options.hide.event).replace(' ', namespace+' ') + namespace
+			show: $.trim('' + options.show.event).replace(/ /g, namespace+' ') + namespace,
+			hide: $.trim('' + options.hide.event).replace(/ /g, namespace+' ') + namespace
 		};
 
 		// Define hoverIntent function
@@ -1490,7 +1496,7 @@ QTIP.bind = function(opts, event)
 PLUGINS = QTIP.plugins = {
 	// Corner object parser
 	Corner: function(corner) {
-		corner = String(corner).replace(/([A-Z])/, ' $1').replace(/middle/gi, 'center').toLowerCase();
+		corner = ('' + corner).replace(/([A-Z])/, ' $1').replace(/middle/gi, 'center').toLowerCase();
 		this.x = (corner.match(/left|right/i) || corner.match(/center/) || ['inherit'])[0].toLowerCase();
 		this.y = (corner.match(/top|bottom|center/i) || ['inherit'])[0].toLowerCase();
 
@@ -1540,7 +1546,10 @@ PLUGINS = QTIP.plugins = {
 	/*
 	 * iOS 4.0 and below scroll fix detection used in offset() function.
 	 */
-	iOS: parseFloat(((/CPU.+OS ([0-9_]{3}).*AppleWebkit.*Mobile/i.exec(navigator.userAgent)) || [0,'4_2'])[1].replace('_','.')) < 4.1,
+	iOS: parseFloat(
+		('' + (/CPU.*OS ([0-9_]{3})|(CPU like).*AppleWebKit.*Mobile/i.exec(navigator.userAgent) || [0,'4_2'])[1])
+		.replace('undefined', '3_2').replace('_','.')
+	) < 4.1,
 	
 	/*
 	 * jQuery-secpfic $.fn overrides 
@@ -2007,7 +2016,8 @@ function Tip(qTip, command)
 		},
 
 		detectColours: function() {
-			var tip = elems.tip.css({ backgroundColor: '', border: '' }),
+			var i,
+				tip = elems.tip.css({ backgroundColor: '', border: '' }),
 				corner = self.corner,
 				precedance = corner[ corner.precedance ],
 
@@ -2018,26 +2028,28 @@ function Tip(qTip, command)
 				backgroundColor = 'background-color',
 				transparent = 'transparent',
 
-				useTitle = elems.titlebar && 
-					(corner.y === 'top' || (corner.y === 'center' && tip.position().top + (size.height / 2) + opts.offset < elems.titlebar.outerHeight(1))),
-				colorElem = useTitle ? elems.titlebar : elems.content;
-				
+				bodyBorder = $(document.body).css('color'),
+				contentColour = qTip.elements.content.css('color'),
+
+				useTitle = elems.titlebar && (corner.y === 'top' || (corner.y === 'center' && tip.position().top + (size.height / 2) + opts.offset < elems.titlebar.outerHeight(1))),
+				colorElem = useTitle ? elems.titlebar : elems.content,
+
 			// Detect tip colours from CSS styles
-			color.fill = tip.css(backgroundColor) || transparent;
-			color.border = tip[0].style[ borderSideCamel ];
+			fill = tip.css(backgroundColor) || transparent,
+			border = tip[0].style[ borderSideCamel ];
 
 			// Make sure colours are valid
-			if(!color.fill || invalid.test(color.fill)) { 
+			if(!fill || invalid.test(fill)) {
 				color.fill = colorElem.css(backgroundColor);
 				if(invalid.test(color.fill)) {
-					color.fill = tooltip.css(backgroundColor);
+					color.fill = tooltip.css(backgroundColor) || fill;
 				}
 			}
-			if(!color.border || invalid.test(color.border)) {
+			if(!border || invalid.test(border)) {
 				color.border = tooltip.css(borderSide);
-				if(invalid.test(color.border) || color.border === $(document.body).css('color')) { 
-					color.border = (colorElem.css(borderSide) !== $(qTip.elements.content).css('color') ? 
-						colorElem.css(borderSide) : transparent);
+				if(invalid.test(color.border) || color.border === bodyBorder) {
+					color.border = colorElem.css(borderSide);
+					if(color.border === contentColour) { color.border = border; }
 				}
 			}
 

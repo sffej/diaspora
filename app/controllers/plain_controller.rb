@@ -2,7 +2,7 @@
 #   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 class PlainController < ApplicationController
-  before_filter :authenticate_user!, :except => [:public]
+  before_filter :authenticate_user!, :except => [:public, :shortenshow]
   respond_to :html
   layout nil
     require File.join(Rails.root, 'lib/forwardmail')
