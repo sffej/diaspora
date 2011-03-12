@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110311000150) do
+ActiveRecord::Schema.define(:version => 20110311220249) do
 
   create_table "aspect_memberships", :force => true do |t|
     t.integer  "aspect_id",  :null => false
@@ -474,6 +474,13 @@ ActiveRecord::Schema.define(:version => 20110311000150) do
 
   create_table "tags", :force => true do |t|
     t.string "name"
+  end
+
+  create_table "user_preferences", :force => true do |t|
+    t.string   "email_type"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
