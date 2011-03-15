@@ -27,7 +27,7 @@ message = Morley::Shorty::swap(params[:status_message][:message])
       @status_message.photos << photos
     end
     if @status_message.save
-      Rails.logger.info("event=create type=status_message chars=#{params[:status_message][:message].length}")
+      Rails.logger.info("event=create type=status_message chars=#{params[:status_message][:text].length}")
 
       current_user.add_to_streams(@status_message, aspects)
       receiving_services = params[:services].map{|s| current_user.services.where(
