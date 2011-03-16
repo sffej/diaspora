@@ -8,6 +8,7 @@ module Shorty
 require 'net/http'
 require 'uri'
 require 'rubygems'
+  if message
     message.gsub!(/( |^)(www\.[^\s]+\.[^\s])/, '\1http://\2')
     message.gsub!(/(<a target="\\?_blank" href=")?(https|http|ftp):\/\/\/([^\s]+)/) do |m|
       if !$1.nil?
@@ -17,15 +18,16 @@ require 'rubygems'
         apikey = AppConfig[:yourlsapi]
         apidomain = AppConfig[:yourlsurl]
         oldurl = CGI::escape("#{$2}://#{$3}")
-        if message
+     #   if message
         newurl = Net::HTTP.get(URI.parse("http://#{apidomain}/yourls-api.php?action=shorturl&url=#{oldurl}&signature=#{apikey}&format=simple"))
-        end
+     #   end
         res = %{#{newurl}}
         res.gsub!(/(\*|_)/) { |m| "\\#{$1}" }
         res
       end
     end
     return message
+  end
 end
 end
 end
