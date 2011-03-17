@@ -346,6 +346,7 @@ en:
       similar_contacts: "similar contacts"
       start_sharing: "start sharing"
       message: "Message"
+      mention: "Mention"
     profile_sidebar:
       remove_contact: "remove contact"
       edit_my_profile: "Edit my profile"
@@ -403,6 +404,8 @@ en:
       posts_tagged_with: "Posts tagged with #%{tag}"
       nobody_talking: "Nobody is talking about %{tag} yet."
       people_tagged_with: "People tagged with %{tag}"
+      people: "people"
+      person: "person"
 
   profiles:
     edit:
@@ -536,8 +539,7 @@ en:
 
   status_messages:
     new_status_message:
-      tell_me_something_good: "tell me something good"
-      oh_yeah: "oh yeah!"
+      mentioning: "Mentioning: "
     show:
       destroy: "Delete"
       permalink: "permalink"

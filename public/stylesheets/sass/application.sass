@@ -4,6 +4,7 @@
 
 
 $blue: #3F8FBA
+$red: #FF0000 
 $background: rgb(252,252,252)
 
 body
@@ -25,7 +26,7 @@ p
   :word-wrap break-word
 
 h1, h2, h3, h4, h5
-  :color #444
+  :color #333
   :position relative
   :font
     :weight bold
@@ -2217,6 +2218,14 @@ h3,h4
   &:active
     :top 0px
 
+.aspect_badge.removed
+  :background
+    :color #FA2A00 
+  :text
+    :decoration line-through 
+  &:hover
+    :background
+      :color #FA2A00
 .stream
   .avatar
     :float left
@@ -2765,6 +2774,7 @@ ul.show_comments
       :display none
 
 .tag
+  :display inline-block
   &:hover
     :text
       :decoration none
@@ -2777,6 +2787,30 @@ ul.show_comments
     :bottom 1px dotted $blue
   :font
     :weight bold
+
+h1.tag
+  :border
+    :bottom 2px dotted $blue
+  &:hover
+    :border
+      :bottom 2px dotted $blue
+    
+
+.info
+  :overflow hidden
+  :white-space nowrap
+  :text-overflow ellipsis
+  
+  .tag
+    :background
+      :color #efefef
+    :color #999
+    :border
+      :bottom 1px dotted #999
+
+    &:hover
+      :border
+        :bottom 1px solid #999
 
 .diaspora_handle
   :font
