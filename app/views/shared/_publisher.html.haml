@@ -36,12 +36,11 @@
 
       .options_and_submit
         %div.mention_helper
-          %span#shorten=(' Shorten URL ')
-          %span#mention=(' Mention Users ')
-          %span#public=(' Public Services ')
-          %span#aspects=(' Aspects ')
           - if aspect != :profile
-            %i= t('.mention_helper_text')
+            %span#shorten=(' Shorten URL ')
+            %span#mention=(' Mention Users ')
+            %span#public=(' Public Services ')
+            %span#aspects=(' Aspects ')
           - else
             .badges
               %i= t('.publishing_to')
