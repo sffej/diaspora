@@ -1,8 +1,8 @@
 $(document).ready(function() { 
 
-  $('#status_message_fake_text').live('click', function() {
+//  $('#status_message_fake_text').live('keyup', function() {
     $('#status_message_fake_text').jqEasyCounter({'maxChars': 1000,'maxCharsWarning': 140});
-  });
+//  });
   //$("textarea[id*='comment_text_on_']").live('click', function() {
     $("textarea[id*='comment_text_on_']").jqEasyCounter({'maxChars': 1000,'maxCharsWarning': 140});
   //});
