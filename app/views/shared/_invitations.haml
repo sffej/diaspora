@@ -4,7 +4,7 @@
   -if invites > 0
     - if SERVICES['facebook']['app_id'] !=""
       %h4{:style => 'text-align:center;'}
-        = t('Via Public Wall Post')
+        = ('Via Public Wall Post')
         = link_to t('.from_facebook'), '/fb', :rel => 'facebox'
         = ('Via Private Message')
         - if defined? remote
