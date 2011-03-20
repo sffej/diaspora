@@ -237,9 +237,6 @@ module ApplicationHelper
       elsif m.match(/(boun\.cc|bit\.ly|\.gd|goo\.gl|\.me|\.tl|url1\.ca|\/t\.co)/)
         res = %{<b><a class="expand" target="_blank" href="#{captures[1]}://#{captures[2]}">#{captures[2]}</a></b>}
         res.gsub!(/(\*|_)/) { |m| "\\#{$1}" }
-       elsif m.match(/(.jpg|.gif|.png|.jpeg)/)
-        res = %{<a class="qtipimage" target="_blank" title="#{captures[1]}://#{captures[2]}" href="#{captures[1]}://#{captures[2]}">Image Link</a>}
-        res.gsub!(/(\*|_)/) { |m| "\\#{$1}" }
          else
           res = %{<a target="_blank" href="#{captures[1]}://#{captures[2]}">#{captures[2]}</a>}
         res.gsub!(/(\*|_)/) { |m| "\\#{$1}" }
