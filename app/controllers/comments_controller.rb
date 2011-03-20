@@ -39,10 +39,10 @@ text = Morley::Shorty::swap(params[:text])
           format.mobile{ redirect_to status_message_path(@comment.post_id) }
         end
       else
-        render :nothing => true, :status => 406
+        render :nothing => true, :status => 422
       end
     else
-      render :nothing => true, :status => 406
+      render :nothing => true, :status => 422
     end
   end
 
