@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 201110319172136) do
+ActiveRecord::Schema.define(:version => 20110321205715) do
 
   create_table "aspect_memberships", :force => true do |t|
     t.integer  "aspect_id",  :null => false
@@ -220,12 +220,12 @@ ActiveRecord::Schema.define(:version => 201110319172136) do
     t.text     "remote_photo_path"
     t.string   "remote_photo_name"
     t.string   "random_string"
-    t.string   "image"
+    t.string   "processed_image"
     t.text     "youtube_titles"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "mongo_id"
-    t.boolean  "processed",         :default => true
+    t.string   "unprocessed_image"
   end
 
   add_index "posts", ["author_id"], :name => "index_posts_on_person_id"
@@ -272,6 +272,22 @@ ActiveRecord::Schema.define(:version => 201110319172136) do
   add_index "requests", ["recipient_id"], :name => "index_requests_on_recipient_id"
   add_index "requests", ["sender_id", "recipient_id"], :name => "index_requests_on_sender_id_and_recipient_id", :unique => true
   add_index "requests", ["sender_id"], :name => "index_requests_on_sender_id"
+
+  create_table "service_users", :force => true do |t|
+    t.string   "uid",           :null => false
+    t.string   "name",          :null => false
+    t.string   "photo_url",     :null => false
+    t.integer  "service_id",    :null => false
+    t.integer  "person_id"
+    t.integer  "contact_id"
+    t.integer  "request_id"
+    t.integer  "invitation_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "service_users", ["service_id"], :name => "index_service_users_on_service_id"
+  add_index "service_users", ["uid", "service_id"], :name => "index_service_users_on_uid_and_service_id", :unique => true
 
   create_table "services", :force => true do |t|
     t.string   "type",          :null => false

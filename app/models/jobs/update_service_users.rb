@@ -4,10 +4,11 @@
 
 
 module Job
-  class ProcessPhoto < Base
-    @queue = :photos
-    def self.perform_delegate(photo_id)
-      Photo.find(photo_id).process
+  class UpdateServiceUsers < Base 
+    @queue = :http_service
+    def self.perform_delegate(service_id)
+      service = Service.find(service_id)
+      service.save_friends
     end
   end
 end

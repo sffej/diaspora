@@ -91,6 +91,7 @@ en:
       aspect_list_is_visible: "aspect list is visible to others in aspect"
       aspect_list_is_not_visible: "aspect list is hidden to others in aspect"
       update: "update"
+      updating: "updating"
     aspect_contacts:
       done_editing: "done editing"
     aspect_stream:
@@ -99,12 +100,6 @@ en:
       post_time: "post time"
     show:
       edit_aspect: "edit aspect"
-    no_contacts_message:
-      nobody: "Bring the people that matter in your life to Diaspora!"
-      nobody_in_aspect: "Your aspect '%{aspect_name}' is empty."
-      add_contact: "Add a contact"
-      add_contact_to: "Add someone to %{aspect_name}"
-      invite: "Invite someone to join Diaspora!"
     no_posts_message:
       start_talking: "Nobody has said anything yet.  Get the conversation started!"
     manage:
@@ -565,6 +560,7 @@ en:
     show:
       destroy: "Delete"
       permalink: "permalink"
+      not_found: "Sorry, we couldn't find that post."
     helper:
       no_message_to_display: "No message to display."
     destroy:
