@@ -7,14 +7,14 @@ $(document).ready(function() {
     $("textarea[id*='comment_text_on_']").jqEasyCounter({'maxChars': 1000,'maxCharsWarning': 140});
   //});
 
-   $('#shorten').qtip({content: 'Shorten your URL by adding an extra / in it!<br>E.g. http:<b>///</b>www.com or https:<b>///</b>www.com',
-      position: {my: 'top left', target: 'mouse', viewport: $(window),adjust: {x: 10,  y: 10}},hide: {fixed: true},style: 'ui-tooltip-dark'});
-   $('#mention').qtip({content: 'Mention another Diaspora user by entering a @ and then their name',
-      position: {my: 'top left', target: 'mouse', viewport: $(window),adjust: {x: 10,  y: 10}},hide: {fixed: true},style: 'ui-tooltip-dark'});
-   $('#public').qtip({content: 'Toggle your public services by clicking their icons, when they are highlighted your post will go to them',
-      position: {my: 'top left', target: 'mouse', viewport: $(window),adjust: {x: 10,  y: 10}},hide: {fixed: true},style: 'ui-tooltip-dark'});
-   $('#aspects').qtip({content: 'Toggle your aspects to have this post go to more than one at a time.',
-      position: {my: 'top left', target: 'mouse', viewport: $(window),adjust: {x: 10,  y: 10}},hide: {fixed: true},style: 'ui-tooltip-dark'});
+//   $('#shorten').qtip({content: 'Shorten your URL by adding an extra / in it!<br>E.g. http:<b>///</b>www.com or https:<b>///</b>www.com',
+//      position: {my: 'top left', target: 'mouse', viewport: $(window),adjust: {x: 10,  y: 10}},hide: {fixed: true},style: 'ui-tooltip-dark'});
+//   $('#mention').qtip({content: 'Mention another Diaspora user by entering a @ and then their name',
+//      position: {my: 'top left', target: 'mouse', viewport: $(window),adjust: {x: 10,  y: 10}},hide: {fixed: true},style: 'ui-tooltip-dark'});
+//   $('#public').qtip({content: 'Toggle your public services by clicking their icons, when they are highlighted your post will go to them',
+//      position: {my: 'top left', target: 'mouse', viewport: $(window),adjust: {x: 10,  y: 10}},hide: {fixed: true},style: 'ui-tooltip-dark'});
+//   $('#aspects').qtip({content: 'Toggle your aspects to have this post go to more than one at a time.',
+//      position: {my: 'top left', target: 'mouse', viewport: $(window),adjust: {x: 10,  y: 10}},hide: {fixed: true},style: 'ui-tooltip-dark'});
 
    $(".expand").live('mouseover', function() {
    $(this).qtip({
