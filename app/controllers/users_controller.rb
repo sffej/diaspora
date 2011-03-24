@@ -57,7 +57,7 @@ class UsersController < ApplicationController
         render :nothing => true, :status => 204
       }
       format.all{
-        redirect_to edit_user_path(@user)
+        redirect_to edit_user_path
       }
     end
   end
