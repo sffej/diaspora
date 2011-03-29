@@ -9,7 +9,7 @@
 *   http://en.wikipedia.org/wiki/MIT_License
 *   http://en.wikipedia.org/wiki/GNU_General_Public_License
 *
-* Date: Mon Mar 21 18:15:30 2011 +0000
+* Date: Mon Mar 28 15:53:34 2011 +0100
 */
 
 "use strict"; // Enable ECMAScript "strict" operation for this function. See more: http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/
@@ -1207,8 +1207,8 @@ function QTip(target, options, id, attr)
 			// Reset the width and add the fluid class to reset max/min
 			tooltip.css('width', 'auto').addClass(fluid);
 
-			// Grab our tooltip width
-			width = tooltip.width();
+			// Grab our tooltip width (add 1 so we don't get wrapping problems in Gecko)
+			width = tooltip.width() + ($.browser.mozilla ? 1 : 0);
 
 			// Parse our max/min properties
 			max = parseInt(tooltip.css('max-width'), 10) || 0;
@@ -1250,7 +1250,7 @@ function QTip(target, options, id, attr)
 		destroy: function()
 		{
 			var t = target[0],
-				title = $.data(t, oldtitle);
+				title = $.attr(t, oldtitle);
 
 			// Destroy tooltip and  any associated plugins if rendered
 			if(self.rendered) {
@@ -1272,6 +1272,7 @@ function QTip(target, options, id, attr)
 			// Reset old title attribute if removed 
 			if(title) {
 				$.attr(t, 'title', title);
+				target.removeAttr(oldtitle);
 			}
 
 			// Remove ARIA attributes and bound qtip events
@@ -1354,8 +1355,8 @@ function init(id, opts)
 
 	// Remove title attribute and store it if present
 	if($.attr(this, 'title')) {
-		$.data(this, oldtitle, $.attr(this, 'title'));
-		elem.removeAttr('title');
+		$.attr(this, oldtitle, $.attr(this, 'title'));
+		this.removeAttribute('title');
 	}
 
 	// Initialize the tooltip and add API reference
@@ -1561,7 +1562,7 @@ PLUGINS = QTIP.plugins = {
 			
 			if(attr === title) {
 				if(arguments.length < 2) {
-					return $.data(self, oldtitle);
+					return $.attr(self, oldtitle);
 				}
 				else if(typeof api === 'object') {
 					// If qTip is rendered and title was originally used as content, update it
@@ -1571,31 +1572,25 @@ PLUGINS = QTIP.plugins = {
 					
 					// Use the regular attr method to set, then cache the result
 					$.fn['attr'+replaceSuffix].apply(this, arguments);
-					$.data(self, oldtitle, $.attr(self, title));
-					return this.removeAttr('title');
+					$.attr(self, oldtitle, $.attr(self, title));
+					return this.removeAttr(title);
 				}
 			}
 		},
 		
 		/* Allow clone to correctly retrieve cached title attributes */
 		clone: function(keepData) {
-			var titles = $([]), elem;
-			
-			// Re-add cached titles before we clone
-			$('*', this).add(this).each(function() {
-				var title = $.data(this, oldtitle);
-				if(title) {
-					$.attr(this, 'title', title);
-					titles = titles.add(this);
-				}
-			});
-			
+			var titles = $([]), title = 'title', elem;
+
 			// Clone our element using the real clone method
-			elem = $.fn['clone'+replaceSuffix].apply(this, arguments);
-			
-			// Remove the old titles again
-			titles.removeAttr('title');
-			
+			elem = $.fn['clone'+replaceSuffix].apply(this, arguments)
+
+			// Grab all elements with an oldtitle set, and change it to regular title attribute
+			.filter('[oldtitle]').each(function() {
+				$.attr(this, title, $.attr(this, oldtitle));
+				this.removeAttribute(oldtitle);
+			});
+
 			return elem;
 		},
 		
