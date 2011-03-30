@@ -31,6 +31,7 @@ en:
   previous: "previous"
   _comments: "Comments"
   all_aspects: "All Aspects"
+  no_results: "No Results Found"
 
 
   #for reference translation, the real activerecord english transations are actually
@@ -143,10 +144,13 @@ en:
       success: "Successfully removed person from aspect"
       failure: "Failed to remove person from aspect"
       no_membership: "Could not find the selected person in that aspect"
+
   bookmarklet:
     post_success: "Posted! Closing!"
-    post_something: 'Post something to Diaspora'
-    from_anywhere: 'from anywhere by bookmarking this link.'
+    post_something: "Post something to Diaspora"
+    explanation: "%{link} from anywhere by bookmarking this link."
+    explanation_link_text: "Post to Diaspora"
+
   comments:
     zero: "no comments"
     one: "1 comment"
@@ -189,7 +193,6 @@ en:
       to: "to"
       subject: "subject"
       send: "Send"
-      no_results: "No Results Found"
     helper:
       new_messages: 
         zero: "no new messages"
