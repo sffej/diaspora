@@ -7,7 +7,9 @@ module Diaspora
     module Querying
 
       def find_visible_post_by_id( id )
-        self.raw_visible_posts.where(:id => id).includes({:author => :profile}, {:comments => {:author => :profile}}, :photos).first
+        post = Post.where(:id => id).joins(:contacts).where(:contacts => {:user_id => self.id}).first
+        post ||= Post.where(:id => id, :author_id => self.person.id).first
+        post ||= Post.where(:id => id, :public => true).first
       end
 
       def raw_visible_posts(opts = {})
@@ -25,7 +27,7 @@ module Diaspora
             :aspect_memberships => {:aspect_id => opts[:by_members_of]})
           posts_from_self = posts_from_self.where(:aspects => {:id => opts[:by_members_of]})
         end
-        
+
         post_ids = Post.connection.execute(posts_from_others.select('posts.id').limit(opts[:limit]).order(opts[:order]).to_sql).map{|r| r.first}
         post_ids += Post.connection.execute(posts_from_self.select('posts.id').limit(opts[:limit]).order(opts[:order]).to_sql).map{|r| r.first}
 
@@ -86,9 +88,10 @@ module Diaspora
         p = Post.arel_table
         post_ids = []
         if contact = self.contact_for(person)
-          post_ids = contact.post_visibilities.select('post_visibilities.post_id').map{|p| p.post_id}
+          post_ids = Post.connection.execute(contact.post_visibilities.select('post_visibilities.post_id').to_sql).map{|r| r.first}
         end
-        post_ids += person.posts.where(:public => true).select('posts.id').map{|p| p.id}
+        post_ids += Post.connection.execute(person.posts.where(:public => true).select('posts.id').to_sql).map{|r| r.first}
+
         Post.where(:id => post_ids, :pending => false).select('DISTINCT `posts`.*').order("posts.created_at DESC")
       end
     end
