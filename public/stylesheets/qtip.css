@@ -11,6 +11,28 @@
 *
 * Date: Fri Jan 28 11:38:45 2011 +0000
 */
+.ui-tooltip-wiki{
+   max-width: 440px;
+}
+ 
+   .ui-tooltip-wiki .ui-tooltip-content{
+      padding: 10px;
+      
+      line-height: 12.5px;
+   }
+ 
+   .ui-tooltip-wiki h1{
+      margin: 0 0 7px;
+ 
+      font-size: 1.5em;
+      line-height: 1em;
+   }
+ 
+   .ui-tooltip-wiki img{ padding: 0 10px 0 0; }
+   
+   .ui-tooltip-wiki p{ margin-bottom: 9px; }
+   .ui-tooltip-wiki .note{ margin-bottom: 0; font-style: italic; color: #888; }
+
 
 /* Fluid class for determining actual width in IE */
 .ui-tooltip-fluid{

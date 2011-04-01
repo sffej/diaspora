@@ -31,9 +31,6 @@ javascripts:
     - public/javascripts/view.js
     - public/javascripts/stream.js
     - public/javascripts/application.js
-    - public/javascripts/jcount.js
-    - public/javascripts/jquery.qtip.js
-    - public/javascripts/diasporg.js
     - public/javascripts/search.js
   mobile:
     - public/javascripts/vendor/jquery144.min.js
@@ -78,5 +75,4 @@ stylesheets:
     - public/stylesheets/vendor/facebox.css
     - public/stylesheets/vendor/fileuploader.css
     - public/stylesheets/vendor/tipsy.css
-    - public/stylesheets/qtip.css
     - public/stylesheets/vendor/autoSuggest.css

@@ -228,7 +228,7 @@ module ApplicationHelper
       elsif m.match(/(youtube|vimeo)/)
         m.gsub(/(\*|_)/) { |m| "\\#{$1}" } #remove markers on markdown chars to not markdown inside links
       elsif m.match(/(boun\.cc|bit\.ly|\.gd|goo\.gl|\.me|\.tl|url1\.ca|\/t\.co)/)
-        res = %{<b><a class="expand" target="_blank" href="#{captures[1]}://#{captures[2]}">#{captures[2]}</a></b>}
+        res = %{<b><a rel="facebox" target="_blank" href="/shorten/show?url=#{captures[1]}://#{captures[2]}">#{captures[2]}</a></b>}
         res.gsub!(/(\*|_)/) { |m| "\\#{$1}" }
          else
           res = %{<a target="_blank" href="#{captures[1]}://#{captures[2]}">#{captures[2]}</a>}
