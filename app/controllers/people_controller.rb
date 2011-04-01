@@ -10,7 +10,7 @@ class PeopleController < ApplicationController
 
   def index
     @aspect = :search
-    params[:q] ||= params[:term]
+    params[:q] ||= params[:term] || ''
 
     if (params[:q][0] == 35 || params[:q][0] == '#') && params[:q].length > 1
       redirect_to "/tags/#{params[:q].gsub("#", "")}"
@@ -25,7 +25,7 @@ class PeopleController < ApplicationController
         render :json => @people
       end
 
-      format.html do
+      format.all do
         @people = Person.search(params[:q], current_user).paginate :page => params[:page], :per_page => limit
         @hashes = hashes_for_people(@people, @aspects)
 

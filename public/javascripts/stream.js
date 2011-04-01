@@ -8,6 +8,8 @@ var Stream = {
     var $stream = $(".stream");
     var $publisher = $("#publisher");
 
+    $(".status_message_delete").tipsy({trigger: 'hover', gravity: 'n'});
+
     Diaspora.widgets.timeago.updateTimeAgo();
     $stream.not(".show").delegate("a.show_post_comments", "click", Stream.toggleComments);
     //audio linx
@@ -104,11 +106,6 @@ var Stream = {
     });
     $(".new_comment").live('ajax:failure', function(data, html, xhr) {
       Diaspora.widgets.alert.alert('Failed to post message!');
-    });
-
-    $(".stream").find(".stream_element_delete", ".stream_element").live('ajax:success', function(data, html, xhr) {
-      var target = $(this).parents(".stream_element");
-      target.hide('blind', { direction: 'vertical' }, 300, function(){ $(this).remove() });
     });
 
     $(".stream").find(".comment_delete", ".comment").live('ajax:success', function(data, html, xhr) {

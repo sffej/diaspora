@@ -320,6 +320,11 @@ header
       :margin 0
       :padding 0
 
+#conversation_inbox a
+  &:hover
+    :text
+      :decoration none
+
 .stream_element
   :position relative
   :word-wrap break-word
@@ -834,7 +839,8 @@ label
     form
       textarea
         :height 18px !important
-
+    .counter
+      :display none
   form
     :position relative
     :top 0
@@ -1016,6 +1022,12 @@ label
         .x
           :display block
 
+  .counter
+    :position absolute
+  .warning
+    :color orange
+  .exceeded
+    :color red
 .field_with_submit
   input[type='text']
     :width 82%
@@ -2621,7 +2633,12 @@ div.dislikes
 
   &:hover:not(.selected)
     :background
-      :color #f0f0f0
+      :color #fafafa
+
+  &.selected:hover
+    :background
+      :color lighten($blue,5%)
+
   &:hover
     :cursor pointer
 
