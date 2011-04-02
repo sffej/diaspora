@@ -110,6 +110,7 @@
         try {
         var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
         piwikTracker.trackPageView();
+        piwikTracker.enableLinkTracking();
         } catch( err ) {}
         </script><noscript><p><img src="http://stats.diasp.org/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
 
