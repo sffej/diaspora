@@ -25,8 +25,6 @@ class AspectsController < ApplicationController
     end
     params[:page] = params[:page] ? params[:page].to_i : 1
 
-
-
     @selected_contacts = @aspects.map { |aspect| aspect.contacts }.flatten.uniq
     @aspect_ids = @aspects.map { |a| a.id }
     @posts = current_user.raw_visible_posts(:by_members_of => @aspect_ids, :type => 'StatusMessage', :order => session[:sort_order] + ' DESC', :page => params[:page]).includes(
@@ -139,8 +137,6 @@ class AspectsController < ApplicationController
     else
       flash[:error] = I18n.t 'aspects.update.failure', :name => @aspect.name
     end
-
-    respond_with @aspect
   end
 
   def toggle_contact_visibility
