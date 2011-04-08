@@ -32,7 +32,7 @@ javascripts:
     - public/javascripts/view.js
     - public/javascripts/stream.js
     - public/javascripts/search.js
-    - public/javascripts/infinite_scroll.js
+    - public/javascripts/infinite-scroll.js
     - public/javascripts/diasporg.js
   mobile:
     - public/javascripts/vendor/jquery152.min.js
