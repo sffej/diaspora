@@ -10,15 +10,27 @@ var InfiniteScroll = {
       var newPath = pathStr.replace("?", "?only_posts=true&");
       return newPath.replace( "page=2", "page=" + nextPage);
     },
-    bufferPx: 300,
+    bufferPx: 500,
     debug: false,
     donetext: "no more.",
     loadingText: "",
     loadingImg: '/images/ajax-loader.gif'
   },
+  postScrollCallback: function(){
+    for (var callback in InfiniteScroll.postScrollCallbacks){
+      InfiniteScroll.postScrollCallbacks[callback]();
+    }
+  },
+  postScrollCallbacks: [],
   initialize: function(){
-    $('#main_stream').infinitescroll(InfiniteScroll.options, function() {
-      Diaspora.widgets.timeago.updateTimeAgo();
-    });
+    $('#main_stream').infinitescroll(InfiniteScroll.options, InfiniteScroll.postScrollCallback);
+  },
+  postScroll: function( callback ){
+    InfiniteScroll.postScrollCallbacks.push(callback);
   }
 }
+
+$(document).ready(function() {
+  InfiniteScroll.initialize();
+});
+

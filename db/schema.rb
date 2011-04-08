@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110405170101) do
+ActiveRecord::Schema.define(:version => 20110406203720) do
 
   create_table "aspect_memberships", :force => true do |t|
     t.integer  "aspect_id",  :null => false
@@ -338,6 +338,8 @@ ActiveRecord::Schema.define(:version => 20110405170101) do
   create_table "tags", :force => true do |t|
     t.string "name"
   end
+
+  add_index "tags", ["name"], :name => "index_tags_on_name", :unique => true
 
   create_table "user_preferences", :force => true do |t|
     t.string   "email_type"
