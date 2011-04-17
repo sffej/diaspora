@@ -114,3 +114,4 @@ isInsertion : function(keyCode){
   }
 },
 }
+;
