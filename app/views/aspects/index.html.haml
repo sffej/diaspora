@@ -17,11 +17,6 @@
   s.src = 'https://api.flattr.com/js/0.6/load.js?mode=auto';
   t.parentNode.insertBefore(s, t);
   })();
-.left{:style=>"float:left;display:inline;position:absolute;top:62px;left:5px;opacity:0.9;"}
-  <a class="FlattrButton" style="display:none;" href="https://diasp.org"></a>
-.right{:style=>"float:right;display:inline;position:absolute;top:55px;right:15px;opacity:0.8;"}
-  Diasp.org pod addons and links: <a onclick="chat();">Chat</a> | <a rel="facebox" href="/status">News | Donations</a> |  <a rel="facebox" href="/forwardemail">Forward Email</a> |  <a rel="facebox" href="/help">Help | Support</a>
-  <a rel="facebox" href="/fb">Facebook Inviter</a>
 
 - content_for :head do
   = include_javascripts :home
@@ -47,6 +42,11 @@
           = new_request_link(@request_count)
   %h4.section.invite_friends
     != t('bookmarklet.explanation', :link => link_to(t('bookmarklet.explanation_link_text'), bookmarklet))
+  .section.invite_friends
+    %h4
+      Diasporg Pod 
+    Welcome to Diaspora Pod Diasp.org. We have a temporary <a onclick="chat();">chat</a> room on IRC set up until chat is built in. Need <a rel="facebox" href="/help">help</a> with Diaspora? Have posts in languages you can not read? <a target="_new" href="http://userscripts.org/scripts/show/91276">Translate</a> them to your language! On this pod you can <a rel="facebox" href="/forwardemail">forward</a> your pod handle to your email account. Updates are often found on our <a target="_new" href="http://b.diasp.org">blog</a> or <a target="_new" href="http://twitter.com/diasporg">twitter</a>. Please consider <a rel="facebox" href="/status">donating</a> to the pod or flattr us, keep the pod ad free!
+    <br><a class="FlattrButton" style="display:none;" href="https://diasp.org"></a>
   - if @invites > 0
     .section.invite_friends
       %h4= t('shared.invitations.invite_your_friends')
