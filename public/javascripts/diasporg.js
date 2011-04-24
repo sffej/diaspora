@@ -1,6 +1,6 @@
 $('.expanded').tipsy({live: true,html:true});
 $('.expand').live('mouseenter', function() {
-  $(this).append("<div class='urlnote'>URL Expanded re-hover to see data</div>")
+  $(this).append("<div class='urlnote'>Short URL Expanded</div>")
   var $self = $(this)
     $.ajax({
       url: '/shorten/show?url='+this.href,
@@ -8,7 +8,7 @@ $('.expand').live('mouseenter', function() {
         $self.addClass("expanded").removeClass('expand').attr('title',data).css('color','green');
         }
     });
-$('.urlnote').hide(2500);
+$('.urlnote').hide(1500);
 });
 
 
