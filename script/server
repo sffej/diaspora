@@ -179,4 +179,5 @@ if [ "$(./script/get_config.rb single_process_mode $RAILS_ENV)" = "false" ]; the
     
     bundle exec ruby ./script/websocket_server.rb&
 fi
+
 bundle exec thin start $args

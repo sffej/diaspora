@@ -32,13 +32,6 @@ class ApplicationController < ActionController::Base
       @all_aspects = current_user.aspects
     end
   end
-<<<<<<< HEAD
-  
-  def count_requests
-    @request_count = Request.where(:recipient_id => current_user.person.id).count if current_user
-  end
-=======
->>>>>>> upstream/master
 
   def ensure_page
     params[:page] = params[:page] ? params[:page].to_i : 1
