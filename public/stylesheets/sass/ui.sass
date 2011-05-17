@@ -7,29 +7,28 @@
 .ui-autocomplete
   :left -11px
 
-.button, .button_set
+.button
   @include border-radius(3px)
-  @include linear-gradient(#f6f6f6,#d0d0d0)
+  @include linear-gradient(#f7f7f7,#d0d0d0)
 
   :font
     :style normal
     :weight bold
-    :family 'helvetica', sans-serif
 
   :display inline
 
-  :padding 5px 5px
+  :padding 4px 7px
   :min-width 26px
 
-  :font-size 13px
+  :font-size 12px
   :line
     :height 13px
 
   :min-height 10px
 
   :border 1px solid #aaa
-    :top 1px solid #ccc
-    :bottom 1px solid #666
+    :top 1px solid #bbb
+    :bottom 1px solid #888
 
   :cursor pointer
 
@@ -52,8 +51,8 @@
     :color #111
     :text-shadow 0 1px 0 #ccc
     :border 1px solid #666
-      :top 1px solid #333
-      :bottom 1px solid #888
+      :top 1px solid #444
+      :bottom 1px solid #999
 
   img
     :position relative
@@ -61,37 +60,7 @@
     :width 20px
     :top 6px
 
-ul.button_set
-
-  :padding
-    :left 0
-    :right 0
-
-  > li
-    :padding 5px
-    :display inline
-    :height 100%
-    :border
-      :left 1px solid #ccc
-      :right 1px solid #fff
-
-    :margin
-      :left -3px
-      :right -3px
-
-    &:first-child
-      :margin
-        :left 0
-      :border
-        :left none
-
-    &:last-child
-      :margin
-        :right 0
-      :border
-        :right none
-
-.button .selected, .button_set .selected
+.button .selected
   @include linear-gradient(#f0f0f0,#fafafa,29%,85%)
 
   :border
@@ -101,18 +70,107 @@ ul.button_set
   :position absolute
   :right 0
 
-.contextual_pane
-  @include border-radius(3px)
-  @include box-shadow(0,0,10px,#000)
 
-  :z-index 20
+.dropdown
+  :position relative
+  :display inline-block
 
-  :position absolute
-  :display none
+  .button
+    :width 240px
 
-  :background
-    :color #fff
+  .wrapper
+    @include box-shadow(0, 2px, 5px, #666)
 
-  :border 4px solid #000
-  :padding 2em
+    :z-index 20
+    :position absolute
+    :display none
+    :width 140px
+    :padding 4px 0
+    :margin-top 1px
+    :background
+      :color #fff
+    :border 1px solid #999
+
+    ul
+      @include user-select(none)
+
+      :padding 0 !important
+      :margin 0 !important
+      :color #333
+
+      > li
+        :font-size 11px !important
+        :padding 3px 2px 
+          :left 24px
+        :position relative
+
+        .check,
+        .checkWhite
+          :position absolute
+          :left 4px
+          :top 1px
+
+        .checkWhite
+          :display none
+          :top 0px
+
+        &.newItem
+          a
+            :color #999
+            :font-style italic
+
+            &:hover
+              :text-decoration none
+          
+
+  &.hang_right
+    .wrapper
+      @include border-radius(3px, 0, 3px, 3px)
+      :right 3px
+
+  &.hang_left
+    .wrapper
+      @include border-radius(0, 3px, 3px, 3px)
+      :left 0px
+
+  &.active
+    .wrapper
+      :display block
+
+    .button
+      @include border-radius(3px, 3px, 0, 0)
+      :border 1px solid #444
+        :bottom none
+    
+    .selected
+      :font-weight bold
+
+    .button,
+    .wrapper ul > li:hover
+      :background #666
+      :color #fff
+      :text-shadow none
+
+
+    .wrapper ul > li:hover
+      :border
+        :top 1px solid #444
+        :bottom 1px solid #444
+      :padding
+        :top 2px
+        :bottom 2px
+
+      a
+        :color #ccc
+
+    .wrapper ul > li,
+    .wrapper ul > li *
+      :cursor pointer
+
+    .selected:hover .checkWhite
+      :display block
+
+    .selected:hover .check
+      :display none
+
 

@@ -69,7 +69,7 @@ Diaspora::Application.routes.draw do
 
   resource :profile
 
-  resources :requests, :only => [:destroy, :create]
+#  resources :requests, :only => [:destroy, :create]
 
   match 'forwardemail',              :to => 'plain#forwardemail'
   match 'forwardemail/on',           :to => 'plain#forwardemailon'
@@ -80,7 +80,8 @@ Diaspora::Application.routes.draw do
   match 'shorten/show',              :to => 'plain#shortenshow'
   resources :plain
 
-  resources :contacts,           :except => [:index, :update]
+  get 'contacts/sharing' => 'contacts#sharing'
+  resources :contacts,           :except => [:index, :update, :create]
   resources :aspect_memberships, :only   => [:destroy, :create, :update]
   resources :post_visibilities,  :only   => [:update]
 
