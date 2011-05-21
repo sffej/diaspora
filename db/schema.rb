@@ -215,8 +215,8 @@ ActiveRecord::Schema.define(:version => 20110518222303) do
     t.integer  "post_id",                       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "contact_id",                    :null => false
     t.boolean  "hidden",     :default => false, :null => false
+    t.integer  "contact_id",                    :null => false
   end
 
   add_index "post_visibilities", ["contact_id", "post_id"], :name => "index_post_visibilities_on_contact_id_and_post_id", :unique => true
@@ -279,7 +279,7 @@ ActiveRecord::Schema.define(:version => 20110518222303) do
   add_index "profiles", ["first_name", "searchable"], :name => "index_profiles_on_first_name_and_searchable"
   add_index "profiles", ["last_name", "searchable"], :name => "index_profiles_on_last_name_and_searchable"
   add_index "profiles", ["mongo_id"], :name => "index_profiles_on_mongo_id"
-  add_index "profiles", ["person_id"], :name => "index_profiles_on_person_id", :unique => true
+  add_index "profiles", ["person_id"], :name => "index_profiles_on_person_id"
 
   create_table "service_users", :force => true do |t|
     t.string   "uid",           :null => false
@@ -363,9 +363,8 @@ ActiveRecord::Schema.define(:version => 20110518222303) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "mongo_id"
-    t.string   "invitation_service"
-    t.string   "invitation_identifier"
-    t.text     "open_aspects"
+    t.string   "invitation_service",     :limit => 127
+    t.string   "invitation_identifier",  :limit => 127
     t.integer  "invitation_limit"
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
@@ -379,16 +378,11 @@ ActiveRecord::Schema.define(:version => 20110518222303) do
   add_index "users", ["mongo_id"], :name => "index_users_on_mongo_id"
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
-  add_foreign_key "aspect_memberships", "aspects", :name => "aspect_memberships_aspect_id_fk", :dependent => :delete
-  add_foreign_key "aspect_memberships", "contacts", :name => "aspect_memberships_contact_id_fk", :dependent => :delete
-
   add_foreign_key "aspect_visibilities", "aspects", :name => "aspect_visibilities_aspect_id_fk", :dependent => :delete
   add_foreign_key "aspect_visibilities", "posts", :name => "aspect_visibilities_post_id_fk", :dependent => :delete
 
   add_foreign_key "comments", "people", :name => "comments_author_id_fk", :column => "author_id", :dependent => :delete
   add_foreign_key "comments", "posts", :name => "comments_post_id_fk", :dependent => :delete
-
-  add_foreign_key "contacts", "people", :name => "contacts_person_id_fk", :dependent => :delete
 
   add_foreign_key "conversation_visibilities", "conversations", :name => "conversation_visibilities_conversation_id_fk", :dependent => :delete
   add_foreign_key "conversation_visibilities", "people", :name => "conversation_visibilities_person_id_fk", :dependent => :delete
