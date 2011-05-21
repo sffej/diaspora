@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
 
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :timeoutable
+         :timeoutable, :token_authenticatable
 
   before_validation :strip_and_downcase_username
   before_validation :set_current_language, :on => :create
@@ -320,6 +320,10 @@ class User < ActiveRecord::Base
 
   def encryption_key
     OpenSSL::PKey::RSA.new(serialized_private_key)
+  end
+
+  def admin?
+    AppConfig[:admins].present? && AppConfig[:admins].include?(self.username)
   end
 
   protected

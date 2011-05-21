@@ -5,15 +5,26 @@
 
 it: 
   javascripts: 
+    aspect_dropdown: 
+      add_to_aspect: "Aggiungi ad un aspetto"
+      toggle: 
+        few: "In {{count}} aspetti"
+        many: "In {{count}} aspetti"
+        one: "In {{count}} aspetto"
+        other: "In {{count}} aspetti"
+        zero: "Aggiungi ad un aspetto"
+    comments: 
+      hide: "hide comments"
+      show: "show all comments"
     confirm_dialog: "Sei sicuro?"
+    failed_to_like: "Valutazione fallita!"
+    failed_to_post_message: "Invio messaggio fallito!"
     infinite_scroll: 
       no_more: "Non ci sono altri post."
     publisher: 
       at_least_one_aspect: "Devi condividere almeno con un aspetto"
     search_for: "Ricerca per {{name}}"
-    shared: 
-      contact_list: 
-        cannot_remove: "Impossibile rimuovere la persona dall'ultimo aspetto. (Se vuoi disconnetterti da questa persona devi rimuovere il contatto.)"
+    show_more: "mostra altro"
     timeago: 
       day: "un giorno"
       days: "%d giorni"

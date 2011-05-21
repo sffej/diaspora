@@ -5,15 +5,26 @@
 
 fr: 
   javascripts: 
+    aspect_dropdown: 
+      add_to_aspect: "Ajouter à l'aspect"
+      toggle: 
+        few: "Dans {{count}} aspects"
+        many: "Dans {{count}} aspects"
+        one: "Dans {{count}} aspect"
+        other: "Dans {{count}} aspects"
+        zero: "Ajouter à l'aspect"
+    comments: 
+      hide: "cacher les commentaires"
+      show: "afficher tous les commentaires"
     confirm_dialog: "Êtes-vous sûr ?"
+    failed_to_like: "Impossible d'aimer !"
+    failed_to_post_message: "Impossible de partager le message !"
     infinite_scroll: 
       no_more: "Pas d'autre messages."
     publisher: 
       at_least_one_aspect: "Vous devez créer au moins un aspect"
     search_for: "Chercher {{name}}"
-    shared: 
-      contact_list: 
-        cannot_remove: "Impossible d'enlever la personne de l'aspect sélectionné. (Si vous voulez vous  déconnecter de cette personne vous devez supprimer ce contact.)"
+    show_more: "voir plus"
     timeago: 
       day: "environ un jour"
       days: "environ %d jours"
@@ -34,4 +45,4 @@ fr:
       unknown: "Type de vidéo inconnu"
       watch: "Voir cette vidéo sur {{provider}}"
     web_sockets: 
-      disconnected: "The websocket is closed; posts will no longer be streamed live."
+      disconnected: "Le WebSocket est fermé, les messages ne seront plus diffusées en direct."

@@ -23,18 +23,27 @@ class AppConfig
     generate_pod_uri
     normalize_pod_url
     check_pod_uri
-    downcase_admins
+    downcase_usernames
   end
 
   def self.load_config_for_environment(env)
-    if File.exist? "#{Rails.root}/config/app_config.yml"
-      all_envs = load_config_yaml "#{Rails.root}/config/app_config.yml"
-      all_envs = load_config_yaml "#{Rails.root}/config/app_config.yml.example" unless all_envs
+    if File.exist? "#{Rails.root}/config/app.yml.example"
+      all_envs = load_config_yaml "#{Rails.root}/config/app.yml.example"
+    else
+      $stderr.puts "ERROR: Why have you deleted config/app.yml.example?"
+      all_envs = {}
+    end
+    if File.exist? "#{Rails.root}/config/app.yml"
+      all_envs_custom = load_config_yaml "#{Rails.root}/config/app.yml"
+      all_envs.deep_merge!(all_envs_custom)
+    elsif File.exist? "#{Rails.root}/config/app_config.yml"
+      all_envs_custom = load_config_yaml "#{Rails.root}/config/app_config.yml"
+      all_envs.deep_merge!(all_envs_custom)
+      $stderr.puts "DEPRECATION WARNING: config/app_config.yml has been renamed to config/app.yml"
     else
       unless Rails.env == "development" || Rails.env == "test"
-        $stderr.puts "WARNING: No config/app_config.yml found! Look at config/app_config.yml.example for help."
+        $stderr.puts "WARNING: No config/app.yml found! Look at config/app.yml.example for help."
       end
-      all_envs = load_config_yaml "#{Rails.root}/config/app_config.yml.example"
     end
 
     env = env.to_s
@@ -63,14 +72,16 @@ class AppConfig
 
   def self.check_pod_uri
     if self.config_vars[:pod_uri].host == "example.org" && Rails.env != "test"
-      puts "WARNING: Please modify your app_config.yml to have a proper pod_url!"
+      puts "WARNING: Please modify your app.yml to have a proper pod_url!"
     end
   end
 
 
-  def self.downcase_admins
-    self.config_vars[:admins] ||= []
-    self.config_vars[:admins].collect! { |admin| admin.downcase }
+  def self.downcase_usernames
+    [:admins, :auth_tokenable].each do |key|
+      self.config_vars[key] ||= []
+      self.config_vars[key].collect! { |username| username.downcase }
+    end
   end
 
   def self.load_config_yaml filename

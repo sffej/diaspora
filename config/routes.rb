@@ -59,6 +59,17 @@ Diaspora::Application.routes.draw do
                                       :invitations   => "invitations"} do
     get 'invitations/resend/:id' => 'invitations#resend', :as => 'invitation_resend'
   end
+
+  # generating a new user token (for devise)
+
+  # ActivityStreams routes
+  scope "/activity_streams", :module => "activity_streams", :as => "activity_streams" do
+    resources :photos, :controller => "photos", :only => [:create, :show, :destroy]
+  end
+
+  #Temporary token_authenticable route
+  resource :token, :only => [:show, :create]
+
   get 'login' => redirect('/users/sign_in')
 
   scope 'admins', :controller => :admins do
@@ -69,7 +80,6 @@ Diaspora::Application.routes.draw do
 
   resource :profile
 
-#  resources :requests, :only => [:destroy, :create]
 
   match 'forwardemail',              :to => 'plain#forwardemail'
   match 'forwardemail/on',           :to => 'plain#forwardemailon'
@@ -80,8 +90,9 @@ Diaspora::Application.routes.draw do
   match 'shorten/show',              :to => 'plain#shortenshow'
   resources :plain
 
-  get 'contacts/sharing' => 'contacts#sharing'
-  resources :contacts,           :except => [:index, :update, :create]
+  resources :contacts,           :except => [:index, :update, :create] do
+    get :sharing, :on => :collection
+  end
   resources :aspect_memberships, :only   => [:destroy, :create, :update]
   resources :post_visibilities,  :only   => [:update]
 

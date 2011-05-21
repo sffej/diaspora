@@ -5,15 +5,26 @@
 
 fi: 
   javascripts: 
+    aspect_dropdown: 
+      add_to_aspect: "Add to aspect"
+      toggle: 
+        few: "In {{count}} aspects"
+        many: "In {{count}} aspects"
+        one: "In {{count}} aspect"
+        other: "In {{count}} aspects"
+        zero: "Add to aspect"
+    comments: 
+      hide: "hide comments"
+      show: "show all comments"
     confirm_dialog: "Oletko varma?"
+    failed_to_like: "Failed to like!"
+    failed_to_post_message: "Failed to post message!"
     infinite_scroll: 
       no_more: "Ei enempää viestejä."
     publisher: 
       at_least_one_aspect: "Sinun täytyy julkaista vähintään yhdelle näkymälle."
     search_for: "Etsi nimellä {{name}}"
-    shared: 
-      contact_list: 
-        cannot_remove: "Et voi poistaa henkilöä viimeisestä näkymästä. (Jos haluat katkaista yhteytesi tähän henkilöön, sinun täytyy poistaa kontakti.)"
+    show_more: "show more"
     timeago: 
       day: "päivä"
       days: "%d päivää"

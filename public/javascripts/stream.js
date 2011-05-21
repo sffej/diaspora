@@ -67,7 +67,7 @@ var Stream = {
     });
 
     $(stream_string + ".new_comment").live('ajax:failure', function(data, html, xhr) {
-      Diaspora.widgets.alert.alert('Failed to post message!');
+      Diaspora.widgets.alert.alert(Diaspora.widgets.i18n.t('failed_to_post_message'));
     });
 
     $stream.find(".comment_delete", ".comment").live('ajax:success', function(data, html, xhr) {
@@ -84,6 +84,14 @@ var Stream = {
       });
 
     });
+
+    // collapse long comments
+    $(stream_string + " .content").find("p").expander({
+      slicePoint: 400,
+      widow: 12,
+      expandText: Diaspora.widgets.i18n.t('show_more'),
+      userCollapse: false
+    });
   },
   setUpLikes: function(){
     var likes = $("#main_stream .like_it, #main_stream .dislike_it");
@@ -93,7 +101,7 @@ var Stream = {
     });
 
     likes.live('ajax:failure', function(data, html, xhr) {
-      Diaspora.widgets.alert.alert('Failed to like/dislike!');
+      Diaspora.widgets.alert.alert(Diaspora.widgets.i18n.t('failed_to_like'));
       $(this).parent().fadeIn('fast');
     });
   },
@@ -124,25 +132,25 @@ var Stream = {
       text = $this.html(),
       showUl = $(this).closest('li'),
       commentBlock = $this.closest(".stream_element").find("ul.comments", ".content"),
-      commentBlockMore = $this.closest(".stream_element").find(".older_comments", ".content"),
-      show = (text.indexOf("show") != -1);
+      commentBlockMore = $this.closest(".stream_element").find(".older_comments", ".content")
 
     if( commentBlockMore.hasClass("inactive") ) {
       commentBlockMore.fadeIn(150, function() {
         commentBlockMore.removeClass("inactive");
         commentBlockMore.removeClass("hidden");
       });
+      $this.html(Diaspora.widgets.i18n.t('comments.hide'));
     } else {
       if(commentBlock.hasClass("hidden")) {
         commentBlock.removeClass('hidden');
         showUl.css('margin-bottom','-1em');
+        $this.html(Diaspora.widgets.i18n.t('comments.hide'));
       }else{
         commentBlock.addClass('hidden');
         showUl.css('margin-bottom','1em');
+        $this.html(Diaspora.widgets.i18n.t('comments.show'));
       }
     }
-
-    $this.html(text.replace((show) ? "show" : "hide", (show) ? "hide" : "show"));
   },
 
   focusNewComment: function(toggle, evt) {

@@ -83,6 +83,7 @@ nl:
     index: 
       handle_explanation: "Dit is jouw Diaspora handle. Deze kun je aan mensen geven zodat ze je kunnen bereiken, net als een e-mailadres."
       no_contacts: "Geen contacten"
+      people_sharing_with_you: "Mensen die met jou delen"
       post_a_message: "plaats een bericht >>"
     manage: 
       add_a_new_aspect: "Voeg een nieuw aspect toe"
@@ -96,7 +97,7 @@ nl:
       error: "Probleem bij het verplaatsen van contact: %{inspect}"
       failure: "werkte niet %{inspect}"
       success: "Persoon naar nieuw aspect verplaatst"
-    new_aspect: 
+    new: 
       create: "Aanmaken"
       name: "Naam"
     no_posts_message: 
@@ -129,6 +130,14 @@ nl:
     other: "%{count} reacties"
     zero: "geen reacties"
   contacts: 
+    aspect_dropdown: 
+      add_to_aspect: "Voeg toe aan aspect"
+      toggle: 
+        few: "In %{count} aspecten"
+        many: "In %{count} aspecten"
+        one: "In %{count} aspect"
+        other: "In %{count} aspecten"
+        zero: "Voeg toe aan aspect"
     create: 
       failure: "Verbinding maken mislukt"
     destroy: 
@@ -139,9 +148,11 @@ nl:
     one: "1 contact"
     other: "%{count} contacten"
     share_with_pane: 
-      accepts: "Zodra %{name} accepteert, zul je elkaars posts gaan zien op Diaspora"
       add_new_aspect: "voeg toe aan nieuw aspect"
+      following: "By placing %{name} in an aspect, you'll start following and sending posts to them."
       share_with: "Start delen met %{name}"
+    sharing: 
+      people_sharing: "Mensen die met jou delen:"
     zero: "geen contacten"
   conversations: 
     create: 
@@ -227,6 +238,7 @@ nl:
       whats_new: "wat is nieuw op Diaspora?"
       your_aspects: "jouw aspecten"
     header: 
+      admin: "admin"
       blog: "blog"
       code: "code"
       login: "inloggen"
@@ -272,7 +284,7 @@ nl:
     new_request: "bood aan om met jou te delen."
     post: "post."
     private_message: "heeft je een bericht gestuurd."
-    request_accepted: "heeft je verzoek geaccepteerd."
+    started_sharing: "deelt vanaf nu met jou."
   notifier: 
     also_commented: 
       commented: "heeft ook op %{post_author}'s post gereageerd:"
@@ -294,23 +306,18 @@ nl:
       mentioned: "heeft jou genoemd in een post:"
       sign_in: "Log in om het te bekijken."
       subject: "%{name} heeft jou genoemd op Diaspora*"
-    new_request: 
-      just_sent_you: "heeft je zojuist een contactverzoek verzonden op Diaspora*"
-      sign_in: "Log hier in"
-      subject: "nieuw Diaspora* contactverzoek van %{from}"
-      try_it_out: "Overweeg eens een kijkje te nemen."
     private_message: 
       message_subject: "Onderwerp: %{subject}"
       private_message: "heeft je een persoonlijk bericht gestuurd:"
       sign_in: "Log in om het te zien."
       subject: "%{name} heeft je een persoonlijk bericht gestuurd op Diaspora*"
-    request_accepted: 
-      accepted: "heeft je contactverzoek geaccepteerd!"
-      sign_in: "Log hier in"
-      subject: "%{name} heeft je contactverzoek geaccepteerd op Diaspora*"
     single_admin: 
       admin: "Je Diaspora administrator"
       subject: "Een bericht over je Diaspora account:"
+    started_sharing: 
+      sharing: "deelt vanaf nu met jou!"
+      sign_in: "Log hier in"
+      subject: "%{name} deelt vanaf nu met je op Diaspora*"
     thanks: "Bedankt,"
   ok: "OK"
   or: "of"
@@ -341,7 +348,6 @@ nl:
     profile_sidebar: 
       bio: "bio"
       born: "geboortedatum"
-      cannot_remove: "Kan %{name} niet van laatste aspect verwijderen. (Als je met deze persoon wilt breken moet je dit contact verwijderen)"
       edit_my_profile: "Bewerk mijn profiel"
       gender: "geslacht"
       in_aspects: "in de aspecten"
@@ -507,7 +513,6 @@ nl:
       your_diaspora_username_is: "Jouw Diaspora gebruikersnaam is: %{diaspora_handle}"
     contact_list: 
       all_contacts: "Alle contacten"
-      cannot_remove: "Kan persoon niet van laatste aspect verwijderen. (Als je met deze persoon wilt breken moet je dit contact verwijderen)"
     footer: 
       logged_in_as: "ingelogd als %{name}"
       your_aspects: "jou aspecten"
@@ -517,7 +522,7 @@ nl:
       from_facebook: "Via Facebook"
       invitations_left: "(%{count} over)"
       invite_someone: "Nodig iemand uit"
-      invite_your_friends: "Vind je vrienden"
+      invite_your_friends: "Nodig je vrienden uit"
       invites: "Uitnodigingen"
       invites_closed: "Uitnodigingen zijn momenteel gesloten voor deze Diaspora pod"
     notification: 
@@ -526,7 +531,7 @@ nl:
       logged_in: "verbonden met %{service}"
       manage: "beheer verbonden services"
       outside: "Openbare berichten zijn zichtbaar voor mensen buiten Diaspora."
-      title: "Je staat op het punt om een openbaar bericht te plaatsen!"
+      title: "Stel verbonden services in"
     publisher: 
       add_photos: "+ foto's"
       all: "al"
@@ -546,6 +551,7 @@ nl:
       dislike: "Vind ik niet meer leuk"
       like: "Vind ik leuk"
       unlike: "vind ik niet meer leuk"
+      via: "via %{link}"
   status_messages: 
     create: 
       success: "Succesvol genoemd: %{names}"
@@ -559,6 +565,12 @@ nl:
       destroy: "Verwijderen"
       not_found: "Sorry, we konden die post niet vinden."
       permalink: "permalink"
+    too_long: 
+      few: "statusberichten mogen niet langer zijn dan %{count} tekens"
+      many: "statusberichten mogen niet langer zijn dan %{count} tekens"
+      one: "statusberichten mogen niet langer zijn dan %{count} tekens"
+      other: "statusberichten mogen niet langer zijn dan %{count} tekens"
+      zero: "statusberichten mogen niet langer zijn dan %{count} tekens"
   stream_helper: 
     hide_comments: "verberg reacties"
     show_comments: "toon alle reacties"
@@ -589,8 +601,7 @@ nl:
       new_password: "Nieuw wachtwoord"
       private_message: "...je een privébericht ontvangt?"
       receive_email_notifications: "Ontvang e-mail notificaties wanneer..."
-      request_acceptence: "...jou contactverzoek accepteert?"
-      request_received: "...je een nieuw contactverzoek ontvangt?"
+      started_sharing: "...iemand met je begint te delen?"
       your_email: "Jouw e-mail"
       your_handle: "Jouw Diaspora handle"
     getting_started: 
@@ -615,7 +626,7 @@ nl:
       email_notifications_changed: "E-mailnotificaties gewijzigd"
       language_changed: "Taal gewijzigd"
       language_not_changed: "Taal wijzigen mislukt"
-      password_changed: "Wachtwoord gewijzigd"
+      password_changed: "Wachtwoord gewijzigd. Je kunt nu inloggen met je nieuwe wachtwoord."
       password_not_changed: "Wachtwoord wijzigen mislukt"
   webfinger: 
     fetch_failed: "ophalen van webfinger profiel is mislukt voor %{profile_url}"

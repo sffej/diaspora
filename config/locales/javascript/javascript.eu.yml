@@ -5,15 +5,26 @@
 
 eu: 
   javascripts: 
+    aspect_dropdown: 
+      add_to_aspect: "Alderdira gehitu"
+      toggle: 
+        few: "{{count}} alderdietan"
+        many: "{{count}} alderdietan"
+        one: "Alderdi {{count}}ean"
+        other: "{{count}} alderdietan"
+        zero: "Alderdira gehitu"
+    comments: 
+      hide: "hide comments"
+      show: "show all comments"
     confirm_dialog: "Ziur al zaude?"
+    failed_to_like: "Huts gustoko egitean!"
+    failed_to_post_message: "Huts egin du mezuaren bidalketak!"
     infinite_scroll: 
       no_more: "Mezu gehiagorik ez dago."
     publisher: 
       at_least_one_aspect: "Gutxienez alderdi batean partekatu behar duzu"
     search_for: "Bilatu {{name}}"
-    shared: 
-      contact_list: 
-        cannot_remove: "Ezin izan da adiskidea azken alderditik ezabatu. (Pertsona honekin harremanak bukatu nahi badituzu, hura ezabatu behar duzu.)"
+    show_more: "erakutsi gehiago"
     timeago: 
       day: "egun bat"
       days: "%d egun"

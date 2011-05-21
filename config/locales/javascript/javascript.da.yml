@@ -5,15 +5,26 @@
 
 da: 
   javascripts: 
+    aspect_dropdown: 
+      add_to_aspect: "Add to aspect"
+      toggle: 
+        few: "In {{count}} aspects"
+        many: "In {{count}} aspects"
+        one: "In {{count}} aspect"
+        other: "In {{count}} aspects"
+        zero: "Add to aspect"
+    comments: 
+      hide: "hide comments"
+      show: "show all comments"
     confirm_dialog: "Er du sikker?"
+    failed_to_like: "Failed to like!"
+    failed_to_post_message: "Failed to post message!"
     infinite_scroll: 
-      no_more: "No more posts."
+      no_more: "Ikke flere poster."
     publisher: 
       at_least_one_aspect: "Du skal dele med mindst et aspekt"
     search_for: "Søg efter {{name}}"
-    shared: 
-      contact_list: 
-        cannot_remove: "Kan ikke fjerne personen fra sidste aspekt. (Hvis du ikke ønsker at dele med denne person mere må du fjerne ham fra kontakter.)"
+    show_more: "show more"
     timeago: 
       day: "en dag"
       days: "%d dage"
@@ -34,4 +45,4 @@ da:
       unknown: "Ukendt video type"
       watch: "Se denne video på {{provider}}"
     web_sockets: 
-      disconnected: "The websocket is closed; posts will no longer be streamed live."
+      disconnected: "Forbindelse er lukket; post vil ikke længere blive opdateret live."

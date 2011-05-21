@@ -83,6 +83,7 @@ es-CL:
     index: 
       handle_explanation: "Esta es tu dirección Diaspora. Como una dirección de correo, puedes dársela a la gente para que te encuentren."
       no_contacts: "No hay contactos"
+      people_sharing_with_you: "Personas compartiendo contigo"
       post_a_message: "postea un mensaje >>"
     manage: 
       add_a_new_aspect: "Agregar un nuevo aspecto"
@@ -96,7 +97,7 @@ es-CL:
       error: "Error al mover el contacto: %{inspect}"
       failure: "no funcionó %{inspect}"
       success: "Persona movida al nuevo aspecto"
-    new_aspect: 
+    new: 
       create: "Crear"
       name: "Nombre"
     no_posts_message: 
@@ -129,6 +130,14 @@ es-CL:
     other: "%{count} comentarios"
     zero: "no hay comentarios"
   contacts: 
+    aspect_dropdown: 
+      add_to_aspect: "Agregar al aspecto"
+      toggle: 
+        few: "En %{count} aspectos"
+        many: "En %{count} aspectos"
+        one: "En %{count} aspecto"
+        other: "En %{count} aspectos"
+        zero: "Agregar al aspecto"
     create: 
       failure: "Error al crear contacto"
     destroy: 
@@ -139,9 +148,11 @@ es-CL:
     one: "1 contacto"
     other: "%{count} contactos"
     share_with_pane: 
-      accepts: "Una vez que %{name} acepte, podrán ver sus post mutuamente en Diaspora"
       add_new_aspect: "Agregar a un nuevo Aspecto"
+      following: "Al colocar a %{name} en un Aspecto, comenzaras compartir posts con el."
       share_with: "Empezar a compartir con %{name}"
+    sharing: 
+      people_sharing: "Personas compartiendo contigo:"
     zero: "no hay contactos"
   conversations: 
     create: 
@@ -227,6 +238,7 @@ es-CL:
       whats_new: "¿Qué hay de nuevo?"
       your_aspects: "Tus Aspectos"
     header: 
+      admin: "admin"
       blog: "blog"
       code: "codigo"
       login: "entrar"
@@ -272,7 +284,7 @@ es-CL:
     new_request: "quiere compartir contigo."
     post: "post."
     private_message: "te envió un mensaje."
-    request_accepted: "aceptó tu solicitud de contacto."
+    started_sharing: "Comenzó a compartir contigo."
   notifier: 
     also_commented: 
       commented: "También comentó en el post de %{post_author}:"
@@ -294,23 +306,18 @@ es-CL:
       mentioned: "Te mencionó en un post:"
       sign_in: "Conéctate para verlo."
       subject: "%{name} te mencionó en Diaspora*"
-    new_request: 
-      just_sent_you: "acaban de enviarte una solicitud de contacto en Diaspora*"
-      sign_in: "Conéctate aquí"
-      subject: "nueva solicitud de contacto Diaspora* de %{from}"
-      try_it_out: "Deberías pensar en echarle un vistazo."
     private_message: 
       message_subject: "Asunto: %{subject}"
       private_message: "te envió un mensaje privado:"
       sign_in: "Conéctate para verlo."
       subject: "%{name} te envió un mensaje privado en Diaspora*"
-    request_accepted: 
-      accepted: "aceptó tu solicitud de contacto!"
-      sign_in: "Conéctate aquí"
-      subject: "%{name} ha aceptado tu solicitud de contacto en Diaspora*"
     single_admin: 
       admin: "Tu administrador de Diaspora"
       subject: "Un mensaje sobre tu cuenta de Diaspora:"
+    started_sharing: 
+      sharing: "Ha comenzado a compartir contigo!"
+      sign_in: "Conectate aqui"
+      subject: "%{name} ha comenzado a compartir contigo en Diaspora*"
     thanks: "Gracias,"
   ok: "OK"
   or: "o"
@@ -341,12 +348,11 @@ es-CL:
     profile_sidebar: 
       bio: "biografía"
       born: "Cumpleaños"
-      cannot_remove: "No se puede eliminar a %{name} del último aspecto. (Si quieres desconectarte de esta persona primero debes eliminar al contacto.)"
       edit_my_profile: "Editar mi perfil"
       gender: "sexo"
       in_aspects: "en aspectos"
       location: "Ubicación"
-      remove_contact: "eliminar contacto"
+      remove_contact: "remove contact"
       remove_from: "¿Eliminar a %{name} de %{aspect}?"
     show: 
       add_some: "agrega algunas"
@@ -507,7 +513,6 @@ es-CL:
       your_diaspora_username_is: "Tu nombre de usuario Diaspora es: %{diaspora_handle}"
     contact_list: 
       all_contacts: "Todos los contactos"
-      cannot_remove: "No se puede eliminar a la persona del último aspecto. (Si quieres desconectarte de esta persona primero debes eliminar al contacto.)"
     footer: 
       logged_in_as: "Conectado como %{name}"
       your_aspects: "Tus Aspectos"
@@ -546,6 +551,7 @@ es-CL:
       dislike: "No me gusta esto"
       like: "Me gusta esto"
       unlike: "No me gusta"
+      via: "via %{link}"
   status_messages: 
     create: 
       success: "Se ha mencionado con éxito a: %{names}"
@@ -559,6 +565,12 @@ es-CL:
       destroy: "Eliminar"
       not_found: "Perdón, no pudimos encontrar ese post."
       permalink: "permalink"
+    too_long: 
+      few: "please make your status messages less than %{count} characters"
+      many: "please make your status messages less than %{count} characters"
+      one: "please make your status messages less than %{count} character"
+      other: "please make your status messages less than %{count} characters"
+      zero: "please make your status messages less than %{count} characters"
   stream_helper: 
     hide_comments: "ocultar comentarios"
     show_comments: "mostrar todos los comentarios"
@@ -589,8 +601,7 @@ es-CL:
       new_password: "Nueva Contraseña"
       private_message: "...recibes un mensaje privado?"
       receive_email_notifications: "Recibir notificaciones por correo electrónico cuando..."
-      request_acceptence: "...aceptan tu solicitud de contacto?"
-      request_received: "...recibes una solicitud de contacto?"
+      started_sharing: "...alguien comienza a compartir contigo?"
       your_email: "Tu correo electrónico"
       your_handle: "Tu dirección diaspora"
     getting_started: 
@@ -615,7 +626,7 @@ es-CL:
       email_notifications_changed: "Notificaciones por email cambiadas"
       language_changed: "Idioma Cambiado"
       language_not_changed: "Error al cambiar de idioma"
-      password_changed: "Contraseña Cambiada"
+      password_changed: "Contraseña Cambiada. Ahora puedes conectarte con la nueva contraseña."
       password_not_changed: "Error al cambiar la contraseña"
   webfinger: 
     fetch_failed: "error al buscar el perfil webfinger para %{profile_url}"

@@ -5,15 +5,26 @@
 
 es: 
   javascripts: 
+    aspect_dropdown: 
+      add_to_aspect: "Añadir al aspecto"
+      toggle: 
+        few: "En {{count}} aspectos"
+        many: "En {{count}} aspectos"
+        one: "En {{count}} aspecto"
+        other: "En {{count}} aspectos"
+        zero: "Añadir al aspecto"
+    comments: 
+      hide: "hide comments"
+      show: "show all comments"
     confirm_dialog: "¿Estás seguro?"
+    failed_to_like: "Failed to like!"
+    failed_to_post_message: "Failed to post message!"
     infinite_scroll: 
       no_more: "No hay más publicaciones."
     publisher: 
       at_least_one_aspect: "Debes publicarlo en al menos un aspecto"
     search_for: "Buscar a {{name}}"
-    shared: 
-      contact_list: 
-        cannot_remove: "Imposible eliminarlo del último Aspecto. (Si quieres dejar de compartir, tendras que eliminarlo.)"
+    show_more: "show more"
     timeago: 
       day: "un día"
       days: "%d días"
