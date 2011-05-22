@@ -22,7 +22,15 @@ module NotificationsHelper
       else
         t('notifications.also_commented_deleted')
       end
-    else #Notifications:StartedSharing, Notifications::Liked, etc.
+    elsif note.instance_of?(Notifications::Liked)
+      post = note.target
+      post = post.post if post.is_a? Like
+      if post
+        "#{translation(target_type, post.author.name)} #{link_to t('notifications.post'), object_path(post), 'data-ref' => post.id, :class => 'hard_object_link'}".html_safe
+      else
+        t('notifications.liked_post_deleted')
+      end
+    else #Notifications:StartedSharing, etc.
       translation(target_type)
     end
   end
