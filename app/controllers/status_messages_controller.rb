@@ -78,7 +78,7 @@ message = Morley::Shorty::swap(params[:status_message][:text])
       end
     else
       if !photos.empty?
-        photos.update_all(:status_message_id => nil)
+        photos.update_all(:status_message_guid => nil)
       end
       respond_to do |format|
         format.js { render :json =>{:errors => @status_message.errors.full_messages}, :status => 422 }
