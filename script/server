@@ -137,12 +137,7 @@ if [ ! -e public/source.tar.gz ]; then
 fi
 
 
-# Check if config files exists
-if [ ! -e 'config/app.yml' ]; then
-    echo "FATAL: config/app.yml is missing! Copy over config/app.yml.example to config/app.yml and edit it properly!" >&2
-    exit 67
-fi
-
+# Check if database.yml exists
 if [ ! -e 'config/database.yml' ]; then
     echo 'FATAL: config/database.yml is missing! Copy over config/database.yml.example to config/database.yml and edit it properly!' >&2
     exit 68
@@ -170,11 +165,6 @@ if [ ! -e 'public/assets/default.css' ]; then
 fi
 
 mkdir -p -v log/thin/
-#bundle exec ruby ./script/websocket_server.rb&
-#redis-server config/redis.conf &>log/redis-console.log &
-#QUEUE=* bundle exec rake resque:work&
-#QUEUE=* bundle exec rake resque:work&
-#QUEUE=* bundle exec rake resque:work&
 if [ "$(./script/get_config.rb single_process_mode $RAILS_ENV)" = "false" ]; then
     redis_config
     redis-server config/redis.conf &>log/redis-console.log &
@@ -184,4 +174,6 @@ if [ "$(./script/get_config.rb single_process_mode $RAILS_ENV)" = "false" ]; the
     bundle exec ruby ./script/websocket_server.rb&
 fi
 
-bundle exec thin start $args
+if [ "$(./script/get_config.rb enable_thin script_server)" = "true" ]; then
+    bundle exec thin start $args
+fi
