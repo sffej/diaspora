@@ -16,7 +16,7 @@ require File.join(Rails.root, 'lib/swap')
 text = Morley::Shorty::swap(params[:text])
 
     if target
-      @comment = current_user.build_comment(text, :on => target)
+      @comment = current_user.build_comment(:text => text, :on => target)
 
       if @comment.save
         Rails.logger.info("event=create type=comment user=#{current_user.diaspora_handle} status=success comment=#{@comment.id} chars=#{params[:text].length}")
