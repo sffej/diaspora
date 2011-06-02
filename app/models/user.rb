@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
          :timeoutable, :token_authenticatable
 
   before_validation :strip_and_downcase_username
-  before_validation :set_current_language, :on => :create
+  before_validation :set_current_language, :post => :create
 
   validates_presence_of :username
   validates_uniqueness_of :username
@@ -154,19 +154,10 @@ class User < ActiveRecord::Base
   end
 
   def build_relayable(model, options = {})
-    options[:post] = options.delete(:on)
-    m = model.new(options.merge(:author_id => self.person.id))
-    m.set_guid
-
-    #sign relayable as model creator
-    m.author_signature = m.sign_with_key(self.encryption_key)
-
-    if !m.post_id.blank? && person.owns?(m.parent)
-      #sign relayable as parent object owner
-      m.parent_author_signature = m.sign_with_key(self.encryption_key)
-    end
-
-    m
+    r = model.new(options.merge(:author_id => self.person.id))
+    r.set_guid
+    r.initialize_signatures
+    r
   end
 
   ######## Commenting  ########
