@@ -6,17 +6,25 @@
 Diaspora.widgets.add("timeago", function() {
   this.selector = "abbr.timeago";
   this.start = function() {
-    Diaspora.widgets.subscribe("stream/scrolled", this.updateTimeAgo);
-    Diaspora.widgets.subscribe("stream/reloaded", this.updateTimeAgo);
+    Diaspora.widgets.subscribe("stream/scrolled", this.updateTimeAgo, this);
+    Diaspora.widgets.subscribe("stream/reloaded", this.updateTimeAgo, this);
+
+    if(this.timeAgoElement().length) {
+      this.updateTimeAgo();
+    }
 
     if(Diaspora.widgets.i18n.language !== "en") {
-      $.each($.timeago.settings.strings, function(index, element) {
+      $.each($.timeago.settings.strings, function(index) {
         $.timeago.settings.strings[index] = Diaspora.widgets.i18n.t("timeago." + index);
       });
     }
   };
 
-  this.updateTimeAgo = function(selector) {
-    $((typeof selector === "string") ? selector : Diaspora.widgets.timeago.selector).timeago();
+  this.timeAgoElement = function(selector) {
+    return $((typeof selector === "string") ? selector : this.selector);
+  };
+
+  this.updateTimeAgo = function() {
+    this.timeAgoElement().timeago();
   };
 });

@@ -82,10 +82,9 @@ Feature: commenting
     Then I should see "Look at this dog"
     When I follow "less than a minute ago"
     Then I should see "Look at this dog"
+    Then I follow "Comment"
     And I fill in "text" with "I think thats a cat"
     And I press "Comment"
     And I wait for the ajax to finish
     When I am on "alice@alice.alice"'s page
     Then I should see "I think thats a cat"
-
-
