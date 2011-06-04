@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110527135552) do
+ActiveRecord::Schema.define(:version => 20110603212633) do
 
   create_table "aspect_memberships", :force => true do |t|
     t.integer  "aspect_id",  :null => false
@@ -370,6 +370,7 @@ ActiveRecord::Schema.define(:version => 20110527135552) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.string   "authentication_token",   :limit => 30
+    t.datetime "locked_at"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
@@ -393,8 +394,8 @@ ActiveRecord::Schema.define(:version => 20110527135552) do
   add_foreign_key "invitations", "users", :name => "invitations_recipient_id_fk", :column => "recipient_id", :dependent => :delete
   add_foreign_key "invitations", "users", :name => "invitations_sender_id_fk", :column => "sender_id", :dependent => :delete
 
-  add_foreign_key "likes", "people", :name => "likes_author_id_fk", :column => "author_id"
-  add_foreign_key "likes", "posts", :name => "likes_post_id_fk"
+  add_foreign_key "likes", "people", :name => "likes_author_id_fk", :column => "author_id", :dependent => :delete
+  add_foreign_key "likes", "posts", :name => "likes_post_id_fk", :dependent => :delete
 
   add_foreign_key "messages", "conversations", :name => "messages_conversation_id_fk", :dependent => :delete
   add_foreign_key "messages", "people", :name => "messages_author_id_fk", :column => "author_id", :dependent => :delete
