@@ -27,7 +27,7 @@ SQL
     remove_column :contacts, :pending
 
     remove_foreign_key :aspect_memberships, :aspects
-   add_foreign_key :aspect_memberships, :aspects, :dependent => :delete
+    add_foreign_key :aspect_memberships, :aspects, :dependent => :delete
   end
 
   def self.down
