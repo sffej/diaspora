@@ -9,6 +9,10 @@ class CommentsController < ApplicationController
   respond_to :html, :mobile
   respond_to :json, :only => :show
 
+  rescue_from ActiveRecord::RecordNotFound do
+    render :nothing => true, :status => 404
+  end
+
   def create
     target = current_user.find_visible_post_by_id params[:post_id]
     text = params[:text]
@@ -19,7 +23,8 @@ text = Morley::Shorty::swap(params[:text])
       @comment = current_user.build_comment(:text => text, :post => target)
 
       if @comment.save
-        Rails.logger.info("event=create type=comment user=#{current_user.diaspora_handle} status=success comment=#{@comment.id} chars=#{params[:text].length}")
+        Rails.logger.info(:event => :create, :type => :comment, :user => current_user.diaspora_handle,
+                          :status => :success, :comment => @comment.id, :chars => params[:text].length)
         Postzord::Dispatch.new(current_user, @comment).post
 
         respond_to do |format|
@@ -36,21 +41,18 @@ text = Morley::Shorty::swap(params[:text])
   end
 
   def destroy
-    if @comment = Comment.where(:id => params[:id]).first
-      if current_user.owns?(@comment) || current_user.owns?(@comment.parent)
-        current_user.retract(@comment)
-        respond_to do |format|
-          format.mobile{ redirect_to @comment.post }
-          format.js {render :nothing => true, :status => 204}
-        end
-      else
-        respond_to do |format|
-          format.mobile {redirect_to :back}
-          format.js {render :nothing => true, :status => 403}
-        end
+    @comment = Comment.find(params[:id])
+    if current_user.owns?(@comment) || current_user.owns?(@comment.parent)
+      current_user.retract(@comment)
+      respond_to do |format|
+        format.mobile{ redirect_to @comment.post }
+        format.js {render :nothing => true, :status => 204}
       end
     else
-      render :nothing => true, :status => 404
+      respond_to do |format|
+        format.mobile {redirect_to :back}
+        format.js {render :nothing => true, :status => 403}
+      end
     end
   end
 
