@@ -72,7 +72,7 @@ module MarkdownifyHelper
         m
       elsif m.match(/(youtu.?be|vimeo)/)
         m.gsub(/(\*|_)/) { |m| "\\#{$1}" } #remove markers on markdown chars to not markdown inside links
-      elsif m.match(/(boun\.cc|bit\.ly|\.gd|goo\.gl|\.me|\.tl|url1\.ca|\/t\.co)/)
+      elsif m.match(/(dia\.so|bit\.ly|\.gd|goo\.gl|\.me|\.tl|url1\.ca|\/t\.co)/)
         res = %{<b><a class="expand" target="_blank" href="#{captures[1]}://#{captures[2]}">#{captures[2]}</a></b>}
         res.gsub!(/(\*|_)/) { |m| "\\#{$1}" }
       else
