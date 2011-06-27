@@ -8,22 +8,18 @@ module Morley
       require 'rubygems'
 	module Shorten
 	 def self.short(url)
-         apikey = AppConfig[:yourlsapi]
-         apidomain = AppConfig[:yourlsurl]
            if !url or url =~ 'test.host'
              return (url)
            else
-             new = Net::HTTP.get(URI.parse("http://#{apidomain}/yourls-api.php?action=shorturl&url=#{url}&signature=#{apikey}&format=simple"))
+             new = Net::HTTP.get(URI.parse("http://dia.so/diaspora-api.php?action=shorturl&url=#{url}&format=simple"))
              return (new)
 	   end 
          end
 	end
         module Stats
          def self.stats(url)
-         apikey = AppConfig[:yourlsapi]
-         apidomain = AppConfig[:yourlsurl]
            if url =~ (Regexp.new "/dia.so/")
-             jsonstats = Net::HTTP.get(URI.parse("http://#{apidomain}/yourls-api.php?action=url-stats&shorturl=#{url}&signature=#{apikey}&format=json"))
+             jsonstats = Net::HTTP.get(URI.parse("http://dia.so/diaspora-api.php?action=url-stats&shorturl=#{url}&format=json"))
            elsif url =~ (Regexp.new "/goo.gl/")
              uri = URI.parse("https://www.googleapis.com/urlshortener/v1/url?projection=FULL&shortUrl=#{url}")
              http = Net::HTTP.new(uri.host, uri.port)
