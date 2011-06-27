@@ -22,7 +22,7 @@ module Morley
          def self.stats(url)
          apikey = AppConfig[:yourlsapi]
          apidomain = AppConfig[:yourlsurl]
-           if url =~ (Regexp.new "/boun.cc/")
+           if url =~ (Regexp.new "/dia.so/")
              jsonstats = Net::HTTP.get(URI.parse("http://#{apidomain}/yourls-api.php?action=url-stats&shorturl=#{url}&signature=#{apikey}&format=json"))
            elsif url =~ (Regexp.new "/goo.gl/")
              uri = URI.parse("https://www.googleapis.com/urlshortener/v1/url?projection=FULL&shortUrl=#{url}")

@@ -60,7 +60,7 @@ class PlainController < ApplicationController
         @stats = result['analytics']['allTime']['shortUrlClicks']
         @longurl = result['longUrl']
       elsif result['long-url']
-        @stats = 'Stats only on boun.cc and goo.gl URLs, Try it!'
+        @stats = 'Stats only on dia.so and goo.gl URLs, Try it!'
         @longurl = result['long-url']
       else
         @stats = 'Error'
