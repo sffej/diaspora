@@ -184,7 +184,13 @@ en:
       people_sharing: "People sharing with you:"
     index:
       add_a_new_aspect: "Add a new aspect"
-      title: "Your Contacts"
+      title: "Contacts"
+      your_contacts: "Your Contacts"
+      no_contacts: "No contacts."
+      my_contacts: "My Contacts"
+      all_contacts: "All Contacts"
+      only_sharing_with_me: "Only sharing with me"
+      remove_person_from_aspect: "Remove %{person_name} from \"%{aspect_name}\""
 
   conversations:
     index:
@@ -502,8 +508,8 @@ en:
       last_name: "Last name"
       your_gender: "Your gender"
       your_birthday: "Your birthday"
-      your_tags: "You: in 5 #tags"
-      your_tags_placeholder: "i.e. #diaspora #ironing #kittens #music"
+      your_tags: "Describe yourself in 5 words"
+      your_tags_placeholder: "like #movies #kittens #travel #teacher #newyork"
       your_bio: "Your bio"
       your_location: "Your location"
       your_photo: "Your photo"

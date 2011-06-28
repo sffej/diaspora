@@ -5,5 +5,8 @@ echo "*     t                             ruby 1.8.7     build                  
 echo "*************************************************************************************************" &&
 echo "" &&
 bundle install &&
+<<<<<<< HEAD
 RAILS_ENV=development rake db:migrate
 bundle exec rake spec SPEC_OPTS="--tag ~performance"
+#cp config/application.yml.example config/application.yml &&
+#bundle exec rake cruise
