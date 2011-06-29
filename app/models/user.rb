@@ -40,6 +40,9 @@ class User < ActiveRecord::Base
   has_many :services, :dependent => :destroy
   has_many :user_preferences, :dependent => :destroy
 
+  has_many :authorizations, :class_name => 'OAuth2::Provider::Models::ActiveRecord::Authorization', :foreign_key => :resource_owner_id
+  has_many :applications, :through => :authorizations, :source => :client
+
   before_save do
     person.save if person && person.changed?
   end

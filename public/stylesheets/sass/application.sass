@@ -134,7 +134,7 @@ form
 
 header
   @include box-shadow(0,1px,3px,#222)
-  @include linear-gradient(rgba(15,15,15,0.85),rgba(10,10,10,1))
+  @include linear-gradient(rgba(25,20,20,0.95),rgba(25,20,20,1))
 
   :z-index 50
   :padding 0
@@ -204,6 +204,8 @@ header
           :background
             :color $blue
           :color #fff
+          :text
+            :decoration none
 
       &:first-child
         a
@@ -278,7 +280,7 @@ ul.dropdown
     :margin 5px 0
 
   .stream_element
-    :padding 20px 20px
+    :padding 15px
     :min-height 50px
     :border
       :bottom 1px solid #ddd
@@ -1390,8 +1392,14 @@ ul#settings_nav
     :display inline
     :margin
       :right 1em
+    :font
+      :weight 700
+
     a
       :padding 2px
+      :font
+        :weight normal
+
 
 .settings_pane
   :display none
@@ -2932,6 +2940,34 @@ h1.tag
   input[type='text'], input.text
     :width 98%
 
+#client-application-image
+  :max-width 100%
+
+#service_stream
+  :margin 0
+  :padding 0
+
+#authorize
+  :text-align center
+
+#application-description
+  :display inline-block
+  :width 300px
+  :padding-bottom 20px
+
+ul#requested-scopes
+  :vertical-align middle
+  li
+    :display inline-block
+    :padding 5px
+
+    img
+      :height 30px
+      :width 30px
+  
+    .scope-description
+      :display none
+
 .canvas
   .image-element,
   .stream_element
@@ -3069,3 +3105,13 @@ ul#left_nav
     :float right
     :text-decoration none
 
+#aspect_controls
+  @include border-radius(2px)
+  :background
+    :color #fafafa
+  :border 1px solid #ccc
+  :padding 10px
+  :min-height 23px
+
+  .conversation_button
+    :float right

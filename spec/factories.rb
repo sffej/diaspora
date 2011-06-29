@@ -14,6 +14,7 @@ end
 Factory.define :profile do |p|
   p.sequence(:first_name) { |n| "Robert#{n}#{r_str}" }
   p.sequence(:last_name)  { |n| "Grimm#{n}#{r_str}" }
+  p.birthday Date.today
 end
 
 
@@ -110,4 +111,23 @@ Factory.define(:activity_streams_photo, :class => ActivityStreams::Photo) do |p|
   p.actor_url "http://notcubbi.es/cubber"
   p.provider_display_name "not cubbies"
   p.public true
+end
+
+Factory.define(:app, :class => OAuth2::Provider.client_class) do |a|
+  a.sequence(:name) { |token| "Chubbies#{token}" }
+  a.sequence(:application_base_url) { |token| "http://chubbi#{token}.es/" }
+
+  a.description "The best way to chub on the net."
+  a.icon_url "/images/chubbies48.png"
+  a.permissions_overview "I will use the permissions this way!"
+  a.sequence(:public_key) {|n| OpenSSL::PKey::RSA.new(2048) }
+end
+
+Factory.define(:oauth_authorization, :class => OAuth2::Provider.authorization_class) do |a|
+  a.association(:client, :factory => :app)
+  a.association(:resource_owner, :factory => :user)
+end
+
+Factory.define(:oauth_access_token, :class => OAuth2::Provider.access_token_class) do |a|
+  a.association(:authorization, :factory => :oauth_authorization)
 end

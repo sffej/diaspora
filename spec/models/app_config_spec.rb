@@ -40,13 +40,14 @@ describe AppConfig do
 
       context "when source config file (i.e. config/application.yml) does not exist" do
         before do
-          application_yml = File.join(Rails.root, "config", "application.yml")
+          application_yml = File.join(Rails.root, "config", "application.yml.example")
           @app_yml = File.join(Rails.root, "config", "app.yml")
           @app_config_yml = File.join(Rails.root, "config", "app_config.yml")
           File.should_receive(:exists?).with(application_yml).at_least(:once).and_return(false)
         end
         after do
           File.instance_eval { alias :exists? :obfuscated_by_rspec_mocks__exists? } # unmock exists? so that the AppConfig.reload! in the top-level after block can run
+          AppConfig.source(AppConfig.source_file)
         end
         context "and there are no old-style config files around" do
           it "prints an error message with instructions for setting up application.yml and exits" do
@@ -142,6 +143,8 @@ describe AppConfig do
 
   describe ".pod_uri" do
     it "properly parses the pod_url" do
+      AppConfig.pod_uri = nil
+      AppConfig[:pod_url] = "http://example.org"
       pod_uri = AppConfig[:pod_uri]
       pod_uri.scheme.should == "http"
       pod_uri.host.should == "example.org"
@@ -152,7 +155,7 @@ describe AppConfig do
     describe "when setting pod_url" do
       context "with a symbol" do
         it "clears the cached pod_uri" do
-          AppConfig[:pod_uri].host.should == "example.org"
+          AppConfig[:pod_uri].host.should_not == "joindiaspora.com"
           AppConfig[:pod_url] = "http://joindiaspora.com"
           AppConfig[:pod_uri].host.should == "joindiaspora.com"
         end
@@ -163,7 +166,7 @@ describe AppConfig do
       end
       context "with a string" do
         it "clears the cached pod_uri" do
-          AppConfig[:pod_uri].host.should == "example.org"
+          AppConfig[:pod_uri].host.should_not == "joindiaspora.com"
           AppConfig['pod_url'] = "http://joindiaspora.com"
           AppConfig[:pod_uri].host.should == "joindiaspora.com"
         end

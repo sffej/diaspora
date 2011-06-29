@@ -74,13 +74,17 @@ class Webfinger
     return http.body
   end
 
+  def hcard_url
+    @wf_profile.hcard
+  end
+
   def get_hcard(webfinger_profile)
     unless webfinger_profile.strip == ""
 
       @wf_profile = WebfingerProfile.new(@account, webfinger_profile)
 
       begin
-        hcard = Faraday.get(@wf_profile.hcard)
+        hcard = Faraday.get(hcard_url)
       rescue
         return I18n.t('webfinger.hcard_fetch_failed', :account => @account)
       end
@@ -94,7 +98,7 @@ class Webfinger
   def make_person_from_webfinger(webfinger_profile)
     card = get_hcard(webfinger_profile)
     if card && @wf_profile
-      p = Person.create_from_webfinger(@wf_profile, card)
+      Person.create_from_webfinger(@wf_profile, card)
     end
   end
 

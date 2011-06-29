@@ -52,15 +52,6 @@ class Post < ActiveRecord::Base
     new_post
   end
 
-  def as_json(opts={})
-    {
-        :post => {
-            :id     => self.guid,
-            :author => self.author.as_json,
-        }
-    }
-  end
-
   # @return Returns true if this Post will accept updates (i.e. updates to the caption of a photo).
   def mutable?
     false
