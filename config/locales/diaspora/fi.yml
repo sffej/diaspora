@@ -4,6 +4,7 @@
 
 
 fi: 
+  _applications: "Applications"
   _comments: "Comments"
   _home: "Etusivu"
   _photos: "kuvat"
@@ -97,13 +98,6 @@ fi:
       no_contacts: "Ei kontakteja"
       people_sharing_with_you: "Ihmiset jotka jakavat kanssasi"
       post_a_message: "post a message >>"
-    manage: 
-      add_a_new_aspect: "Lisää uusi näkymä"
-      add_a_new_contact: "Lisää uusi kontakti"
-      drag_to_add: "Lisää ihmisiä raahaamalla"
-      manage_aspects: "Hallitse näkymiä"
-      no_requests: "Ei uusia pyyntöjä"
-      requests: "Pyynnöt"
     many: "%{count} näkymää"
     move_contact: 
       error: "Virhe siirrettäessä kontaktia: %{inspect}"
@@ -125,6 +119,9 @@ fi:
       failure: "Antamasi näkymän nimi, %{name}, on liian pitkä."
       success: "Näkymäsi, %{name}, muokkaus onnistui."
     zero: "ei näkymiä"
+  authorizations: 
+    index: 
+      revoke_access: "Revoke Access"
   back: "Takaisin"
   bookmarklet: 
     explanation: "%{link} from anywhere by bookmarking this link."
@@ -146,6 +143,15 @@ fi:
     create: 
       failure: "Kontaktin luonti epäonnistui"
     few: "%{count} kontaktia"
+    index: 
+      add_a_new_aspect: "Add a new aspect"
+      all_contacts: "All Contacts"
+      my_contacts: "My Contacts"
+      no_contacts: "No contacts."
+      only_sharing_with_me: "Only sharing with me"
+      remove_person_from_aspect: "Remove %{person_name} from \"%{aspect_name}\""
+      title: "Contacts"
+      your_contacts: "Your Contacts"
     many: "%{count} kontaktia"
     one: "1 kontakti"
     other: "%{count} kontaktia"
@@ -556,6 +562,7 @@ fi:
   settings: "Asetukset"
   shared: 
     add_contact: 
+      add_new_contact: "Add a new contact"
       create_request: "Etsi Diaspora-tunnuksella"
       diaspora_handle: "diaspora@handle.org"
       enter_a_diaspora_username: "Anna Diaspora-käyttäjätunnus:"

@@ -4,6 +4,7 @@
 
 
 pt-PT: 
+  _applications: "Applications"
   _comments: "Comentários"
   _home: "Início"
   _photos: "fotografias"
@@ -97,13 +98,6 @@ pt-PT:
       no_contacts: "Não há contactos"
       people_sharing_with_you: "Pessoas a partilhar consigo"
       post_a_message: "publicar uma mensagem >>"
-    manage: 
-      add_a_new_aspect: "Adicionar um novo aspecto"
-      add_a_new_contact: "Adicionar um novo contacto"
-      drag_to_add: "Arraste para adicionar pessoas"
-      manage_aspects: "Gerir aspectos"
-      no_requests: "Não existem novos pedidos"
-      requests: "Pedidos"
     many: "%{count} aspectos"
     move_contact: 
       error: "Erro ao mover o contacto: %{inspect}"
@@ -125,6 +119,9 @@ pt-PT:
       failure: "O seu aspecto, %{name}, tinha um nome grande demais para ser guardado."
       success: "O seu aspecto, %{name}, foi editado com sucesso."
     zero: "não há aspectos"
+  authorizations: 
+    index: 
+      revoke_access: "Revoke Access"
   back: "Voltar"
   bookmarklet: 
     explanation: "Publique no Diaspora de qualquer lado ao adicionar %{link} como marcador."
@@ -146,6 +143,15 @@ pt-PT:
     create: 
       failure: "Erro ao criar contacto"
     few: "%{count} contactos"
+    index: 
+      add_a_new_aspect: "Add a new aspect"
+      all_contacts: "All Contacts"
+      my_contacts: "My Contacts"
+      no_contacts: "No contacts."
+      only_sharing_with_me: "Only sharing with me"
+      remove_person_from_aspect: "Remove %{person_name} from \"%{aspect_name}\""
+      title: "Contacts"
+      your_contacts: "Your Contacts"
     many: "%{count} contactos"
     one: "1 contacto"
     other: "%{count} contactos"
@@ -556,6 +562,7 @@ pt-PT:
   settings: "Definições"
   shared: 
     add_contact: 
+      add_new_contact: "Add a new contact"
       create_request: "Encontrar através do endereço do Diaspora"
       diaspora_handle: "diaspora@handle.org"
       enter_a_diaspora_username: "Introduza um nome de utilizador do Diaspora:"

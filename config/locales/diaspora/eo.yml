@@ -4,6 +4,7 @@
 
 
 eo: 
+  _applications: "Aplikaĵoj"
   _comments: "Komentoj"
   _home: "Hejmo"
   _photos: "Bildoj"
@@ -97,13 +98,6 @@ eo:
       no_contacts: "Nul kontaktoj"
       people_sharing_with_you: "Homoj, kiuj konigas kun vi"
       post_a_message: "Afiŝi mesaĝon »"
-    manage: 
-      add_a_new_aspect: "Aldoni novan aspekton"
-      add_a_new_contact: "Aldoni novan kontakton"
-      drag_to_add: "Trenu por aldoni homojn"
-      manage_aspects: "Administri aspektojn"
-      no_requests: "Neniujn novajn petojn "
-      requests: "Petoj"
     many: "%{count} aspektoj"
     move_contact: 
       error: "Ne povis movi kontakton: %{inspect}"
@@ -125,6 +119,9 @@ eo:
       failure: "Via aspekto, %{name}, havis tro longan nomon saviĝi."
       success: "Via aspekto, %{name}, sukcese redaktiĝis."
     zero: "neniu aspektoj"
+  authorizations: 
+    index: 
+      revoke_access: "Revoke Access"
   back: "Antaŭen"
   bookmarklet: 
     explanation: "Vi povas poŝti al DIASPORA* el ĉie per legosignado la ligilon %{link}."
@@ -146,6 +143,15 @@ eo:
     create: 
       failure: "Ne povis krei kontakton"
     few: "%{count} kontaktoj"
+    index: 
+      add_a_new_aspect: "Aldoni novan aspekton"
+      all_contacts: "Ĉiuj kontaktoj"
+      my_contacts: "Miaj kontaktoj"
+      no_contacts: "Neniuj kontaktoj."
+      only_sharing_with_me: "Nur partoprenata al mi"
+      remove_person_from_aspect: "Forigi %{person_name} de \"%{aspect_name}\""
+      title: "Kontaktoj"
+      your_contacts: "Viaj kontaktoj"
     many: "%{count} kontaktoj"
     one: "1 kontakto"
     other: "%{count} kontaktoj"
@@ -479,7 +485,7 @@ eo:
       your_photo: "Via bildo"
       your_private_profile: "Via nepublika profilo"
       your_public_profile: "Via nepublika profilo"
-      your_tags: "Vi en kvin #etikedoj"
+      your_tags: "En kvin vortoj priskribu vin mem."
       your_tags_placeholder: "ekz. #diaspora #gladado #katidoj #muziko"
     update: 
       failed: "Ne povis ĝisdatigi profilon"
@@ -556,6 +562,7 @@ eo:
   settings: "Agordoj"
   shared: 
     add_contact: 
+      add_new_contact: "Aldoni novan kontakton"
       create_request: "Trovi per DIASPORA* uzantnomo"
       diaspora_handle: "diaspora@handle.org"
       enter_a_diaspora_username: "Aldonu DIASPORA* uzantnomo:"

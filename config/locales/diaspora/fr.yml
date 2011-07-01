@@ -4,6 +4,7 @@
 
 
 fr: 
+  _applications: "Applications"
   _comments: "Commentaires"
   _home: "Accueil"
   _photos: "photos"
@@ -97,13 +98,6 @@ fr:
       no_contacts: "Aucun contact"
       people_sharing_with_you: "Personnes partageant avec vous"
       post_a_message: "publier un message >>"
-    manage: 
-      add_a_new_aspect: "Ajouter un nouvel aspect"
-      add_a_new_contact: "Ajouter un nouveau contact"
-      drag_to_add: "Faites glisser pour ajouter des personnes"
-      manage_aspects: "Gérer les aspects"
-      no_requests: "Pas de nouvelle requête"
-      requests: "Requêtes"
     many: "%{count} aspects"
     move_contact: 
       error: "Erreur lors du déplacement du contact : %{inspect}"
@@ -125,6 +119,9 @@ fr:
       failure: "Votre aspect %{name} a un nom trop long pour être enregistré."
       success: "Votre aspect « %{aspect_name} » a été modifié."
     zero: "aucun aspect"
+  authorizations: 
+    index: 
+      revoke_access: "Revoke Access"
   back: "Retour"
   bookmarklet: 
     explanation: "Publier sur Diaspora depuis n'importe où en ajoutant %{link} à vos marque-pages."
@@ -146,6 +143,15 @@ fr:
     create: 
       failure: "Impossible de créer le contact"
     few: "%{count} contacts"
+    index: 
+      add_a_new_aspect: "Add a new aspect"
+      all_contacts: "All Contacts"
+      my_contacts: "My Contacts"
+      no_contacts: "No contacts."
+      only_sharing_with_me: "Only sharing with me"
+      remove_person_from_aspect: "Remove %{person_name} from \"%{aspect_name}\""
+      title: "Contacts"
+      your_contacts: "Your Contacts"
     many: "%{count} contacts"
     one: "1 contact"
     other: "%{count} contacts"
@@ -556,6 +562,7 @@ fr:
   settings: "Options"
   shared: 
     add_contact: 
+      add_new_contact: "Add a new contact"
       create_request: "Rechercher par handle Diaspora"
       diaspora_handle: "diaspora@handle.org"
       enter_a_diaspora_username: "Entrez un nom d'utilisateur Diaspora :"

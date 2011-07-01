@@ -65,28 +65,36 @@ describe AuthorizationsController do
         prepare_manifest("http://chubbi.es/")
         @controller.stub!(:verify).and_return('ok')
         post :token,  @params_hash
-        response.body.blank?.should be_false
+        response.code.should == "200"
       end
 
       it 'renders something for cubbies ' do
         prepare_manifest("http://cubbi.es/")
         @controller.stub!(:verify).and_return('ok')
         post :token,  @params_hash
-        response.body.blank?.should be_false
+        response.code.should == "200"
       end
 
+      it 'renders something for cubbies ' do
+        prepare_manifest("https://www.cubbi.es:443/")
+        @controller.stub!(:verify).and_return('ok')
+        post :token,  @params_hash
+        response.code.should == "200"
+      end
+      
       it 'renders something for localhost' do
         prepare_manifest("http://localhost:3423/")
         @controller.stub!(:verify).and_return('ok')
         post :token,  @params_hash
-        response.body.blank?.should be_false
+        response.code.should == "200"
       end
 
       it 'renders nothing for myspace' do
         prepare_manifest("http://myspace.com")
         @controller.stub!(:verify).and_return('ok')
         post :token,  @params_hash
-        response.body.blank?.should be_true
+        response.code.should == "403"
+        response.body.should include("http://myspace.com")
       end
     end
 

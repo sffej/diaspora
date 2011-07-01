@@ -4,6 +4,7 @@
 
 
 da: 
+  _applications: "Applications"
   _comments: "Kommentarer"
   _home: "Hjem"
   _photos: "Billeder"
@@ -97,13 +98,6 @@ da:
       no_contacts: "Ingen kontakter"
       people_sharing_with_you: "Personer der deler med dig"
       post_a_message: "post en besked >>"
-    manage: 
-      add_a_new_aspect: "Tilføj et nyt aspekt"
-      add_a_new_contact: "Tilføj en ny kontaktperson"
-      drag_to_add: "Træk for at tilføje personer"
-      manage_aspects: "Administrér aspekter"
-      no_requests: "Ingen nye anmodninger"
-      requests: "Anmodninger"
     many: "%{count} aspekter"
     move_contact: 
       error: "Kunne ikke flytte kontaktperson: %{inspect}"
@@ -125,6 +119,9 @@ da:
       failure: "Dit aspekt, %{name}, var for langt til at blive gemt."
       success: "Dit aspekt, %{name}, er nu blevet redigeret."
     zero: "ingen aspekter"
+  authorizations: 
+    index: 
+      revoke_access: "Revoke Access"
   back: "Tilbage"
   bookmarklet: 
     explanation: "%{link} alle steder fra ved at bogmærke dette link."
@@ -146,6 +143,15 @@ da:
     create: 
       failure: "Kunne ikke oprette kontakt"
     few: "%{count} kontaktpersoner"
+    index: 
+      add_a_new_aspect: "Add a new aspect"
+      all_contacts: "All Contacts"
+      my_contacts: "My Contacts"
+      no_contacts: "No contacts."
+      only_sharing_with_me: "Only sharing with me"
+      remove_person_from_aspect: "Remove %{person_name} from \"%{aspect_name}\""
+      title: "Contacts"
+      your_contacts: "Your Contacts"
     many: "%{count} kontakter"
     one: "Én kontaktperson"
     other: "%{count} kontaktpersoner"
@@ -556,6 +562,7 @@ da:
   settings: "Indstillinger"
   shared: 
     add_contact: 
+      add_new_contact: "Add a new contact"
       create_request: "Find med Diaspora handle"
       diaspora_handle: "diaspora@handle.org"
       enter_a_diaspora_username: "Indtast et Diaspora handle:"
