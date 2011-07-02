@@ -18,8 +18,7 @@ class AspectsController < ApplicationController
       @contacts_sharing_with = current_user.contacts.sharing.includes(:person => :profile)
     end
 
-    #No aspect_listings on infinite scroll
-    @aspects = @aspects.includes(:contacts => {:person => :profile}) unless params[:only_posts]
+    aspect_ids = @aspects.map{|a| a.id}
 
     # redirect to signup
     if (current_user.getting_started == true || @aspects.blank?) && !request.format.mobile? && !request.format.js?
@@ -27,7 +26,12 @@ class AspectsController < ApplicationController
       return
     end
 
-    @selected_contacts = @aspects.map { |aspect| aspect.contacts }.flatten.uniq unless params[:only_posts]
+    unless params[:only_posts]
+      all_selected_contacts = Contact.joins(:aspect_memberships).
+        where(:aspect_memberships => {:aspect_id => aspect_ids})
+      @selected_contacts_count =  all_selected_contacts.count
+      @selected_contacts = all_selected_contacts.includes(:person => :profile)
+    end
 
     @aspect_ids = @aspects.map { |a| a.id }
     posts = current_user.visible_posts(:by_members_of => @aspect_ids,
@@ -65,7 +69,7 @@ class AspectsController < ApplicationController
           @contact = current_user.share_with(@person, @aspect)
         end
       else
-        respond_with @aspect
+        redirect_to contacts_path(:a_id => @aspect.id)
       end
     else
       respond_to do |format|
@@ -112,9 +116,9 @@ class AspectsController < ApplicationController
     @contacts_in_aspect = @aspect.contacts.includes(:aspect_memberships, :person => :profile).all.sort! { |x, y| x.person.name <=> y.person.name }
     c = Contact.arel_table
     if @contacts_in_aspect.empty?
-      @contacts_not_in_aspect = current_user.contacts.receiving.includes(:aspect_memberships, :person => :profile).all.sort! { |x, y| x.person.name <=> y.person.name }
+      @contacts_not_in_aspect = current_user.contacts.includes(:aspect_memberships, :person => :profile).all.sort! { |x, y| x.person.name <=> y.person.name }
     else
-      @contacts_not_in_aspect = current_user.contacts.receiving.where(c[:id].not_in(@contacts_in_aspect.map(&:id))).includes(:aspect_memberships, :person => :profile).all.sort! { |x, y| x.person.name <=> y.person.name }
+      @contacts_not_in_aspect = current_user.contacts.where(c[:id].not_in(@contacts_in_aspect.map(&:id))).includes(:aspect_memberships, :person => :profile).all.sort! { |x, y| x.person.name <=> y.person.name }
     end
 
     @contacts = @contacts_in_aspect + @contacts_not_in_aspect
