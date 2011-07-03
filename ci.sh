@@ -9,4 +9,4 @@ bundle install &&
 #bundle exec rake spec SPEC_OPTS="--tag ~performance"
 #cp config/application.yml.example config/application.yml &&
 #bundle exec rake cruise
-bundle exec rake cruise SPEC_OPTS="--tag ~performance"
+bundle exec rake spec SPEC_OPTS="--tag ~performance"
