@@ -51,23 +51,27 @@ describe NotificationsController do
     end
 
     it 'paginates the notifications' do
-      25.times do
-        Factory(:notification, :recipient => @user, :target => @post)
-      end
+      25.times { Factory(:notification, :recipient => @user, :target => @post) }
 
       @controller.index({})[:notifications].count.should == 25
       @controller.index(:page => 2)[:notifications].count.should == 1
     end
 
     it "includes the actors" do
-      notification = Factory(:notification, :recipient => @user, :target => @post)
+      Factory(:notification, :recipient => @user, :target => @post)
       response = @controller.index({})
       response[:notifications].first[:actors].first.should be_a(Person)
     end
 
     it 'eager loads the target' do
       response = @controller.index({})
-      response[:notifications].each{ |note| note[:target].should be }
+      response[:notifications].each { |note| note[:target].should be }
+    end
+
+    it "supports a limit per_page parameter" do
+      5.times { Factory(:notification, :recipient => @user, :target => @post) }
+      response = @controller.index({:per_page => 5})
+      response[:notifications].length.should == 5
     end
   end
 end

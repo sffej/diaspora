@@ -10,8 +10,6 @@ class StatusMessagesController < ApplicationController
   respond_to :json, :only => :show
 
 
-  helper_method :object_aspect_ids
-
   # Called when a user clicks "Mention" on a profile page
   # @option [Integer] person_id The id of the person to be mentioned
   def new
@@ -112,7 +110,6 @@ message = Morley::Shorty::swap(params[:status_message][:text])
   def show
     @status_message = current_user.find_visible_post_by_id params[:id]
     if @status_message
-      @object_aspect_ids = @status_message.aspects.map{|a| a.id}
 
       # mark corresponding notification as read
       if notification = Notification.where(:recipient_id => current_user.id, :target_id => @status_message.id).first
@@ -128,11 +125,4 @@ message = Morley::Shorty::swap(params[:status_message][:text])
     end
   end
 
-  def object_aspect_ids
-    if  params[:action] == 'show'
-      @object_aspect_ids ||= @status_message.aspects.map{|a| a.id}
-    else
-      super
-    end
-  end
 end

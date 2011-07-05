@@ -38,7 +38,7 @@ class AspectsController < ApplicationController
                                            :type => ['StatusMessage','ActivityStreams::Photo'],
                                            :order => session[:sort_order] + ' DESC',
                                            :max_time => params[:max_time].to_i
-                          ).includes(:comments, :mentions, :likes, :dislikes)
+                          ).includes(:likes, {:comments => {:author => :profile}}, {:mentions => {:person => :profile}})
 
     @posts = PostsFake.new(posts)
     if params[:only_posts]
@@ -156,6 +156,11 @@ class AspectsController < ApplicationController
 
   def ensure_page
     params[:max_time] ||= Time.now + 1
+  end
+
+  helper_method :all_aspects_selected?
+  def all_aspects_selected?
+    @aspect == :all
   end
 
   private

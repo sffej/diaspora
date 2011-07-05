@@ -14,8 +14,16 @@ Background:
 
   And I go to the destroy user session page
 
-Scenario: someone shares with me
-  When I sign in as "alice@alice.alice"
-  And I follow "notifications" in the header
+  Scenario: someone shares with me
+    When I sign in as "alice@alice.alice"
+    And I follow "notifications" in the header
+    And I wait for the ajax to finish
+    And I follow "View all"
 
   Then I should see "started sharing with you"
+
+  Scenario: notification popup
+    When I sign in as "alice@alice.alice"
+    And I click the notification badge
+    And I wait for the ajax to finish
+    Then the notification dropdown should be visible
