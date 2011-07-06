@@ -46,7 +46,7 @@ Feature: commenting
     And I fill in "Comment" with "is that a poodle?"
     And I press "Comment"
     And I wait for the ajax to finish
-    When I hover over the comment
+    When I hover over the ".comment.posted"
     And I preemptively confirm the alert
     And I click to delete the first comment
     And I wait for the ajax to finish
@@ -72,7 +72,8 @@ Feature: commenting
     Then I should see "Look at this dog"
     When I follow "less than a minute ago"
     Then I should see "Look at this dog"
-    Then I follow "Comment"
+    When I open the comment box
+    And I focus the comment field
     And I fill in "text" with "I think thats a cat"
     And I press "Comment"
     And I wait for the ajax to finish

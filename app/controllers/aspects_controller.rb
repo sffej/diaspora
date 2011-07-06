@@ -10,6 +10,9 @@ class AspectsController < ApplicationController
   respond_to :html, :js
   respond_to :json, :only => [:show, :create]
 
+  helper_method :tags, :tag_followings
+  helper_method :all_aspects_selected?
+
   def index
     if params[:a_ids]
       @aspects = current_user.aspects.where(:id => params[:a_ids])
@@ -38,7 +41,7 @@ class AspectsController < ApplicationController
                                            :type => ['StatusMessage','ActivityStreams::Photo'],
                                            :order => session[:sort_order] + ' DESC',
                                            :max_time => params[:max_time].to_i
-                          ).includes(:likes, {:comments => {:author => :profile}}, {:mentions => {:person => :profile}})
+                          ).includes({:comments => {:author => :profile}}, {:mentions => {:person => :profile}})
 
     @posts = PostsFake.new(posts)
     if params[:only_posts]
@@ -158,9 +161,21 @@ class AspectsController < ApplicationController
     params[:max_time] ||= Time.now + 1
   end
 
-  helper_method :all_aspects_selected?
   def all_aspects_selected?
     @aspect == :all
+  end
+
+  def tag_followings
+    if current_user
+      if @tag_followings == nil
+        @tag_followings = current_user.tag_followings
+      end
+      @tag_followings
+    end
+  end
+
+  def tags
+    @tags ||= current_user.followed_tags
   end
 
   private

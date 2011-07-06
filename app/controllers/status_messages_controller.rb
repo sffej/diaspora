@@ -125,4 +125,8 @@ message = Morley::Shorty::swap(params[:status_message][:text])
     end
   end
 
+  helper_method :comments_expanded
+  def comments_expanded
+    true
+  end
 end

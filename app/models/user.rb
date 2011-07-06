@@ -39,6 +39,8 @@ class User < ActiveRecord::Base
   has_many :contact_people, :through => :contacts, :source => :person
   has_many :services, :dependent => :destroy
   has_many :user_preferences, :dependent => :destroy
+  has_many :tag_followings, :dependent => :destroy
+  has_many :followed_tags, :through => :tag_followings, :source => :tag
 
   has_many :authorizations, :class_name => 'OAuth2::Provider::Models::ActiveRecord::Authorization', :foreign_key => :resource_owner_id
   has_many :applications, :through => :authorizations, :source => :client
@@ -182,10 +184,14 @@ class User < ActiveRecord::Base
   # Check whether the user has liked a post.  Extremely inefficient if the post's likes are not loaded.
   # @param [Post] post
   def liked?(post)
-    if self.like_for(post)
-      return true
+    if post.likes.loaded?
+      if self.like_for(post)
+        return true
+      else
+        return false
+      end
     else
-      return false
+      Like.exists?(:author_id => self.person.id, :post_id => post.id)
     end
   end
 
@@ -193,10 +199,11 @@ class User < ActiveRecord::Base
   # @param [Post] post
   # @return [Like]
   def like_for(post)
-    post.likes.each do |like|
-      return like if like.author_id == self.person.id
+    if post.likes.loaded?
+      return post.likes.detect{ |like| like.author_id == self.person.id }
+    else
+      return Like.where(:author_id => self.person.id, :post_id => post.id).first
     end
-    return nil
   end
 
   ######### Mailer #######################

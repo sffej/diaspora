@@ -4,13 +4,17 @@
 
 Diaspora::Application.routes.draw do
 
+
   # Posting and Reading
 
   resources :aspects do
     put 'toggle_contact_visibility' => :toggle_contact_visibility
   end
 
-  resources :status_messages, :only => [:new, :create, :destroy, :show]
+  resources :status_messages, :only => [:new, :create, :destroy, :show] do
+    resources :likes, :only => [:create, :destroy, :index]
+  end
+
   get 'bookmarklet' => 'status_messages#bookmarklet'
   get 'p/:id'       => 'posts#show', :as => 'post'
 
@@ -20,7 +24,6 @@ Diaspora::Application.routes.draw do
 
   resources :comments, :only => [:create, :destroy]
 
-  resources :likes, :only => [:create, :destroy]
 
   resources :conversations do
     resources :messages, :only => [:create, :show]
@@ -32,6 +35,9 @@ Diaspora::Application.routes.draw do
   end
 
   resources :tags, :only => [:index]
+  post    "/tags/:name/tag_followings" => "tag_followings#create", :as => 'tag_tag_followings'
+  delete  "/tags/:name/tag_followings" => "tag_followings#destroy"
+
   get 'tags/:name' => 'tags#show', :as => 'tag'
 
   resources :apps, :only => [:show]
