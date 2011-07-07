@@ -75,38 +75,45 @@ class PeopleController < ApplicationController
     if @person
       @profile = @person.profile
 
-      if current_user
-        @contact = current_user.contact_for(@person)
-        @aspects_with_person = []
-        if @contact && !params[:only_posts]
-          @aspects_with_person = @contact.aspects
-          @aspect_ids = @aspects_with_person.map(&:id)
-          @contacts_of_contact_count = @contact.contacts.count
-          @contacts_of_contact = @contact.contacts.limit(8)
+      unless params[:format] == "json" # hovercard
+        if current_user
+          @contact = current_user.contact_for(@person)
+          @aspects_with_person = []
+          if @contact && !params[:only_posts]
+            @aspects_with_person = @contact.aspects
+            @aspect_ids = @aspects_with_person.map(&:id)
+            @contacts_of_contact_count = @contact.contacts.count
+            @contacts_of_contact = @contact.contacts.limit(8)
 
+          else
+            @contact ||= Contact.new
+            @contacts_of_contact_count = 0
+            @contacts_of_contact = []
+          end
+
+          if (@person != current_user.person) && !@contact.persisted?
+            @commenting_disabled = true
+          else
+            @commenting_disabled = false
+          end
+          @posts = current_user.posts_from(@person).where(:type => ["StatusMessage", "ActivityStreams::Photo"]).includes(:comments).limit(15).where(StatusMessage.arel_table[:created_at].lt(max_time))
         else
-          @contact ||= Contact.new
-          @contacts_of_contact_count = 0
-          @contacts_of_contact = []
-        end
-
-        if (@person != current_user.person) && !@contact.persisted?
           @commenting_disabled = true
-        else
-          @commenting_disabled = false
+          @posts = @person.posts.where(:type => ["StatusMessage", "ActivityStreams::Photo"], :public => true).includes(:comments).limit(15).where(StatusMessage.arel_table[:created_at].lt(max_time)).order('posts.created_at DESC')
         end
-        @posts = current_user.posts_from(@person).where(:type => ["StatusMessage", "ActivityStreams::Photo"]).includes(:comments).limit(15).where(StatusMessage.arel_table[:created_at].lt(max_time))
-      else
-        @commenting_disabled = true
-        @posts = @person.posts.where(:type => ["StatusMessage", "ActivityStreams::Photo"], :public => true).includes(:comments).limit(15).where(StatusMessage.arel_table[:created_at].lt(max_time)).order('posts.created_at DESC')
-      end
 
-      @posts = PostsFake.new(@posts)
+        @posts = PostsFake.new(@posts)
+      end
 
       if params[:only_posts]
         render :partial => 'shared/stream', :locals => {:posts => @posts}
       else
-        respond_with @person, :locals => {:post_type => :all}
+        respond_to do |format|
+          format.all { respond_with @person, :locals => {:post_type => :all} }
+          format.json {
+            render :json => @person.to_json(:includes => params[:includes])
+          }
+        end
       end
 
     else
@@ -131,7 +138,6 @@ class PeopleController < ApplicationController
       @aspect = :profile
       @contacts_of_contact = @contact.contacts.paginate(:page => params[:page], :per_page => (params[:limit] || 15))
       @hashes = hashes_for_people @contacts_of_contact, @aspects
-      @contact = current_user.contact_for(@person)
       @aspects_with_person = @contact.aspects
       @aspect_ids = @aspects_with_person.map(&:id)
     else
@@ -139,8 +145,16 @@ class PeopleController < ApplicationController
       redirect_to people_path
     end
   end
+
+  def aspect_membership_dropdown
+    @person = Person.find(params[:id])
+    @contact = current_user.contact_for(@person) || Contact.new
+    render :partial => 'aspect_memberships/aspect_dropdown', :locals => {:contact => @contact, :person => @person, :hang => 'left'}
+  end
+
   private
   def webfinger(account, opts = {})
     Resque.enqueue(Job::SocketWebfinger, current_user.id, account, opts)
   end
+
 end

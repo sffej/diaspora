@@ -219,14 +219,17 @@ class Person < ActiveRecord::Base
     self.posts.where(:type => "Photo").exists?
   end
 
-  def as_json(opts={})
-    {
-      :id => self.guid,
+  def as_json( opts = {} )
+    opts ||= {}
+    json = {
+      :id => self.id,
       :name => self.name,
-      :avatar => self.profile.image_url(:thumb_small),
+      :avatar => self.profile.image_url(:thumb_medium),
       :handle => self.diaspora_handle,
-      :url => "/people/#{self.id}"
+      :url => "/people/#{self.id}",
     }
+    json.merge!(:tags => self.profile.tags.map{|t| "##{t.name}"}) if opts[:includes] == "tags"
+    json
   end
 
   protected

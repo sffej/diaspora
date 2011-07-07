@@ -43,7 +43,7 @@ class StatusMessage < Post
 
     escaped_message = opts[:plain_text] ? self.raw_message: ERB::Util.h(self.raw_message)
     mentioned_message = self.format_mentions(escaped_message, opts)
-    self.format_tags(mentioned_message, opts)
+    Diaspora::Taggable.format_tags(mentioned_message, opts)
   end
 
   def format_mentions(text, opts = {})
@@ -57,7 +57,7 @@ class StatusMessage < Post
       if opts[:plain_text]
         person ? ERB::Util.h(person.name) : ERB::Util.h($~[1])
       else
-        person ? "<a href=\"/people/#{person.id}\" class=\"mention\">@#{ERB::Util.h(person.name)}</a>" : ERB::Util.h($~[1])
+        person ? "<a href=\"/people/#{person.id}\" class=\"mention hovercardable\">@#{ERB::Util.h(person.name)}</a>" : ERB::Util.h($~[1])
       end
     end
     form_message
@@ -107,7 +107,7 @@ class StatusMessage < Post
     <activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
     <activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
   </entry>
-      XML
+    XML
   end
 
   def socket_to_user(user_or_id, opts={})

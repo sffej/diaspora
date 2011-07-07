@@ -362,4 +362,20 @@ describe Person do
       alice.person.has_photos?.should be_true
     end
   end
+
+  describe '#as_json' do
+    it 'returns a hash representation of a person' do
+      @person.as_json.should == {
+        :id => @person.id,
+        :name => @person.name,
+        :avatar => @person.profile.image_url(:thumb_medium),
+        :handle => @person.diaspora_handle,
+        :url => "/people/#{@person.id}",
+      }
+    end
+    it 'return tags if asked' do
+      @person.as_json(:includes => "tags").
+        should == @person.as_json.merge(:tags =>  @person.profile.tags.map{|t| "##{t.name}"})
+    end
+  end
 end
