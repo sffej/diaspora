@@ -8,7 +8,7 @@ describe PostsFake do
       @people << post.author
       4.times do
         comment = Factory(:comment, :post => post)
-        @people << comment.author
+        comment.author
       end
       @posts << post
     end
@@ -41,10 +41,6 @@ describe PostsFake do
       @fakes.should_receive(:people_hash).and_return({})
       @fake.author
     end
-    it 'refers to its comments array for comments' do
-      @fake.comments = [mock()]
-      @fake.comments
-    end
     it 'refers to its post for any other field' do
       @post.should_receive(:text)
       @fake.text
@@ -55,7 +51,7 @@ describe PostsFake do
       sm = Factory(:status_message)
       fake = PostsFake::Fake.new(sm, @fakes)
 
-      status_message_path(fake).should == status_message_path(sm)
+      post_path(fake).should == post_path(sm)
     end
   end
 end

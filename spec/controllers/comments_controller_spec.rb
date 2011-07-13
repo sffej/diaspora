@@ -80,13 +80,13 @@ describe CommentsController do
 
       it 'lets the user delete his comment' do
         alice.should_receive(:retract).with(@comment)
-        delete :destroy, :format => "js",  :id => @comment.id
+        delete :destroy, :format => "js", :post_id => 1,  :id => @comment.id
         response.status.should == 204
       end
 
       it "lets the user destroy other people's comments" do
         alice.should_receive(:retract).with(@comment2)
-        delete :destroy, :format => "js",  :id => @comment2.id
+        delete :destroy, :format => "js", :post_id => 1,  :id => @comment2.id
         response.status.should == 204
       end
     end
@@ -101,20 +101,41 @@ describe CommentsController do
 
       it 'let the user delete his comment' do
         alice.should_receive(:retract).with(@comment)
-        delete :destroy, :format => "js",  :id => @comment.id
+        delete :destroy, :format => "js", :post_id => 1,  :id => @comment.id
         response.status.should == 204
       end
 
       it 'does not let the user destroy comments he does not own' do
         alice.should_not_receive(:retract).with(@comment2)
-        delete :destroy, :format => "js",  :id => @comment3.id
+        delete :destroy, :format => "js", :post_id => 1,  :id => @comment3.id
         response.status.should == 403
       end
     end
     it 'renders nothing and 404 on a nonexistent comment' do
-      delete :destroy, :id => 343415
+      delete :destroy, :post_id => 1, :id => 343415
       response.status.should == 404
       response.body.strip.should be_empty
+    end
+  end
+
+  describe '#index' do
+    before do
+      @message = bob.post(:status_message, :text => "hey", :to => bob.aspects.first.id)
+      @comments = [alice, bob, eve].map{ |u| u.comment("hey", :post => @message) }
+    end
+    it 'returns all the comments for a post' do
+      get :index, :post_id => @message.id, :format => 'js'
+      assigns[:comments].should == @comments
+    end
+    it 'returns a 404 on a nonexistent post' do
+      get :index, :post_id => 235236, :format => 'js'
+      response.status.should == 404
+    end
+    it 'returns a 404 on a post that is not visible to the signed in user' do
+      message = eve.post(:status_message, :text => "hey", :to => eve.aspects.first.id)
+      bob.comment("hey", :post => @message)
+      get :index, :post_id => message.id, :format => 'js'
+      response.status.should == 404
     end
   end
 end

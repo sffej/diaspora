@@ -4,26 +4,36 @@
 
 Diaspora::Application.routes.draw do
 
-
   # Posting and Reading
 
   resources :aspects do
-    put 'toggle_contact_visibility' => :toggle_contact_visibility
+    put :toggle_contact_visibility
   end
 
-  resources :status_messages, :only => [:new, :create, :destroy, :show] do
+  resources :status_messages, :only => [:new, :create]
+
+  resources :posts, :only => [:show, :destroy] do
+    resources :likes, :only => [:create, :destroy, :index]
+    resources :comments, :only => [:create, :destroy, :index]
+  end
+  get 'p/:id' => 'publics#post', :as => 'public_post'
+
+  # roll up likes into a nested resource above
+  resources :comments, :only => [:create, :destroy] do
     resources :likes, :only => [:create, :destroy, :index]
   end
 
+
   get 'bookmarklet' => 'status_messages#bookmarklet'
-  get 'p/:id'       => 'posts#show', :as => 'post'
 
   resources :photos, :except => [:index] do
-    put 'make_profile_photo' => :make_profile_photo
+    put :make_profile_photo
   end
 
-  resources :comments, :only => [:create, :destroy]
-
+  # ActivityStreams routes
+  scope "/activity_streams", :module => "activity_streams", :as => "activity_streams" do
+    resources :photos, :controller => "photos", :only => [:create]
+  end
 
   resources :conversations do
     resources :messages, :only => [:create, :show]
@@ -31,23 +41,28 @@ Diaspora::Application.routes.draw do
   end
 
   resources :notifications, :only => [:index, :update] do
-    get 'read_all' => :read_all, :on => :collection
+    get :read_all, :on => :collection
   end
 
   resources :tags, :only => [:index]
-  post    "/tags/:name/tag_followings" => "tag_followings#create", :as => 'tag_tag_followings'
-  delete  "/tags/:name/tag_followings" => "tag_followings#destroy"
-
+  scope "tags/:name" do
+    post   "tag_followings" => "tag_followings#create", :as => 'tag_tag_followings'
+    delete "tag_followings" => "tag_followings#destroy"
+  end
   get 'tags/:name' => 'tags#show', :as => 'tag'
 
   resources :apps, :only => [:show]
+
+  #Cubbies info page
+  resource :token, :only => :show
+
+
   # Users and people
 
   resource :user, :only => [:edit, :update, :destroy], :shallow => true do
     get :export
     get :export_photos
   end
-
 
   controller :users do
     get 'public/:username'          => :public,          :as => 'users_public'
@@ -65,25 +80,14 @@ Diaspora::Application.routes.draw do
                                       :invitations   => "invitations"} do
     get 'invitations/resend/:id' => 'invitations#resend', :as => 'invitation_resend'
   end
-
-  # generating a new user token (for devise)
-
-  # ActivityStreams routes
-  scope "/activity_streams", :module => "activity_streams", :as => "activity_streams" do
-    resources :photos, :controller => "photos", :only => [:create, :show, :destroy]
-  end
-
-
-  #Temporary token_authenticable route
-  resource :token, :only => :show
-
+  
   get 'login' => redirect('/users/sign_in')
 
   scope 'admins', :controller => :admins do
-    match 'user_search'   => :user_search
-    get   'admin_inviter' => :admin_inviter
-    get   'add_invites'   => :add_invites, :as => 'add_invites'
-    get   'stats'         => :stats, :as => 'pod_stats'
+    match :user_search
+    get   :admin_inviter
+    get   :add_invites, :as => 'add_invites'
+    get   :stats, :as => 'pod_stats'
   end
 
   resource :profile
@@ -104,20 +108,16 @@ Diaspora::Application.routes.draw do
   resources :aspect_memberships, :only   => [:destroy, :create, :update]
   resources :post_visibilities,  :only   => [:update]
 
-
   resources :people, :except => [:edit, :update] do
     resources :status_messages
     resources :photos
     get  :contacts
+    get "aspect_membership_button" => :aspect_membership_dropdown, :as => "aspect_membership_button"
     collection do
       post 'by_handle' => :retrieve_remote, :as => 'person_by_handle'
       get :tag_index
     end
   end
-
-  get "people/:id/aspect_membership_button" => "people#aspect_membership_dropdown", :as => "aspect_membership_button"
-
-
 
 
   # Federation
@@ -133,17 +133,19 @@ Diaspora::Application.routes.draw do
 
   # External
 
-
-  get "/oauth/authorize" => "authorizations#new"
-  post "/oauth/authorize" => "authorizations#create"
-
-  post "/oauth/token" => "authorizations#token"
   resources :authorizations, :only => [:index, :destroy]
+  scope "/oauth", :controller => :authorizations, :as => "oauth" do
+    get "authorize" => :new
+    post "authorize" => :create
+    post :token
+  end
 
   resources :services, :only => [:index, :destroy]
   controller :services do
-    match '/auth/:provider/callback' => :create
-    match '/auth/failure'            => :failure
+    scope "/auth", :as => "auth" do
+      match ':provider/callback' => :create
+      match :failure
+    end
     scope 'services' do
       match 'inviter/:provider' => :inviter, :as => 'service_inviter'
       match 'finder/:provider'  => :finder,  :as => 'friend_finder'
@@ -151,7 +153,7 @@ Diaspora::Application.routes.draw do
   end
 
   scope 'api/v0', :controller => :apis do
-    get 'me' => :me
+    get :me
   end
 
 

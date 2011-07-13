@@ -257,6 +257,15 @@ ul.dropdown
       :display block
 
 //////////////////////////////////
+//hacks for tagging plugin...
+ul.as-selections 
+  :width 100% !important
+  >li.as-original
+    :width 100% !important
+    >input
+      :width 100% !important
+      :color #999
+//////////////////////////////////
 
 .unread
   :background-color #E6E6E6
@@ -293,10 +302,10 @@ ul.dropdown
       :height 370px
       :width 500px
 
-    time
-      :font
-        :weight normal
-        :size smaller
+    .comment
+      .comment_info
+        :font
+          :size smaller
 
 .from
   a
@@ -439,7 +448,7 @@ ul.dropdown
           :top -1px
 
   .delete
-    @include opacity(0.6)
+    @include opacity(0.3)
     :padding 5px
 
     &:hover
@@ -450,7 +459,8 @@ ul.dropdown
     :right 12px
 
   .controls
-    :display none
+    @include transition(opacity)
+    @include opacity(0)
     :z-index 6
     :color #999
     a
@@ -460,7 +470,7 @@ ul.dropdown
 
   &:hover, .comment:hover
     > .controls
-      :display inline
+      @include opacity(1)
 
     .from
       a
@@ -472,21 +482,17 @@ ul.dropdown
       :font
         :size 1em
 
-  .comments
-    :padding
-      :bottom 6px
-    > li:last-child
-      :border-bottom none
   .comment_box
     :width 475px
     :margin
       :bottom 5px
 
 .post_initial_info
-  .details
-    :color #aaa
   :margin
     :bottom 5px
+
+.details
+  :color #aaa
 
 .post_scope
   :cursor default
@@ -542,23 +548,6 @@ ul.dropdown
       :background none
       :border none
 
-
-.stream ul.comments
-  :padding
-    :bottom 6px
-
-  > li:last-child
-    :border-bottom none
-
-  .avatar
-    :width 30px
-    :height 30px
-
-  .comment_box
-    :margin
-      :bottom 5px
-
-
 .submit_button
   :text
     :align right
@@ -566,8 +555,12 @@ ul.dropdown
 ul.comments,
 ul.show_comments,
 .likes_container
+
+  .avatar
+    :width 30px
+    :height 30px
+
   :margin 0
-    :top 0.5em
   :padding 0
 
   :font
@@ -577,13 +570,6 @@ ul.show_comments,
 
   :position relative
 
-  textarea
-    :width 365px
-    :height 21px
-
-  input
-    :display none
-
   li
     :list
       :style none
@@ -591,12 +577,6 @@ ul.show_comments,
 
     :border
       :bottom 1px dotted #aaa
-
-    .new_comment
-      :min-height 35px
-      p
-        :margin
-          :bottom 0
 
     .from
       :font
@@ -610,16 +590,13 @@ ul.show_comments,
       :width 400px
 
     .content
-      :color #666
       :margin
         :top 0px
         :bottom -2px
       :padding
         :left 36px
         :right 10px
-      .from
-        a
-          :color rgb(85,80,80)
+
       p
         :margin
           :bottom 0
@@ -628,45 +605,102 @@ ul.show_comments,
     .right
       :right 4px
 
-    form
-      :margin
-        :top -5px
-        :bottom -4px
-      :font
-        :size 1em
-
-      .submit_button
-        input
-          :margin
-            :right 0
-
-      textarea
-        :font
-          :size 1em
-        :margin
-          :bottom -3px
-
-      p
-        :position relative
-        :left 35px
-
     .avatar
       :position absolute
       :display inline
 
-    form.open
-      .submit_button
-        :display block
-        :margin
-          :top 5px
-          :bottom 2px
-          :right 2px
-      input
-        :display inline-block
+ul.show_comments
+  :padding
+    :bottom 6px
+  :margin
+    :top 6px
 
-.comments
-  .timeago
-    :color #999
+form.new_comment
+  :padding 8px 5px
+  .avatar
+    :position absolute
+    :display inline
+    :width 30px
+    :height 30px
+
+  :min-height 35px
+
+  input
+    :display none
+
+  :margin
+    :bottom -4px
+
+  :font
+    :size 1em
+
+  .submit_button
+    input
+      :margin
+        :right 0
+
+  textarea
+    :width 365px
+    :height 21px
+
+    :font
+      :size 1em
+    :margin
+      :top 0
+      :bottom -3px
+
+  p
+    :margin
+      :bottom 0
+      :top -10px
+    :position relative
+    :left 35px
+
+  &.open
+    .submit_button
+      :display block
+      :margin
+        :top 5px
+        :bottom 2px
+        :right 2px
+
+    input
+      :display inline-block
+
+
+.comment
+  .like_action
+    @include transition(opacity)
+    @include opacity(0)
+
+    &:before
+      :content " · "
+
+  &:hover
+    .like_action
+      @include opacity(1)
+
+  .likes,
+  .likes_container
+    :display inline
+    :padding 0
+    :margin 0
+    :font
+      :size 10px
+    a
+      :font
+        :weight normal
+
+    img
+      :margin 0
+      :height 9px
+      :width 9px
+      :top 1px
+
+  .likes
+    :margin
+      :left 5px
+
 
 .stream.show
   ul.comments
@@ -813,6 +847,7 @@ label
     :cursor pointer
 
 #publisher
+
   :z-index 0
   :color #999
   :position relative
@@ -1054,17 +1089,14 @@ img.scaled_full
 #thumbnails
   a
     :display inline-block
-    :width 100px
-    :min-width 100px
-    :height 100px
+    :height 140px
     :min-height 100px
     :margin
-      :bottom 15px
-      :right 15px
+      :bottom 5px
+      :right 2px
 
     img
-      :height 100px
-      :width 100px
+      :height 140px
 
 #global_search
   :display inline
@@ -1682,38 +1714,48 @@ ul#request_result
       :bottom 2.5em
       :padding 0
 
+.contact_list_controls
+  :height 30px
+  :margin
+    :bottom 5px
+  :vertical-align middle
+
+#contact_list_search
+  :width 200px
+  :margin
+    :top 0
+  :float right
+
 .contact_list,
 .aspect_list
-  :height 450px
-  :max-height 450px
+  @include border-radius(3px)
+
+  :height 300px
+  :max-height 300px
 
   :overflow-y auto
   :overflow-x hidden
 
-  :border 2px solid #eee
+  :border 1px solid #bbb
 
   :background
     :color rgb(252,252,252)
 
   .name
     :position absolute
-    :left 70px
+    :left 65px
     :top 10px
+
+  .diaspora_id
+    :color #777
+    :font
+      :size smaller
 
   .avatar
     :position absolute
     :left 6px
     :height 50px
     :width 50px
-
-  :-webkit-border-radius 0 0 5px 5px
-  :-moz-border-radius 0 0 5px 5px
-  :border-radius 0 0 5px 5px
-
-  input.contact_list_search
-    :width 100%
-    :margin
-      :top 0
 
   .button.share
     :padding
@@ -1724,31 +1766,50 @@ ul#request_result
 
   > ul
     :margin 0
-    :padding 0
+    :padding 5px
+      :right 0
 
     > li
-      :position relative
-      :height 50px
-      :padding 4px
-      :border
-        :bottom 1px solid #eee
+      @include border-radius(3px)
+      :background
+        :color #fff
 
-      &:last-child
+      :position relative
+      :display inline-block
+
+      &.hidden
+        :display none
+
+      :height 50px
+      :width 170px
+
+      :margin
+        :bottom 5px
+        :right 5px
+
+      :padding 8px
+      :border 1px solid #ccc
+
+      > .right
+        :right -5px
+        :bottom 2px
+
+      &.remote_friend
+        :width 260px
+
+      a.button
+        @include box-shadow(0,0,0)
+
         :border
           :bottom none
 
-      &:hover
-        :background
-          :color rgb(245,245,245)
+        :height 12px !important
+        :width 12px !important
 
-      > .right
-        :right 8px
-        :top 12px
-
-      a.button
         :padding
           :right 4px
           :left 4px
+
         &.added
           @include linear-gradient(rgb(158,255,153), rgb(92,199,86))
 
@@ -2175,10 +2236,13 @@ h3,h4
 
 
 ul.show_comments
-  :margin
-    :bottom -0.5em
   :border
     :top 1px dotted #aaa
+
+ul.show_comments,
+.likes_container
+  a
+    :color #999
 
 .likes_container
   :margin
@@ -2187,29 +2251,18 @@ ul.show_comments
 
 ul.show_comments,
 .likes_container
-  *
-    :font
-      :weight bold
-    :color #999
-
-  li
-    :border
-      :bottom 1px solid #ccc
-
   img
     :position relative
-    :top 3px
+    :top 2px
     :height 12px
     :width 12px
-    :margin
-      :left 0.5em
 
 .mark_all_read
   :position relative
   :top 10px
 
 #aspect_edit_pane
-  :width 400px
+  :width 810px
   .person_tiles
     .tile
       @include border-radius(2px)
@@ -3025,7 +3078,7 @@ ul.left_nav
     :padding 10px 
     :min-height 30px
 
-    img
+    > img
       :height 30px
       :width 30px
       :float left
@@ -3066,75 +3119,3 @@ ul.left_nav
   :margin
     :top 30px
 
-#hovercard
-  @include border-radius(2px)
-  @include box-shadow(0,0,5px,#666)
-
-  :position relative
-
-  .avatar
-    :position relative
-    :height 70px
-    :width 70px
-    :margin
-      :right 10px
-      :left 0
-    :top 0 !important
-
-  :background
-    :color $background
-
-  :height 70px
-
-  :padding 5px
-    :bottom 25px
-
-  :border 1px solid #999
-
-  :width 240px
-    
-  h4
-    :margin
-      :bottom 10px
-  a
-    :color $blue
-    :font
-      :weight bold !important
-
-  .hovercard_footer
-    :position absolute
-    :bottom 0
-    :left 0
-    :background
-      :color #eee
-    :width 100%
-
-    :min-height 19px
-
-    :font
-      :size smaller
-
-    :border
-      :top 1px solid #ccc
-
-    .footer_container
-      :padding 1px 5px
-
-      .hashtags
-        :overflow hidden
-        :white-space nowrap
-        :text-overflow ellipsis
-
-      a
-        :color #999
-        :margin
-          :right 4px
-        :font
-          :weight normal
-
-#hovercard_container
-  :padding 10px
-    :top 5px
-  :position absolute
-  :display none
-  :z-index 10

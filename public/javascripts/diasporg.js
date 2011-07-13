@@ -9,7 +9,7 @@ $('.expand').live('mouseenter', function() {
         }
     });
 
-$('.urlnote').html('URL Expanded - Rehover for info').fadeOut(2000);
+$('.urlnote').html('URL Expanded - Rehover for info').fadeOut(1000);
 });
 
 
