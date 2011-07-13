@@ -148,7 +148,7 @@ var View = {
 
     avatars: {
       bind: function() {
-        $("#main_stream img.avatar, #aspect_listings img.avatar, #manage_aspect_zones img.avatar").tipsy({
+        $("#aspect_listings img.avatar, #manage_aspect_zones img.avatar").tipsy({
           live: true
         });
       }
@@ -239,4 +239,3 @@ $(function() {
   /* Make sure this refers to View, not the document */
   View.initialize.apply(View);
 });
-
