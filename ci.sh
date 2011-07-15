@@ -6,7 +6,7 @@ echo "**************************************************************************
 echo "" &&
 bundle install &&
 RAILS_ENV=development rake db:migrate
-#hbundle exec rake spec SPEC_OPTS="--tag ~performance"
+#bundle exec rake spec SPEC_OPTS="--tag ~performance"
 #cp config/application.yml.example config/application.yml &&
 #bundle exec rake cruise
 bundle exec rake spec SPEC_OPTS="--tag ~performance"
