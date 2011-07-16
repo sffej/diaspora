@@ -10,7 +10,7 @@
     %title
       = page_title yield(:page_title)
 
-    %meta{'name' => 'keywords', :content => 'diaspora, diaspora*, diasp, diasp.org, diasporg'}
+    %meta{'name' => 'keywords', :content => 'diaspora, diaspora*, open source, social network, diasp, diasp.org, diasporg'}
     %meta{'name' => 'description', :content => 'Diaspora is the Privacy Aware Open Source Social Network. Diasp.org is an open Diaspora pod and is user supported. '}
 
     %meta{'http-equiv' => 'X-UA-Compatible', :content => 'IE=edge,chrome=1'}
@@ -105,7 +105,7 @@
           %li= link_to 'Twitter', "http://twitter.com/diasporg"
           %li= link_to 'Facebook', "http://facebook.com/diasp.org"
           %li= link_to 'Blog', "http://b.diasp.org"
-          %li= link_to 'Support', "https://support.diasp.org"
+          %li= link_to 'Support', "https://frodointernet.com/support"
           %li= link_to 'Github', "https://github.com/diasporg/diaspora"
           %li= link_to 'Integration Server', "http://ci.diasp.org"
           %li= link_to 'Flattr', "https://flattr.com/profile/diasporg"
@@ -115,7 +115,7 @@
         = link_to t('.have_a_problem'), 'http://diaspora.shapado.com/'
 
         <script type="text/javascript">
-        var pkBaseURL = (("https:" == document.location.protocol) ? "https://stats.frodo.net/" : "http://stats.frodo.net/");
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://frodointernet.com/s/" : "http://frodointernet.com/s/");
         document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
         </script><script type="text/javascript">
         try {
@@ -123,7 +123,7 @@
         piwikTracker.trackPageView();
         piwikTracker.enableLinkTracking();
         } catch( err ) {}
-        </script><noscript><p><img src="https://stats.frodo.net/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
+        </script><noscript><p><img src="https://frodointernet.com/s/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
 
     -if !@landing_page && request.url.match(/joindiaspora.com/)
       :javascript
