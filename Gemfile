@@ -14,7 +14,7 @@ gem 'ohai', '0.5.8', :require => false #Chef dependency
 gem 'nokogiri'
 gem 'settingslogic', '2.0.6'
 
-gem 'vanna', :git => "git://github.com/MikeSofaer/vanna.git"
+gem 'vanna', :git => "https://github.com/MikeSofaer/vanna"
 
 #Security
 gem 'devise', '~> 1.3.1'
@@ -25,7 +25,7 @@ gem 'omniauth', '0.2.6'
 gem 'twitter', '1.5.0'
 
 gem 'oauth2-provider', '0.0.16'
-gem 'jwt', :git => "git://github.com/zhitomirskiyi/ruby-jwt.git", :require => false
+gem 'jwt', :git => "https://github.com/zhitomirskiyi/ruby-jwt", :require => false
 
 #Web
 gem 'faraday'
@@ -40,18 +40,18 @@ gem 'rails-i18n'
 gem 'i18n-inflector-rails', '~> 1.0'
 
 #Tags
-gem 'acts-as-taggable-on', :git => 'git://github.com/diaspora/acts-as-taggable-on.git'
+gem 'acts-as-taggable-on', :git => 'https://github.com/diaspora/acts-as-taggable-on'
 
 #Uncatagorized
-gem 'roxml', :git => 'git://github.com/Empact/roxml.git', :ref => '7ea9a9ffd2338aaef5b0'
+gem 'roxml', :git => 'https://github.com/Empact/roxml', :ref => '7ea9a9ffd2338aaef5b0'
 gem 'addressable', '2.2.4', :require => 'addressable/uri'
 gem 'json', '1.4.6'
-gem 'http_accept_language', :git => 'git://github.com/iain/http_accept_language.git', :ref => '0b78aa7849fc90cf9e12'
+gem 'http_accept_language', :git => 'https://github.com/iain/http_accept_language', :ref => '0b78aa7849fc90cf9e12'
 
 gem 'thin', '1.2.11', :require => false
 
 #Websocket
-gem 'em-websocket', :git => 'git://github.com/igrigorik/em-websocket', :ref => 'e278f5a1c4db60be7485'
+gem 'em-websocket', :git => 'https://github.com/igrigorik/em-websocket', :ref => 'e278f5a1c4db60be7485'
 
 #File uploading
 gem 'carrierwave', '0.5.2'
@@ -80,7 +80,7 @@ group :development do
   gem 'yard'
   gem 'capistrano', '2.5.19', :require => false
   gem 'capistrano-ext', '1.2.1', :require => false
-  gem 'sod', :git => "git://github.com/MikeSofaer/sod.git", :require => false
+  gem 'sod', :git => "https://github.com/MikeSofaer/sod", :require => false
 end
 
 group :test, :development do
@@ -112,6 +112,6 @@ group :test do
   gem 'rspec-instafail', '>= 0.1.7', :require => false
   gem 'fuubar'
 
-  gem 'diaspora-client', :git => 'git://github.com/diaspora/diaspora-client.git'
+  gem 'diaspora-client', :git => 'https://github.com/diaspora/diaspora-client'
 
 end
