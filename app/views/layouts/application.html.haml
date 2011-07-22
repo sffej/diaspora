@@ -31,6 +31,7 @@
     - if rtl?
       = include_stylesheets :rtl, :media => 'all'
 
+    = csrf_meta_tag
     <!--[if IE]>
     = javascript_include_tag "/javascripts/ie.js"
     <![endif]-->
@@ -50,7 +51,6 @@
       = javascript_include_tag 'web-socket-receiver'
       = render 'js/websocket_js'
 
-    = csrf_meta_tag
 
     = yield(:head)
 
