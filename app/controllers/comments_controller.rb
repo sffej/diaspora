@@ -30,7 +30,7 @@ text = Morley::Shorty::swap(params[:text])
         respond_to do |format|
           format.js{ render(:create, :status => 201)}
           format.html{ render :nothing => true, :status => 201 }
-          format.mobile{ redirect_to @comment.post }
+          format.mobile{ redirect_to :back }
         end
       else
         render :nothing => true, :status => 422
@@ -45,7 +45,7 @@ text = Morley::Shorty::swap(params[:text])
     if current_user.owns?(@comment) || current_user.owns?(@comment.parent)
       current_user.retract(@comment)
       respond_to do |format|
-        format.mobile{ redirect_to @comment.post }
+        format.mobile{ redirect_to :back }
         format.js {render :nothing => true, :status => 204}
       end
     else
