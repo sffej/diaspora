@@ -41,7 +41,7 @@ RSpec.configure do |config|
   end
 
   config.after(:all) do
-    `rm -rf #{Rails.root}/tmp/uploads/*`
+#    `rm -rf #{Rails.root}/tmp/uploads/*`
   end
 end
 
