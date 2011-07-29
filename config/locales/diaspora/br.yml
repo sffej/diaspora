@@ -108,6 +108,7 @@ br:
         heading: "Diaspora ID"
       handle_explanation: "Ar postel-mañ zo ho skor diaspora. E-giz ur chomlec'h-postel e c'hellit skignat anezhañ a-benn bezañ kavet gant an dud."
       no_contacts: "Darempred ebet"
+      no_tags: "No tags"
       people_sharing_with_you: "People sharing with you"
       post_a_message: "post a message >>"
       services: 
@@ -205,6 +206,7 @@ br:
     new: 
       abandon_changes: "Abandon changes?"
       send: "Kaset"
+      sending: "Sending..."
       subject: "sujed"
       to: "da"
     show: 
@@ -293,6 +295,12 @@ br:
         one: "1 den zo bet plijet ganti"
         other: "%{count} den zo bet plijet ganti"
         zero: "den ebet zo bet plijet ganti"
+      people_like_this_comment: 
+        few: "%{count} likes"
+        many: "%{count} likes"
+        one: "%{count} like"
+        other: "%{count} likes"
+        zero: "no likes"
   limited: "Limited"
   more: "Muioc'h"
   next: "next"
@@ -565,6 +573,7 @@ br:
         other: "%{count} Reshares"
         zero: "Reshare"
       reshare_confirmation: "Reshare %{author} - %{text}?"
+      reshare_original: "Reshare orignial"
       show_original: "Show Original"
   search: "Klask"
   services: 

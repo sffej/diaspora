@@ -31,20 +31,7 @@
     = render 'aspects/aspect_listings'
 
   .section
-    %ul.left_nav
-      %li
-        %div.root_element
-          = t('aspects.index.tags_following')
-
-        %ul.sub_nav
-          - if tags.size > 0
-            - for tg in tags
-              %li
-                = link_to "##{tg.name}", tag_path(:name => tg.name), :class => "tag_selector"
-          - else
-            %li
-              %span.new_aspect
-                = t('aspects.index.no_tags')
+    = render 'tags/followed_tags_listings'
 
 .span-13.append-1
   #aspect_stream_container.stream_container
@@ -54,7 +41,7 @@
       :posts => @posts
 
 .span-5.rightBar.last
-  = render 'selected_contacts', :people => @selected_people[0..19], :count => @selected_people.size
+  = render 'selected_contacts', :people => @selected_people[0..19], :count => @contact_count
 
   .section
     .title
@@ -68,13 +55,18 @@
       %br
       = t(".diaspora_id.content_2")
 
-  .section
-    .title
-      = image_tag('/images/icons/bookmark.png')
-      %h5
-        = t('bookmarklet.heading')
-    .content
-      != t('bookmarklet.explanation', :link => link_to(t('bookmarklet.explanation_link_text'), bookmarklet))
+  - unless AppConfig[:invites_off]
+    .section
+      .title
+
+        = image_tag('/images/icons/plus.png')
+        %h5
+          - unless AppConfig[:open_invitations]
+            .right
+              = t('shared.invitations.invitations_left', :count => @invites)
+          = t('shared.invitations.invite_your_friends')
+      .content
+        = render "shared/invitations", :invites => @invites
 
   .section
     .title
@@ -145,16 +137,23 @@
         - unless current_user.services.any?{|x| x.provider == service}
           %br= link_to service.titleize, "/auth/#{service}" 
 
-  - unless AppConfig[:invites_off]
+  - unless AppConfig.configured_services.blank?
     .section
       .title
-
-        = image_tag('/images/icons/plus.png')
+        = image_tag('/images/icons/monotone_wrench_settings.png')
         %h5
-          - unless AppConfig[:open_invitations]
-            .right
-              = t('shared.invitations.invitations_left', :count => @invites)
-          = t('shared.invitations.invite_your_friends')
+          = t('.services.heading')
       .content
-        = render "shared/invitations", :invites => @invites
+        = t('.services.content')
+        - AppConfig.configured_services.each do |service|
+          - unless current_user.services.any?{|x| x.provider == 
+service}
+            %br= link_to service.titleize, "/auth/#{service}" 
 
+  .section
+    .title
+      = image_tag('/images/icons/bookmark.png')
+      %h5
+        = t('bookmarklet.heading')
+    .content
+      != t('bookmarklet.explanation', :link => link_to(t('bookmarklet.explanation_link_text'), bookmarklet))

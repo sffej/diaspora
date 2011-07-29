@@ -108,6 +108,7 @@ fi:
         heading: "Diaspora ID"
       handle_explanation: "Tämä on Diaspora-osoitteesi. Voit käyttää sitä kuten sähköpostiosoitettasi. Sen avulla sinut tavoitetaan Diasporasta."
       no_contacts: "Ei kontakteja"
+      no_tags: "No tags"
       people_sharing_with_you: "Ihmiset jotka jakavat kanssasi"
       post_a_message: "post a message >>"
       services: 
@@ -205,6 +206,7 @@ fi:
     new: 
       abandon_changes: "Abandon changes?"
       send: "Lähetä"
+      sending: "Sending..."
       subject: "aihe"
       to: "vastaanottaja"
     show: 
@@ -293,6 +295,12 @@ fi:
         one: "%{count} tykkää"
         other: "%{count} tykkää"
         zero: "ei tykkäyksiä"
+      people_like_this_comment: 
+        few: "%{count} likes"
+        many: "%{count} likes"
+        one: "%{count} like"
+        other: "%{count} likes"
+        zero: "no likes"
   limited: "Limited"
   more: "Lisää"
   next: "seuraava"
@@ -565,6 +573,7 @@ fi:
         other: "%{count} Reshares"
         zero: "Reshare"
       reshare_confirmation: "Reshare %{author} - %{text}?"
+      reshare_original: "Reshare orignial"
       show_original: "Show Original"
   search: "Etsi"
   services: 

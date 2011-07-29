@@ -108,6 +108,7 @@ pt-BR:
         heading: "Diaspora ID"
       handle_explanation: "Este é o seu endereço na Diaspora*. Como um endereço de e-mail, pode ser usado por outras pessoas para contactar você."
       no_contacts: "Nenhum contato"
+      no_tags: "No tags"
       people_sharing_with_you: "People sharing with you"
       post_a_message: "post a message >>"
       services: 
@@ -205,6 +206,7 @@ pt-BR:
     new: 
       abandon_changes: "Abandon changes?"
       send: "Send"
+      sending: "Sending..."
       subject: "subject"
       to: "to"
     show: 
@@ -293,6 +295,12 @@ pt-BR:
         one: "1 person liked this"
         other: "%{count} people liked this"
         zero: "no people liked this"
+      people_like_this_comment: 
+        few: "%{count} likes"
+        many: "%{count} likes"
+        one: "%{count} like"
+        other: "%{count} likes"
+        zero: "no likes"
   limited: "Limited"
   more: "Mais"
   next: "Próximo"
@@ -565,6 +573,7 @@ pt-BR:
         other: "%{count} Reshares"
         zero: "Reshare"
       reshare_confirmation: "Reshare %{author} - %{text}?"
+      reshare_original: "Reshare orignial"
       show_original: "Show Original"
   search: "Busca"
   services: 

@@ -108,6 +108,7 @@ fr:
         heading: "Identifiant Diaspora"
       handle_explanation: "Ceci est votre identifiant diaspora. Comme une adresse de courrier électronique, vous pouvez le communiquer à d'autres personnes pour leur permettre de vous joindre."
       no_contacts: "Aucun contact"
+      no_tags: "No tags"
       people_sharing_with_you: "Personnes partageant avec vous"
       post_a_message: "publier un message >>"
       services: 
@@ -205,6 +206,7 @@ fr:
     new: 
       abandon_changes: "Abandon changes?"
       send: "Envoyer"
+      sending: "Sending..."
       subject: "sujet"
       to: "pour"
     show: 
@@ -293,6 +295,12 @@ fr:
         one: "%{count} personne aime"
         other: "%{count} personnes aiment"
         zero: "Personne n'aime ça"
+      people_like_this_comment: 
+        few: "%{count} likes"
+        many: "%{count} likes"
+        one: "%{count} like"
+        other: "%{count} likes"
+        zero: "no likes"
   limited: "Limited"
   more: "Plus"
   next: "suivant"
@@ -565,6 +573,7 @@ fr:
         other: "%{count} Reshares"
         zero: "Reshare"
       reshare_confirmation: "Reshare %{author} - %{text}?"
+      reshare_original: "Reshare orignial"
       show_original: "Show Original"
   search: "Rechercher"
   services: 

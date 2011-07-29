@@ -108,6 +108,7 @@ pl:
         heading: "Diaspora ID"
       handle_explanation: "To jest Twój identyfikator w Diasporze. Podobnie jak adresu e-mailowy, możesz podawać go innym, aby mogli się z Tobą skontaktować."
       no_contacts: "Brak kontaktów"
+      no_tags: "No tags"
       people_sharing_with_you: "Osoby dzielące się z tobą"
       post_a_message: "napisz wiadomość >>"
       services: 
@@ -205,6 +206,7 @@ pl:
     new: 
       abandon_changes: "Abandon changes?"
       send: "Wyślij"
+      sending: "Sending..."
       subject: "temat"
       to: "do"
     show: 
@@ -293,6 +295,12 @@ pl:
         one: "1 osoba to polubiła"
         other: "%{count} osób polubiło to"
         zero: "nikt tego nie polubił"
+      people_like_this_comment: 
+        few: "%{count} likes"
+        many: "%{count} likes"
+        one: "%{count} like"
+        other: "%{count} likes"
+        zero: "no likes"
   limited: "Limited"
   more: "Więcej"
   next: "następny"
@@ -565,6 +573,7 @@ pl:
         other: "%{count} Reshares"
         zero: "Reshare"
       reshare_confirmation: "Reshare %{author} - %{text}?"
+      reshare_original: "Reshare orignial"
       show_original: "Show Original"
   search: "Szukaj"
   services: 

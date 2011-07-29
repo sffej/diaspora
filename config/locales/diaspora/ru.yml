@@ -108,6 +108,7 @@ ru:
         heading: "Diaspora ID"
       handle_explanation: "Это идентификатор вашей Диаспоры. Так же как адрес электронной почты, который вы можете дать людям, для связи с вами."
       no_contacts: "Контакты отсутствуют"
+      no_tags: "No tags"
       people_sharing_with_you: "Люди делятся с вами"
       post_a_message: "опубликовать сообщение>>"
       services: 
@@ -205,6 +206,7 @@ ru:
     new: 
       abandon_changes: "Abandon changes?"
       send: "Отправить"
+      sending: "Sending..."
       subject: "тема"
       to: "к"
     show: 
@@ -293,6 +295,12 @@ ru:
         one: "%{count} понравилось"
         other: "%{count} понравилось"
         zero: "никому не понравилось"
+      people_like_this_comment: 
+        few: "%{count} likes"
+        many: "%{count} likes"
+        one: "%{count} like"
+        other: "%{count} likes"
+        zero: "no likes"
   limited: "Limited"
   more: "Подробнее"
   next: "далее"
@@ -565,6 +573,7 @@ ru:
         other: "%{count} Reshares"
         zero: "Reshare"
       reshare_confirmation: "Reshare %{author} - %{text}?"
+      reshare_original: "Reshare orignial"
       show_original: "Show Original"
   search: "Поиск"
   services: 

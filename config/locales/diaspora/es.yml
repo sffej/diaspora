@@ -108,6 +108,7 @@ es:
         heading: "Identidad Diaspora*"
       handle_explanation: "Ésta es tu dirección Diaspora*. Como una dirección de correo, puedes dársela a la gente para que te encuentre."
       no_contacts: "No hay contactos"
+      no_tags: "No tags"
       people_sharing_with_you: "Comparten contigo"
       post_a_message: "publica un mensaje >>"
       services: 
@@ -205,6 +206,7 @@ es:
     new: 
       abandon_changes: "¿Descartar los cambios?"
       send: "Enviar"
+      sending: "Sending..."
       subject: "asunto"
       to: "para"
     show: 
@@ -293,6 +295,12 @@ es:
         one: "A 1 le gusta"
         other: "A %{count} les gusta"
         zero: "A nadie le gusta"
+      people_like_this_comment: 
+        few: "%{count} likes"
+        many: "%{count} likes"
+        one: "%{count} like"
+        other: "%{count} likes"
+        zero: "no likes"
   limited: "Restringido"
   more: "Más"
   next: "siguiente"
@@ -565,6 +573,7 @@ es:
         other: "%{count} Reshares"
         zero: "Reshare"
       reshare_confirmation: "Reshare %{author} - %{text}?"
+      reshare_original: "Reshare orignial"
       show_original: "Show Original"
   search: "Buscar"
   services: 

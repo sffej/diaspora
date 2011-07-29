@@ -108,6 +108,7 @@ hu:
         heading: "Diaspora ID"
       handle_explanation: "Ez a Te Diaspora felhasználóneved. Megadhatod elérhetőségként, mint egy email címet."
       no_contacts: "Nincs ismerős"
+      no_tags: "No tags"
       people_sharing_with_you: "Ismerőseid"
       post_a_message: "üzenet küldése >>"
       services: 
@@ -205,6 +206,7 @@ hu:
     new: 
       abandon_changes: "Abandon changes?"
       send: "Küldés"
+      sending: "Sending..."
       subject: "tárgy"
       to: "címzett"
     show: 
@@ -293,6 +295,12 @@ hu:
         one: "1 személy kedveli"
         other: "%{count} személy kedveli"
         zero: "senki nem kedveli"
+      people_like_this_comment: 
+        few: "%{count} likes"
+        many: "%{count} likes"
+        one: "%{count} like"
+        other: "%{count} likes"
+        zero: "no likes"
   limited: "Limited"
   more: "Bővebben"
   next: "következő"
@@ -565,6 +573,7 @@ hu:
         other: "%{count} Reshares"
         zero: "Reshare"
       reshare_confirmation: "Reshare %{author} - %{text}?"
+      reshare_original: "Reshare orignial"
       show_original: "Show Original"
   search: "Keresés"
   services: 

@@ -108,6 +108,7 @@ eu:
         heading: "Diaspora IDa"
       handle_explanation: "Hau da zure Diaspora IDa. E-posta helbidea bezalakoa da, zure adiskideei emaiezu zu aurkitzearren."
       no_contacts: "Adiskiderik ez"
+      no_tags: "No tags"
       people_sharing_with_you: "Zurekin harremanetan dagoen jendea"
       post_a_message: "mezu bat bidali >>"
       services: 
@@ -205,6 +206,7 @@ eu:
     new: 
       abandon_changes: "Aldaketak bertan behera utzi?"
       send: "Bidali"
+      sending: "Sending..."
       subject: "gaia"
       to: "nori:"
     show: 
@@ -293,6 +295,12 @@ eu:
         one: "%{count}ek du gustoko"
         other: "%{count} pertsonek gustoko dute hau"
         zero: "oraindik ez du inork gustoko"
+      people_like_this_comment: 
+        few: "%{count} likes"
+        many: "%{count} likes"
+        one: "%{count} like"
+        other: "%{count} likes"
+        zero: "no likes"
   limited: "Mugatua"
   more: "Gehiago"
   next: "hurrengoa"
@@ -565,6 +573,7 @@ eu:
         other: "%{count} Reshares"
         zero: "Reshare"
       reshare_confirmation: "Reshare %{author} - %{text}?"
+      reshare_original: "Reshare orignial"
       show_original: "Show Original"
   search: "Bilatu"
   services: 

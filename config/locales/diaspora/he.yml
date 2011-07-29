@@ -108,6 +108,7 @@ he:
         heading: "Diaspora ID"
       handle_explanation: "זהו שם המשתמש שלך בדיאספורה. כמו כתובת דואר אלקטרוני, ניתן לחלוק אותו עם אנשים כדי שיגיעו אליך."
       no_contacts: "אין אנשי קשר"
+      no_tags: "No tags"
       people_sharing_with_you: "אנשים המשתפים אתך"
       post_a_message: "פרסום הודעה >>"
       services: 
@@ -205,6 +206,7 @@ he:
     new: 
       abandon_changes: "Abandon changes?"
       send: "שליחה"
+      sending: "Sending..."
       subject: "נושא"
       to: "אל"
     show: 
@@ -293,6 +295,12 @@ he:
         one: "אדם אחד אהב את זה"
         other: "%{count} אנשים אהבו את זה"
         zero: "אף אחד לא אהב את זה"
+      people_like_this_comment: 
+        few: "%{count} likes"
+        many: "%{count} likes"
+        one: "%{count} like"
+        other: "%{count} likes"
+        zero: "no likes"
   limited: "Limited"
   more: "המשך"
   next: "הבאה"
@@ -565,6 +573,7 @@ he:
         other: "%{count} Reshares"
         zero: "Reshare"
       reshare_confirmation: "Reshare %{author} - %{text}?"
+      reshare_original: "Reshare orignial"
       show_original: "Show Original"
   search: "חיפוש"
   services: 

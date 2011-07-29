@@ -108,6 +108,7 @@ sk:
         heading: "Diaspora ID"
       handle_explanation: "Toto je Vaša adresa a slúži ako vizitka. Pomocou nej Vás môžu ostatní vyhľadať."
       no_contacts: "Žiadne kontakty"
+      no_tags: "No tags"
       people_sharing_with_you: "People sharing with you"
       post_a_message: "post a message >>"
       services: 
@@ -205,6 +206,7 @@ sk:
     new: 
       abandon_changes: "Abandon changes?"
       send: "Poslať"
+      sending: "Sending..."
       subject: "predmet"
       to: "komu"
     show: 
@@ -293,6 +295,12 @@ sk:
         one: "1 person liked this"
         other: "%{count} people liked this"
         zero: "no people liked this"
+      people_like_this_comment: 
+        few: "%{count} likes"
+        many: "%{count} likes"
+        one: "%{count} like"
+        other: "%{count} likes"
+        zero: "no likes"
   limited: "Limited"
   more: "Viac"
   next: "ďalej"
@@ -565,6 +573,7 @@ sk:
         other: "%{count} Reshares"
         zero: "Reshare"
       reshare_confirmation: "Reshare %{author} - %{text}?"
+      reshare_original: "Reshare orignial"
       show_original: "Show Original"
   search: "Hľadať"
   services: 

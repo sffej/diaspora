@@ -108,6 +108,7 @@ es-AR:
         heading: "Diaspora ID"
       handle_explanation: "Ésta es tu dirección de Diáspora*. Es como una dirección de correo electrónico, podés dársela a la gente para que te encuentren."
       no_contacts: "No hay contactos"
+      no_tags: "No tags"
       people_sharing_with_you: "Comparten con vos"
       post_a_message: "publicar un mensaje >>"
       services: 
@@ -205,6 +206,7 @@ es-AR:
     new: 
       abandon_changes: "Abandon changes?"
       send: "Enviar"
+      sending: "Sending..."
       subject: "asunto"
       to: "para"
     show: 
@@ -293,6 +295,12 @@ es-AR:
         one: "%{count} le gusta"
         other: "%{count} les gusta"
         zero: "a nadie le gusta"
+      people_like_this_comment: 
+        few: "%{count} likes"
+        many: "%{count} likes"
+        one: "%{count} like"
+        other: "%{count} likes"
+        zero: "no likes"
   limited: "Limited"
   more: "Más"
   next: "siguiente"
@@ -565,6 +573,7 @@ es-AR:
         other: "%{count} Reshares"
         zero: "Reshare"
       reshare_confirmation: "Reshare %{author} - %{text}?"
+      reshare_original: "Reshare orignial"
       show_original: "Show Original"
   search: "Buscar"
   services: 

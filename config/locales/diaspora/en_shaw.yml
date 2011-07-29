@@ -108,6 +108,7 @@ en_shaw:
         heading: "·𐑛𐑦𐑨𐑕𐑐𐑹𐑩 𐑲𐑛𐑧𐑯𐑑𐑦𐑓𐑦𐑒𐑱𐑖𐑩𐑯"
       handle_explanation: "𐑞𐑦𐑕 𐑦𐑟 𐑿𐑼 ·𐑛𐑦𐑨𐑕𐑐𐑹𐑩 𐑲𐑛𐑧𐑯𐑑𐑦𐑓𐑦𐑒𐑱𐑖𐑩𐑯. 𐑤𐑲𐑒 𐑩𐑯 𐑦-𐑥𐑱𐑤 𐑨𐑛𐑮𐑧𐑕, 𐑿 𐑒𐑨𐑯 𐑜𐑦𐑝 𐑞𐑦𐑕 𐑑 𐑐𐑰𐑐𐑩𐑤 𐑑 𐑮𐑰𐑗 𐑿."
       no_contacts: "𐑯𐑴 𐑒𐑪𐑯𐑑𐑨𐑒𐑑𐑕"
+      no_tags: "No tags"
       people_sharing_with_you: "𐑐𐑰𐑐𐑩𐑤 𐑖𐑺𐑦𐑙 𐑢𐑦𐑞 𐑿"
       post_a_message: "𐑐𐑴𐑕𐑑 𐑩 𐑥𐑧𐑕𐑩𐑡 >>"
       services: 
@@ -205,6 +206,7 @@ en_shaw:
     new: 
       abandon_changes: "𐑩𐑚𐑨𐑯𐑛𐑩𐑯 𐑗𐑱𐑯𐑡𐑩𐑟?"
       send: "𐑕𐑧𐑯𐑛"
+      sending: "Sending..."
       subject: "𐑕𐑳𐑚𐑡𐑧𐑒𐑑"
       to: "𐑑"
     show: 
@@ -293,6 +295,12 @@ en_shaw:
         one: "%{count} 𐑤𐑲𐑒"
         other: "%{count} 𐑤𐑲𐑒𐑕"
         zero: "𐑯𐑴 𐑤𐑲𐑒𐑕"
+      people_like_this_comment: 
+        few: "%{count} likes"
+        many: "%{count} likes"
+        one: "%{count} like"
+        other: "%{count} likes"
+        zero: "no likes"
   limited: "𐑤𐑦𐑥𐑦𐑑𐑩𐑛"
   more: "𐑥𐑹"
   next: "𐑯𐑧𐑒𐑕𐑑"
@@ -565,6 +573,7 @@ en_shaw:
         other: "%{count} Reshares"
         zero: "Reshare"
       reshare_confirmation: "Reshare %{author} - %{text}?"
+      reshare_original: "Reshare orignial"
       show_original: "Show Original"
   search: "𐑕𐑻𐑗"
   services: 

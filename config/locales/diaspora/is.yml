@@ -108,6 +108,7 @@ is:
         heading: "Diaspora ID"
       handle_explanation: "Þetta er netfangið þitt hjá Díaspora. Eins og með venjulegt netfang, geturðu gefið fólki það svo þau geti haft samband við þig. "
       no_contacts: "Engir tengiliðir"
+      no_tags: "No tags"
       people_sharing_with_you: "People sharing with you"
       post_a_message: "post a message >>"
       services: 
@@ -205,6 +206,7 @@ is:
     new: 
       abandon_changes: "Abandon changes?"
       send: "Send"
+      sending: "Sending..."
       subject: "subject"
       to: "to"
     show: 
@@ -293,6 +295,12 @@ is:
         one: "1 person liked this"
         other: "%{count} people liked this"
         zero: "no people liked this"
+      people_like_this_comment: 
+        few: "%{count} likes"
+        many: "%{count} likes"
+        one: "%{count} like"
+        other: "%{count} likes"
+        zero: "no likes"
   limited: "Limited"
   more: "Meira"
   next: "næsta"
@@ -565,6 +573,7 @@ is:
         other: "%{count} Reshares"
         zero: "Reshare"
       reshare_confirmation: "Reshare %{author} - %{text}?"
+      reshare_original: "Reshare orignial"
       show_original: "Show Original"
   search: "Leita"
   services: 
