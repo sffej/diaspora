@@ -300,7 +300,7 @@ ActiveRecord::Schema.define(:version => 20110729045734) do
 
   add_index "profiles", ["full_name", "searchable"], :name => "index_profiles_on_full_name_and_searchable"
   add_index "profiles", ["full_name"], :name => "index_profiles_on_full_name"
-  add_index "profiles", ["person_id"], :name => "index_profiles_on_person_id"
+  add_index "profiles", ["person_id"], :name => "index_profiles_on_person_id", :unique => true
 
   create_table "service_users", :force => true do |t|
     t.string   "uid",           :null => false
