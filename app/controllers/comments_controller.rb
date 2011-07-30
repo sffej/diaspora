@@ -30,7 +30,7 @@ text = Morley::Shorty::swap(params[:text])
         respond_to do |format|
           format.js{ render(:create, :status => 201)}
           format.html{ render :nothing => true, :status => 201 }
-          format.mobile{ redirect_to :back }
+          format.mobile{ redirect_to post_url(@comment.post) }
         end
       else
         render :nothing => true, :status => 422

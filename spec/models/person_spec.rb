@@ -36,7 +36,6 @@ describe Person do
     end
   end
 
-
   describe '#diaspora_handle' do
     context 'local people' do
       it 'uses the pod config url to set the diaspora_handle' do
@@ -227,8 +226,8 @@ describe Person do
       people.empty?.should be true
     end
 
-    it 'should return nothing on a two character query' do
-      people = Person.search("in", @user)
+    it 'should return nothing on a one character query' do
+      people = Person.search("i", @user)
       people.empty?.should be true
     end
 

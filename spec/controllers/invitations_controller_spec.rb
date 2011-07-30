@@ -12,6 +12,7 @@ describe InvitationsController do
     @aspect = @user.aspects.first
 
     request.env["devise.mapping"] = Devise.mappings[:user]
+    Webfinger.stub_chain(:new, :fetch).and_return(Factory(:person))
   end
 
   describe "#create" do
@@ -107,7 +108,7 @@ describe InvitationsController do
 
       it 'seeds the aspects' do
         put :update, @accept_params
-        invited.aspects.count.should == 2
+        invited.aspects.count.should == 4
       end
 
       it 'adds a contact' do
