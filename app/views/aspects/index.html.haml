@@ -77,7 +77,7 @@
       = t('.cubbies.explanation')
       = link_to t('.cubbies.learn_more'), token_path
 
-  .section{:style => "height:120px;"}
+  .section{:style => "height:130px;"}
     .title
       = image_tag('/images/icons/help.png')
       %h5
@@ -91,40 +91,17 @@
     .title
       = image_tag('/images/icons/emailforward.png')
       %h5
-        Forward your @diasp.org Email
+        Forward your @diasp.org address to your email address
     .content
       On this pod you can <a rel="facebox" href="/forwardemail">forward</a> your pod handle to your email account.
 
-  .section
-    .title
-      = image_tag('/images/icons/chat.png')
-      %h5
-        Chat
-    .content
-      We have a temporary <a onclick="chat();">chat</a> room on IRC set up until chat is built in.
-
-  .section{:style => "height:300px;"}
+  .section{:style => "height:100px;"}
     .title
       = image_tag('/images/icons/diasporg.png')
       %h5
-        Support the Diasporg Pod
+        Flattr
     .content
-      Welcome to Diaspora Pod Diasp.org. 
-      Please consider <a target="_new" href="http://b.diasp.org/donations/">donating</a> to the pod or flattr us, keep the pod ad free!
-
-      Be a founding supporter with a monthly auto-subscription:
-      <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-      <input type="hidden" name="cmd" value="_s-xclick">
-      <input type="hidden" name="hosted_button_id" value="4JJKQLR8MZMEG">
-      <input type="hidden" name="on0" value="Level"><select name="os0">
-      <option value="Basic">Basic : $1.00USD - monthly</option>
-      <option value="Gold">Gold : $3.00USD - monthly</option>
-      </select>
-      <input type="hidden" name="on1" value="UserName:"><input type="hidden" name="os1" maxlength="40" value="#{current_user.diaspora_handle}">
-      <input type="hidden" name="currency_code" value="USD">
-      <input type="submit" value="Subscribe" name="submit">
-      </form>
-      <br><a class="FlattrButton" href="https://diasp.org"></a><br>
+      <a class="FlattrButton" href="https://diasp.org"></a>
 
   - unless AppConfig.configured_services.blank?
     .section
