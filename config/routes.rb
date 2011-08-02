@@ -83,7 +83,7 @@ Diaspora::Application.routes.draw do
                                       :invitations   => "invitations"} do
     get 'invitations/resend/:id' => 'invitations#resend', :as => 'invitation_resend'
   end
-  
+
   get 'login' => redirect('/users/sign_in')
 
   scope 'admins', :controller => :admins do
@@ -122,6 +122,7 @@ Diaspora::Application.routes.draw do
       get :tag_index
     end
   end
+  get '/u/:username' => 'people#show', :as => 'user_profile'
 
 
   # Federation
@@ -165,7 +166,6 @@ Diaspora::Application.routes.draw do
 
   get 'mobile/toggle', :to => 'home#toggle_mobile', :as => 'toggle_mobile'
 
-  get '/u/:username' => 'people#show', :as => 'user_profile'
   # Startpage
 
   root :to => 'home#show'
