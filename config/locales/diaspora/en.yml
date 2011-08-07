@@ -111,6 +111,7 @@ en:
       edit_aspect: "edit aspect"
     no_posts_message:
       start_talking: "Nobody has said anything yet!"
+    no_contacts_message:
       you_should_add_some_more_contacts: "You should add some more contacts!"
       try_adding_some_more_contacts: "You can search (top) or invite (right) more contacts."
       or_featured:  "Or you can share with %{link}"
@@ -300,7 +301,8 @@ en:
     check_token:
       not_found: "Invitation token not found"
     edit:
-      sign_up: "sign_up"
+      your_account_awaits: "Your account awaits!"
+      accept_your_invitation: "Accept your invitation"
 
   layouts:
     header:
@@ -562,8 +564,11 @@ en:
 
   registrations:
     new:
-      sign_up: "Sign up"
-      sign_up_for_diaspora: "Sign up for Diaspora"
+      create_my_account: "Create my account"
+
+      join_the_movement: "Join the movement!"
+      sign_up_today: "Sign up today"
+
       enter_email: "Enter an email"
       enter_username: "Pick a username (only letters, numbers, and underscores)"
       enter_password: "Enter a password"
@@ -657,7 +662,6 @@ en:
       share_with: "share with"
       whats_on_your_mind: "What's on your mind?"
       publishing_to: "publishing to: "
-      public: "Public"
       click_to_share_with: "Click to share with: "
       discard_post: "Discard post"
     add_contact:

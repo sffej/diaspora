@@ -19,7 +19,7 @@ var Stream = {
     //Stream.setUpImageLinks();
 
     Diaspora.widgets.subscribe("stream/scrolled", Stream.collapseText);
-    Stream.collapseText('eventID', Stream.selector);
+    Stream.collapseText('eventID', $(Stream.selector)[0]);
   },
   collapseText: function(){
     elements = $(Array.prototype.slice.call(arguments,1));
@@ -34,7 +34,7 @@ var Stream = {
     // collapse long comments
     $(".comment .content span", elements).expander({
       slicePoint: 200,
-      widow: 400,
+      widow: 18,
       expandText: Diaspora.widgets.i18n.t("show_more"),
       userCollapse: false
     });

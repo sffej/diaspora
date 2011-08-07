@@ -22,19 +22,21 @@ class Services::Facebook < Service
   def finder(opts = {})
     Rails.logger.debug("event=friend_finder type=facebook sender_id=#{self.user_id}")
     prevent_service_users_from_being_empty
-    if opts[:local]
-      self.service_users.with_local_people
-    elsif opts[:remote]
-      self.service_users.with_remote_people
-    else
-      self.service_users
-    end
+    result = if opts[:local]
+               self.service_users.with_local_people
+             elsif opts[:remote]
+               self.service_users.with_remote_people
+             else
+               self.service_users
+             end
+    result.order('service_users.person_id DESC, service_users.name')
   end
 
   def save_friends
     url = "https://graph.facebook.com/me/friends?fields[]=name&fields[]=picture&access_token=#{URI.escape(self.access_token)}"
     response = Faraday.get(url)
     data = JSON.parse(response.body)['data']
+    return unless data
     data.map!{ |p|
       su = ServiceUser.new(:service_id => self.id, :uid => p["id"], :photo_url => p["picture"], :name => p["name"])
       su.attach_local_models
