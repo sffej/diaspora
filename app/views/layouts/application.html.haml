@@ -83,6 +83,9 @@
 
   %body{:class => "#{yield(:body_class)}"}
     - unless @landing_page
+      %a{:id=>"back-to-top", :title=>"Back to top", :href=>"#"}
+        &#8679;
+
       #notifications
 
       - flash.each do |name, msg|
@@ -138,4 +141,3 @@
           feedback_widget_options.color = "#222";
           feedback_widget_options.style = "idea";
           var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
-
