@@ -59,7 +59,7 @@ text = Morley::Shorty::swap(params[:text])
   def index
     @post = current_user.find_visible_post_by_id(params[:post_id])
     if @post
-      @comments = @post.comments.includes(:author => :profile)
+      @comments = @post.comments.includes(:author => :profile).order('created_at ASC')
       render :layout => false
     else
       raise ActiveRecord::RecordNotFound.new
