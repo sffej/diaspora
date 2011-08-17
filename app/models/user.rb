@@ -358,7 +358,7 @@ class User < ActiveRecord::Base
     self.person = Person.new(opts[:person])
     self.person.diaspora_handle = "#{opts[:username]}@#{AppConfig[:pod_uri].authority}"
     self.person.url = AppConfig[:pod_url]
-    self.invites = AppConfig[:invite_count] || 5
+
 
     self.serialized_private_key = User.generate_key if self.serialized_private_key.blank?
     self.person.serialized_public_key = OpenSSL::PKey::RSA.new(self.serialized_private_key).public_key
