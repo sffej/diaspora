@@ -34,13 +34,13 @@ class LikesController < ApplicationController
     if @like = Like.where(:id => params[:id], :author_id => current_user.person.id).first
       current_user.retract(@like)
       respond_to do |format|
-        format.all{}
-        format.js{ render 'likes/update' }
+        format.all { }
+        format.js { render 'likes/update' }
       end
     else
       respond_to do |format|
-        format.mobile {redirect_to :back}
-        format.js {render :nothing => true, :status => 403}
+        format.mobile { redirect_to :back }
+        format.js { render :nothing => true, :status => 403 }
       end
     end
   end
