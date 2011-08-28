@@ -2884,6 +2884,7 @@ ul.left_nav
     @include transition(opacity)
     @include opacity(0.3)
     :float right
+    :display none
 
     &:hover
       @include opacity(1)
@@ -2893,7 +2894,6 @@ ul.left_nav
 
   .edit
     :margin-top 4px
-    :display none
 
   .contact_count
     @include border-radius(4px)
@@ -2938,8 +2938,10 @@ ul.left_nav
       a.tag_selector
         :width 140px
 
-      li:hover
-        .edit
+      li:hover,
+      li.hover
+        .edit,
+        .unfollow_icon
           :display inline-block
 
 .stream_container
