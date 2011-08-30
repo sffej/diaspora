@@ -12,11 +12,32 @@
         likes: self.instantiate("Likes", element.find("div.likes_container")),
         lightBox: self.instantiate("Lightbox", element),
         deletePostLink: element.find("a.stream_element_delete"),
-        postScope: element.find("span.post_scope")
+        hidePostLoader: element.find("img.hide_loader"),
+        hidePostUndo: element.find("a.stream_element_hide_undo"),
+        postScope: element.find("span.post_scope"),
+        content: element.find(".content p")
       });
 
+      // tipsy tooltips
       self.deletePostLink.tipsy({ trigger: "hover" });
       self.postScope.tipsy({ trigger: "hover" });
+
+      // collapse long posts
+      self.content.expander({
+        slicePoint: 400,
+        widow: 12,
+        expandText: Diaspora.I18n.t("show_more"),
+        userCollapse: false
+      });
+
+      self.deletePostLink.bind("click", function(evt) {
+        self.deletePostLink.toggleClass("hidden");
+        self.hidePostLoader.toggleClass("hidden");
+      });
+
+      self.hidePostUndo.bind("click", function(evt) {
+        self.hidePostLoader.toggleClass("hidden");
+      });
 
       self.globalSubscribe("post/" + self.postGuid + "/comment/added", function(evt, comment) {
         self.commentStream.publish("comment/added", comment);

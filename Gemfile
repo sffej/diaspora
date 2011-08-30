@@ -14,6 +14,8 @@ gem 'ohai', '0.5.8', :require => false #Chef dependency
 gem 'nokogiri'
 gem 'settingslogic', '2.0.6'
 
+gem 'foreman'
+
 gem 'vanna', :git => "git://github.com/MikeSofaer/vanna.git"
 
 #Security
@@ -50,6 +52,7 @@ gem 'json', '1.4.6'
 gem 'http_accept_language', :git => 'git://github.com/iain/http_accept_language.git', :ref => '0b78aa7849fc90cf9e12'
 
 gem 'thin', '1.2.11', :require => false
+gem 'redcarpet', :git => 'git://github.com/tanoku/redcarpet'
 
 #Websocket
 gem 'em-websocket', :git => 'git://github.com/igrigorik/em-websocket', :ref => 'e278f5a1c4db60be7485'

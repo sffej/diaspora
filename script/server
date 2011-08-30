@@ -175,6 +175,11 @@ if [ "$(./script/get_config.rb single_process_mode $RAILS_ENV)" = "false" ]; the
 
     QUEUE=* bundle exec rake resque:work&
     QUEUE=* bundle exec rake resque:work&    
+    QUEUE=* bundle exec rake resque:work&
+    QUEUE=* bundle exec rake resque:work&
+    QUEUE=* bundle exec rake resque:work&
+    QUEUE=* bundle exec rake resque:work&
+    QUEUE=* bundle exec rake resque:work&
     bundle exec ruby ./script/websocket_server.rb&
 fi
 
