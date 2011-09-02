@@ -173,13 +173,14 @@ if [ "$(./script/get_config.rb single_process_mode $RAILS_ENV)" = "false" ]; the
     redis_config
     redis-server config/redis.conf &>log/redis-console.log &
 
-    QUEUE=* bundle exec rake resque:work&
-    QUEUE=* bundle exec rake resque:work&    
-    QUEUE=* bundle exec rake resque:work&
-    QUEUE=* bundle exec rake resque:work&
-    QUEUE=* bundle exec rake resque:work&
-    QUEUE=* bundle exec rake resque:work&
-    QUEUE=* bundle exec rake resque:work&
+#    RAILS_ENV=production QUEUE=* bundle exec rake resque:work&
+#    RAILS_ENV=production QUEUE=* bundle exec rake resque:work&    
+#    RAILS_ENV=production QUEUE=* bundle exec rake resque:work&
+#    RAILS_ENV=production QUEUE=* bundle exec rake resque:work&
+#    RAILS_ENV=production QUEUE=* bundle exec rake resque:work&
+#    RAILS_ENV=production QUEUE=* bundle exec rake resque:work&
+#    RAILS_ENV=production QUEUE=* bundle exec rake resque:work&
+COUNT=9 QUEUE=* bundle exec rake resque:workers&
     bundle exec ruby ./script/websocket_server.rb&
 fi
 

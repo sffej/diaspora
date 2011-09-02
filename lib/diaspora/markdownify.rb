@@ -28,7 +28,12 @@ module Diaspora
 
         content = link.gsub(%r{^\w+://}, '')
 
-        %Q{<a target="_blank" href="#{link}">#{content}</a>}
+        if link.match(/(dia\.so|bit\.ly|\.gd|goo\.gl|\.tl|url1\.ca|\/t\.co)/)
+          %Q{<a class="expand" target="_blank" href="#{link}">#{content}</a>}
+        else
+          %Q{<a target="_blank" href="#{link}">#{content}</a>}
+        end
+
       end
 
       def autolink_vimeo(link)
