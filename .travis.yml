@@ -1,9 +1,10 @@
 bundler_args: "--without development production"
 rvm:
   - ree
-#  - 1.9.2
 
 before_script:
+  - "sudo cp config/ci/xvfb /etc/init.d/xvfb"
+  - "sh -e /etc/init.d/xvfb start"
   - "sass --update public/stylesheets/sass/:public/stylesheets/"
   - "cp config/database.yml.example config/database.yml"
   - "rake db:create"
