@@ -13,6 +13,7 @@ OS=`uname -s`
 #export RUBY_GC_MALLOC_LIMIT=50000000
 
 export RAILS_ENV=$(./script/get_config.rb rails_env script_server)
+export DB=$(./script/get_config.rb db script_server)
 THIN_PORT=$(./script/get_config.rb thin_port script_server)
 eval "DEFAULT_THIN_ARGS=\"$(./script/get_config.rb default_thin_args script_server)\""
 SOCKET_PORT=$(./script/get_config.rb socket_port $RAILS_ENV)
@@ -169,7 +170,7 @@ if [ ! -e 'public/assets/default.css' ]; then
 fi
 
 mkdir -p -v log/thin/
-if [ "$(./script/get_config.rb single_process_mode $RAILS_ENV)" = "false" ]; then
+if [ "$SINGLE_PROCESS" != "true" ]; then
     redis_config
     redis-server config/redis.conf &>log/redis-console.log &
 
