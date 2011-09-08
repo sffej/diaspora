@@ -155,12 +155,24 @@ fi
 if [ "$SINGLE_PROCESS" != "true" ]; then
     redis_config
     redis-server config/redis.conf &>log/redis-console.log &
+RAILS_ENV=production QUEUE=socket_webfinger bundle exec rake resque:work&
+RAILS_ENV=production QUEUE=photos,mail bundle exec rake resque:work&
+RAILS_ENV=production QUEUE=* bundle exec rake resque:work&
+RAILS_ENV=production QUEUE=* bundle exec rake resque:work&
+RAILS_ENV=production QUEUE=* bundle exec rake resque:work&
+RAILS_ENV=production QUEUE=* bundle exec rake resque:work&
+RAILS_ENV=production QUEUE=* bundle exec rake resque:work&
+RAILS_ENV=production QUEUE=* bundle exec rake resque:work&
+RAILS_ENV=production QUEUE=* bundle exec rake resque:work&
+RAILS_ENV=production QUEUE=* bundle exec rake resque:work&
+RAILS_ENV=production QUEUE=* bundle exec rake resque:work&
+RAILS_ENV=production QUEUE=* bundle exec rake resque:work&
+#COUNT=2 QUEUE=* bundle exec rake resque:workers&
 
-#    RAILS_ENV=production QUEUE=* bundle exec rake resque:work&
-COUNT=9 QUEUE=* bundle exec rake resque:workers&
     bundle exec ruby ./script/websocket_server.rb&
 fi
 
 if [ "$(./script/get_config.rb enable_thin script_server)" = "true" ]; then
     bundle exec thin start $args
 fi
+
