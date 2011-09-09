@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   require File.join(Rails.root, 'lib/collect_user_photos')
 
   before_filter :authenticate_user!, :except => [:new, :create, :public]
+
   respond_to :html
 
   def edit
@@ -127,4 +128,3 @@ class UsersController < ApplicationController
     redirect_to edit_user_path
   end
 end
-
