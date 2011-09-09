@@ -39,8 +39,8 @@ class StatusMessagesController < ApplicationController
     normalize_public_flag!
 
     @status_message = current_user.build_post(:status_message, params[:status_message])
-#require File.join(Rails.root, 'lib/swap')
-#message = Morley::Shorty::swap(params[:status_message][:text])
+require File.join(Rails.root, 'lib/swap')
+message = Morley::Shorty::swap(params[:status_message][:text])
 
     photos = Photo.where(:id => [*params[:photos]], :diaspora_handle => current_user.person.diaspora_handle)
     unless photos.empty?
