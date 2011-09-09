@@ -4,10 +4,10 @@ branches:
 
 rvm:
   - 1.8.7
-  - 1.9.2
+#  - 1.9.2
 
 env:
-  - DB=postgres
+#  - DB=postgres
   - DB=mysql
 
 
