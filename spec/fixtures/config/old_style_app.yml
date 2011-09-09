@@ -85,18 +85,10 @@ default:
   cloudfiles_username: 'example'
   cloudfiles_api_key:  'abc123'
   invites_off: false
-  invite_count: 5
 
   #list of users who have admin privileges
   admins:
     - 'example_user1dsioaioedfhgoiesajdigtoearogjaidofgjo'
-
-  #yourlsapikey
-  yourlsapi: 1234567
-  yourlsurl: domain.com
-
-  #facebook api for wall post inviter
-  fbapiKey: '123xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 
   #s3 config, if set, carrierwave will store your photos on s3
   #s3_key: 'key'
