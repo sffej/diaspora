@@ -7,7 +7,7 @@ rvm:
   - 1.9.2
 
 env:
-#  - DB=postgres
+  - DB=postgres
   - DB=mysql
 
 
