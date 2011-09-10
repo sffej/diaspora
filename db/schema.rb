@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(:version => 20110907205720) do
     t.datetime "updated_at"
   end
 
-  add_index "conversation_visibilities", ["conversation_id", "person_id"], :name => "index_conversation_visibilities_usefully", :unique => true
+  add_index "conversation_visibilities", ["conversation_id", "person_id"], :name => "index_conversation_visibilities_on_conversation_id_and_person_id", :unique => true
   add_index "conversation_visibilities", ["conversation_id"], :name => "index_conversation_visibilities_on_conversation_id"
   add_index "conversation_visibilities", ["person_id"], :name => "index_conversation_visibilities_on_person_id"
 
@@ -247,8 +247,8 @@ ActiveRecord::Schema.define(:version => 20110907205720) do
     t.integer  "post_id",                       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "hidden",     :default => false, :null => false
     t.integer  "contact_id",                    :null => false
+    t.boolean  "hidden",     :default => false, :null => false
   end
 
   add_index "post_visibilities", ["contact_id", "post_id"], :name => "index_post_visibilities_on_contact_id_and_post_id", :unique => true
@@ -279,9 +279,9 @@ ActiveRecord::Schema.define(:version => 20110907205720) do
     t.string   "provider_display_name"
     t.string   "actor_url"
     t.integer  "objectId"
-    t.string   "root_guid",             :limit => 30
     t.string   "status_message_guid"
     t.integer  "likes_count",                         :default => 0
+    t.string   "root_guid",             :limit => 30
   end
 
   add_index "posts", ["author_id"], :name => "index_posts_on_person_id"
@@ -310,7 +310,7 @@ ActiveRecord::Schema.define(:version => 20110907205720) do
 
   add_index "profiles", ["full_name", "searchable"], :name => "index_profiles_on_full_name_and_searchable"
   add_index "profiles", ["full_name"], :name => "index_profiles_on_full_name"
-  add_index "profiles", ["person_id"], :name => "index_profiles_on_person_id"
+  add_index "profiles", ["person_id"], :name => "index_profiles_on_person_id", :unique => true
 
   create_table "service_users", :force => true do |t|
     t.string   "uid",                          :null => false
@@ -386,7 +386,8 @@ ActiveRecord::Schema.define(:version => 20110907205720) do
     t.string   "language"
     t.string   "email",                                 :default => "",    :null => false
     t.string   "encrypted_password",     :limit => 128, :default => "",    :null => false
-    t.string   "invitation_token",       :limit => 60
+    t.string   "password_salt",                         :default => "",    :null => false
+    t.string   "invitation_token",       :limit => 20
     t.datetime "invitation_sent_at"
     t.string   "reset_password_token"
     t.string   "remember_token"
@@ -398,15 +399,16 @@ ActiveRecord::Schema.define(:version => 20110907205720) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "invitation_service",     :limit => 127
-    t.string   "invitation_identifier",  :limit => 127
+    t.string   "invitation_service"
+    t.string   "invitation_identifier"
+    t.text     "open_aspects"
     t.integer  "invitation_limit"
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.string   "authentication_token",   :limit => 30
+    t.datetime "locked_at"
     t.string   "unconfirmed_email"
     t.string   "confirm_email_token",    :limit => 30
-    t.datetime "locked_at"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
