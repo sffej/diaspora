@@ -2,7 +2,7 @@ God::Contacts::Email.defaults do |d|
   d.from_email = 'god@diasp.org'
   d.to_email = 'god@diasp.org'
   d.from_name = 'God'
-#  d.delivery_method = :sendmail
+  d.delivery_method = :sendmail
 end
 God.contact(:email) do |c|
   c.name = 'david'
@@ -20,6 +20,7 @@ num_workers.times do |num|
     w.interval = 90.seconds
     w.env      = {"QUEUE"=>"*", "RAILS_ENV"=>rails_env}
     w.start    = "bundle exec rake resque:work"
+    w.log      = "#{rails_root}/log/god.log"
 
     w.uid = 'root'
     w.gid = 'root'
