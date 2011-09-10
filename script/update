@@ -1,0 +1,45 @@
+#!/bin/bash
+
+function pause(){
+   read -p .$*.
+}
+echo 'fetch upstream'
+git fetch upstream
+echo "Merge upstream?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) git merge upstream/master; echo 'merged git'; break;;
+        No ) exit;;
+    esac
+done
+echo "bundle install?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) bundle install; break;;
+        No ) break;;
+    esac
+done
+
+echo "Do you wish to migrate db?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) script/migrate; echo 'db migrated'; break;;
+        No ) exit;;
+    esac
+done
+
+echo "Jammit?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) bundle exec jammit; break;;
+        No ) exit;;
+    esac
+done
+
+echo "push to git origin?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) git push origin master; break;;
+        No ) exit;;
+    esac
+done
