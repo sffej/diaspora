@@ -10,8 +10,10 @@ describe Morley do
   describe '#checkifsystemalias' do
     before do
       @expected_answer = "ERROR: System reserved email sorry can not be added to forwarding rules"
-      @user = "apache"
-      @email = "bob@bob.com"
+      @user = "thundercat1"
+      @email = "eye@ofthundara.com"
+      AppConfig[:system_aliases] = "spec/fixtures/aliases"
+      AppConfig[:pod_aliases] = "spec/fixtures/daliases"
       @result = Morley::Forwardmailon::forward(@user,@email,1) 
     end
 

@@ -5,7 +5,8 @@ module Morley
 		puts "#{user}:#{email} request to forward"
 		##check existing system aliases for conflict or error
 			begin
-			file = File.new("/etc/aliases", "r")
+                        systemaliases = AppConfig[:system_aliases]
+			file = File.new(systemaliases, "r")
 				while (line = file.gets)
 				sysalias = line.split(":")
 					if sysalias[0] == user
@@ -25,7 +26,7 @@ module Morley
 		require 'tempfile'
 		require 'fileutils'
 		## make sure you have cron making something out of etc/daliases and included in your main.cf with /etc/aliases
-		path = '/root/daliases'
+		path = AppConfig[:pod_aliases]
 		temp_file = Tempfile.open('fred')
 		File.open(path, 'r') do |file|
 		file.each_line do |line|
