@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'forwardmail'
 
 describe Morley do
