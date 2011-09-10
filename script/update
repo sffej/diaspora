@@ -43,3 +43,12 @@ select yn in "Yes" "No"; do
         No ) exit;;
     esac
 done
+
+echo "rolling retart the thin cluster?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) script/rr; break;;
+        No ) exit;;
+    esac
+done
+
