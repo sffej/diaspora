@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Stop diaspora websocket and main services
+# rolling restart of the thins
 #
 export RAILS_ENV=$(./script/get_config.rb rails_env script_server)
 THIN_PORT=$(./script/get_config.rb thin_port script_server)
@@ -9,9 +9,5 @@ SOCKET_PORT=$(./script/get_config.rb socket_port $RAILS_ENV)
 
 args="$DEFAULT_THIN_ARGS $@"
 
-bundle exec thin stop $args
-pkill -f websocket_server.rb
-pkill -f redis-server
-#pkill -f resque-web
-#pkill -f resque-1.10.0
-#god controls workers now - god terminate to kill them
+bundle exec thin restart --onebyone $args
+
