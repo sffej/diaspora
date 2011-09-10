@@ -9,7 +9,7 @@ echo "Merge upstream?"
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) git merge upstream/master; echo 'merged git'; break;;
-        No ) exit;;
+        No ) break;;
     esac
 done
 echo "bundle install?"
@@ -24,7 +24,7 @@ echo "Do you wish to migrate db?"
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) script/migrate; echo 'db migrated'; break;;
-        No ) exit;;
+        No ) break;;
     esac
 done
 
@@ -32,7 +32,7 @@ echo "Jammit?"
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) bundle exec jammit; break;;
-        No ) exit;;
+        No ) break;;
     esac
 done
 
@@ -40,7 +40,7 @@ echo "push to git origin?"
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) git push origin master; break;;
-        No ) exit;;
+        No ) break;;
     esac
 done
 
@@ -48,7 +48,7 @@ echo "rolling retart the thin cluster?"
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) script/rr; break;;
-        No ) exit;;
+        No ) break;;
     esac
 done
 
