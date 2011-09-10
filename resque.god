@@ -1,23 +1,23 @@
 God::Contacts::Email.defaults do |d|
   d.from_email = 'god@diasp.org'
+  d.to_email = 'god@diasp.org'
   d.from_name = 'God'
-  d.delivery_method = :sendmail
+#  d.delivery_method = :sendmail
 end
 God.contact(:email) do |c|
   c.name = 'david'
   c.group = 'developers'
-  c.to_email = 'god.diasp@z8s.com'
 end
 rails_env   = ENV['RAILS_ENV']  || "production"
 rails_root  = ENV['RAILS_ROOT'] || "/root/diaspora"
-num_workers = rails_env == 'production' ? 2 : 2
+num_workers = rails_env == 'production' ? 5 : 2
 
 num_workers.times do |num|
   God.watch do |w|
     w.dir      = "#{rails_root}"
     w.name     = "resque-#{num}"
     w.group    = 'resque'
-    w.interval = 30.seconds
+    w.interval = 90.seconds
     w.env      = {"QUEUE"=>"*", "RAILS_ENV"=>rails_env}
     w.start    = "bundle exec rake resque:work"
 
