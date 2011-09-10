@@ -5,6 +5,9 @@ export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
 export RUBY_GC_MALLOC_LIMIT=1000000000
 export RUBY_HEAP_FREE_MIN=500000
 
+#fix schema
+wget https://raw.github.com/diaspora/diaspora/master/db/schema.rb
+cp schema.rb db/schema.rb
 
 # Start xvfb in preparation for cucumber & jasmine
 sh -e /etc/init.d/xvfb start
