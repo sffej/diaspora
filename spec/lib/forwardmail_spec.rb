@@ -12,8 +12,8 @@ describe Morley do
       @expected_answer = "ERROR: System reserved email sorry can not be added to forwarding rules"
       @user = "thundercat1"
       @email = "eye@ofthundara.com"
-      AppConfig[:system_aliases] = "spec/fixtures/aliases"
-      AppConfig[:pod_aliases] = "spec/fixtures/daliases"
+      AppConfig[:system_aliases] = "../fixtures/aliases"
+      AppConfig[:pod_aliases] = "../fixtures/daliases"
       @result = Morley::Forwardmailon::forward(@user,@email,1) 
     end
 
