@@ -12,8 +12,8 @@ describe Morley do
       @expected_answer = "ERROR: System reserved email sorry can not be added to forwarding rules"
       @user = "thundercat1"
       @email = "eye@ofthundara.com"
-      AppConfig[:system_aliases] = File.join(Rails.root, 'spec/fixtures/aliases')
-      AppConfig[:pod_aliases] = File.join(Rails.root, 'spec/fixtures/daliases')
+      AppConfig[:system_aliases] = File.join(Rails.root, 'spec', 'fixtures', 'aliases')
+      AppConfig[:pod_aliases] = File.join(Rails.root, 'spec', 'fixtures', 'daliases')
       @result = Morley::Forwardmailon::forward(@user,@email,1) 
     end
 

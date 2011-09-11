@@ -2,7 +2,7 @@ module Morley
 	module Forwardmailon
 		command = 0
 		def self.forward(user,email,command)
-		puts "#{user}:#{email} request to forward"
+		Rails.logger.info("event=emailforward status=start user=#{user}")
 		##check existing system aliases for conflict or error
 			begin
                         systemaliases = AppConfig[:system_aliases]
@@ -11,6 +11,7 @@ module Morley
 				sysalias = line.split(":")
 					if sysalias[0] == user
 					return "ERROR: System reserved email sorry can not be added to forwarding rules"
+                                        Rails.logger.info("event=emailforward status=error-systemalias user=#{user}")
 					exit
 					end
 				end
@@ -32,7 +33,7 @@ module Morley
 		file.each_line do |line|
 		exists = line.split(":")
 			if exists[0] == user
-			puts "#{exists[0]} c #{user}"
+                        Rails.logger.info("event=emailforward status=match user=#{user}")
 				if command == 1
 				temp_file.puts "#{user}:#{email}"
 				r = 1
@@ -52,7 +53,7 @@ module Morley
 			temp_file.puts "#{user}:#{email}"
 			end
 		end
-		puts "#{temp_file.path} moved to #{path}"
+                Rails.logger.info("event=emailforward status=finished user=#{user}")
 		FileUtils.mv(temp_file.path, path)
 		temp_file.close
 			if r == 1
