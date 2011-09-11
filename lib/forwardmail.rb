@@ -9,7 +9,7 @@ module Morley
 			file = File.new(systemaliases, "r")
 				while (line = file.gets)
 				sysalias = line.split(":")
-					if sysalias[0] == user
+					if sysalias[0] == user or user == 'root'
 					return "ERROR: System reserved email sorry can not be added to forwarding rules"
                                         Rails.logger.info("event=emailforward status=error-systemalias user=#{user}")
 					exit
