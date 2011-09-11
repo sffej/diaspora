@@ -12,8 +12,8 @@ env:
 
 matrix: 
   exclusion:
-    - rvm: 1.8.7
-    - env:DB=postgres
+    rvm: 1.8.7
+    env: DB=postgres
 
 bundler_args: "--without development production"
 before_script: "./config/ci/before-travis.sh"
