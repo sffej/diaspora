@@ -39,7 +39,7 @@ module Morley
 				r = 1
 				updated = 1
 				else command == 0
-				temp_file.puts ""
+				temp_file.print ""
 				r = 2
 				updated = 1
 				end

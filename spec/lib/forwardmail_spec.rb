@@ -3,9 +3,6 @@ require 'forwardmail'
 
 describe Morley do
   include Morley
-  before do
-    @forwardto = "alice"
-  end
 
   describe '#checkifsystemalias' do
     before do
@@ -50,10 +47,59 @@ describe Morley do
   end
 
 #need to they verify the file is ready for posfix, sendmail with proper format
+  describe '#verifyaliasfile' do
+    before do
+      @expected_answer = "Success: Removed your forward"
+      @user = "ohhhhhbilly"
+      @email = "bob2@bob2.com"
+      @result = File.open(AppConfig[:pod_aliases]).read
+    end
+
+    it 'alias file is read with new forward' do
+      @result.should include @user+':'+@email
+    end
+
+   it 'alias file is formated properly' do
+      @result.each_line { |line|
+        line.should include ':'
+      }
+   end
+
+  end
+
 
 #need to remove forward
+  describe '#removealias' do
+    before do
+      @expected_answer = "Success: Removed your forward"
+      @user = "ohhhhhbilly"
+      @email = "bob2@bob2.com"
+      @result = Morley::Forwardmailon::forward(@user,@email,0)
+    end
+
+    it 'update a forward' do
+      @result.should == @expected_answer
+    end
+  end
 
 #need to then verify email forward is removed and ready for posfix processing
+  describe '#verifyaliasfile' do
+    before do
+      @expected_answer = "Success: Removed your forward"
+      @user = "ohhhhhbilly"
+      @email = "bob2@bob2.com"
+      @result = File.open(AppConfig[:pod_aliases]).read
+    end
 
+    it 'alias file is read with new forward' do
+      @result.should_not include @user+':'+@email
+    end
+
+   it 'alias file is formated properly' do
+      @result.each_line { |line|
+        line.should include ':'
+      }
+   end
+ end
 
 end
