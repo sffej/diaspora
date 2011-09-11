@@ -22,7 +22,7 @@ describe Morley do
     end
   end
 
-  describe '#newalias' do
+  describe '#create newalias' do
     before do
       @expected_answer = "Success: Added your forward"
       @user = "ohhhhhbilly"
@@ -48,5 +48,12 @@ describe Morley do
       @result.should == @expected_answer
     end
   end
+
+#need to they verify the file is ready for posfix, sendmail with proper format
+
+#need to remove forward
+
+#need to then verify email forward is removed and ready for posfix processing
+
 
 end
