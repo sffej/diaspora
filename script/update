@@ -12,6 +12,15 @@ select yn in "Yes" "No"; do
         No ) break;;
     esac
 done
+echo "push to git origin?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) git push origin master; break;;
+        No ) break;;
+    esac
+done
+
+
 echo "bundle install?"
 select yn in "Yes" "No"; do
     case $yn in
@@ -27,27 +36,17 @@ select yn in "Yes" "No"; do
         No ) break;;
     esac
 done
-
-echo "Jammit?"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) bundle exec jammit; break;;
-        No ) break;;
-    esac
-done
-
-echo "push to git origin?"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) git push origin master; break;;
-        No ) break;;
-    esac
-done
-
 echo "rolling retart the thin cluster?"
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) script/rr; break;;
+        No ) break;;
+    esac
+done
+echo "Jammit?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) bundle exec jammit; break;;
         No ) break;;
     esac
 done
