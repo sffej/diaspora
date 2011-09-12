@@ -28,8 +28,8 @@ class Post < ActiveRecord::Base
   has_many :resharers, :class_name => 'Person', :through => :reshares, :source => :author
 
   belongs_to :author, :class_name => 'Person'
-
-  validates_uniqueness_of :guid
+  
+  validates :guid, :uniqueness => true
 
   def diaspora_handle
     read_attribute(:diaspora_handle) || self.author.diaspora_handle
@@ -125,6 +125,12 @@ class Post < ActiveRecord::Base
   # @return [Array<Comment>]
   def last_three_comments
     self.comments.order('created_at DESC').limit(3).includes(:author => :profile).reverse
+  end
+
+  # @return [Integer]
+  def update_comments_counter
+    self.class.where(:id => self.id).
+      update_all(:comments_count => self.comments.count)
   end
 end
 

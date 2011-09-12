@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110907205720) do
+ActiveRecord::Schema.define(:version => 20110911213207) do
 
   create_table "aspect_memberships", :force => true do |t|
     t.integer  "aspect_id",  :null => false
@@ -281,7 +281,11 @@ ActiveRecord::Schema.define(:version => 20110907205720) do
     t.integer  "objectId"
     t.string   "status_message_guid"
     t.integer  "likes_count",                         :default => 0
+<<<<<<< HEAD
     t.string   "root_guid",             :limit => 30
+=======
+    t.integer  "comments_count",                      :default => 0
+>>>>>>> upstream/master
   end
 
   add_index "posts", ["author_id"], :name => "index_posts_on_person_id"
