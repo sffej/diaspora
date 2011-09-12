@@ -11,8 +11,8 @@ env:
   - DB=mysql
 
 #matrix:
-  exclude: 
-    - rvm: 1.8.7
+exclude: 
+  - rvm: 1.8.7
 #      env:DB=postgres
 
 #bundler_args: "--without development production"
