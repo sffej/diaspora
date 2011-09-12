@@ -10,7 +10,7 @@ wget https://raw.github.com/diaspora/diaspora/master/db/schema.rb
 cp schema.rb db/schema.rb
 
 # Start xvfb in preparation for cucumber & jasmine
-sh -e /etc/init.d/xvfb start
+#sh -e /etc/init.d/xvfb start
 
 # Regenerate css files
 echo "Regenerate CSS files"
@@ -27,3 +27,4 @@ fi
 echo "Creating databases for $DB and loading schema"
 bundle exec rake db:create
 bundle exec rake db:schema:load
+echo "Kittens"
