@@ -281,11 +281,8 @@ ActiveRecord::Schema.define(:version => 20110911213207) do
     t.integer  "objectId"
     t.string   "status_message_guid"
     t.integer  "likes_count",                         :default => 0
-<<<<<<< HEAD
     t.string   "root_guid",             :limit => 30
-=======
     t.integer  "comments_count",                      :default => 0
->>>>>>> upstream/master
   end
 
   add_index "posts", ["author_id"], :name => "index_posts_on_person_id"
