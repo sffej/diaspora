@@ -18,6 +18,15 @@ class SignedRetraction
                 :target_author_signature,
                 :sender
 
+  #NOTE(fix this hack -- go through the app and make sure we only call RelayableRetraction in a unified way)
+  def author
+    if sender.is_a?(User)
+      sender.person
+    else
+      sender
+    end
+  end
+
   def signable_accessors
       accessors = self.class.roxml_attrs.collect do |definition|
         definition.accessor
