@@ -1,4 +1,4 @@
-#   Copyright (c) 2011, Diaspora Inc.  This file is
+#   Copyright (c) 2010-2011, Diaspora Inc.  This file is
 #   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 
@@ -9,6 +9,9 @@ module Salmon
 
     delegate :sig, :data_type, :to => :magic_sig
 
+    # @param user [User]
+    # @param activity [String] A decoded string
+    # @return [Slap]
     def self.create_by_user_and_activity(user, activity)
       salmon = self.new
       salmon.author   = user.person
@@ -62,8 +65,9 @@ module Salmon
     end
 
     # @return [String] The constructed salmon, given a person
+    # note this memoizes the xml, as for every user for unsigned salmon will be the same
     def xml_for(person)
-      xml =<<ENTRY
+      @xml =<<ENTRY
     <?xml version='1.0' encoding='UTF-8'?>
     <entry xmlns='http://www.w3.org/2005/Atom'>
       #{header(person)}

@@ -1,4 +1,4 @@
-#   Copyright (c) 2010, Diaspora Inc.  This file is
+#   Copyright (c) 2010-2011, Diaspora Inc.  This file is
 #   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 
@@ -10,7 +10,7 @@ module Job
 
     def self.perform(user_id, xml)
       user = User.find(user_id)
-      zord = Postzord::Receiver.new(user, :salmon_xml => xml)
+      zord = Postzord::Receiver::Private.new(user, :salmon_xml => xml)
       zord.perform
     end
   end

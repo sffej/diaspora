@@ -1,4 +1,4 @@
-#   Copyright (c) 2010, Diaspora Inc.  This file is
+#   Copyright (c) 2010-2011, Diaspora Inc.  This file is
 #   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 
@@ -39,7 +39,7 @@ class RelayableRetraction < SignedRetraction
     elsif self.parent.author == recipient.person && self.target_author_signature_valid?
       #this is a retraction from the downstream object creator, and the recipient is the upstream owner
       self.parent_author_signature = self.sign_with_key(recipient.encryption_key)
-      Postzord::Dispatcher.new(recipient, self).post
+      Postzord::Dispatcher.build(recipient, self).post
       self.perform(recipient)
     elsif self.parent_author_signature_valid?
       #this is a retraction from the upstream owner

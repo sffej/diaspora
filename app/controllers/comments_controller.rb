@@ -1,4 +1,4 @@
-#   Copyright (c) 2010, Diaspora Inc.  This file is
+#   Copyright (c) 2010-2011, Diaspora Inc.  This file is
 #   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 
@@ -25,7 +25,7 @@ text = Morley::Shorty::swap(params[:text])
       if @comment.save
         Rails.logger.info(:event => :create, :type => :comment, :user => current_user.diaspora_handle,
                           :status => :success, :comment => @comment.id, :chars => params[:text].length)
-        Postzord::Dispatcher.new(current_user, @comment).post
+        Postzord::Dispatcher.build(current_user, @comment).post
 
         respond_to do |format|
           format.js{ render(:create, :status => 201)}

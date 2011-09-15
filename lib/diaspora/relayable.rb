@@ -1,4 +1,4 @@
-#   Copyright (c) 2010, Diaspora Inc.  This file is
+#   Copyright (c) 2010-2011, Diaspora Inc.  This file is
 #   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 
@@ -63,7 +63,7 @@ module Diaspora
         #dispatch object DOWNSTREAM, received it via UPSTREAM
         unless user.owns?(comment_or_like)
           comment_or_like.save!
-          Postzord::Dispatcher.new(user, comment_or_like).post
+          Postzord::Dispatcher.build(user, comment_or_like).post
         end
 
         comment_or_like.socket_to_user(user) if comment_or_like.respond_to? :socket_to_user

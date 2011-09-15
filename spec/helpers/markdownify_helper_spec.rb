@@ -1,4 +1,4 @@
-#   Copyright (c) 2010, Diaspora Inc.  This file is
+#   Copyright (c) 2010-2011, Diaspora Inc.  This file is
 #   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 
@@ -24,7 +24,7 @@ describe MarkdownifyHelper do
     end
 
     it 'autolinks standard url links' do
-      puts markdownify("http://joindiaspora.com/")
+      markdownify("http://joindiaspora.com/").should match /<p><a href="http:\/\/joindiaspora.com\/">http:\/\/joindiaspora.com\/<\/a><\/p>/
     end
 
     context 'when formatting status messages' do

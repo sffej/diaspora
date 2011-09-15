@@ -1,4 +1,4 @@
-#   Copyright (c) 2011, Diaspora Inc.  This file is
+#   Copyright (c) 2010-2011, Diaspora Inc.  This file is
 #   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 
@@ -13,6 +13,16 @@ module Salmon
           #{person.encrypt("<decrypted_header>#{plaintext_header}</decrypted_header>")}
         </encrypted_header>
 XML
+    end
+
+    # @return [String, Boolean] False if RSAError; XML if no error
+    def xml_for(person)
+      begin
+       super 
+      rescue OpenSSL::PKey::RSAError => e
+        Rails.logger.info(:event => :invalid_rsa_key, :identifier => person.diaspora_handle)
+        false
+      end
     end
 
     # Decrypts an encrypted magic sig envelope
