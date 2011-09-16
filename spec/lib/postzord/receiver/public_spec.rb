@@ -55,8 +55,8 @@ describe Postzord::Receiver::Public do
         @receiver.perform!
       end
 
-      it 'enqueues a Job::ReceiveLocalBatch' do 
-        Resque.should_receive(:enqueue).with(Job::ReceiveLocalBatch, anything, anything)
+      it 'enqueues a Jobs::ReceiveLocalBatch' do 
+        Resque.should_receive(:enqueue).with(Jobs::ReceiveLocalBatch, anything, anything)
         @receiver.perform!
       end
     end
@@ -102,9 +102,9 @@ describe Postzord::Receiver::Public do
       comment = stub.as_null_object
       @receiver.instance_variable_set(:@object, comment)
 
-      local_post_batch_receiver = stub.as_null_object
-      Postzord::Receiver::LocalPostBatch.stub(:new).and_return(local_post_batch_receiver)
-      local_post_batch_receiver.should_receive(:notify_users)
+      local_batch_receiver = stub.as_null_object
+      Postzord::Receiver::LocalBatch.stub(:new).and_return(local_batch_receiver)
+      local_batch_receiver.should_receive(:notify_users)
       @receiver.receive_relayable
     end
   end
