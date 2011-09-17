@@ -37,7 +37,7 @@ module Postzord
           set_author!
           receive_object
         else
-          raise 'not a valid object'
+          raise "not a valid object:#{@object.inspect}"
         end
       end
 
