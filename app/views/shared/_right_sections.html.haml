@@ -26,10 +26,14 @@
       = image_tag('/images/icons/coffee.png')
       %h5
         = t('aspects.index.donate')
-      %br
+      %hr
         <a class="FlattrButton" href="https://diasp.org"></a>
-      %br
+      %hr
         One time donations via Bitcoin, Google, Paypal, Amazon <a href="http://b.diasp.org/donations/">Here</a>
+      %hr
+        = link_to(image_tag('/images/t-shirt.gif', :style => "position:relative;"), "http://cafepress.com/diasporg", :target => "new")
+      %br
+        Order some merchandise and help the pod out and promote Diaspora*
     .content
       = t('aspects.index.keep_us_running', :pod => URI.parse(AppConfig[:pod_url]).host)
       %br
