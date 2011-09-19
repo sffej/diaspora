@@ -155,9 +155,7 @@ fi
 if [ "$(bundle exec ruby ./script/get_config.rb 'single_process_mode?')" != "true" ]; then
     redis_config
     redis-server config/redis.conf &>log/redis-console.log &
-RAILS_ENV=production QUEUE=socket_webfinger,mail,photos,http,http_service,receive,receive_local,delete_account bundle exec rake resque:work&
-god -c /root/diaspora/resque.god start resque&
-
+    god -c /root/diaspora/resque.god start resque&
     bundle exec ruby ./script/websocket_server.rb&
 fi
 
