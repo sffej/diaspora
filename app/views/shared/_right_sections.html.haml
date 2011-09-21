@@ -33,7 +33,7 @@
       %hr
         = link_to(image_tag('/images/t-shirt.gif', :style => "position:relative;"), "http://cafepress.com/diasporg", :target => "new")
       %br
-        Order some merchandise and help the pod out and promote Diaspora*
+        Order some merchandise and help the pod out and promote Diaspora* (soon waiting on high res logo)
     .content
       = t('aspects.index.keep_us_running', :pod => URI.parse(AppConfig[:pod_url]).host)
       %br
@@ -70,6 +70,12 @@
       != t('aspects.index.help.satisfaction', :link => link_to("GetSatisfaction", "http://getsatisfaction.com/diaspora"))
       %br
       != t('aspects.index.help.tutorials', :link => link_to("Diasporial" , "http://diasporial.com/tutorials"))
+      %br
+      <a rel="facebox" href="/status">markdown help</a>
+      %br
+      Follow the pod on <a target="_new" href="http://twitter.com/diasporg">twitter</a> and <a target="_new" href="http://facebook.com/diasp.org">facebook</a> and <a target="_new" href="http://b.diasp.org">blog</a>
+      %br
+      Have posts in languages you can not read? <a target="_new" href="http://userscripts.org/scripts/show/91276">Translate</a>
 
 - unless AppConfig.configured_services.blank? || all_services_connected?
   .section
@@ -85,17 +91,6 @@
         - AppConfig.configured_services.each do |service|
           - unless current_user.services.any?{|x| x.provider == service}
             = link_to(image_tag("social_media_logos/#{service.to_s.downcase}-24x24.png", :title => service.to_s.titleize), "/auth/#{service}")
-
-.section{:style => "height:190px;"}
-  .title
-    = image_tag('/images/icons/help.png')
-    %h5
-      Help and Support
-  .content
-    Getting Started? Check out <a href="http://www.diasporial.com/" target="_new">Diasporial</a> for a news and tutorials.<br> 
-    Links to <a rel="facebox" href="/help">general help</a> and <a rel="facebox" href="/status">markdown help</a>.<br>
-    Updates are often found on our <a target="_new" href="http://b.diasp.org">blog</a> or <a target="_new" href="http://twitter.com/diasporg">twitter</a> and yes even on <a target="_new" href="http://facebook.com/diasp.org">facebook</a>. If your interested in pod dev see: #diasporg on freenode irc.
-    Have posts in languages you can not read? <a target="_new" href="http://userscripts.org/scripts/show/91276">Translate</a> them to your language!
 
 .section
   .title
