@@ -3230,13 +3230,25 @@ ul#getting_started
 #getting_started_service_icons
   :text-align center
 
-  img
-    :margin
-      :right 48px
-
   :padding
     :bottom 20px
     :top 10px
+
+  .service
+    :margin
+      :right 48px
+    :position relative
+
+    .service_image
+      :position relative
+
+    .checkmark
+      :position absolute
+      img
+        :height 36px
+        :width 36px
+      :left 25px
+      :top -15px
 
 #right_service_icons
   :text-align center
@@ -3326,6 +3338,9 @@ ul#getting_started
     :vertical-align top
     :position relative
 
+    :border
+      :bottom 1px solid #ddd
+
     :padding 5px
     :margin
       :bottom 5px
@@ -3380,6 +3395,7 @@ ul#getting_started
   :display block
   :color white
   :position fixed
+  :z-index 49
   :right 20px
   :bottom 20px
   :opacity 0
