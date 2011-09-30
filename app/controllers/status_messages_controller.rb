@@ -11,13 +11,14 @@ class StatusMessagesController < ApplicationController
   # Called when a user clicks "Mention" on a profile page
   # @param person_id [Integer] The id of the person to be mentioned
   def new
-    if params[:person_id] && @person = Person.where(params[:person_id]).first
+    if params[:person_id] && @person = Person.where(:id => params[:person_id]).first
       @aspect = :profile
       @contact = current_user.contact_for(@person)
       @aspects_with_person = []
       if @contact
         @aspects_with_person = @contact.aspects
-        @aspect_ids = @aspects_with_person.map(&:id)
+        @aspect_ids = @aspects_with_person.map{|x| x.id}
+        puts @aspect_ids.inspect
         @contacts_of_contact = @contact.contacts
         render :layout => nil
       end

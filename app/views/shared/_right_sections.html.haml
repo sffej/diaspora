@@ -57,7 +57,7 @@
   .content
     = t('aspects.index.help.here_to_help')
     %br
-    = t('aspects.index.help.did_you')
+    = t('aspects.index.help.do_you')
     %br
     != t('aspects.index.help.have_a_question', :link => link_to("#question" , tag_path(:name => "question")))
     %br
@@ -67,15 +67,16 @@
     %br
     %br
     %p
-      != t('aspects.index.help.satisfaction', :link => link_to("GetSatisfaction", "http://getsatisfaction.com/diaspora"))
-      %br
-      != t('aspects.index.help.tutorials', :link => link_to("Diasporial" , "http://diasporial.com/tutorials"))
-      %br
       <a rel="facebox" href="/status">markdown help</a>
       %br
       Follow the pod on <a target="_new" href="http://twitter.com/diasporg">twitter</a> and <a target="_new" href="http://facebook.com/diasp.org">facebook</a> and <a target="_new" href="http://b.diasp.org">blog</a>
       %br
       Have posts in languages you can not read? <a target="_new" href="http://userscripts.org/scripts/show/91276">Translate</a>
+      %br
+      != t('aspects.index.help.feature_and_forum', :gs=> link_to("GetSatisfaction", "http://getsatisfaction.com/diaspora", :target => '_blank'), :forum => link_to("Forum", "http://www.diasporaforum.org/", :target => '_blank'))
+    %p
+      != t('aspects.index.help.tutorials_and_wiki', :tutorial => link_to("Diasporial" , "http://diasporial.com/tutorials", :target => '_blank'), :wiki => link_to('Wiki','http://github.com/diaspora/diaspora/wiki', :target => '_blank'))
+    %p
       != t('aspects.index.help.email_feedback', :link => link_to("Email" , "mailto:yosem@joindiaspora.com"))
 
 - unless AppConfig.configured_services.blank? || all_services_connected?
