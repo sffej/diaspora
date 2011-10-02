@@ -11,7 +11,7 @@ args="$DEFAULT_THIN_ARGS $@"
 
 bundle exec thin stop $args
 pkill -f websocket_server.rb
-pkill -f redis-server
+#pkill -f redis-server
 #pkill -f resque-web
 #pkill -f resque-1.10.0
 #god controls workers now - god terminate to kill them
