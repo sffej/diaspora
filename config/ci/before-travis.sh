@@ -9,11 +9,8 @@ export RUBY_HEAP_FREE_MIN=500000
 wget https://raw.github.com/diaspora/diaspora/master/db/schema.rb
 cp schema.rb db/schema.rb
 
-# Start xvfb in preparation for cucumber & jasmine
-#sh -e /etc/init.d/xvfb start
-
 # Regenerate css files
-echo "Regenerate CSS files"
+echo "Regenerating CSS files"
 bundle exec sass -q --update public/stylesheets/sass/:public/stylesheets/
 
 # Create a database.yml for the right database
