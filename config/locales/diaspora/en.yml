@@ -120,6 +120,7 @@ en:
       or_featured:  "Or you can share with %{link}"
       featured_users: "featured users"
     aspect_listings:
+      edit_aspect: "Edit %{name}"
       add_an_aspect: "+ Add an aspect"
 
     selected_contacts:
@@ -128,7 +129,7 @@ en:
       manage_your_aspects: "Manage your aspects."
 
     new:
-      name: "Name (only visibile to you)"
+      name: "Name (only visible to you)"
       create: "Create"
     create:
       success: "Your new aspect %{name} was created"
@@ -225,7 +226,7 @@ en:
     other: "%{count} reactions"
 
   contacts:
-    zero: "no contacts"
+    zero: "contacts"
     one: "1 contact"
     two: "%{count} contacts"
     few: "%{count} contacts"
@@ -236,12 +237,13 @@ en:
     sharing:
       people_sharing: "People sharing with you:"
     index:
-      edit_aspect: "Edit %{name}"
+      add_to_aspect: "Add contacts to %{name}"
       start_a_conversation: "Start a conversation"
       add_a_new_aspect: "Add a new aspect"
       title: "Contacts"
       your_contacts: "Your Contacts"
-      no_contacts: "No contacts."
+      no_contacts: "Looks like you need to add some contacts!"
+      check_out: "Check out"
       my_contacts: "My Contacts"
       all_contacts: "All Contacts"
       only_sharing_with_me: "Only sharing with me"
