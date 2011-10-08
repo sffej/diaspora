@@ -49,15 +49,6 @@
       = t('aspects.index.cubbies.explanation')
       = link_to t('aspects.index.cubbies.learn_more'), token_path
 
-- if @stream.has_featured_users?
-  .section
-    .title.no_icon
-      %h5
-        =t('aspects.index.community_members')
-    .content#featured_users
-      = render 'featured_users/user', :person => @stream.random_featured_user
-      = link_to t('aspects.index.see_more_from_us'), featured_path, :id => 'view_all_contacts_link'
-
 .section
   .title
     = image_tag('/images/icons/question.png')
@@ -118,5 +109,15 @@
       Forward your @diasp.org address to your email address
   .content
     On this pod you can <a rel="facebox" href="/forwardemail">forward</a> your pod handle to your email account.
+
+- if @stream.has_featured_users?
+  .section
+    .title.no_icon
+      %h5
+        =t('aspects.index.community_members')
+    .content#featured_users
+      = render 'featured_users/user', :person => @stream.random_featured_user
+      = link_to t('aspects.index.see_more_from_us'), featured_path, :id => 'view_all_contacts_link'
+
 
 
