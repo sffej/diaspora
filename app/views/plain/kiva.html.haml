@@ -1,7 +1,7 @@
 .section
   %h3
     Join the Diaspora Kiva
-    = link_to ('team'), 'http://kiva.org/invitedto/diaspora/by/david1974'
+    = link_to ('team'), 'http://kiva.org/invitedto/diaspora/by/david1974', :target => "_blank"
     and help us change lives one loan at a time
 
 .section
@@ -15,4 +15,4 @@
       = new.use
       in 
       = new.location["country"]
-      <a href="http://www.kiva.org/lend/#{new.id}">loan</a> them $25
+      <a target="_blank" href="http://www.kiva.org/lend/#{new.id}">loan</a> them $25
