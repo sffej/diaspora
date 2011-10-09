@@ -1,15 +1,11 @@
-$('.expanded').tipsy({live: true,html:true,title: 'ex'});
-$('.expand').live('mouseenter', function() {
-  $(this).append("<div class='urlnote' style='diasplay:inline;'><img src='/images/ajax-loader.gif'>Expanding URL</div>")
+$("a[href*='dia.so'][class!='expanded'],a[href*='t.co'][class!='expanded'],a[href*='bit.ly'][class!='expanded'],a[href*='goo.gl'][class!='expanded']").live('mouseenter', function() {
   var $self = $(this)
     $.ajax({
       url: '/shorten/show?url='+this.href,
         success: function(data) {
-        $self.addClass("expanded").removeClass('expand').attr('ex',data).css('color','green');
+        $self.addClass("expanded").append("<span class='via'> "+data+" </span>");
         }
     });
-
-$('.urlnote').html('URL Expanded - Rehover for info').fadeOut(1000);
 });
 
 
