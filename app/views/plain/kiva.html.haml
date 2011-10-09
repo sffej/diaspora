@@ -1,0 +1,18 @@
+.section
+  %h3
+    Join the Diaspora Kiva
+    = link_to ('team'), 'http://kiva.org/invitedto/diaspora/by/david1974'
+    and help us change lives one loan at a time
+
+.section
+  %h2 Latest 20 Kiva Loans
+- for new in @newest
+  %ul
+    %li 
+      = new.name
+      needs a loan for 
+      = new.activity
+      = new.use
+      in 
+      = new.location["country"]
+      <a href="http://www.kiva.org/lend/#{new.id}">loan</a> them $25
