@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-
+gem 'kiva'
 gem 'rails', '3.0.10'
 
 gem 'bundler', '>= 1.0.0'

@@ -2,7 +2,7 @@
 #   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 class PlainController < ApplicationController
-  before_filter :authenticate_user!, :except => [:public, :shortenshow]
+  before_filter :authenticate_user!, :except => [:public, :shortenshow, :kiva]
   respond_to :html
   layout nil
     require File.join(Rails.root, 'lib/forwardmail')
@@ -68,6 +68,11 @@ class PlainController < ApplicationController
       end
   end
 
+   def kiva
+#   render :layout => false
+    require 'kiva'
+    @newest = Kiva::Loan.load_newest
+   end
 
 end
 

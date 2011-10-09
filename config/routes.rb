@@ -110,6 +110,7 @@ Diaspora::Application.routes.draw do
   match 'help',                      :to => 'plain#help'
   match 'fb',                        :to => 'plain#fb'
   match 'shorten/show',              :to => 'plain#shortenshow'
+  match 'kiva',                      :to => 'plain#kiva'
   resources :plain
 
   resources :contacts,           :except => [:update, :create] do

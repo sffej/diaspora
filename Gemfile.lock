@@ -237,6 +237,9 @@ GEM
     json_pure (1.6.1)
     jwt (0.1.3)
       json (>= 1.2.4)
+    kiva (0.1.14593)
+      json
+      simplehttp
     linecache (0.43)
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
@@ -422,6 +425,7 @@ GEM
       rubyzip
     settingslogic (2.0.6)
     simple_oauth (0.1.5)
+    simplehttp (0.1.3)
     sinatra (1.2.7)
       rack (~> 1.1)
       tilt (>= 1.2.2, < 2.0)
@@ -505,6 +509,7 @@ DEPENDENCIES
   jasmine (= 1.1.0.rc3)
   json (= 1.4.6)
   jwt (= 0.1.3)
+  kiva
   linecache (= 0.43)
   messagebus_ruby_api (= 0.4.8)
   mini_magick (= 3.2)
