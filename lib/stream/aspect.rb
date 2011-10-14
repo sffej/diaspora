@@ -72,7 +72,8 @@ class Stream::Aspect< Stream::Base
   #
   # @return [Boolean] see #for_all_aspects?
   def ajax_stream?
-    for_all_aspects?
+    #for_all_aspects?
+    false
   end
 
   # The title that will display at the top of the stream's
@@ -116,5 +117,14 @@ class Stream::Aspect< Stream::Base
     else
       Rails.application.routes.url_helpers.contacts_path(:a_id => aspect.id)
     end
+  end
+
+  # This is perfomance optimization, as everyone in your aspect stream you have
+  # a contact.
+  #
+  # @param post [Post]
+  # @return [Boolean]
+  def can_comment?(post)
+    true
   end
 end
