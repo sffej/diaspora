@@ -137,11 +137,13 @@ describe Stream::Aspect do
       @stream = Stream::Aspect.new(stub, stub)
     end
     it 'is true stream is for all aspects?' do
+      pending
       @stream.stub(:for_all_aspects?).and_return(true)
       @stream.ajax_stream?.should be_true
     end
 
     it 'is false if it is not for all aspects' do
+      pending
       @stream.stub(:for_all_aspects?).and_return(false)
       @stream.ajax_stream?.should be_false
     end
