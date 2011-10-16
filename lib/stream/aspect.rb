@@ -2,7 +2,7 @@
 #   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 
-class Stream::Aspect< Stream::Base
+class Stream::Aspect < Stream::Base
 
   # @param user [User]
   # @param inputted_aspect_ids [Array<Integer>] Ids of aspects for given stream
@@ -72,11 +72,7 @@ class Stream::Aspect< Stream::Base
   #
   # @return [Boolean] see #for_all_aspects?
   def ajax_stream?
-    if AppConfig[:redis_cache]
-      true
-    else
-      false
-    end
+    !AppConfig[:redis_cache] && for_all_aspects?
   end
 
   # The title that will display at the top of the stream's
