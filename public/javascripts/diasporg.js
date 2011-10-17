@@ -11,20 +11,20 @@ $(this).css('cursor','wait');
 });
 
 
-$("a[href*='youtube.com'],a[href*='youtu.be']").live({
-      mouseenter: function() { 
-        var $self = $(this);
-        if (this.href.indexOf("youtu.be") > 0) {
-       	   id =	this.href.split("/");
-           check = "http://www.youtube.com/watch?v="+id[3];
-        } else {
-           check = this.href
-        }
-        url = $.jYoutube(check);
-          $self.append("<span id='youtubeimg'><br><img src="+url+"></span>");
-      },
-      mouseleave: function() { 
-          $("span#youtubeimg").delay(633).remove();
-      }
-});
+//$("a[href*='youtube.com'],a[href*='youtu.be']").live({
+//      mouseenter: function() { 
+//        var $self = $(this);
+//        if (this.href.indexOf("youtu.be") > 0) {
+//       	   id =	this.href.split("/");
+//           check = "http://www.youtube.com/watch?v="+id[3];
+//        } else {
+//           check = this.href
+//        }
+//        url = $.jYoutube(check);
+//          $self.append("<span id='youtubeimg'><br><img src="+url+"></span>");
+//      },
+//      mouseleave: function() { 
+//          $("span#youtubeimg").delay(633).remove();
+//      }
+//});
 
