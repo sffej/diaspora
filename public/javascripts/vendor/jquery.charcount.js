@@ -33,10 +33,11 @@
 		function calculate(obj){
 			var count = $(obj).val().length;
 			var word = $(obj).val().split(' ');
-			$.each(word, function(key, value) {if (value.match(/\/\/\//ig)) {count = count - value.length + 16;}});
-			if (value.match(/\/\//ig)) {
-                        $('#diasotip').show;
-			}
+			$.each(word, function(key, value) {
+			if (value.match(/:\/\//ig)) {
+                        $('#diasotip').show(900);
+                        }
+			if (value.match(/:\/\/\//ig)) {count = count - value.length + 16;}});
 			var available = options.allowed - count;
 			if(available <= options.warning && available >= 0){
 				$(obj).next().addClass(options.cssWarning);

@@ -9,6 +9,9 @@
     $(".public_icon").tipsy({trigger: 'hover', gravity: 'n'});
   });
 
+#diasotip{:style => "display: none;"}
+  Protip: Shorten a url by adding a extra / to it, eg http:///domain.com
+
 #publisher.closed{:class => ((aspect == :profile)? 'mention_popup' : nil )}
   .content_creation
     = form_for(StatusMessage.new, :remote => remote?, :html => {"data-type" => "json"}) do |status|
