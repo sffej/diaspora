@@ -21,7 +21,6 @@ javascripts:
     - public/javascripts/vendor/timeago.js
     - public/javascripts/vendor/Mustache.js
     - public/javascripts/vendor/facebox.js
-    - public/javascripts/vendor/jyoutube.min.js
     - public/javascripts/jquery.infinitescroll-custom.js
     - public/javascripts/jquery.autocomplete-custom.js
     - public/javascripts/jquery.infieldlabel-custom.js
