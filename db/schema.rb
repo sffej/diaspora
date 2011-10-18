@@ -364,8 +364,8 @@ ActiveRecord::Schema.define(:version => 20111012215141) do
     t.integer  "shareable_id",                       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "hidden",         :default => false,  :null => false
     t.integer  "contact_id",                         :null => false
+    t.boolean  "hidden",         :default => false,  :null => false
     t.string   "shareable_type", :default => "Post", :null => false
   end
 
