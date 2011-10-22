@@ -5,7 +5,7 @@ class Stream::Base
   def initialize(user, opts={})
     self.user = user
     self.max_time = opts[:max_time]
-    self.order = opts[:order] 
+    self.order = opts[:order]
   end
 
   # @return [Person]
@@ -27,6 +27,10 @@ class Stream::Base
   def can_comment?(post)
     return true if post.author.local?
     post_is_from_contact?(post)
+  end
+
+  def post_from_group(post)
+    []
   end
 
   # @return [String]
