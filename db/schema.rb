@@ -420,7 +420,8 @@ ActiveRecord::Schema.define(:version => 20111021184041) do
     t.string   "language"
     t.string   "email",                                             :default => "",    :null => false
     t.string   "encrypted_password",                 :limit => 128, :default => "",    :null => false
-    t.string   "invitation_token",                   :limit => 60
+    t.string   "password_salt",                                     :default => "",    :null => false
+    t.string   "invitation_token",                   :limit => 20
     t.datetime "invitation_sent_at"
     t.string   "reset_password_token"
     t.string   "remember_token"
@@ -432,15 +433,16 @@ ActiveRecord::Schema.define(:version => 20111021184041) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "invitation_service",                 :limit => 127
-    t.string   "invitation_identifier",              :limit => 127
+    t.string   "invitation_service"
+    t.string   "invitation_identifier"
+    t.text     "open_aspects"
     t.integer  "invitation_limit"
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.string   "authentication_token",               :limit => 30
+    t.datetime "locked_at"
     t.string   "unconfirmed_email"
     t.string   "confirm_email_token",                :limit => 30
-    t.datetime "locked_at"
     t.boolean  "show_community_spotlight_in_stream",                :default => true,  :null => false
   end
 
