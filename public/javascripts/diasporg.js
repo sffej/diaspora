@@ -1,4 +1,4 @@
-$("a[href*='http://dia.so'][class!='expanded'],a[href*='http://t.co'][class!='expanded'],a[href*='http://bit.ly'][class!='expanded'],a[href*='http://goo.gl'][class!='expanded']").live('mouseenter', function() {
+$("a[href*='http://dia.so'][class!='expanded'],a[href*='http://t.co'][class!='expanded'],a[href*='http://bit.ly'][class!='expanded'],a[href*='http://goo.gl'][class!='expanded'],a[href*='http://j.mp'][class!='expanded'],a[href*='http://is.gd'][class!='expanded']").live('mouseenter', function() {
 $(this).css('cursor','wait');
   var $self = $(this)
     $.ajax({
