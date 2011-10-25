@@ -114,17 +114,17 @@ var View = {
   },
 
   tooltips: {
-    public_badge: {
+    conversation_participants: {
       bind: function() {
-        $(".public_badge img").tipsy({
+        $(".conversation_participants img").twipsy({
           live: true
         });
       }
     },
 
-    conversation_participants: {
+    contacts_on_side: {
       bind: function() {
-        $(".conversation_participants img").tipsy({
+        $("#selected_aspect_contacts .avatar").twipsy({
           live: true
         });
       }

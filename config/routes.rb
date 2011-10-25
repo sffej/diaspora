@@ -53,6 +53,7 @@ Diaspora::Application.routes.draw do
     delete "tag_followings" => "tag_followings#destroy"
   end
 
+  post   "multiple_tag_followings" => "tag_followings#create_multiple", :as => 'multiple_tag_followings'
 
   get "tag_followings" => "tag_followings#index", :as => 'tag_followings'
   resources :mentions, :only => [:index]
@@ -68,6 +69,7 @@ Diaspora::Application.routes.draw do
   # Users and people
 
   resource :user, :only => [:edit, :update, :destroy], :shallow => true do
+    get :getting_started_completed
     get :export
     get :export_photos
   end
