@@ -110,14 +110,6 @@
   .content
     On this pod you can <a rel="facebox" href="/forwardemail">forward</a> your pod handle to your email account.
 
-- if @stream.has_community_spotlight?
-  .section
-    .title.no_icon
-      %h5
-        =t('aspects.index.community_spotlight')
-    .content#community_spotlight
-      = link_to t('aspects.index.see_more_from_us'), spotlight_path, :id => 'view_all_contacts_link'
-
 .section
   .title
     = image_tag('/images/icons/kiva.png')
