@@ -4,7 +4,7 @@
 
 class CommentsController < ApplicationController
   include ApplicationHelper
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:index]
 
   respond_to :html, :mobile, :except => :show
   respond_to :js, :only => [:index]
@@ -57,7 +57,12 @@ text = Morley::Shorty::swap(params[:text])
   end
 
   def index
-    @post = current_user.find_visible_shareable_by_id(Post, params[:post_id])
+    if user_signed_in?
+      @post = current_user.find_visible_shareable_by_id(Post, params[:post_id])
+    else
+      @post = Post.where(:id => params[:post_id], :public => true).includes(:author, :comments => :author).first
+    end
+
     if @post
       @comments = @post.comments.includes(:author => :profile).order('created_at ASC')
       render :layout => false
