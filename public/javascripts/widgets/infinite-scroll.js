@@ -11,7 +11,7 @@
       debug: false,
       donetext: Diaspora.I18n.t("infinite_scroll.no_more"),
       loadingText: "",
-      loadingImg: "/images/ajax-loader.gif",
+      loadingImg: "https://c790230.ssl.cf2.rackcdn.com/ajax-loader.gif",
       navSelector: "#pagination",
       nextSelector: ".paginate",
       itemSelector: ".stream_element",

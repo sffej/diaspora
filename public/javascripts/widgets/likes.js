@@ -6,7 +6,7 @@
       $.extend(self, {
         likesContainer: likesContainer,
         likesList: likesContainer.find(".likes_list"),
-        loadingImage: $("<img/>", { src: "/images/ajax-loader.gif" }),
+        loadingImage: $("<img/>", { src: "https://c790230.ssl.cf2.rackcdn.com/ajax-loader.gif" }),
         expander: likesContainer.find("a.expand_likes")
       });
 

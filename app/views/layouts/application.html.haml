@@ -17,7 +17,7 @@
 
     %meta{"http-equiv"=>"Content-Type", :content=>"text/html; charset=utf-8"}/
 
-    %link{:rel => 'shortcut icon', :href => '/favicon.png'}
+    %link{:rel => 'shortcut icon', :href => 'https://c790230.ssl.cf2.rackcdn.com/favicon.png'}
     %link{:rel => 'apple-touch-icon', :href => '/apple-touch-icon.png'}
 
     / Social Media Icons are by Paul Robert Lloyd @ http://paulrobertlloyd.com/2009/06/social_media_icons
@@ -126,7 +126,7 @@
           %li= link_to 'Privacy Policy', "/privacy-policy.html"
           %li= link_to 'Terms of Service', "/toc.html"
           %li= link_to(t('layouts.application.toggle'), toggle_mobile_path)  if is_mobile_device?
-        = image_tag 'powered_by_diaspora.png', :height => "11px", :width => "145px"
+        = image_tag 'https://c790230.ssl.cf2.rackcdn.com/powered_by_diaspora.png', :height => "11px", :width => "145px"
 
     -if !@landing_page && request.url.match(/joindiaspora.com/)
       :javascript

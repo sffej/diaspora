@@ -67,8 +67,8 @@ var View = {
       .click(this.reshareButton.removeFocus);
 
     /* facebox */
-    $.facebox.settings.closeImage = 'https://d3eyt67fedlkjl.cloudfront.net/images/facebox/closelabel.png';
-    $.facebox.settings.loadingImage = 'https://d3eyt67fedlkjl.cloudfront.net/images/facebox/loading.gif';
+    $.facebox.settings.closeImage = 'https://c790230.ssl.cf2.rackcdn.com/closelabel.png';
+    $.facebox.settings.loadingImage = 'https://c790230.ssl.cf2.rackcdn.com/loading.gif';
     $.facebox.settings.opacity = 0.75;
 
     $('a[rel*=facebox]').facebox();
@@ -181,7 +181,7 @@ var View = {
 
   avatars: {
     fallback: function(evt) {
-      $(this).attr("src", "https://d3eyt67fedlkjl.cloudfront.net/images/user/default.png");
+      $(this).attr("src", "https://c790230.ssl.cf2.rackcdn.com/default.png");
     },
     selector: "img.avatar"
   }
