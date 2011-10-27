@@ -2,19 +2,10 @@
 -#   licensed under the Affero General Public License version 3 or later.  See
 -#   the COPYRIGHT file.
 
-:javascript
-  (function() {
-  var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
-  s.type = 'text/javascript';
-  s.async = true;
-  s.src = 'https://api.flattr.com/js/0.6/load.js?mode=auto';
-  t.parentNode.insertBefore(s, t);
-  })();
-
 - if AppConfig[:open_invitations]
   .section
     .title
-      = image_tag('/images/icons/plus.png')
+      = image_tag('https://c790230.ssl.cf2.rackcdn.com/plus.png')
       %h5
         = t('shared.invitations.invite_your_friends')
     .content
@@ -23,26 +14,24 @@
 - unless AppConfig[:paypal_hosted_button_id].blank?
   .section
     .title
-      = image_tag('/images/icons/coffee.png')
+      = image_tag('https://c790230.ssl.cf2.rackcdn.com/coffee.png')
       %h5
         = t('aspects.index.donate')
-      %hr
-        <a class="FlattrButton" href="https://diasp.org"></a>
-      %hr
-        One time donations via Bitcoin, Google, Paypal, Amazon <a href="http://b.diasp.org/donations/">Here</a>
-      %hr
-        = link_to(image_tag('/images/t-shirt.gif', :style => "position:relative;"), "http://cafepress.com/diasporg", :target => "new")
-      %br
-        <font color="#CC0000">Order some merchandise and help the pod out and promote Diaspora*</font> (Let me know if want other items, they have tons)
-    .content
+      .content
       = t('aspects.index.keep_us_running', :pod => URI.parse(AppConfig[:pod_url]).host)
       %br
       = render 'shared/donate'
+      %hr
+        Starting a subscription keeps the servers up and ad free. Also have options via Bitcoin, Google, Paypal, Amazon, Flattr and more <a href="http://b.diasp.org/donations/">Here</a>
+      %hr
+        = link_to(image_tag('https://c790230.ssl.cf2.rackcdn.com/t-shirt.gif', :style => "position:relative;"), "http://cafepress.com/diasporg", :target => "new")
+      %br
+        <font color="#CC0000">Order some merchandise to promote Diaspora*</font>
 
 - unless has_connected_cubbies?
   .section
     .title
-      = image_tag('/images/icons/cubbies.png')
+      = image_tag('https://c790230.ssl.cf2.rackcdn.com/cubbies.png')
       %h5
         = t('aspects.index.cubbies.heading')
     .content
@@ -51,7 +40,7 @@
 
 .section
   .title
-    = image_tag('/images/icons/question.png')
+    = image_tag('https://c790230.ssl.cf2.rackcdn.com/question.png')
     %h5
       = t('aspects.index.help.need_help')
   .content
@@ -82,7 +71,7 @@
 - unless AppConfig.configured_services.blank? || all_services_connected?
   .section
     .title
-      = image_tag('/images/icons/monotone_wrench_settings.png')
+      = image_tag('https://c790230.ssl.cf2.rackcdn.com/monotone_wrench_settings.png')
       %h5
         = t('aspects.index.services.heading')
     .content
@@ -96,7 +85,7 @@
 
 .section
   .title
-    = image_tag('/images/icons/bookmark.png')
+    = image_tag('https://c790230.ssl.cf2.rackcdn.com/bookmark.png')
     %h5
       = t('bookmarklet.heading')
   .content
@@ -104,7 +93,7 @@
 
 .section
   .title
-    = image_tag('/images/icons/emailforward.png')
+    = image_tag('https://c790230.ssl.cf2.rackcdn.com/emailforward.png')
     %h5
       Forward your @diasp.org address to your email address
   .content
@@ -112,7 +101,7 @@
 
 .section
   .title
-    = image_tag('/images/icons/kiva.png')
+    = image_tag('https://c790230.ssl.cf2.rackcdn.com/kiva.png')
     %h5 
       Kiva
   .content

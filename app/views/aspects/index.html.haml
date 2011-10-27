@@ -2,22 +2,6 @@
 -#   licensed under the Affero General Public License version 3 or later.  See
 -#   the COPYRIGHT file.
 
-:javascript
-  function chat()
-  {
-  var username = '#{current_user.diaspora_handle}';
-  var name = username.split('@');
-  mywindow = window.open("http://webchat.freenode.net/?channels=diasporg&nick="+name[0], "chat", "toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,scrollbars=1, width=700, height=600");
-  mywindow.moveTo(0, 0);
-  }
-  (function() {
-  var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
-  s.type = 'text/javascript';
-  s.async = true;
-  s.src = 'https://api.flattr.com/js/0.6/load.js?mode=auto';
-  t.parentNode.insertBefore(s, t);
-  })();
-
 - content_for :head do
   = include_javascripts :home
 

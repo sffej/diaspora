@@ -18,7 +18,7 @@
     %meta{"http-equiv"=>"Content-Type", :content=>"text/html; charset=utf-8"}/
 
     %link{:rel => 'shortcut icon', :href => 'https://c790230.ssl.cf2.rackcdn.com/favicon.png'}
-    %link{:rel => 'apple-touch-icon', :href => '/apple-touch-icon.png'}
+    %link{:rel => 'apple-touch-icon', :href => 'https://c790230.ssl.cf2.rackcdn.com/apple-touch-icon.png'}
 
     / Social Media Icons are by Paul Robert Lloyd @ http://paulrobertlloyd.com/2009/06/social_media_icons
 
@@ -40,9 +40,8 @@
     = javascript_include_tag "/javascripts/ie.js"
     <![endif]-->
 
-    = include_javascripts :jquery
     :javascript
-      !window.jQuery && document.write(unescape('%3Cscript src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"%3E%3C/script%3E'))
+      document.write(unescape('%3Cscript src="https://c790230.ssl.cf2.rackcdn.com/jquery.js"%3E%3C/script%3E'))
 
     - unless @landing_page
       = include_javascripts :main
@@ -77,11 +76,11 @@
 
     -if AppConfig[:piwik_id]
       :javascript
-        var pkBaseURL = (("https:" == document.location.protocol) ? "https://#{AppConfig[:piwik_url]}/" : "http://#{AppConfig[:piwik_url]}/");
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://c790230.ssl.cf2.rackcdn.com/" : "https://c790230.ssl.cf2.rackcdn.com/");
         document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
       :javascript
         try {
-        var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", #{AppConfig[:piwik_id]});
+        var piwikTracker = Piwik.getTracker("https://frodointernet.com/s/piwik.php", #{AppConfig[:piwik_id]});
         piwikTracker.trackPageView();
         piwikTracker.enableLinkTracking();
         } catch( err ) {}
