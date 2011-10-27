@@ -48,17 +48,17 @@ ActiveRecord::Schema.define(:version => 20111026173547) do
   add_index "aspects", ["user_id"], :name => "index_aspects_on_user_id"
 
   create_table "comments", :force => true do |t|
-    t.text     "text",                                                      :null => false
-    t.integer  "commentable_id",                                            :null => false
-    t.integer  "author_id",                                                 :null => false
-    t.string   "guid",                                                      :null => false
+    t.text     "text",                                        :null => false
+    t.integer  "commentable_id",                              :null => false
+    t.integer  "author_id",                                   :null => false
+    t.string   "guid",                                        :null => false
     t.text     "author_signature"
     t.text     "parent_author_signature"
     t.text     "youtube_titles"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "likes_count",                           :default => 0,      :null => false
-    t.string   "commentable_type",        :limit => 60, :default => "Post", :null => false
+    t.integer  "likes_count",             :default => 0,      :null => false
+    t.string   "commentable_type",        :default => "Post", :null => false
   end
 
   add_index "comments", ["author_id"], :name => "index_comments_on_person_id"
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(:version => 20111026173547) do
     t.datetime "updated_at"
   end
 
-  add_index "conversation_visibilities", ["conversation_id", "person_id"], :name => "index_conversation_visibilities_usefully", :unique => true
+  add_index "conversation_visibilities", ["conversation_id", "person_id"], :name => "index_conversation_visibilities_on_conversation_id_and_person_id", :unique => true
   add_index "conversation_visibilities", ["conversation_id"], :name => "index_conversation_visibilities_on_conversation_id"
   add_index "conversation_visibilities", ["person_id"], :name => "index_conversation_visibilities_on_person_id"
 
@@ -185,7 +185,7 @@ ActiveRecord::Schema.define(:version => 20111026173547) do
     t.text   "data",                 :null => false
   end
 
-  add_index "o_embed_caches", ["url"], :name => "index_o_embed_caches_on_url", :length => {"url"=>1000}
+  add_index "o_embed_caches", ["url"], :name => "index_o_embed_caches_on_url", :length => {"url"=>255}
 
   create_table "oauth_access_tokens", :force => true do |t|
     t.integer  "authorization_id",               :null => false
@@ -246,7 +246,6 @@ ActiveRecord::Schema.define(:version => 20111026173547) do
   add_index "people", ["owner_id"], :name => "index_people_on_owner_id", :unique => true
 
   create_table "photos", :force => true do |t|
-    t.integer  "tmp_old_id"
     t.integer  "author_id",                              :null => false
     t.boolean  "public",              :default => false, :null => false
     t.string   "diaspora_handle"
@@ -296,9 +295,9 @@ ActiveRecord::Schema.define(:version => 20111026173547) do
     t.string   "provider_display_name"
     t.string   "actor_url"
     t.string   "objectId"
-    t.string   "root_guid",             :limit => 30
     t.string   "status_message_guid"
     t.integer  "likes_count",                         :default => 0
+    t.string   "root_guid",             :limit => 30
     t.integer  "comments_count",                      :default => 0
     t.integer  "o_embed_cache_id"
   end
@@ -331,7 +330,7 @@ ActiveRecord::Schema.define(:version => 20111026173547) do
 
   add_index "profiles", ["full_name", "searchable"], :name => "index_profiles_on_full_name_and_searchable"
   add_index "profiles", ["full_name"], :name => "index_profiles_on_full_name"
-  add_index "profiles", ["person_id"], :name => "index_profiles_on_person_id"
+  add_index "profiles", ["person_id"], :name => "index_profiles_on_person_id", :unique => true
 
   create_table "service_users", :force => true do |t|
     t.string   "uid",                          :null => false
@@ -365,12 +364,12 @@ ActiveRecord::Schema.define(:version => 20111026173547) do
   add_index "services", ["user_id"], :name => "index_services_on_user_id"
 
   create_table "share_visibilities", :force => true do |t|
-    t.integer  "shareable_id",                                     :null => false
+    t.integer  "shareable_id",                       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "hidden",                       :default => false,  :null => false
-    t.integer  "contact_id",                                       :null => false
-    t.string   "shareable_type", :limit => 60, :default => "Post", :null => false
+    t.integer  "contact_id",                         :null => false
+    t.boolean  "hidden",         :default => false,  :null => false
+    t.string   "shareable_type", :default => "Post", :null => false
   end
 
   add_index "share_visibilities", ["contact_id"], :name => "index_post_visibilities_on_contact_id"
@@ -425,7 +424,8 @@ ActiveRecord::Schema.define(:version => 20111026173547) do
     t.string   "language"
     t.string   "email",                                             :default => "",    :null => false
     t.string   "encrypted_password",                 :limit => 128, :default => "",    :null => false
-    t.string   "invitation_token",                   :limit => 60
+    t.string   "password_salt",                                     :default => "",    :null => false
+    t.string   "invitation_token",                   :limit => 20
     t.datetime "invitation_sent_at"
     t.string   "reset_password_token"
     t.string   "remember_token"
@@ -437,15 +437,16 @@ ActiveRecord::Schema.define(:version => 20111026173547) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "invitation_service",                 :limit => 127
-    t.string   "invitation_identifier",              :limit => 127
+    t.string   "invitation_service"
+    t.string   "invitation_identifier"
+    t.text     "open_aspects"
     t.integer  "invitation_limit"
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.string   "authentication_token",               :limit => 30
+    t.datetime "locked_at"
     t.string   "unconfirmed_email"
     t.string   "confirm_email_token",                :limit => 30
-    t.datetime "locked_at"
     t.boolean  "show_community_spotlight_in_stream",                :default => true,  :null => false
   end
 
@@ -455,5 +456,37 @@ ActiveRecord::Schema.define(:version => 20111026173547) do
   add_index "users", ["invitation_token"], :name => "index_users_on_invitation_token"
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token", :unique => true
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
+
+  add_foreign_key "aspect_memberships", "aspects", :name => "aspect_memberships_aspect_id_fk", :dependent => :delete
+  add_foreign_key "aspect_memberships", "contacts", :name => "aspect_memberships_contact_id_fk", :dependent => :delete
+
+  add_foreign_key "aspect_visibilities", "aspects", :name => "aspect_visibilities_aspect_id_fk", :dependent => :delete
+
+  add_foreign_key "comments", "people", :name => "comments_author_id_fk", :column => "author_id", :dependent => :delete
+
+  add_foreign_key "contacts", "people", :name => "contacts_person_id_fk", :dependent => :delete
+
+  add_foreign_key "conversation_visibilities", "conversations", :name => "conversation_visibilities_conversation_id_fk", :dependent => :delete
+  add_foreign_key "conversation_visibilities", "people", :name => "conversation_visibilities_person_id_fk", :dependent => :delete
+
+  add_foreign_key "conversations", "people", :name => "conversations_author_id_fk", :column => "author_id", :dependent => :delete
+
+  add_foreign_key "invitations", "users", :name => "invitations_recipient_id_fk", :column => "recipient_id", :dependent => :delete
+  add_foreign_key "invitations", "users", :name => "invitations_sender_id_fk", :column => "sender_id", :dependent => :delete
+
+  add_foreign_key "likes", "people", :name => "likes_author_id_fk", :column => "author_id", :dependent => :delete
+
+  add_foreign_key "messages", "conversations", :name => "messages_conversation_id_fk", :dependent => :delete
+  add_foreign_key "messages", "people", :name => "messages_author_id_fk", :column => "author_id", :dependent => :delete
+
+  add_foreign_key "notification_actors", "notifications", :name => "notification_actors_notification_id_fk", :dependent => :delete
+
+  add_foreign_key "posts", "people", :name => "posts_author_id_fk", :column => "author_id", :dependent => :delete
+
+  add_foreign_key "profiles", "people", :name => "profiles_person_id_fk", :dependent => :delete
+
+  add_foreign_key "services", "users", :name => "services_user_id_fk", :dependent => :delete
+
+  add_foreign_key "share_visibilities", "contacts", :name => "post_visibilities_contact_id_fk", :dependent => :delete
 
 end
