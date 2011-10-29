@@ -1,0 +1,38 @@
+#!/bin/bash
+
+function pause(){
+   read -p .$*.
+}
+echo 'pull diasporg'
+git pull
+
+echo "bundle install?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) bundle install; break;;
+        No ) break;;
+    esac
+done
+
+echo "Do you wish to migrate db?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) script/migrate; echo 'db migrated'; break;;
+        No ) break;;
+    esac
+done
+echo "rolling retart the thin cluster?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) script/rr; break;;
+        No ) break;;
+    esac
+done
+echo "Jammit?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) bundle exec jammit; break;;
+        No ) break;;
+    esac
+done
+
