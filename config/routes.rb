@@ -112,7 +112,7 @@ Diaspora::Application.routes.draw do
   match 'forwardemail/off',          :to => 'plain#forwardemailoff'
   match 'status',                    :to => 'plain#status'
   match 'help',                      :to => 'plain#help'
-  match 'fb',                        :to => 'plain#fb'
+  match 'supportyourpod',            :to => 'plain#supportyourpod'
   match 'shorten/show',              :to => 'plain#shortenshow'
   match 'kiva',                      :to => 'plain#kiva'
   resources :plain
