@@ -50,4 +50,11 @@ select yn in "Yes" "No"; do
         No ) break;;
     esac
 done
+echo "cdn css/js?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) script/cdn; break;;
+        No ) break;;
+    esac
+done
 

@@ -24,14 +24,14 @@
 
     / bootstrap/blueprint switch
     - if @aspect == :getting_started || @page == :logged_out
-      = stylesheet_link_tag "bootstrap.min.css"
+      = stylesheet_link_tag "https://c790230.ssl.cf2.rackcdn.com/bootstrap.min.css"
     - else
-      = stylesheet_link_tag "blueprint/screen", :media => 'screen'
-      = stylesheet_link_tag "blueprint/print", :media => 'print'
+      = stylesheet_link_tag "https://c790230.ssl.cf2.rackcdn.com/screen.css", :media => 'screen'
+      = stylesheet_link_tag "https://c790230.ssl.cf2.rackcdn.com/print.css", :media => 'print'
 
-    = stylesheet_link_tag "login", :media => 'screen'
+    = stylesheet_link_tag "https://c790230.ssl.cf2.rackcdn.com/login.css", :media => 'screen'
 
-    = include_stylesheets :default, :media => 'all'
+    = stylesheet_link_tag "https://c790230.ssl.cf2.rackcdn.com/default-datauri.css", :media => 'all'
     - if rtl?
       = include_stylesheets :rtl, :media => 'all'
 
@@ -44,7 +44,7 @@
       document.write(unescape('%3Cscript src="https://c790230.ssl.cf2.rackcdn.com/jquery.js"%3E%3C/script%3E'))
 
     - unless @landing_page
-      = include_javascripts :main
+      = javascript_include_tag "https://c790230.ssl.cf2.rackcdn.com/main.js"
       -if current_user
         :javascript
           Diaspora.I18n.loadLocale(#{get_javascript_strings_for(current_user.language).to_json}, "#{current_user.language}");

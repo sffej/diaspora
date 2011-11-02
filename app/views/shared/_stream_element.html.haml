@@ -6,10 +6,10 @@
 .stream_element{:id => post.guid, :class => from_group(post)}
   .right.controls
     - if current_user && post.author.owner_id == current_user.id
-      = link_to image_tag('deletelabel.png'), post_path(post), :confirm => t('are_you_sure'), :method => :delete, :remote => true, :class => "delete stream_element_delete", :title => t('delete')
+      = link_to image_tag('https://c790230.ssl.cf2.rackcdn.com/deletelabel.png'), post_path(post), :confirm => t('are_you_sure'), :method => :delete, :remote => true, :class => "delete stream_element_delete", :title => t('delete')
     - else
-      = link_to image_tag('deletelabel.png'), share_visibility_path(:id => "42", :post_id => post.id), :method => :put, :remote => true, :class => "delete stream_element_delete vis_hide", :title => t('.hide_and_mute')
-    = image_tag 'ajax-loader.gif', :class => "hide_loader hidden"
+      = link_to image_tag('https://c790230.ssl.cf2.rackcdn.com/deletelabel.png'), share_visibility_path(:id => "42", :post_id => post.id), :method => :put, :remote => true, :class => "delete stream_element_delete vis_hide", :title => t('.hide_and_mute')
+    = image_tag 'https://c790230.ssl.cf2.rackcdn.com/ajax-loader.gif', :class => "hide_loader hidden"
 
   .undo_text.hidden
     %p
