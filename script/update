@@ -57,4 +57,11 @@ select yn in "Yes" "No"; do
         No ) break;;
     esac
 done
-../deploy
+echo "notify newrelic?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) ../deploy; break;;
+        No ) break;;
+    esac
+done
+
