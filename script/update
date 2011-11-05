@@ -65,3 +65,4 @@ select yn in "Yes" "No"; do
     esac
 done
 
+wget http://podupti.me/db/pull.php?domain=diasp.org 2>&1 >/dev/null

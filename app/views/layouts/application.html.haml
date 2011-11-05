@@ -127,6 +127,19 @@
           %li= link_to(t('layouts.application.toggle'), toggle_mobile_path)  if is_mobile_device?
         = image_tag 'https://c790230.ssl.cf2.rackcdn.com/powered_by_diaspora.png', :height => "11px", :width => "145px"
 
+      <script type="text/javascript">
+      var clicky_site_ids = clicky_site_ids || [];
+      clicky_site_ids.push(66500162);
+      (function() {
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = '//static.getclicky.com/js';
+      ( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
+      })();
+      </script>
+      <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/66500162ns.gif" /></p></noscript>
+
     -if !@landing_page && request.url.match(/joindiaspora.com/)
       :javascript
           var is_ssl = ("https:" == document.location.protocol);
