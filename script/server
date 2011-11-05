@@ -154,8 +154,8 @@ fi
 # Start Diaspora
 
 if [ "$(bundle exec ruby ./script/get_config.rb 'single_process_mode?')" != "true" ]; then
-    redis_config
-    redis-server config/redis.conf &>log/redis-console.log &
+#    redis_config
+#    redis-server config/redis.conf &>log/redis-console.log &
     god -c /root/diaspora/resque.god start resque&
 
     bundle exec rake resque:scheduler&
