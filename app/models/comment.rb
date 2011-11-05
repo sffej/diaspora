@@ -32,6 +32,8 @@ class Comment < ActiveRecord::Base
 
   serialize :youtube_titles, Hash
 
+  scope :including_author, includes(:author => :profile)
+
   before_save do
     self.text.strip! unless self.text.nil?
   end
@@ -57,7 +59,7 @@ class Comment < ActiveRecord::Base
   end
 
   def notification_type(user, person)
-    if self.post.author == user.person
+    if (self.post.author == user.person) && (self.author != user.person)
       return Notifications::CommentOnPost
     elsif self.post.comments.where(:author_id => user.person.id) != [] && self.author_id != user.person.id
       return Notifications::AlsoCommented
