@@ -11,7 +11,7 @@ namespace :ci do
       system("export DISPLAY=:99.0 && bundle exec rake cucumber")
       raise "Cucumber failed!" unless $?.exitstatus == 0
     else
-      ["rspec spec", "rake jasmine:ci"].each do |cmd|
+      ["rspec spec"].each do |cmd|
         puts "Starting to run #{cmd}..."
         system("export DISPLAY=:99.0 && bundle exec #{cmd}")
         raise "#{cmd} failed!" unless $?.exitstatus == 0
