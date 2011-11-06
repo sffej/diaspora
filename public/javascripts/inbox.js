@@ -55,7 +55,7 @@ $(document).ready(function(){
     debug: false,
     donetext: "no more.",
     loadingText: "",
-    loadingImg: 'https://c790230.ssl.cf2.rackcdn.com/ajax-loader.gif'
+    loadingImg: '/images/ajax-loader.gif'
   }, function(){
     $('.conversation', '.stream').bind('mousedown', function(){
       bindIt($(this));
