@@ -36,7 +36,7 @@ select yn in "Yes" "No"; do
         No ) break;;
     esac
 done
-echo "rolling retart the thin cluster?"
+echo "rolling restart the thin cluster?"
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) script/rr; break;;
@@ -57,12 +57,11 @@ select yn in "Yes" "No"; do
         No ) break;;
     esac
 done
-echo "notify newrelic?"
+echo "notify?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) ../deploy; break;;
+        Yes ) ../deploy; wget http://podupti.me/db/pull.php?domain=diasp.org 2>&1 >/dev/null; break;;
         No ) break;;
     esac
 done
 
-wget http://podupti.me/db/pull.php?domain=diasp.org 2>&1 >/dev/null
