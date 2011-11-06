@@ -2,7 +2,7 @@ require File.join(Rails.root, 'lib','statistics')
 
 class AdminsController < ApplicationController
   before_filter :authenticate_user!
-#  before_filter :redirect_unless_admin
+  before_filter :redirect_unless_admin
 
   def user_search
     params[:user] ||= {}
