@@ -74,5 +74,13 @@ class PlainController < ApplicationController
     @newest = Kiva::Loan.load_newest
    end
 
+   def git
+    render :layout => false
+    require 'git'
+    g = Git.open('/root/diaspora')
+    @commits = g.config('user.name')
+   end
+
+
 end
 

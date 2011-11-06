@@ -22,13 +22,18 @@
   %br
 
 .span-5.leftNavBar
-  #home_user_badge
+  #h5ome_user_badge
     = owner_image_link
     %h4
       = link_to current_user.first_name, "/u/#{current_user.username}"
+    %br
+    %br
     %h4
       <a href="http://travis-ci.org/diasporg/diaspora"><img src="https://secure.travis-ci.org/diasporg/diaspora.png"></a>
-
+    %br
+    %br
+    %h4
+      <a href="https://github.com/diasporg/diaspora" class="gitwatch">github</a><script type="text/javascript" src="https://c790230.ssl.cf2.rackcdn.com/github-watchers.min.js"></script> 
 
 .span-13.append-1
   #aspect_stream_container.stream_container

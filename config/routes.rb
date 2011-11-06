@@ -117,6 +117,7 @@ Diaspora::Application.routes.draw do
   match 'stats',		     :to => 'users#stats'
   match 'shorten/show',              :to => 'plain#shortenshow'
   match 'kiva',                      :to => 'plain#kiva'
+  match 'git',                      :to => 'plain#git'
   resources :plain
 
   resources :contacts,           :except => [:update, :create] do
