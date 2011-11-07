@@ -2,25 +2,10 @@ namespace :ci do
 
   desc "Run tests in the cloud. ZOMG!"
   task :travis do
-#    ["rspec spec"].each do |cmd|
-#      puts "Starting to run #{cmd}..."
-#      system("export DISPLAY=:99.0 && bundle exec #{cmd}")
-#      raise "#{cmd} failed!" unless $?.exitstatus == 0
-    if ENV['BUILD_TYPE'] == 'cucumber'
-      puts "Running cucumber features..."
-      system("export DISPLAY=:99.0 && bundle exec rake cucumber")
-      raise "Cucumber failed!" unless $?.exitstatus == 0
-    else
-      ["rspec spec"].each do |cmd|
-        puts "Starting to run #{cmd}..."
-        system("export DISPLAY=:99.0 && bundle exec #{cmd}")
-        raise "#{cmd} failed!" unless $?.exitstatus == 0
-      end
-      puts "Running oauth cucumber features..."
-      system("export DISPLAY=:99.0 && GROUP=oauth bundle exec rake cucumber")
-      raise "OAuth cucumber failed!" unless $?.exitstatus == 0
-    end
-  end
+    ["rspec spec"].each do |cmd|
+      puts "Starting to run #{cmd}..."
+      system("export DISPLAY=:99.0 && bundle exec #{cmd}")
+      raise "#{cmd} failed!" unless $?.exitstatus == 0
 
   desc "Run tests that can't run on travis"
   task :hard_things => [:environment, :'ci:migrate'] do
