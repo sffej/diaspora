@@ -43,6 +43,16 @@ select yn in "Yes" "No"; do
         No ) break;;
     esac
 done
+#god -c /root/diaspora/resque.god start resque&
+echo "restart workers?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) god terminate; god -c /root/diaspora/resque.god start resque&; break;;
+        No ) break;;
+    esac
+done
+
+
 echo "Jammit?"
 select yn in "Yes" "No"; do
     case $yn in

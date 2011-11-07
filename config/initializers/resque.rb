@@ -14,8 +14,8 @@ if !AppConfig.single_process_mode?
     Resque.redis = Redis.new(:host => AppConfig[:redis_url], :port => 6379)
   end
   
-  Resque::Failure::MultipleWithRetrySuppression.classes = [Resque::Failure::Redis]
-  Resque::Failure.backend = Resque::Failure::MultipleWithRetrySuppression
+#  Resque::Failure::MultipleWithRetrySuppression.classes = [Resque::Failure::Redis]
+#  Resque::Failure.backend = Resque::Failure::MultipleWithRetrySuppression
 end
 
 if AppConfig.single_process_mode?
