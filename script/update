@@ -47,7 +47,7 @@ done
 echo "restart workers?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) god terminate; god -c /root/diaspora/resque.god start resque&; break;;
+        Yes ) god terminate; god -c /root/diaspora/resque.god start resque; break;;
         No ) break;;
     esac
 done
