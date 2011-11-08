@@ -6,6 +6,7 @@ namespace :ci do
       puts "Starting to run #{cmd}..."
       system("export DISPLAY=:99.0 && bundle exec #{cmd}")
       raise "#{cmd} failed!" unless $?.exitstatus == 0
+   end
   end
 
   desc "Run tests that can't run on travis"
