@@ -1,4 +1,5 @@
 require 'resque/tasks'
+require 'resque-cleaner'
 
 task "resque:setup" do
   require File.join(File.dirname(__FILE__), '..', '..', 'config', 'environment')

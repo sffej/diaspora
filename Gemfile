@@ -1,6 +1,8 @@
 source 'http://rubygems.org'
+#daisporg
 gem 'kiva'
-gem 'git'
+gem 'resque-cleaner'
+
 gem 'rails', '3.0.10'
 
 gem 'bundler', '>= 1.0.0'
@@ -72,7 +74,7 @@ gem 'ruby-oembed'
 gem 'resque', '1.10.0'
 gem 'resque-ensure-connected'
 gem 'resque-timeout', '1.0.0'
-gem 'SystemTimer', '1.2.1', :platforms => :ruby_18
+gem 'SystemTimer', '1.2.3', :platforms => :ruby_18
 
 # reporting
 
