@@ -45,7 +45,6 @@
 
     - unless @landing_page
       = javascript_include_tag "https://c790230.ssl.cf2.rackcdn.com/main.js"
-      -if current_user
         :javascript
           Diaspora.I18n.loadLocale(#{get_javascript_strings_for(current_user.language).to_json}, "#{current_user.language}");
           Diaspora.Page = "#{params[:controller].camelcase}#{params[:action].camelcase}";
