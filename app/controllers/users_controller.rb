@@ -55,9 +55,9 @@ class UsersController < ApplicationController
       elsif u[:language]
         if @user.update_attributes(u)
           I18n.locale = @user.language
-          flash[:notice] = I18n.t 'users.update.language_updated'
+          flash[:notice] = I18n.t 'users.update.language_changed'
         else
-          flash[:error] = I18n.t 'users.update.language_not_updated'
+          flash[:error] = I18n.t 'users.update.language_not_changed'
         end
       elsif u[:email]
         @user.unconfirmed_email = u[:email]
@@ -66,6 +66,12 @@ class UsersController < ApplicationController
           flash[:notice] = I18n.t 'users.update.unconfirmed_email_changed'
         else
           flash[:error] = I18n.t 'users.update.unconfirmed_email_not_changed'
+        end
+      elsif u[:auto_follow_back]
+        if  @user.update_attributes(u)
+          flash[:notice] = I18n.t 'users.update.follow_settings_changed'
+        else
+          flash[:error] = I18n.t 'users.update.follow_settings_not_changed'
         end
       end
     elsif aspect_order = params[:reorder_aspects]
