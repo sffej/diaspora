@@ -10,7 +10,7 @@ God.contact(:email) do |c|
 end
 rails_env   = ENV['RAILS_ENV']  || "production"
 rails_root  = ENV['RAILS_ROOT'] || "/root/diaspora"
-num_workers = rails_env == 'production' ? 2 : 2
+num_workers = rails_env == 'production' ? 4 : 2
 
 num_workers.times do |num|
   God.watch do |w|
@@ -18,7 +18,7 @@ num_workers.times do |num|
     w.name     = "resque-#{num}"
     w.group    = 'resque'
     w.interval = 90.seconds
-    w.env      = {"QUEUE"=>"*", "RAILS_ENV"=>rails_env}
+    w.env      = {"QUEUE"=>"photos,receive_local,receive_salmon,receive,mail,socket_webfinger,delete_account,http,http_service", "RAILS_ENV"=>rails_env}
     w.start    = "bundle exec rake resque:work"
     w.log      = "#{rails_root}/log/god.log"
 

@@ -6,6 +6,11 @@
 
 - content_for :page_title do
   DIASPORA* Public Pod Diasporg
+:css
+  body{
+    margin-top: 20px;
+    background: #031019;
+  }
 - begin
   = render :partial => 'home/show'
 - rescue
@@ -15,6 +20,7 @@
     }
     body{
       margin-top: 20px;
+      background: #000000;
     }
   :erb
     <%= File.open(File.join(Rails.root, 'public/default.html')).read %>
