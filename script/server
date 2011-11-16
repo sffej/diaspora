@@ -157,8 +157,8 @@ if [ "$(bundle exec ruby ./script/get_config.rb 'single_process_mode?')" != "tru
 #    redis_config
 #    redis-server config/redis.conf &>log/redis-console.log &
 #    god -c /root/diaspora/resque.god start resque&
-
-    bundle exec ruby ./script/websocket_server.rb&
+     god -c script/diaspora.god start resque websocket&
+#    bundle exec ruby ./script/websocket_server.rb&
 fi
 
 if [ "$(./script/get_config.rb enable_thin script_server)" = "true" ]; then
