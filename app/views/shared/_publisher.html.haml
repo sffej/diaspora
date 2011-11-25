@@ -32,7 +32,7 @@
       %p
         %params
           #publisher_textarea_wrapper
-            = link_to( image_tag('deletelabel.png'), "#", :id => "hide_publisher", :title => t('.discard_post'))
+            = link_to( image_tag('https://c790230.ssl.cf2.rackcdn.com/deletelabel.png'), "#", :id => "hide_publisher", :title => t('.discard_post'))
             %ul#photodropzone
             - if current_user.getting_started?
               = status.text_area :fake_text, :rows => 2, :value => h(publisher_formatted_text), :tabindex => 1, :placeholder => t('.whats_on_your_mind'),
