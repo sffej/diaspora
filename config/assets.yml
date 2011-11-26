@@ -36,6 +36,7 @@ javascripts:
     - public/javascripts/stream.js
     - public/javascripts/content-updater.js
     - public/javascripts/diasporg.js
+    - public/javascripts/zenbox.js
     - public/javascripts/aspects-dropdown.js
     - public/javascripts/contact-edit.js
     - public/javascripts/contact-list.js
@@ -87,6 +88,7 @@ stylesheets:
     - public/stylesheets/vendor/fileuploader.css
     - public/stylesheets/vendor/autoSuggest.css
     - public/stylesheets/interim-bootstrap.css
+    - public/stylesheets/zenbox.css
   rtl:
     - public/stylesheets/rtl.css
   mobile:
