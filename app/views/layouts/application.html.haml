@@ -126,30 +126,16 @@
           %li= link_to(t('layouts.application.toggle'), toggle_mobile_path)  if is_mobile_device?
         = image_tag 'https://c790230.ssl.cf2.rackcdn.com/powered_by_diaspora.png', :height => "11px", :width => "145px"
 
-    - if current_user
-      :javascript
-        if (typeof(Zenbox) !== "undefined") {
-        Zenbox.init({
-        dropboxID:   "20030157",
-        url:         "https://diasporg.zendesk.com",
-        tabID:       "support",
-        tabColor:    "black",
-        tabPosition: "Right",
-        requester_name: "#{@current_user.name}",
-        requester_email: "#{@current_user.email}"
-        });
-        }
-    - if !current_user
-      :javascript
-        if (typeof(Zenbox) !== "undefined") {
-        Zenbox.init({
-        dropboxID:   "20030157",
-        url:         "https://diasporg.zendesk.com",
-        tabID:       "support",
-        tabColor:    "black",
-        tabPosition: "Right"
-        });
-        }
+    :javascript
+      if (typeof(Zenbox) !== "undefined") {
+      Zenbox.init({
+      dropboxID:   "20030157",
+      url:         "https://diasporg.zendesk.com",
+      tabID:       "support",
+      tabColor:    "black",
+      tabPosition: "Right"
+      });
+      }
 
     -if !@landing_page && request.url.match(/joindiaspora.com/)
       :javascript
