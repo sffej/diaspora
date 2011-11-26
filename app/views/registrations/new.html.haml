@@ -42,6 +42,15 @@
         %b
           = t('password_confirmation')
         = f.password_field :password_confirmation, :title => t('registrations.new.enter_password_again') 
+      .clearfix
+        %i
+          = t('are_you_sure')
+          = (' You agree with ') 
+          = link_to t('privacy'), '/privacy-policy.html', :rel => 'facebox'
+          = ('and')
+          = link_to t('account'), '/toc.html', :rel => 'facebox'
+          = (' Terms?')
+        = f.check_box :remember_me
 
       .submit_field
         = f.submit t('registrations.new.create_my_account'), :class => 'in_aspects'
