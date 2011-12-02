@@ -8,3 +8,4 @@ Diaspora.Pages.CommentStreamIndex = function() {
     self.infiniteScroll = self.instantiate("InfiniteScroll");
   });
 };
+

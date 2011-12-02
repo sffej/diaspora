@@ -895,7 +895,7 @@ en:
 
     like_stream:
       title: "Like Stream"
-      contacts_title: "People who Posts you like"
+      contacts_title: "People who posts you like"
 
     followed_tag:
       title: "#Followed Tags"

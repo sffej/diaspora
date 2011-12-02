@@ -201,7 +201,7 @@ Diaspora::Application.routes.draw do
 
   #Protocol Url
   get 'protocol' => redirect("https://github.com/diaspora/diaspora/wiki/Diaspora%27s-federation-protocol")
-  
+
   # Resque web
   if AppConfig[:mount_resque_web]
     mount Resque::Server.new, :at => '/resque-jobs', :as => "resque_web"
