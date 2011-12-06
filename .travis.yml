@@ -10,11 +10,8 @@ env:
   - DB=postgres
   - DB=mysql
 
-<<<<<<< HEAD
 matrix: { exclude: [{ rvm: 1.8.7, env: DB=postgres } , { rvm: 1.9.2 , env: DB=mysql }]}
-before_install: gem install bundler --pre
-=======
->>>>>>> upstream/master
+
 bundler_args: "--without development production"
 before_script: "./config/ci/before-travis.sh"
 script: "bundle exec rake travis"
