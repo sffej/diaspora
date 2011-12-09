@@ -475,9 +475,9 @@ DEPENDENCIES
   parallel_tests
   rails (= 3.0.11)
   rails-i18n
-  resque-cleaner
   redcarpet (= 2.0.0)
   resque (= 1.19.0)
+  resque-cleaner
   resque-ensure-connected
   resque-timeout (= 1.0.0)
   rest-client (= 1.6.1)
