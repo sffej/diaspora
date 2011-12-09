@@ -48,6 +48,7 @@ gem 'sqlite3' if ENV['DB'] == 'all' || ENV['DB'] == 'sqlite'
 # file uploading
 
 gem 'carrierwave', '0.5.8'
+gem 'fog'
 gem 'fastercsv', '1.5.4', :require => false
 gem 'mini_magick', '3.3'
 gem 'rest-client', '1.6.1'
@@ -122,8 +123,8 @@ group :test, :development do
 end
 
 group :test do
-  gem 'capybara', '~> 0.3.9'
-  gem 'cucumber-rails', '0.3.2'
+  gem 'capybara', '~> 1.1.2'
+  gem 'cucumber-rails', '1.2.1'
   gem 'cucumber-api-steps', '0.6', :require => false
   gem 'database_cleaner', '0.7.0'
   gem 'diaspora-client', :git => 'git://github.com/diaspora/diaspora-client.git'
