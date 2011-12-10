@@ -36,6 +36,10 @@ class Reshare < Post
   def notification_type(user, person)
     Notifications::Reshared if root.author == user.person
   end
+
+  def nsfw?
+    root.raw_message.include?('#nsfw')
+  end
   
   private
 
