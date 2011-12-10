@@ -15,7 +15,7 @@ gem 'thin', '~> 1.3.1', :require => false
 gem 'devise', '~> 1.3.1'
 gem 'devise_invitable', '0.5.0'
 gem 'jwt', "0.1.3"
-gem 'oauth2-provider', '0.0.16'
+gem 'oauth2-provider', '0.0.19'
 
 gem 'omniauth', '1.0.1'
 gem 'omniauth-facebook'
@@ -103,7 +103,7 @@ gem 'typhoeus'
 gem 'haml', '3.1.4'
 gem 'mobile-fu'
 gem 'sass', '3.1.11'
-gem 'will_paginate', '3.0.pre2'
+gem 'will_paginate', '3.0.2'
 gem 'client_side_validations'
 
 # web
