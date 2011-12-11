@@ -2,7 +2,7 @@ namespace :ci do
 
   desc "Run tests in the cloud. ZOMG!"
   task :travis do
-    ["rspec spec"].each do |cmd|
+    ["rake generate_fixtures", "rspec spec"].each do |cmd|
       puts "Starting to run #{cmd}..."
       system("bundle exec #{cmd}")
       raise "#{cmd} failed!" unless $?.exitstatus == 0
