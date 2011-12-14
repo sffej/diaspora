@@ -11,3 +11,4 @@ args="$DEFAULT_THIN_ARGS $@"
 
 bundle exec thin restart --onebyone $args
 
+service nginx restart
