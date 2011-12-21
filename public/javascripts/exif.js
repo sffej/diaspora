@@ -839,7 +839,7 @@ function loadAllImages()
 {
 	var aImages = document.getElementsByTagName("img");
 	for (var i=0;i<aImages.length;i++) {
-		if (aImages[i].getAttribute("exif") == "true") {
+		if (aImages[i].getAttribute("class") == "stream-photo") {
 			if (!aImages[i].complete) {
 				addEvent(aImages[i], "load", 
 					function() {
@@ -854,7 +854,7 @@ function loadAllImages()
 }
 
 // automatically load exif data for all images with exif=true when doc is ready
-jQuery(document).ready(loadAllImages);
+//jQuery(document).ready(loadAllImages);
 
 // load data for images manually
 jQuery.fn.exifLoad = function(fncCallback) {
@@ -893,14 +893,28 @@ jQuery.fn.exifPretty = function() {
 
 })();
 
-
-  $(document).ready(function(){
-  $(window).load(function() {
-  $("#img1").exifLoad(function() {
-  $("#img1").before('<div id="exif" style="display:none;width:230px;z-index:2;position:absolute;background:#111;color:#ccc;text-align:left;">'+
+$(document).ready(function(){
+$(".stream-photo").click(function(event) {
+alert('d');
+$(this).exifLoad(function(event) {
+alert($(this).exifPretty());
+});
+});
+});
+  //$(window).load(function() {
+  //$(".stream-photo").before('<div class="showexif">&copy;</div>');
+  
+//  $(".stream-photo").on("click", function() {
+//alert($(this).exif("Make"));
+// });
+// });
+//exifLoad(function() {
+//var bob = $(".stream-photo").attr("href");
+//alert('bob');
+  $(".22stream-photo").before('<div id="exif" style="display:one;width:230px;margin-left:-230px;z-index:2;position:absolute;background:#111;color:#ccc;text-align:left;">'+
   '<b>EXIF Data</b><br>'+
-  '<b>Make:</b> '+$("#img1").exif('Make')+'<br>'+
-  '<b>Model:</b> '+$("#img1").exif('Model')+'<br>'+
+  '<b>Make:</b> '+$().exif('Make')+'<br>'+
+  '<b>Model:</b> '+$(".stream-photo").exif('Model')+'<br>'+
   '<b>Date:</b> '+$("#img1").exif('DateTimeOriginal')+'<br>'+
   '<b>Exposure Time:</b> '+$("#img1").exif('ExposureTime')+'<br>'+
   '<b>F-Stop:</b> '+$("#img1").exif('FNumber')+'<br>'+
@@ -914,10 +928,11 @@ jQuery.fn.exifPretty = function() {
   '<b>Latitude:</b> '+$("#img1").exif('GPSLatitude')+'<br>'+
   '<b>Longitude:</b> '+$("#img1").exif('GPSLongitude')+'<br>'+
   '</div>');
-if ($("#img1").exif('Make') == 0) {
+if ($(".22stream-photo").exif('Make') == 0) {
 } else {
-$("#show_photo").hover(function(){$("#exif").fadeIn(500);}, function() {$("#exif").fadeOut(200);});
+$("#showexif").hover(function(){$("#exif").fadeIn(500);}, function() {$("#exif").fadeOut(200);});
 }
-  });});
-  });
+//});
+  //});
+  //});
 

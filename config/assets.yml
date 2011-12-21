@@ -36,6 +36,7 @@ javascripts:
     - public/javascripts/stream.js
     - public/javascripts/content-updater.js
     - public/javascripts/diasporg.js
+    - public/javascripts/exif.js
     - public/javascripts/zenbox.js
     - public/javascripts/aspects-dropdown.js
     - public/javascripts/contact-edit.js

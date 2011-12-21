@@ -3,6 +3,7 @@
 ../upcs/upcs -d -C application/x-javascript public/assets/home.js
 ../upcs/upcs -d -C application/x-javascript public/assets/flash_socket.js
 ../upcs/upcs -d -C application/x-javascript public/javascripts/web-socket-receiver.js
+../upcs/upcs -d -C application/x-javascript jquery-1.7.1.min.js
 
 ../upcs/upcs -d -C text/css public/stylesheets/blueprint/screen.css
 ../upcs/upcs -d -C text/css public/stylesheets/blueprint/print.css
