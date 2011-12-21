@@ -16,16 +16,16 @@
     .title
       = image_tag('https://c790230.ssl.cf2.rackcdn.com/coffee.png')
       %h5
-        = link_to t('aspects.index.donate'), "/supportyourpod", :rel => "facebox"
-        to keep this community pod ad free and alive!
+        = t('aspects.index.donate') 
+    .content
+      = link_to t('aspects.index.donate'), "/supportyourpod", :rel => "facebox"
+      to keep your community pod ad free and running, without your support Diasporg does not exist!
       %br
-      %h5
-        = link_to 'view pod stats', "/stats"
-        and see how busy the server is!
+      = link_to(image_tag('https://c790230.ssl.cf2.rackcdn.com/flattr-badge-large.png'), "/supportyourpod", :rel => "facebox")
       %hr
-        = link_to(image_tag('https://c790230.ssl.cf2.rackcdn.com/t-shirt.gif', :style => "position:relative;"), "http://cafepress.com/diasporg", :target => "new")
+      = link_to(image_tag('https://c790230.ssl.cf2.rackcdn.com/t-shirt.gif', :style => "position:relative;"), "http://cafepress.com/diasporg", :target => "new")
       %br
-        <font color="#CC0000">Order some merchandise to promote Diaspora*</font>
+      <font color="#CC0000">Order some merchandise to promote Diaspora*</font>
 
 - unless has_connected_cubbies?
   .section
