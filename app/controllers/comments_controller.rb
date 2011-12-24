@@ -23,8 +23,8 @@ text = Morley::Shorty::swap(params[:text])
       @comment = current_user.build_comment(:text => text, :post => target)
 
       if @comment.save
-        Rails.logger.info(:event => :create, :type => :comment, :user => current_user.diaspora_handle,
-                          :status => :success, :comment => @comment.id, :chars => params[:text].length)
+        Rails.logger.info("event => :create, :type => :comment, :user => #{current_user.diaspora_handle},
+                          :status => :success, :comment => #{@comment.id}, :chars => #{params[:text].length}")
         Postzord::Dispatcher.build(current_user, @comment).post
 
         respond_to do |format|
