@@ -40,7 +40,7 @@
     = javascript_include_tag "/javascripts/ie.js"
     <![endif]-->
 
-    -# %script{:type => "text/javascript", :src => 'https://c790230.ssl.cf2.rackcdn.com/jquery.js'}
+    %script{:type => "text/javascript", :src => 'https://c790230.ssl.cf2.rackcdn.com/jquery.js'}
     :javascript
       !window.jQuery && document.write(unescape("#{escape_javascript(include_javascripts(:jquery))})"))
 
