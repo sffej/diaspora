@@ -40,8 +40,10 @@
     = javascript_include_tag "/javascripts/ie.js"
     <![endif]-->
 
-    = javascript_include_tag "https://c790230.ssl.cf2.rackcdn.com/jquery.js"
-    -# = javascript_include_tag "/javascripts/exif.js"
+    -# %script{:type => "text/javascript", :src => 'https://c790230.ssl.cf2.rackcdn.com/jquery.js'}
+    :javascript
+      !window.jQuery && document.write(unescape("#{escape_javascript(include_javascripts(:jquery))})"))
+
     - unless @landing_page
       = javascript_include_tag "https://c790230.ssl.cf2.rackcdn.com/main.js"
       :javascript
