@@ -49,6 +49,7 @@ end
 # configuration
 
 gem 'settingslogic', '2.0.6'
+gem 'heroku'
 
 # database
 
