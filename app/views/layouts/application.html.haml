@@ -47,10 +47,6 @@
       :javascript
         Diaspora.I18n.loadLocale(#{get_javascript_strings_for(I18n.locale).to_json}, "#{I18n.locale}");
         Diaspora.Page = "#{params[:controller].camelcase}#{params[:action].camelcase}";
-    - if current_user
-      = javascript_include_tag "https://c790230.ssl.cf2.rackcdn.com/flash_socket.js" #unless modern_browser?
-      = javascript_include_tag 'https://c790230.ssl.cf2.rackcdn.com/web-socket-receiver.js'
-      = render 'js/websocket_js'
 
     = yield(:head)
 
