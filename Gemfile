@@ -48,9 +48,8 @@ end
 
 # configuration
 
-gem 'settingslogic', '2.0.6'
-gem 'heroku'
 
+gem 'settingslogic', '2.0.6'
 # database
 
 gem 'activerecord-import'
@@ -144,6 +143,8 @@ group :test do
 end
 
 group :development do
+
+  gem 'heroku'
   gem 'capistrano', '~> 2.9.0', :require => false
   gem 'capistrano_colors', :require => false
   gem 'capistrano-ext', '1.2.1', :require => false
