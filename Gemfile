@@ -44,10 +44,15 @@ group :production do # we don't install these on travis to speed up test runs
   # reporting
   gem 'hoptoad_notifier'
   gem 'newrelic_rpm', :require => false
+  gem 'rack-google-analytics', :require => 'rack/google-analytics'
+  gem 'rack-piwik', :require => 'rack/piwik'
 end
 
 # configuration
 
+group :heroku do
+  gem 'pg'
+end
 
 gem 'settingslogic', '2.0.6'
 # database

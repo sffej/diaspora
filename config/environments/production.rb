@@ -47,8 +47,22 @@ Diaspora::Application.configure do
   # the I18n.default_locale when a translation can not be found)
   config.i18n.fallbacks = true
   config.threadsafe!
+
+
+  require File.join(Rails.root, 'app/models/app_config')
+
+  if AppConfig[:google_a_site].present?
+    config.gem 'rack-google-analytics', :lib => 'rack/google-analytics'
+    config.middleware.use Rack::GoogleAnalytics, :tracker => AppConfig[:google_a_site]
+  end
+
+  if AppConfig[:piwik_url].present?
+    config.gem 'rack-piwik', :lib => 'rack/piwik'
+    config.middleware.use Rack::Piwik, :piwik_url => AppConfig[:piwik_url], :piwik_id => AppConfig[:piwik_id]
+  end
 end
 
 # Sacrifice readability for a 10% performance boost
 Haml::Template::options[:ugly] = true
 GC.enable_stats if GC.respond_to?(:enable_stats)
+GC::Profiler.enable if defined?(GC::Profiler) && GC::Profiler.respond_to?(:enable)
