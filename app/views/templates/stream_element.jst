@@ -1,12 +1,12 @@
 <div class="right controls">
   <% if(author.id != current_user.id) { %>
     <a href="#" rel=nofollow>
-      <img src="/images/icons/ignoreuser.png" alt="Ignoreuser" class="block_user control_icon" title= "<%= Diaspora.I18n.t('ignore') %>" />
-      <img src="/images/deletelabel.png" class="delete control_icon hide_post" title="<%= Diaspora.I18n.t('stream.hide') %>" />
+      <img src="https://c790230.ssl.cf2.rackcdn.com/ignoreuser.png" alt="Ignoreuser" class="block_user control_icon" title= "<%= Diaspora.I18n.t('ignore') %>" />
+      <img src="https://c790230.ssl.cf2.rackcdn.com/deletelabel.png" class="delete control_icon hide_post" title="<%= Diaspora.I18n.t('stream.hide') %>" />
     </a>
   <% } else { %>
     <a href="#" rel=nofollow>
-      <img src="/images/deletelabel.png" class="delete control_icon remove_post" title="<%= Diaspora.I18n.t('delete') %>" />
+      <img src="https://c790230.ssl.cf2.rackcdn.com/deletelabel.png" class="delete control_icon remove_post" title="<%= Diaspora.I18n.t('delete') %>" />
     </a>
   <% } %>
 
