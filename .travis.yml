@@ -7,6 +7,7 @@ branches:
 
 env:
   - DB=mysql
+  - DB=postgres
 
 #matrix: { exclude: [{ rvm: 1.8.7, env: DB=postgres } , { rvm: 1.9.3 , env: DB=postgres }]}
 before_install: gem install bundler --pre
