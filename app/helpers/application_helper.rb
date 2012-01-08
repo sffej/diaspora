@@ -37,7 +37,7 @@ module ApplicationHelper
   end
 
   def info_text(text)
-    image_tag 'icons/monotone_question.png', :class => 'what_is_this', :title => text
+    image_tag 'https://c790230.ssl.cf2.rackcdn.com/monotone_question.png', :class => 'what_is_this', :title => text
   end
 
   def get_javascript_strings_for(language)
@@ -77,7 +77,7 @@ module ApplicationHelper
   end
 
   def jquery_include_tag
-    javascript_include_tag('//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js') +
+    javascript_include_tag('https://c790230.ssl.cf2.rackcdn.com/jquery.js') +
     content_tag(:script) do
       "!window.jQuery && document.write(unescape(\"#{escape_javascript(include_javascripts(:jquery))}\"))".html_safe
     end
