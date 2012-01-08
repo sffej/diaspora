@@ -405,6 +405,7 @@ GEM
       rubyzip
     settingslogic (2.0.6)
     simple_oauth (0.1.5)
+    simplehttp (0.1.3)
     sinatra (1.2.8)
       rack (~> 1.1)
       tilt (>= 1.2.2, < 2.0)
