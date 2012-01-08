@@ -1,7 +1,7 @@
 <div class="container" style="position:relative;">
 
   <a href="/stream">
-    <img alt="Logo_small" class="diaspora_header_logo" height="38px" width="38px" src="/images/header-logo.png" />
+    <img alt="Logo_small" class="diaspora_header_logo" height="38px" width="38px" src="https://c790230.ssl.cf2.rackcdn.com/header-logo.png" />
   </a>
 
   <div id="global_search">
@@ -13,13 +13,13 @@
 
   <div id="nav_badges">
     <div class="badge" id="home_badge">
-      <a href="/stream" title="<%= Diaspora.I18n.t('header.home') %>"><img alt="Home" src="/images/icons/home_grey.png">
+      <a href="/stream" title="<%= Diaspora.I18n.t('header.home') %>"><img alt="Home" src="https://c790230.ssl.cf2.rackcdn.com/home_grey.png">
       </a>
     </div>
 
     <div class="badge" id="notification_badge">
       <a href="/notifications" title="<%= Diaspora.I18n.t('header.notifications') %>">
-        <img alt="<%= Diaspora.I18n.t('header.notifications') %>" id="notification-flag" src="/images/icons/notifications_grey.png">
+        <img alt="<%= Diaspora.I18n.t('header.notifications') %>" id="notification-flag" src="https://c790230.ssl.cf2.rackcdn.com/notifications_grey.png">
         <div class="badge_count <%= current_user.notifications_count > 0 ? '' : 'hidden' %>">
           <%= current_user.notifications_count %>
         </div>
@@ -28,7 +28,7 @@
 
     <div class="badge" id="message_inbox_badge">
       <a href="/conversations" title="<%= Diaspora.I18n.t('header.messages') %>">
-        <img alt="<%= Diaspora.I18n.t('header.messages') %>" src="/images/icons/mail_grey.png">
+        <img alt="<%= Diaspora.I18n.t('header.messages') %>" src="https://c790230.ssl.cf2.rackcdn.com/mail_grey.png">
         <div class="badge_count <%= current_user.unread_messages_count > 0 ? '' : 'hidden' %>">
           <%= current_user.unread_messages_count %>
         </div>
@@ -55,7 +55,7 @@
 
     <div class="notifications">
       <div class="ajax_loader">
-        <img alt="Ajax-loader" src="/images/ajax-loader.gif">
+        <img alt="Ajax-loader" src="https://c790230.ssl.cf2.rackcdn.com/ajax-loader.gif">
       </div>
     </div>
   </div>
