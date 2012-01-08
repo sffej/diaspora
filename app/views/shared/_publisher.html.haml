@@ -12,22 +12,15 @@
 #diasotip{:style => "display: none;"}
   Protip: Shorten a url by adding a extra / to it, eg http:///domain.com
 
-- if publisher_open
-  :javascript
-    $(document).ready(function() {
-        Publisher.open();
-      });
-
 -if publisher_explain
   :javascript
-    $(document).ready(function()
-      {
+    $(document).ready(function() {
         Publisher.triggerGettingStarted();
       });
 
-#publisher.closed{:class => ((aspect == :profile)? 'mention_popup' : nil )}
+#publisher{:class => ((aspect == :profile || publisher_open) ? "mention_popup" : "closed")}
   .content_creation
-    = form_for(StatusMessage.new, :remote => remote?, :html => {"data-type" => "json"}) do |status|
+    = form_for(StatusMessage.new) do |status|
       = status.error_messages
       %p
         %params
@@ -84,7 +77,7 @@
                 - for aspect in all_aspects
                   = aspect_dropdown_list_item(aspect, !all_aspects_selected?(selected_aspects) && selected_aspects.include?(aspect) )
 
-          = status.submit t('.share'), :disable_with => t('.posting'), :class => 'button creation', :tabindex => 2
+          = status.submit t('.share'), :disabled => publisher_hidden_text.blank?, :class => 'button creation', :tabindex => 2
 
           .facebox_content
             #question_mark_pane
