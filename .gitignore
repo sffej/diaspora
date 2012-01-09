@@ -27,6 +27,7 @@ config/mailing_list.csv
 
 # Generated files
 log/*
+public/images/mocks/.pacasa.ini
 public/stylesheets/*.css
 public/diaspora
 spec/fixtures/*.y*ml
