@@ -2,16 +2,18 @@ branches:
   only:
     - 'master'
 
+rvm:
   - 1.8.7
-  - 1.9.2
+  - 1.9.3
 
 env:
-  - DB=mysql
   - DB=postgres
+  - DB=mysql
+
 
 matrix: { exclude: [{ rvm: 1.8.7, env: DB=postgres } , { rvm: 1.9.3 , env: DB=postgres }]}
 before_install: gem install bundler --pre
-bundler_args: "--without development production heroku"
+bundler_args: "--without development production"
 before_script: "./config/ci/before-travis.sh"
 script: "bundle exec rake travis"
 
@@ -21,3 +23,4 @@ notifications:
       - 'irc.freenode.org:6667#diasporg'
   email:
     - tci@z8s.com
+
