@@ -79,6 +79,7 @@ Diaspora::Application.routes.draw do
     get :export_photos
   end
 
+
   controller :users do
     get 'public/:username'          => :public,           :as => 'users_public'
     match 'getting_started'         => :getting_started,  :as => 'getting_started'
@@ -201,6 +202,8 @@ Diaspora::Application.routes.draw do
 
   #Protocol Url
   get 'protocol' => redirect("https://github.com/diaspora/diaspora/wiki/Diaspora%27s-federation-protocol")
+
+  #match '/' => redirect("/pages/", current_subdomain), :constraints => { :subdomain => /.+/ }
 
   # Resque web
   if AppConfig[:mount_resque_web]

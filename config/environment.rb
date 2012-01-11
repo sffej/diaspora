@@ -38,6 +38,14 @@ USERNAME_BLACKLIST = ['admin', 'administrator', 'hostmaster', 'info', 'postmaste
 # Initialize the rails application
 Diaspora::Application.initialize!
 
+
+#config.gem 'subdomain-fu'
+#SubdomainFu.tld_size = 1 # sets for current environment
+#SubdomainFu.tld_sizes = {:development => 1,
+#                         :test => 1,
+#                         :production => 1} # set all at once (also the defaults)
+
+
 # allow token auth only for posting activitystream photos
 module Devise
   module Strategies
