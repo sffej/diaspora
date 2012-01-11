@@ -3,7 +3,7 @@
 #   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 #
-# Start diaspora websocket and main services
+# Start diaspora main services
 #
 
 # ensure right directory
@@ -75,13 +75,6 @@ done
 services=$( chk_service $THIN_PORT )
 if [ -n "$services" ]; then
     echo "FATAL: Error: thin port $THIN_PORT is already in use. Exiting" >&2
-    echo "     $services"
-    exit 64
-fi
-
-services=$( chk_service $SOCKET_PORT )
-if [ -n "$services" ]; then
-    echo "FATAL: Error: websocket port $SOCKET_PORT is already in use. Exiting" >&2
     echo "     $services"
     exit 64
 fi
