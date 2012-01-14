@@ -24,6 +24,8 @@ describe Morley do
       @expected_answer = "Success: Added your forward"
       @user = "ohhhhhbilly"
       @email = "bob@bob.com"
+      AppConfig[:system_aliases] = File.join(Rails.root, 'spec', 'fixtures', 'aliases')
+      AppConfig[:pod_aliases] = File.join(Rails.root, 'spec', 'fixtures', 'daliases')
       Morley::Forwardmailon::forward(@user,@email,0)
       @result = Morley::Forwardmailon::forward(@user,@email,1)
     end
@@ -38,6 +40,8 @@ describe Morley do
       @expected_answer = "Success: Updated your existing forward"
       @user = "ohhhhhbilly"
       @email = "bob2@bob2.com"
+      AppConfig[:system_aliases] = File.join(Rails.root, 'spec', 'fixtures', 'aliases')
+      AppConfig[:pod_aliases] = File.join(Rails.root, 'spec', 'fixtures', 'daliases')
       @result = Morley::Forwardmailon::forward(@user,@email,1)
     end
 
@@ -52,6 +56,8 @@ describe Morley do
       @expected_answer = "Success: Removed your forward"
       @user = "ohhhhhbilly"
       @email = "bob2@bob2.com"
+      AppConfig[:system_aliases] = File.join(Rails.root, 'spec', 'fixtures', 'aliases')
+      AppConfig[:pod_aliases] = File.join(Rails.root, 'spec', 'fixtures', 'daliases')
       @result = File.open(AppConfig[:pod_aliases]).read
     end
 
@@ -74,6 +80,8 @@ describe Morley do
       @expected_answer = "Success: Removed your forward"
       @user = "ohhhhhbilly"
       @email = "bob2@bob2.com"
+      AppConfig[:system_aliases] = File.join(Rails.root, 'spec', 'fixtures', 'aliases')
+      AppConfig[:pod_aliases] = File.join(Rails.root, 'spec', 'fixtures', 'daliases')
       @result = Morley::Forwardmailon::forward(@user,@email,0)
     end
 
@@ -88,6 +96,8 @@ describe Morley do
       @expected_answer = "Success: Removed your forward"
       @user = "ohhhhhbilly"
       @email = "bob2@bob2.com"
+      AppConfig[:system_aliases] = File.join(Rails.root, 'spec', 'fixtures', 'aliases')
+      AppConfig[:pod_aliases] = File.join(Rails.root, 'spec', 'fixtures', 'daliases')
       @result = File.open(AppConfig[:pod_aliases]).read
     end
 
