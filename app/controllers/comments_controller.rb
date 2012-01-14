@@ -59,6 +59,10 @@ text = Morley::Shorty::swap(params[:text])
     end
   end
 
+  def new
+    render :layout => false
+  end
+
   def index
     if user_signed_in?
       @post = current_user.find_visible_shareable_by_id(Post, params[:post_id])
@@ -70,6 +74,7 @@ text = Morley::Shorty::swap(params[:text])
       @comments = @post.comments.includes(:author => :profile).order('created_at ASC')
       respond_with do |format|
         format.json  { render :json => @post.comments.as_api_response(:backbone), :status => 200 }
+        format.mobile{render :layout => false}
       end
     else
       raise ActiveRecord::RecordNotFound.new
