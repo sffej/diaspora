@@ -219,6 +219,9 @@ GEM
     jwt (0.1.4)
       json (>= 1.2.4)
     kgio (2.7.0)
+    kiva (0.1.14593)
+      json
+      simplehttp
     launchy (2.0.3)
     linecache (0.46)
       rbx-require-relative (> 0.0.4)
