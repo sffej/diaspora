@@ -28,13 +28,6 @@
       = link_to current_user.first_name, local_or_remote_person_path(current_user.person)
 
   .section
-    = link_to image_tag('https://c790230.ssl.cf2.rackcdn.com/StopSOPA-Profile-Picture.png'), '/sopa.html', :rel => 'facebox'
-    %br
-    = ('This site will be offline Jan 18th from 8am to 8pm EST')
-    %br
-    %br
-
-  .section
     %ul.left_nav
       %li
         = link_to t("streams.multi.title"), multi_stream_path, :class => 'home_selector', :rel => 'backbone'
