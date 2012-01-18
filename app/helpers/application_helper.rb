@@ -32,6 +32,10 @@ module ApplicationHelper
     without_close_html + link_to(image_tag('https://c790230.ssl.cf2.rackcdn.com/deletelabel.png'), "#", :class => 'close')
   end
 
+  def diaspora_id_host
+    User.diaspora_id_host
+  end
+
   def jquery_include_tag
     javascript_include_tag('https://c790230.ssl.cf2.rackcdn.com/jquery.js') +
     content_tag(:script) do
