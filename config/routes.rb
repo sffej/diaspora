@@ -213,5 +213,4 @@ Diaspora::Application.routes.draw do
 
   # Startpage
   root :to => 'home#show'
-  #root :to => redirect('https://diasp.org/pipa.html')
 end
