@@ -35,6 +35,7 @@ group :production do # we don't install these on travis to speed up test runs
   gem 'newrelic_rpm'
   gem 'rack-google-analytics', :require => 'rack/google-analytics'
   gem 'rack-piwik', :require => 'rack/piwik'
+  gem 'rack-ssl', :require => 'rack/ssl'
 end
 
 # configuration
@@ -152,4 +153,7 @@ group :development do
   gem 'ruby-debug19', :platforms => :ruby_19
   gem 'ruby-debug', :platforms => :mri_18
   gem 'yard', :require => false
+
+  # speed up development requests (already pulled into rails 3.2)
+  gem 'active_reload'
 end
