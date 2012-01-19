@@ -1,6 +1,5 @@
-require File.join(File.dirname(__FILE__), '..', 'app', 'models', 'app_config')
-
 module EnviromentConfiguration
+  ARRAY_SEPERATOR = '%|%'
   def self.heroku?
     ENV['HEROKU']
   end
@@ -28,10 +27,6 @@ module EnviromentConfiguration
     else
       #do nothing
     end
-  end
-
-  def self.circumvent_ssl?
-    ENV['NO_SSL'] || AppConfig[:circumvent_ssl_requirement].present?
   end
 
   def self.ca_cert_file_location
