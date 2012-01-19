@@ -1,6 +1,15 @@
+#!/bin/bash
 #fix schema
 wget https://raw.github.com/diaspora/diaspora/master/db/schema.rb
 cp schema.rb db/schema.rb
+
+# Install firefox & Xvfb, in preparation for cucumber & jasmine
+
+#echo "Installing Firefox and Xvfb"
+#sudo aptitude --quiet=2 --without-recommends --assume-yes install firefox xvfb
+#sudo cp script/ci/xvfb /etc/init.d/xvfb
+echo "Start Xvfb"
+sh -e /etc/init.d/xvfb start
 
 # Regenerate css files
 echo "Regenerating CSS files"
