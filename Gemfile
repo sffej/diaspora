@@ -27,7 +27,7 @@ gem 'twitter', '2.0.2'
 
 # mail
 
-gem 'messagebus_ruby_api', '1.0.1'
+gem 'messagebus_ruby_api', '1.0.3'
 
 group :production do # we don't install these on travis to speed up test runs
   # reporting
@@ -94,7 +94,7 @@ gem 'acts-as-taggable-on', :git => 'git://github.com/diaspora/acts-as-taggable-o
 # URIs and HTTP
 
 gem 'addressable', '2.2.4', :require => 'addressable/uri'
-gem 'http_accept_language', :git => 'git://github.com/iain/http_accept_language.git', :ref => '0b78aa7849fc90cf9e12'
+gem 'http_accept_language', '~> 1.0.2'
 gem 'typhoeus'
 
 # views
