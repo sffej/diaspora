@@ -38,7 +38,7 @@ module ApplicationHelper
   end
 
   def jquery_include_tag
-    javascript_include_tag('https://c790230.ssl.cf2.rackcdn.com/jquery-1.7.1.min.js') +
+    "<script src='https://c790230.ssl.cf2.rackcdn.com/jquery-1.7.1.min.js' type='text/javascript'></script>".html_safe +
     content_tag(:script) do
       "!window.jQuery && document.write(unescape(\"#{escape_javascript(include_javascripts(:jquery))}\")); jQuery.ajaxSetup({'cache': false});".html_safe
     end

@@ -4,27 +4,6 @@
 
 class Postzord::Dispatcher::Public < Postzord::Dispatcher
 
-  # @param user [User] User dispatching the object in question
-  # @param object [Object] The object to be sent to other Diaspora installations
-  # @opt additional_subscribers [Array<Person>] Additional subscribers
-  def initialize(user, object, opts={})
-    @sender = user
-    @object = object
-    @xml = @object.to_diaspora_xml
-
-    additional_subscribers = opts[:additional_subscribers] || []
-    dests = AppConfig[:public_federation_destinations]
-    if dests && dests.respond_to?(:each)
-      AppConfig[:public_federation_destinations].each do |dest|
-        receptacle = Person.find_by_url(dest)
-        if receptacle
-          additional_subscribers << receptacle
-        end
-      end
-    end
-    @subscribers = subscribers_from_object | [*additional_subscribers]
-  end
-
   # @param user [User]
   # @param activity [String]
   # @return [Salmon::EncryptedSlap]

@@ -18,7 +18,7 @@ num_resqueworkers.times do |num|
     w.dir      = "#{rails_root}"
     w.name     = "resque-#{num}"
     w.group    = 'resque'
-    w.interval = 90.seconds
+    w.interval = 190.seconds
     w.env      = {"QUEUE"=>"photos,receive_local,receive_salmon,receive,mail,socket_webfinger,delete_account,http,http_service", "RAILS_ENV"=>rails_env}
     w.start    = "bundle exec rake resque:work"
     w.log      = "#{rails_root}/log/god.log"
@@ -46,14 +46,14 @@ num_resqueworkers.times do |num|
     w.transition([:start, :restart], :up) do |on|
       on.condition(:process_running) do |c|
         c.running = true
-        c.interval = 5.seconds
+        c.interval = 15.seconds
       end
 
       # failsafe
       on.condition(:tries) do |c|
         c.times = 5
         c.transition = :start
-        c.interval = 5.seconds
+        c.interval = 15.seconds
       end
     end
 
