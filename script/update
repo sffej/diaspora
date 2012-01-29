@@ -56,7 +56,7 @@ done
 echo "Jammit?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) bundle exec jammit && bundle exec sass -q --update public/stylesheets/sass/:public/stylesheets/; break;;
+        Yes ) bundle exec sass -q --update public/stylesheets/sass/:public/stylesheets/ && bundle exec jammit; break;;
         No ) break;;
     esac
 done

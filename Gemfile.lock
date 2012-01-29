@@ -222,6 +222,9 @@ GEM
     jwt (0.1.4)
       json (>= 1.2.4)
     kgio (2.7.0)
+    kiva (0.1.14593)
+      json
+      simplehttp
     launchy (2.0.3)
     linecache (0.46)
       rbx-require-relative (> 0.0.4)
@@ -333,6 +336,8 @@ GEM
       redis-namespace (~> 1.0.2)
       sinatra (>= 0.9.2)
       vegas (~> 0.1.2)
+    resque-cleaner (0.2.7)
+      resque (~> 1.0)
     resque-timeout (1.0.0)
       resque (~> 1.0)
     rest-client (1.6.7)
@@ -496,6 +501,7 @@ DEPENDENCIES
   rails-i18n
   redcarpet (= 2.0.1)
   resque (= 1.19.0)
+  resque-cleaner
   resque-ensure-connected!
   resque-timeout (= 1.0.0)
   rest-client (= 1.6.7)
