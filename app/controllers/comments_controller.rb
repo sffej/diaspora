@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
   end
 
   def create
-    target = current_user.find_visible_shareable_by_id Post, params[:post_id]
+    target = current_user.find_visible_shareable_by_id(Post, params[:post_id])
     text = params[:text]
 require File.join(Rails.root, 'lib/swap')
 text = Morley::Shorty::swap(params[:text])
@@ -26,7 +26,7 @@ text = Morley::Shorty::swap(params[:text])
       if @comment.save
         Rails.logger.info("event => :create, :type => :comment, :user => #{current_user.diaspora_handle},
                           :status => :success, :comment => #{@comment.id}, :chars => #{params[:text].length}")
-        Postzord::Dispatcher.build(current_user, @comment).post
+        current_user.dispatch_post(@comment)
 
         respond_to do |format|
           format.json{ render :json => @comment.as_api_response(:backbone), :status => 201 }
@@ -53,8 +53,7 @@ text = Morley::Shorty::swap(params[:text])
     else
       respond_to do |format|
         format.mobile {redirect_to :back}
-        format.js {render :nothing => true, :status => 403}
-        format.json { render :nothing => true, :status => 403 }
+        format.any(:js, :json) {render :nothing => true, :status => 403}
       end
     end
   end
