@@ -47,7 +47,7 @@ done
 echo "restart workers?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) god terminate; god -c script/diaspora.god start resque websocket; break;;
+        Yes ) god terminate; god -c script/diaspora.god; break;;
         No ) break;;
     esac
 done
@@ -56,7 +56,7 @@ done
 echo "Jammit?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) bundle exec sass -q --update public/stylesheets/sass/:public/stylesheets/ && bundle exec jammit; break;;
+        Yes ) bundle exec sass -q --update public/stylesheets/sass/:public/stylesheets/; bundle exec jammit; break;;
         No ) break;;
     esac
 done
