@@ -11,24 +11,28 @@
 
 class RemovePublicShareVisibilities < ActiveRecord::Migration
   class ShareVisibility < ActiveRecord::Base; end
+  class Post < ActiveRecord::Base; end
+  class Photo < ActiveRecord::Base; end
 
   def self.up
     %w{Post Photo}.each do |type|
 
       index = 0
-      visibilitiy_size = ShareVisibility.count
+      shareable_size = type.constantize.count
+      table_name = type.tableize
 
-      while index < visibilitiy_size + 100 do
+      while index < shareable_size + 100 do
         sql = <<-SQL
           DELETE sv
             FROM share_visibilities AS sv
-              INNER JOIN posts
-              ON sv.shareable_id = posts.id
+              INNER JOIN #{table_name}
+              ON sv.shareable_id = #{table_name}.id
               WHERE sv.shareable_type = "#{type}"
-                AND #{type.tableize}.public IS TRUE
-                AND #{type.tableize}.id < #{index};
+                AND #{table_name}.public IS TRUE
+                AND #{table_name}.id < #{index};
         SQL
 
+        puts "deleted public share vis up to #{index} of #{type}"
         ActiveRecord::Base.connection.execute(sql)
 
         index += 100
