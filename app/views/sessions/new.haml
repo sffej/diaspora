@@ -19,6 +19,8 @@
       = image_tag('https://c790230.ssl.cf2.rackcdn.com/asterisk.png', :id => 'asterisk', :class => 'logo', :height => 154, :width => 154)
     %p
       = image_tag('https://c790230.ssl.cf2.rackcdn.com/logo_caps.png', :id => 'logo', :width => 98, :height => 14)
+    %p
+    You must use a modern browser and have cookies enabled to use this site
 
     - flash.each do |name, msg|
       %p{:class => "login_#{name}"}= msg
@@ -49,7 +51,7 @@
       - if display_registration_link?
         %br
         %br
-        Welcome all new and existing users! Remember this pod and its lack of ad's is supported by your donations, see the donation section on the right hand side after login. Or read more about donations on the diasporg <a href="http://b.diasp.org/donations">blog</a>
+        Remember this pod and its lack of ad's is supported by your donations, see the donation section on the right hand side after login.
         %br
         %br
         = link_to t('devise.shared.links.sign_up'), new_registration_path(resource_name)
