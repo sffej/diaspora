@@ -9,8 +9,8 @@ God.contact(:email) do |c|
   c.group = 'developers'
 end
 rails_env   = ENV['RAILS_ENV']  || "production"
-rails_root  = ENV['RAILS_ROOT'] || "/root/diaspora"
-num_resqueworkers = 4
+rails_root  = ENV['RAILS_ROOT'] || "/home/dmm/diaspora"
+num_resqueworkers = 1
 
 
 num_resqueworkers.times do |num|
@@ -23,8 +23,8 @@ num_resqueworkers.times do |num|
     w.start    = "bundle exec rake resque:work"
     w.log      = "#{rails_root}/log/god.log"
 
-    w.uid = 'root'
-    w.gid = 'root'
+    #w.uid = 'dmm'
+    #w.gid = 'dmm'
 
     # restart if memory gets too high
     w.transition(:up, :restart) do |on|
