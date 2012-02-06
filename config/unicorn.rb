@@ -1,10 +1,10 @@
-rails_env = ENV['RAILS_ENV'] || 'development'
+rails_env = 'production'
 
 # Enable and set these to run the worker as a different user/group
 #user  = 'diaspora'
 #group = 'diaspora'
 
-worker_processes 1
+worker_processes 2
 
 ## Load the app before spawning workers
 preload_app true
