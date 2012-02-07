@@ -86,6 +86,7 @@
     = jquery_include_tag
     - unless @landing_page
       = javascript_include_tag "https://c790230.ssl.cf2.rackcdn.com/main.js"
+      = include_javascripts :templates
       :javascript
         Diaspora.I18n.loadLocale(#{get_javascript_strings_for(I18n.locale).to_json}, "#{I18n.locale}");
         Diaspora.Page = "#{params[:controller].camelcase}#{params[:action].camelcase}";
@@ -128,8 +129,6 @@
     - unless current_user
       %header
         = render 'layouts/header'
-
-    = render 'layouts/templates'
 
     .container{:style=> "#{yield(:break_the_mold)}"}
       - if @aspsect == :getting_started || @page == :logged_out

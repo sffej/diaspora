@@ -1,0 +1,7 @@
+package_assets: on
+template_function: Handlebars.compile
+template_extension: 'handlebars'
+
+javascripts:
+  app:
+    - public/javascripts/app/templates/*
