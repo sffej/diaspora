@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -336,8 +337,8 @@ ActiveRecord::Schema.define(:version => 20120203220932) do
     t.date     "birthday"
     t.string   "gender"
     t.text     "bio"
-    t.boolean  "searchable",                      :default => true,  :null => false
-    t.integer  "person_id",                                          :null => false
+    t.boolean  "searchable",                      :default => true, :null => false
+    t.integer  "person_id",                                         :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "location"

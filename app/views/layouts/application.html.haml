@@ -57,12 +57,11 @@
 
     / bootstrap/blueprint switch
     - if @aspect == :getting_started || @page == :logged_out
-      = include_stylesheets :bootstrap
+      = stylesheet_link_tag "https://c790230.ssl.cf2.rackcdn.com/bootstrap-datauri.css"
     - else
-      = include_stylesheets :blueprint, :media => 'screen'
+      = stylesheet_link_tag "https://c790230.ssl.cf2.rackcdn.com/blueprint-datauri.css"
 
-    = include_stylesheets :login, :media => 'screen'
-
+    = stylesheet_link_tag "https://c790230.ssl.cf2.rackcdn.com/login.css", :media => 'screen'
     = stylesheet_link_tag "https://c790230.ssl.cf2.rackcdn.com/default-datauri.css", :media => 'all'
     - if rtl?
       = include_stylesheets :rtl, :media => 'all'
@@ -86,7 +85,7 @@
     = jquery_include_tag
     - unless @landing_page
       = javascript_include_tag "https://c790230.ssl.cf2.rackcdn.com/main.js"
-      = include_javascripts :templates
+      = javascript_include_tag "https://c790230.ssl.cf2.rackcdn.com/templates.js"
       :javascript
         Diaspora.I18n.loadLocale(#{get_javascript_strings_for(I18n.locale).to_json}, "#{I18n.locale}");
         Diaspora.Page = "#{params[:controller].camelcase}#{params[:action].camelcase}";

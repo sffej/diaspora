@@ -8,6 +8,6 @@ eval "DEFAULT_THIN_ARGS=\"$(./script/get_config.rb default_thin_args script_serv
 
 args="$DEFAULT_THIN_ARGS $@"
 
-bundle exec thin restart --onebyone $args
+bundle exec thin restart --onebyone -w 66 $args
 
 service nginx restart
