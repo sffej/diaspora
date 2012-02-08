@@ -2,11 +2,22 @@ namespace :ci do
 
   desc "Run tests in the cloud. ZOMG!"
   task :travis do
-    ["rake generate_fixtures", "rspec spec"].each do |cmd|
-      puts "Starting to run #{cmd}..."
-      system("bundle exec #{cmd}")
-      raise "#{cmd} failed!" unless $?.exitstatus == 0
-   end
+    if ENV['BUILD_TYPE'] == 'cucumber'
+      puts "Running cucumber features..."
+      system("export DISPLAY=:99.0 && bundle exec rake cucumber")
+      raise "Cucumber failed!" unless $?.exitstatus == 0
+    else
+      ["rake generate_fixtures", "rake spec"].each do |cmd|
+        puts "Running bundle exec #{cmd}..."
+        system("bundle exec #{cmd}")
+        raise "#{cmd} failed!" unless $?.exitstatus == 0
+      end
+      ['jammit', "rake jasmine:ci", "rake cucumber"].each do |cmd|
+        puts "Running bundle exec #{cmd}..."
+        system("export DISPLAY=:99.0 && GROUP=oauth bundle exec #{cmd}")
+        raise "#{cmd} failed!" unless $?.exitstatus == 0
+      end
+    end
   end
 
   desc "Run tests that can't run on travis"
