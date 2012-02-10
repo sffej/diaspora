@@ -337,8 +337,8 @@ ActiveRecord::Schema.define(:version => 20120203220932) do
     t.date     "birthday"
     t.string   "gender"
     t.text     "bio"
-    t.boolean  "searchable",                      :default => true, :null => false
-    t.integer  "person_id",                                         :null => false
+    t.boolean  "searchable",                      :default => true,  :null => false
+    t.integer  "person_id",                                          :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "location"
