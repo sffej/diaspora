@@ -12,8 +12,8 @@ preload_app true
 # How long to wait before killing an unresponsive worker
 timeout 30
 
-#pid '/var/run/diaspora/diaspora.pid'
-#listen '/var/run/diaspora/diaspora.sock', :backlog => 2048
+pid '/home/dmm/run/diaspora.pid'
+listen '/home/dmm/run/diaspora.sock', :backlog => 2048
 
 # Ruby Enterprise Feature
 if GC.respond_to?(:copy_on_write_friendly=)

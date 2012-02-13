@@ -121,7 +121,7 @@ Diaspora::Application.routes.draw do
   match 'supportyourpod',            :to => 'plain#supportyourpod'
   match 'stats',		     :to => 'users#stats'
   match 'shorten/show',              :to => 'plain#shortenshow'
-  match 'kiva',                      :to => 'plain#kiva'
+  match 'promote',                      :to => 'users#promote'
   match 'git',                      :to => 'plain#git'
   resources :plain
 
