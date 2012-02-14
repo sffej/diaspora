@@ -4,14 +4,14 @@
     <div class="controls">
       {{#if authorIsCurrentUser}}
         <a href="#" rel=nofollow>
-          <img src="/images/icons/ignoreuser.png" alt="Ignoreuser" class="block_user control_icon" title="{{t "ignore"}}" />
+          <img src="{{imageUrl "/images/icons/ignoreuser.png"}}"" alt="Ignoreuser" class="block_user control_icon" title="{{t "ignore"}}" />
         </a>
         <a href="#" rel=nofollow>
-          <img src="/images/deletelabel.png" class="delete control_icon hide_post" title="{{t "stream.hide"}}" />
+          <img src="{{imageUrl "/images/deletelabel.png"}}" class="delete control_icon hide_post" title="{{t "stream.hide"}}" />
         </a>
       {{else}}
         <a href="#" rel=nofollow>
-          <img src="/images/deletelabel.png" class="delete control_icon remove_post" title="{{t "delete"}}" />
+          <img src="{{imageUrl "/images/deletelabel.png"}}" class="delete control_icon remove_post" title="{{t "delete"}}" />
         </a>
       {{/if}}
     </div>
@@ -45,23 +45,23 @@
     </div>
 
     {{#if nsfw}}
-      <div class="shield_wrapper">
-        <div class="shield">
-          {{t "stream.nsfw"}}
-          <a href="#">
-            {{t "stream.show"}}
-          </a>
-        </div>
-    {{/if}}
-
-    <div class="post-content"> </div>
-
-    {{#if nsfw}}
+      <div class="nsfw-shield">
+        <strong>
+          NSFW
+        </strong>
+        |
+        <a href="#">
+          {{t "stream.show_post"}}
+        </a>
       </div>
-    {{/if}}
 
-    <div class="feedback"> </div>
-    <div class="likes"> </div>
-    <div class="comments"> </div>
+    {{else}}
+
+      <div class="post-content"> </div>
+
+      <div class="feedback"> </div>
+      <div class="likes"> </div>
+      <div class="comments"> </div>
+    {{/if}}
 
   </div>
