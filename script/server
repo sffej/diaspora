@@ -108,6 +108,7 @@ if [ "$(bundle exec ruby ./script/get_config.rb 'single_process_mode?')" != "tru
 fi
 
 if [ "$(./script/get_config.rb enable_thin script_server)" = "true" ]; then
-    bundle exec thin start $args
+    #bundle exec thin start $args
+    #unicorn -c config/unicorn.rb
 fi
 

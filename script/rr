@@ -2,12 +2,5 @@
 #
 # rolling restart of the thins
 #
-export RAILS_ENV=$(./script/get_config.rb rails_env script_server)
-THIN_PORT=$(./script/get_config.rb thin_port script_server)
-eval "DEFAULT_THIN_ARGS=\"$(./script/get_config.rb default_thin_args script_server)\""
-
-args="$DEFAULT_THIN_ARGS $@"
-
-bundle exec thin restart --onebyone -w 66 $args
-
-service nginx restart
+god restart unicorn
+sudo service nginx restart

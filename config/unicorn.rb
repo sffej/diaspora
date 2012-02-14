@@ -3,8 +3,10 @@ rails_env = 'production'
 # Enable and set these to run the worker as a different user/group
 #user  = 'diaspora'
 #group = 'diaspora'
+stderr_path "/home/dmm/diaspora/log/unicorn.stderr.log"
+stdout_path "/home/dmm/diaspora/log/unicorn.stdout.log"
 
-worker_processes 2
+worker_processes 6
 
 ## Load the app before spawning workers
 preload_app true
@@ -30,7 +32,7 @@ before_fork do |server, worker|
     Resque.redis.client.disconnect
   end
 
-  old_pid = '/var/run/diaspora/diaspora.pid.oldbin'
+  old_pid = '/home/dmm/run/diaspora.pid.oldbin'
   if File.exists?(old_pid) && server.pid != old_pid
     begin
       Process.kill("QUIT", File.read(old_pid).to_i)
