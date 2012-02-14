@@ -69,7 +69,7 @@ done
 echo "notify?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) ../deploy; wget http://podupti.me/db/pull.php?domain=diasp.org 2>&1 > /dev/null; break;;
+        Yes ) wget http://podupti.me/db/pull.php?domain=diasp.org 2>&1 > /dev/null; break;;
         No ) break;;
     esac
 done
