@@ -1,6 +1,0 @@
-#!/bin/bash
-#
-# rolling restart of the thins
-#
-god restart unicorn
-sudo service nginx restart

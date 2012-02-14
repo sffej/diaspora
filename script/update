@@ -39,15 +39,14 @@ done
 echo "rolling restart the thin cluster?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) script/rr; break;;
+        Yes ) god restart unicorn; break;;
         No ) break;;
     esac
 done
-#god -c /root/diaspora/resque.god start resque&
 echo "restart workers?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) god terminate; god -c script/diaspora.god; break;;
+        Yes ) god restart resque; break;;
         No ) break;;
     esac
 done
