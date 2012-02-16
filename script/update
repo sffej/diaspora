@@ -36,7 +36,7 @@ select yn in "Yes" "No"; do
         No ) break;;
     esac
 done
-echo "rolling restart the thin cluster?"
+echo "rolling restart the unicorn cluster?"
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) god restart unicorn; break;;
