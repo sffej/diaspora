@@ -10,7 +10,7 @@ God.contact(:email) do |c|
 end
 rails_env   = ENV['RAILS_ENV']  || "production"
 rails_root  = ENV['RAILS_ROOT'] || "/home/dmm/diaspora"
-num_resqueworkers = 2
+num_resqueworkers = 4
 
 
 num_resqueworkers.times do |num|
@@ -79,7 +79,7 @@ God.watch do |w|
   w.stop = "kill -QUIT `cat #{rails_root}/tmp/pids/unicorn.pid`"
 
   # USR2 causes the master to re-create itself and spawn a new worker pool
-  w.restart = "kill -USR2 `cat #{rails_root}/tmp/pids/unicorn.pid`"
+  w.restart = "kill -HUP `cat #{rails_root}/tmp/pids/unicorn.pid`"
 
   w.start_grace = 10.seconds
   w.restart_grace = 10.seconds
