@@ -9,11 +9,11 @@
   {{/if}}
 
   <a href="/people/{{author.guid}}" class="img">
-    <img src="{{author.avatar.small}}" class="avatar" />
+    <img src="{{author.avatar.small}}" class="avatar" title="{{name}}"/>
   </a>
 
   <div class="bd">
-    <a href="/people/{{author.guid}}" class="author">
+    <a href="/people/{{author.guid}}" class="author" title="{{author.diaspora_id}}">
       {{author.name}}
     </a>
 

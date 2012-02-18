@@ -14,8 +14,8 @@
   <div class="comment no-border">
     <div class="media new_comment_form_wrapper {{#unless comments_count}} hidden {{/unless}}">
       {{#with current_user}}
-        <a href="/people/{{guid}}" class="img">
-          <img src="{{avatar.small}}" class="avatar" />
+        <a href="/people/{{guid}}" class="img" title="{{name}}">
+          <img src="{{avatar.small}}" class="avatar" title="{{name}}"/>
         </a>
       {{/with}}
 
