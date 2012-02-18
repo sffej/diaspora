@@ -103,12 +103,6 @@ fi
 
 # Start Diaspora
 
-if [ "$(bundle exec ruby ./script/get_config.rb 'single_process_mode?')" != "true" ]; then
      god -c script/diaspora.god&
-fi
 
-if [ "$(./script/get_config.rb enable_thin script_server)" = "true" ]; then
-    #bundle exec thin start $args
-    #unicorn -c config/unicorn.rb
-fi
 
