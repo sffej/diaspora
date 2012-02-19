@@ -5,6 +5,8 @@
 #profile
   .profile_photo
     = person_image_link(person, :size => :thumb_large, :to => :photos)
+    %br
+    = link_to t('_photos'), person_photos_path(@person)
 
   - if user_signed_in?
     - if person != current_user.person
