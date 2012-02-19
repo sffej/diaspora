@@ -19,9 +19,9 @@ app.views.Stream = Backbone.View.extend({
     this.stream.bind("allPostsLoaded", this.unbindInfScroll, this)
     this.collection.bind("add", this.addPost, this);
     if(window.app.user()) {
-    app.user().bind("nsfwChanged", function() {
-        _.map(this.postViews, function(view){ view.render() })
-      }, this)
+      app.user().bind("nsfwChanged", function() {
+          _.map(this.postViews, function(view){ view.render() })
+        }, this)
     }
   },
 
