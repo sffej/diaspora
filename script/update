@@ -55,14 +55,14 @@ select yn in "Yes" "No"; do
 done
 
 
-echo "Jammit?"
+echo "remake css and Jammit?"
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) bundle exec sass -q --update public/stylesheets/sass/:public/stylesheets/; bundle exec jammit; break;;
         No ) break;;
     esac
 done
-echo "cdn css/js?"
+echo "cdn assets?"
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) script/cdn; break;;
@@ -78,7 +78,7 @@ select yn in "Yes" "No"; do
     esac
 done
 
-echo "notify?"
+echo "notify poduptime?"
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) curl http://podupti.me/db/pull.php?domain=diasp.org; break;;
