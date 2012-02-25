@@ -15,17 +15,22 @@
   .section
     .title
       = image_tag('https://c790230.ssl.cf2.rackcdn.com/coffee.png')
-      %h5
+      %h4
         = t('aspects.index.donate') 
     .content
+      = t('aspects.index.keep_us_running', :pod => URI.parse(AppConfig[:pod_url]).host)      
       = link_to t('aspects.index.donate'), "/supportyourpod", :rel => "facebox"
-      to keep your community pod ad free and running, without your support Diasporg does not exist!
       %br
-      = link_to(image_tag('https://c790230.ssl.cf2.rackcdn.com/flattr-badge-large.png'), "/supportyourpod", :rel => "facebox")
-      %br 
+      Use Paypal, Amazon, Bitcoin, Google, Flattr and more to support
+      %br
+      %br
       = link_to(image_tag('https://c790230.ssl.cf2.rackcdn.com/promote.gif'), "/promote")
-      %hr
+      %br
+      Share the pod with your other Social Networks!
+      %br
       = link_to(image_tag('https://c790230.ssl.cf2.rackcdn.com/t-shirt.gif', :style => "position:relative;"), "http://cafepress.com/diasporg", :target => "new")
+      %br
+      Order some merch and promote Diaspora*
 
 - unless has_connected_cubbies?
   .section
