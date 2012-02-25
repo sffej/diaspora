@@ -36,13 +36,16 @@ select yn in "Yes" "No"; do
         No ) break;;
     esac
 done
-echo "rolling restart the unicorn cluster?"
+OP=`cat tmp/pids/unicorn.pid`
+echo $OP
+echo "start new unicorn cluster?"
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) god restart unicorn; break;;
         No ) break;;
     esac
 done
+
 echo "restart workers?"
 select yn in "Yes" "No"; do
     case $yn in
@@ -66,11 +69,21 @@ select yn in "Yes" "No"; do
         No ) break;;
     esac
 done
-echo "notify?"
+
+echo "kill old $OP unicorn cluster?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) wget http://podupti.me/db/pull.php?domain=diasp.org 2>&1 > /dev/null; break;;
+        Yes ) kill $OP; break;;
         No ) break;;
     esac
 done
+
+echo "notify?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) curl http://podupti.me/db/pull.php?domain=diasp.org; break;;
+        No ) break;;
+    esac
+done
+
 
