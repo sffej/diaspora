@@ -198,7 +198,7 @@
             pathParse: undefined,
             dataType: 'html',
             appendCallback: true,
-            bufferPx: 40,
+            bufferPx: 940,
             orientation: 'height',
             errorCallback: function () { },
             currPage: 1,

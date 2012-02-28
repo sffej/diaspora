@@ -28,7 +28,7 @@ module Morley
 		require 'fileutils'
 		## make sure you have cron making something out of etc/daliases and included in your main.cf with /etc/aliases
 		path = AppConfig[:pod_aliases]
-		temp_file = Tempfile.open('fred')
+		temp_file = Tempfile.open('/home/dmm/fred')
 		File.open(path, 'r') do |file|
 		file.each_line do |line|
 		exists = line.split(":")
@@ -51,6 +51,7 @@ module Morley
 			#else new line with forward
 			r = 3
 			temp_file.puts "#{user}:#{email}"
+                        Rails.logger.info("event=emailforward status=addnewforward user=#{user}")
 			end
 		end
                 Rails.logger.info("event=emailforward status=finished user=#{user}")
