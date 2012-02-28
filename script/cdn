@@ -12,3 +12,4 @@
 ../upcs/upcs -d -C text/css public/assets/blueprint-datauri.css
 ../upcs/upcs -d -C text/css public/assets/default-datauri.css
 ../upcs/upcs -d -C text/css public/assets/bootstrap-datauri.css
+../upcs/upcs -d -C text/css public/assets/application.css
