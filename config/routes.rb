@@ -141,8 +141,13 @@ Diaspora::Application.routes.draw do
   resources :people, :except => [:edit, :update] do
     resources :status_messages
     resources :photos
-    get  :contacts
+    get :contacts
     get "aspect_membership_button" => :aspect_membership_dropdown, :as => "aspect_membership_button"
+
+    member do
+      get :last_post
+    end
+
     collection do
       post 'by_handle' => :retrieve_remote, :as => 'person_by_handle'
       get :tag_index
@@ -153,6 +158,7 @@ Diaspora::Application.routes.draw do
   constraints(Subdomain) do
     match '/' => 'users#user_photo'
   end
+
   # Federation
 
   controller :publics do

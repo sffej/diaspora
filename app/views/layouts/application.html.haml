@@ -48,12 +48,12 @@
   %body
     = flash_messages
 
-    - unless current_user
-      %header
+    %header
+      - unless current_user
         = render 'layouts/header'
 
     .container
-      - if @aspsect == :getting_started || @page == :logged_out
+      - if @aspect == :getting_started || @page == :logged_out
         = yield
       - else
         .span-24.last
