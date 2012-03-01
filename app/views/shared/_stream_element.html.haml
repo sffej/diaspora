@@ -40,7 +40,7 @@
       .post-content
         = nsfw_sheild(post)
         - if post.activity_streams?
-          = link_to image_tag(post.image_url, 'data-small-photo' => post.image_url, 'data-full-photo' => post.image_url, :class => 'stream-photo', :id => '1'), post.object_url, :class => "stream-photo-link"
+          = link_to image_tag(post.image_url, 'data-small-photo' => post.image_url, 'data-full-photo' => post.image_url, :class => 'stream-photo', :id => photo_path(post.photos.first)), post.object_url, :class => "stream-photo-link"
         - elsif reshare?(post)
           = render 'reshares/reshare', :reshare => post, :post => post.root
         - else

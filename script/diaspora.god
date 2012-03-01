@@ -70,7 +70,7 @@ end
 
 God.watch do |w|
   w.name = "unicorn"
-  w.interval = 30.seconds # default
+  w.interval = 200.seconds # default
 
   # unicorn needs to be run from the rails root
   w.start = "cd #{rails_root} && unicorn -c #{rails_root}/config/unicorn.rb -E #{rails_env} -D"
@@ -89,7 +89,7 @@ God.watch do |w|
 
   w.start_if do |start|
     start.condition(:process_running) do |c|
-      c.interval = 5.seconds
+      c.interval = 15.seconds
       c.running = false
     end
   end
