@@ -112,3 +112,15 @@
   .content
     On this pod you can <a rel="facebox" href="/forwardemail">forward</a> your pod handle to your email account.
 
+%footer
+  .section
+    %ul#footer_nav
+      %li= link_to 'Twitter', "http://twitter.com/diasporg"
+      %li= link_to 'Facebook', "http://facebook.com/diasp.org"
+      %li= link_to 'Blog', "http://b.diasp.org"
+      %li= link_to 'Github', "https://github.com/diasporg/diaspora"
+      %li= link_to 'Privacy Policy', "/privacy-policy.html"
+      %li= link_to 'Terms of Service', "/toc.html"
+      %li= link_to(t('layouts.application.toggle'), toggle_mobile_path)  if is_mobile_device?
+    = image_tag 'https://c790230.ssl.cf2.rackcdn.com/powered_by_diaspora.png', :height => "11px", :width => "145px"
+

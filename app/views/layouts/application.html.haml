@@ -64,21 +64,6 @@
       %a{:id=>"back-to-top", :title=>"#{I18n.t('.back_to_top')}", :href=>"#"}
         &#8679;
 
-    %footer
-      .container
-        %ul#footer_nav
-          %li= link_to 'Twitter', "http://twitter.com/diasporg"
-          %li= link_to 'Facebook', "http://facebook.com/diasp.org"
-          %li= link_to 'Blog', "http://b.diasp.org"
-          %li= link_to 'Support', "https://diasporg.zendesk.com"
-          %li= link_to 'Github', "https://github.com/diasporg/diaspora"
-          %li= link_to 'Integration Server', "http://ci.diasp.org"
-          %li= link_to 'Flattr', "https://flattr.com/profile/diasporg"
-          %li= link_to 'Privacy Policy', "/privacy-policy.html"
-          %li= link_to 'Terms of Service', "/toc.html"
-          %li= link_to(t('layouts.application.toggle'), toggle_mobile_path)  if is_mobile_device?
-        = image_tag 'https://c790230.ssl.cf2.rackcdn.com/powered_by_diaspora.png', :height => "11px", :width => "145px"
-
     :javascript
       if (typeof(Zenbox) !== "undefined") {
       Zenbox.init({
