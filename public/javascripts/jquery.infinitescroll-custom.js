@@ -181,7 +181,7 @@
 
     $.infinitescroll = {
         defaults: {
-            debug: false,
+            debug: true,
             binder: $(window),
             preload: false,
             nextSelector: "div.navigation a:first",
@@ -192,13 +192,13 @@
             contentSelector: null,           // not really a selector. :) it's whatever the method was called on..
             loadMsgSelector: null,
             loadingMsgRevealSpeed: 'fast', // controls how fast you want the loading message to come in, ex: 'fast', 'slow', 200 (milliseconds)
-            extraScrollPx: 150,
+            extraScrollPx: 96,
             itemSelector: "div.post",
-            animate: false,
+            animate: true,
             pathParse: undefined,
             dataType: 'html',
             appendCallback: true,
-            bufferPx: 940,
+            bufferPx: 96,
             orientation: 'height',
             errorCallback: function () { },
             currPage: 1,
@@ -209,7 +209,7 @@
             isDone: false,  // for when it goes all the way through the archive.
             isPaused: false,
             container: undefined, //If left undefined uses window scroll, set as container for local scroll
-            pixelsFromNavToBottom: undefined,
+            pixelsFromNavToBottom: 163,
             path: undefined
         },
         loadingImg: undefined,
