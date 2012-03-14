@@ -5,7 +5,7 @@ gem 'resque-cleaner'
 
 gem 'rails', '3.0.11'
 
-gem 'bundler', '>= 1.1.0'
+gem 'bundler', '>= 1.0.0'
 gem 'foreman', '0.34.1'
 gem 'whenever'
 
