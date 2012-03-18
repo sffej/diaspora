@@ -5,7 +5,7 @@ gem 'resque-cleaner'
 
 gem 'rails', '3.0.11'
 
-gem 'bundler', '>= 1.0.0'
+gem 'bundler', '~> 1.1.0'
 gem 'foreman', '0.34.1'
 gem 'whenever'
 
@@ -18,7 +18,6 @@ gem 'rack-cors', '~> 0.2.4', :require => 'rack/cors'
 # authentication
 
 gem 'devise', '~> 1.3.1'
-gem 'devise_invitable', '0.5.0'
 gem 'jwt'
 gem 'oauth2-provider', '0.0.19'
 
@@ -84,7 +83,7 @@ gem 'rails-i18n'
 gem 'nokogiri', '1.5.0'
 gem 'redcarpet', "2.0.1"
 gem 'roxml', :git => 'git://github.com/Empact/roxml.git', :ref => '7ea9a9ffd2338aaef5b0'
-gem 'ruby-oembed'
+gem 'ruby-oembed', '~> 0.8.7'
 
 # queue
 
@@ -115,7 +114,7 @@ gem 'client_side_validations'
 
 gem 'faraday'
 gem 'faraday-stack'
-gem 'em-synchrony', :platforms => :ruby_19
+gem 'em-synchrony', '1.0.0', :platforms => :ruby_19
 
 # jazzy jasmine
 
