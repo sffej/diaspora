@@ -16,6 +16,7 @@ timeout 30
 
 pid '/home/dmm/diaspora/tmp/pids/unicorn.pid'
 listen '/home/dmm/run/diaspora.sock', :backlog => 2048
+listen '192.168.1.2:8080', :backlog => 2048
 
 # Ruby Enterprise Feature
 if GC.respond_to?(:copy_on_write_friendly=)
