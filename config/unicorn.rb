@@ -6,7 +6,7 @@ rails_env = 'production'
 stderr_path "/home/dmm/diaspora/log/unicorn.stderr.log"
 stdout_path "/home/dmm/diaspora/log/unicorn.stdout.log"
 
-worker_processes 2
+worker_processes 8
 
 ## Load the app before spawning workers
 preload_app true
