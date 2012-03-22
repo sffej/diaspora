@@ -45,8 +45,8 @@ class StatusMessagesController < ApplicationController
     services = [*params[:services]].compact
 
     @status_message = current_user.build_post(:status_message, params[:status_message])
-    require File.join(Rails.root, 'lib/swap')
-    message = Morley::Shorty::swap(params[:status_message][:text])
+    #require File.join(Rails.root, 'lib/swap')
+    #message = Morley::Shorty::swap(params[:status_message][:text])
     @status_message.attach_photos_by_ids(params[:photos])
 
     if @status_message.save
