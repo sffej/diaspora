@@ -79,6 +79,7 @@ describe StatusMessagesController do
       :aspect_ids => [@aspect1.id.to_s] }
     }
 
+<<<<<<< HEAD
     it 'creates with valid html' do
       post :create, status_message_hash
       response.status.should == 302
@@ -113,6 +114,8 @@ describe StatusMessagesController do
       response.should be_redirect
     end
     
+=======
+>>>>>>> parent of 9723385... added status message spec, fix render nothing
     it 'removes getting started from new users' do
       @controller.should_receive(:remove_getting_started)
       post :create, status_message_hash
