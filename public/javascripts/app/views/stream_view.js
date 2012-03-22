@@ -69,7 +69,7 @@ app.views.Stream = Backbone.View.extend({
       }
 
       // only collapse if height exceeds collHeight+20%
-      if( elem.height() > ((collHeight*1.2)+addHeight) && !elem.is(".opened") ) {
+      if( elem.height() > ((collHeight*1.8)+addHeight) && !elem.is(".opened") ) {
         elem.data("orig-height", elem.height() );
         elem
           .height( Math.max(collHeight, addHeight) )
@@ -108,7 +108,7 @@ app.views.Stream = Backbone.View.extend({
     var $window = $(window);
     var distFromTop = $window.height() + $window.scrollTop();
     var distFromBottom = $(document).height() - distFromTop;
-    var bufferPx = 500;
+    var bufferPx = 1300;
 
     if(distFromBottom < bufferPx) {
       this.render();

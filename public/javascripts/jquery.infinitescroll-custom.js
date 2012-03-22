@@ -192,13 +192,13 @@
             contentSelector: null,           // not really a selector. :) it's whatever the method was called on..
             loadMsgSelector: null,
             loadingMsgRevealSpeed: 'fast', // controls how fast you want the loading message to come in, ex: 'fast', 'slow', 200 (milliseconds)
-            extraScrollPx: 96,
+            extraScrollPx: 55,
             itemSelector: "div.post",
-            animate: true,
+            animate: false,
             pathParse: undefined,
             dataType: 'html',
             appendCallback: true,
-            bufferPx: 96,
+            bufferPx: 55,
             orientation: 'height',
             errorCallback: function () { },
             currPage: 1,
@@ -209,7 +209,7 @@
             isDone: false,  // for when it goes all the way through the archive.
             isPaused: false,
             container: undefined, //If left undefined uses window scroll, set as container for local scroll
-            pixelsFromNavToBottom: 163,
+            pixelsFromNavToBottom: 363,
             path: undefined
         },
         loadingImg: undefined,
