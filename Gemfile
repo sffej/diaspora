@@ -1,6 +1,5 @@
 source 'http://rubygems.org'
 #daisporg
-gem 'kiva'
 gem 'resque-cleaner'
 
 gem 'rails', '3.1.4'
