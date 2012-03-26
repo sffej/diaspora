@@ -47,7 +47,7 @@ class StatusMessagesController < ApplicationController
     @status_message = current_user.build_post(:status_message, params[:status_message])
     @status_message.attach_photos_by_ids(params[:photos])
 
-    if @status_message.save!
+    if @status_message.save
       aspects = current_user.aspects_from_ids(destination_aspect_ids)
       current_user.add_to_streams(@status_message, aspects)
       receiving_services = Service.titles(services)
@@ -63,14 +63,12 @@ class StatusMessagesController < ApplicationController
       if coming_from_profile_page? # if this is a post coming from a profile page
         flash[:notice] = successful_mention_message
       end
-      puts @status_message.inspect
       respond_to do |format|
         format.html { redirect_to :back }
         format.mobile { redirect_to stream_path }
         format.json { render :json => @status_message.as_api_response(:backbone), :status => 201 }
       end
     else
-      puts @status_message.inspect
       respond_to do |format|
         format.html { redirect_to :back }
         format.mobile { redirect_to stream_path }
