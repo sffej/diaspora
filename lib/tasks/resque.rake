@@ -4,6 +4,8 @@ require 'resque-cleaner'
 task "resque:setup" do
   require File.join(File.dirname(__FILE__), '..', '..', 'config', 'environment')
   Rails.logger.info("event=resque_setup rails_env=#{Rails.env}")
+
+  Resque.after_fork = Proc.new { ActiveRecord::Base.establish_connection }
 end
 
 desc "Alias for resque:work (To run workers on Heroku)"
