@@ -63,7 +63,6 @@ class StatusMessagesController < ApplicationController
       if coming_from_profile_page? # if this is a post coming from a profile page
         flash[:notice] = successful_mention_message
       end
-
       respond_to do |format|
         format.html { redirect_to :back }
         format.mobile { redirect_to stream_path }
