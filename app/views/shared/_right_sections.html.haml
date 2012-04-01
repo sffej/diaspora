@@ -2,6 +2,15 @@
 -#   licensed under the Affero General Public License version 3 or later.  See
 -#   the COPYRIGHT file.
 
+:javascript
+  (function() {
+  var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+  s.type = 'text/javascript';
+  s.async = true;
+  s.src = 'https://api.flattr.com/js/0.6/load.js?mode=auto';
+  t.parentNode.insertBefore(s, t);
+  })();
+
 - if AppConfig[:open_invitations]
   .section
     .title
@@ -16,13 +25,14 @@
     .title
       = image_tag('https://c790230.ssl.cf2.rackcdn.com/coffee.png')
       %h4
-        = t('aspects.index.donate') 
+        = link_to t('aspects.index.donate'), "/supportyourpod", :rel => "facebox" 
     .content
       = t('aspects.index.keep_us_running', :pod => URI.parse(AppConfig[:pod_url]).host)      
       = link_to t('aspects.index.donate'), "/supportyourpod", :rel => "facebox"
+      %h4
+        Use Paypal, Amazon, Bitcoin, Google, Flattr and more to support this pod, KEEP the AD's Away!
       %br
-      Use Paypal, Amazon, Bitcoin, Google, Flattr and more to support
-      %br
+      <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="https://diasp.org"></a>
       %br
       = link_to(image_tag('https://c790230.ssl.cf2.rackcdn.com/promote.gif'), "/promote")
       %br
