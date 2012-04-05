@@ -8,14 +8,7 @@ rvm:
   - 1.9.2
 
 env:
-<<<<<<< HEAD
   - DB=mysql
-=======
-  # - DB=postgres BUILD_TYPE=other
-  - DB=mysql BUILD_TYPE=other
-  # - DB=postgres BUILD_TYPE=cucumber
-  - DB=mysql BUILD_TYPE=cucumber
->>>>>>> upstream/master
 
 before_install: 
   - "./script/ci/before_install.sh"
