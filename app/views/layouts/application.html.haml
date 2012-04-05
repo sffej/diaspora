@@ -13,25 +13,14 @@
     %meta{'name' => 'keywords', :content => 'diaspora, diaspora*, open source, social network, diasp, diasp.org, diasporg'}
     %meta{'name' => 'description', :content => 'Diaspora is the Privacy Aware Open Source Social Network. Diasp.org is an open Diaspora pod and is user supported. '}
 
-<<<<<<< HEAD
     %link{:rel => 'shortcut icon', :href => 'https://c790230.ssl.cf2.rackcdn.com/favicon.png'}
     %link{:rel => 'apple-touch-icon', :href => 'https://c790230.ssl.cf2.rackcdn.com/apple-touch-icon.png'}
-=======
-    %link{:rel => 'shortcut icon', :href => "#{image_path('favicon.png')}" }
-    %link{:rel => 'apple-touch-icon', :href => "#{image_path('apple-touch-icon.png')}"}
->>>>>>> upstream/master
 
     %title
       = page_title yield(:page_title)
 
     = include_base_css_framework
-<<<<<<< HEAD
-    = stylesheet_link_tag "https://c790230.ssl.cf2.rackcdn.com/login.css", :media => 'screen'
-    = stylesheet_link_tag "https://c790230.ssl.cf2.rackcdn.com/default-datauri.css", :media => 'all'
-    = stylesheet_link_tag "https://c790230.ssl.cf2.rackcdn.com/application.css", :media => 'all'
-=======
     = stylesheet_link_tag 'login', 'application', 'default'
->>>>>>> upstream/master
 
     - if rtl?
       = stylesheet_link_tag :rtl, :media => 'all'
@@ -44,12 +33,7 @@
     = jquery_include_tag
 
     - unless @landing_page
-<<<<<<< HEAD
-      = javascript_include_tag "https://c790230.ssl.cf2.rackcdn.com/main.js"
-      = javascript_include_tag "https://c790230.ssl.cf2.rackcdn.com/templates.js"
-=======
       = javascript_include_tag :main, :templates
->>>>>>> upstream/master
       = load_javascript_locales
 
     = set_asset_host
@@ -78,7 +62,6 @@
       %a{:id=>"back-to-top", :title=>"#{t('.back_to_top')}", :href=>"#"}
         &#8679;
 
-<<<<<<< HEAD
     :javascript
       if (typeof(Zenbox) !== "undefined") {
       Zenbox.init({
@@ -90,15 +73,13 @@
       });
       }
 
-=======
     %footer
       .container
         %ul#footer_nav
-          %li= link_to '@joindiaspora', "http://twitter.com/joindiaspora"
-          %li= link_to 'github', "https://github.com/diaspora/diaspora"
-          %li= link_to t('layouts.header.blog'), "http://blog.joindiaspora.com"
+          %li= link_to '@diasporg', "http://twitter.com/diasporg"
+          %li= link_to 'github', "https://github.com/diasporg/diaspora"
+          %li= link_to t('layouts.header.blog'), "http://b.diasp.org"
           %li= link_to t('layouts.header.code'), "#{root_url.chomp('/')}/source.tar.gz" unless request.url.match(/joindiaspora.com/)
           %li= link_to t('.whats_new'), 'https://github.com/diaspora/diaspora/wiki/Changelog'
           %li= link_to(t('layouts.application.toggle'), toggle_mobile_path)  if is_mobile_device?
         = image_tag 'branding/powered_by_diaspora.png', :height => "11px", :width => "145px"
->>>>>>> upstream/master
