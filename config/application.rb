@@ -13,9 +13,16 @@ if RUBY_VERSION.include? '1.9'
 end
 
 require 'rails/all'
-# If you have a Gemfile, require the gems listed there, including any gems
-# you've limited to :test, :development, or :production.
-Bundler.require(:default, Rails.env) if defined?(Bundler)
+
+# Sanitize groups to make matching :assets easier
+RAILS_GROUPS = Rails.groups(:assets => %w(development test)).map { |group| group.to_sym }
+
+if defined?(Bundler)
+  # If you precompile assets before deploying to production, use this line
+  Bundler.require(*RAILS_GROUPS)
+  # If you want your assets lazily compiled in production, use this line
+  # Bundler.require(:default, :assets, Rails.env)
+end
 
 
 module Diaspora
@@ -63,5 +70,31 @@ module Diaspora
     config.filter_parameters += [:text]
     config.filter_parameters += [:bio]
 
+    # Enable the asset pipeline
+    config.assets.enabled = true
+
+    # For easier deployment to Heroku
+    config.assets.initialize_on_precompile = false
+
+    # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
+    # Javascripts
+    config.assets.precompile += [ "aspect-contacts.js", "contact-list.js", "finder.js",
+      "home.js", "ie.js", "inbox.js", "jquery.js", "jquery_ujs.js", "jquery.textchange.min.js",
+      "login.js", "mailchimp.js", "main.js", "mobile.js", "profile.js", "people.js", "photos.js",
+      "profile.js", "publisher.js", "templates.js", "validation.js" ]
+
+    # Stylesheets
+    config.assets.precompile += [ "blueprint.css", "bootstrap.css", "default.css",
+      "login.css", "mobile.css", "new-templates.css", "rtl.css", "vendor/bootstrap.css",
+      "vendor/bootstrap-responsive.css" ]
+
+    # Version of your assets, change this if you want to expire all your assets
+    config.assets.version = '1.0'
+
   end
+end
+
+# Only load asset_sync if S3 is configured
+if RAILS_GROUPS.include?(:assets) && ENV['AWS_ACCESS_KEY_ID']
+  require 'asset_sync'
 end

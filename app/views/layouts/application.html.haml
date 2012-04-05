@@ -20,22 +20,20 @@
       = page_title yield(:page_title)
 
     = include_base_css_framework
-    = stylesheet_link_tag "https://c790230.ssl.cf2.rackcdn.com/login.css", :media => 'screen'
-    = stylesheet_link_tag "https://c790230.ssl.cf2.rackcdn.com/default-datauri.css", :media => 'all'
-    = stylesheet_link_tag "https://c790230.ssl.cf2.rackcdn.com/application.css", :media => 'all'
+    = stylesheet_link_tag 'login', 'application', 'default'
 
     - if rtl?
-      = include_stylesheets :rtl, :media => 'all'
+      = stylesheet_link_tag :rtl, :media => 'all'
 
     = old_browser_js_support
     <!--[if IE]>
-    = include_javascripts :ie
+    = javascript_include_tag :ie
     <![endif]-->
 
     = jquery_include_tag
+
     - unless @landing_page
-      = javascript_include_tag "https://c790230.ssl.cf2.rackcdn.com/main.js"
-      = javascript_include_tag "https://c790230.ssl.cf2.rackcdn.com/templates.js"
+      = javascript_include_tag :main, :templates
       = load_javascript_locales
 
     = set_asset_host
@@ -75,3 +73,13 @@
       });
       }
 
+    %footer
+      .container
+        %ul#footer_nav
+          %li= link_to '@diasporg', "http://twitter.com/diasporg"
+          %li= link_to 'github', "https://github.com/diasporg/diaspora"
+          %li= link_to t('layouts.header.blog'), "http://b.diasp.org"
+          %li= link_to t('layouts.header.code'), "#{root_url.chomp('/')}/source.tar.gz" unless request.url.match(/joindiaspora.com/)
+          %li= link_to t('.whats_new'), 'https://github.com/diaspora/diaspora/wiki/Changelog'
+          %li= link_to(t('layouts.application.toggle'), toggle_mobile_path)  if is_mobile_device?
+        = image_tag 'branding/powered_by_diaspora.png', :height => "11px", :width => "145px"
