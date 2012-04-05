@@ -16,7 +16,8 @@ class PostsController < ApplicationController
              :xml
 
   def new
-    redirect_to "/stream" and return unless FeatureFlags.new_publisher
+    @feature_flag = FeatureFlagger.new(current_user) #I should be a global before filter so @feature_flag is accessible
+    redirect_to "/stream" and return unless @feature_flag.new_publisher?
     render :text => "", :layout => true
   end
 
@@ -39,7 +40,7 @@ class PostsController < ApplicationController
 
       respond_to do |format|
         format.xml{ render :xml => @post.to_diaspora_xml }
-        format.mobile{render 'posts/show.mobile.haml'}
+        format.mobile{render 'posts/show.mobile.haml', :layout => "application"}
         format.json{ render :json => PostPresenter.new(@post, current_user).to_json }
         format.any{render 'posts/show.html.haml'}
       end
