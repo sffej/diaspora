@@ -516,6 +516,7 @@ DEPENDENCIES
   rails_autolink
   redcarpet (= 2.0.1)
   resque (= 1.20.0)
+  resque-cleaner
   resque-timeout (= 1.0.0)
   rest-client (= 1.6.7)
   roxml!
