@@ -58,7 +58,7 @@ done
 echo "remake css and Jammit?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) bundle exec sass -q --update public/stylesheets/sass/:public/stylesheets/; bundle exec jammit; bundle exec rake assets:precompile; break;;
+        Yes ) bundle exec sass -q --update public/stylesheets/sass/:public/stylesheets/; bundle exec rake assets:precompile; break;;
         No ) break;;
     esac
 done
