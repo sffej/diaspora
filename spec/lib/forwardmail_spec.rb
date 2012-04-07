@@ -1,5 +1,5 @@
 #require 'spec_helper'
-require 'forwardmail'
+#require 'forwardmail'
 
 describe Morley do
   include Morley
