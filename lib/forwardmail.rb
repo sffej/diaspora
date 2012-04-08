@@ -28,7 +28,7 @@ module Morley
 		require 'fileutils'
 		## make sure you have cron making something out of etc/daliases and included in your main.cf with /etc/aliases
 		path = AppConfig[:pod_aliases]
-		temp_file = Tempfile.open('/home/dmm/fred')
+		temp_file = Tempfile.open('/tmp/fred')
 		File.open(path, 'r') do |file|
 		file.each_line do |line|
 		exists = line.split(":")
