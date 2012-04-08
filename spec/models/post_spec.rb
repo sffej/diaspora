@@ -141,11 +141,11 @@ describe Post do
           Post.for_visible_shareable_sql(time, 'created_at')
         end
 
-        it 'defaults to 15 posts' do
+        it 'defaults to 25 posts' do
           chain = stub.as_null_object
 
           Post.stub(:by_max_time).and_return(chain)
-          chain.should_receive(:limit).with(15).and_return(Post)
+          chain.should_receive(:limit).with(25).and_return(Post)
           Post.for_visible_shareable_sql(Time.now + 1, "created_at")
         end
 
