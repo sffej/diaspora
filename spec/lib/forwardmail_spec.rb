@@ -54,13 +54,13 @@ describe Morley do
 
 
 #need to remove forward
-    it 'update a forward' do
-      @expected_answer = "Success: Removed your forward"
-      @user = "ohhhhhbilly"
-      @email = "bob2@bob2.com"
-      @result = Morley::Forwardmailon::forward(@user,@email,0)
-      @result.should == @expected_answer
-    end
+#    it 'update a forward' do
+#      @expected_answer = "Success: Removed your forward"
+#     @user = "ohhhhhbilly"
+#      @email = "bob2@bob2.com"
+#      @result = Morley::Forwardmailon::forward(@user,@email,0)
+#      @result.should == @expected_answer
+#    end
 
 #    it 'alias file is read with new forward' do
 #      @expected_answer = "Success: Removed your forward"
