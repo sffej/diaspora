@@ -81,7 +81,7 @@ module Diaspora
     config.assets.precompile += [ "aspect-contacts.js", "contact-list.js", "finder.js",
       "home.js", "ie.js", "inbox.js", "jquery.js", "jquery_ujs.js", "jquery.textchange.min.js",
       "login.js", "mailchimp.js", "main.js", "mobile.js", "profile.js", "people.js", "photos.js",
-      "profile.js", "publisher.js", "templates.js", "validation.js", "diasporg.js", "zenbox.js" ]
+      "profile.js", "publisher.js", "templates.js", "validation.js", "zenbox.js", "diasporg.js" ]
 
     # Stylesheets
     config.assets.precompile += [ "blueprint.css", "bootstrap.css", "default.css",
@@ -89,7 +89,7 @@ module Diaspora
       "vendor/bootstrap-responsive.css" ]
 
     # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
+    config.assets.version = '1.1'
 
   end
 end
