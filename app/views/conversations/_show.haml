@@ -13,15 +13,15 @@
     = person_image_link(participant)
 
 .span-15.last
-  .stream
-    = render :partial => 'messages/message', :collection => conversation.messages
+  .stream_element.new_message
+    .media
+      .img
+        = owner_image_tag(:thumb_small)
 
-    .stream_element.new_message
-      .media
-        .img
-          = owner_image_tag(:thumb_small)
+      .bd
+        = form_for [conversation, Message.new] do |message|
+          = message.text_area :text, :rows => 5, :tabindex => 1
+          = message.submit t('.reply').capitalize, :disable_with => t('.replying'), :class => 'button creation', :tabindex => 2
 
-        .bd
-          = form_for [conversation, Message.new] do |message|
-            = message.text_area :text, :rows => 5, :tabindex => 1
-            = message.submit t('.reply').capitalize, :disable_with => t('.replying'), :class => 'button creation', :tabindex => 2
+    .stream
+      = render :partial => 'messages/message', :collection => conversation.messages
