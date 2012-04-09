@@ -25,10 +25,10 @@ describe Conversation do
   end
 
   describe '#last_author' do
-    it 'returns the last author to a conversation' do
+    it 'returns the first author to a conversation' do
       cnv = Conversation.create(@create_hash)
       Message.create(:author => @user2.person, :created_at => Time.now + 100, :text => "last", :conversation_id => cnv.id)
-      cnv.reload.last_author.id.should == @user2.person.id
+      cnv.reload.last_author.id.should == @user1.person.id
     end
   end
 
