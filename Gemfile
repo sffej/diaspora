@@ -27,6 +27,7 @@ gem 'omniauth-tumblr'
 gem 'omniauth-twitter'
 
 gem 'twitter', '2.0.2'
+gem 'rails_admin', :git => 'git://github.com/diaspora/rails_admin_smaller.git'
 
 # mail
 
@@ -111,6 +112,7 @@ gem 'client_side_validations'
 
 group :assets do
   gem 'sass-rails', '3.1.4'
+  gem 'bootstrap-sass', '~> 2.0.2'
 
   # Windows and OSX have an execjs compatible runtime built-in, Linux users should
   # install Node.js or use 'therubyracer'.
@@ -134,8 +136,8 @@ gem 'faraday'
 gem 'faraday-stack'
 gem 'em-synchrony', '1.0.0', :platforms => :ruby_19
 
-# jazzy jasmine
 
+gem 'jasmine', :git => 'git://github.com/pivotal/jasmine-gem.git'
 ### GROUPS ####
 
 group :test do
@@ -170,7 +172,6 @@ end
 
 group :test, :development do
   # Use the latest Jasmine from github for asset pipeline compatibility
-  gem 'jasmine', :git => 'git://github.com/pivotal/jasmine-gem.git'
   gem 'ruby-debug-base19', '0.11.23' if RUBY_VERSION.include? '1.9.1'
   gem 'ruby-debug19', :platforms => :ruby_19
   gem 'ruby-debug', :platforms => :mri_18
