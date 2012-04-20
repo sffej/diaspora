@@ -59,7 +59,7 @@ defaults: &defaults
   # running, however this makes it quite slow as all the time intensive jobs
   # must be run inside the request cycle. Also the live updates from the Websocket
   # will be disabled.
-  single_process_mode: false
+  single_process_mode: true
 
   ## Use Amazon S3 instead of your local filesystem
   ## to handle uploaded pictures.
@@ -74,7 +74,7 @@ defaults: &defaults
   ## https://images.example.org here, all requests made to
   ## pictures under /uploads/images will be redirected to
   ## https://images.example.org/uploads/images/...
-  image_redirect_url: 'https://images.example.org'
+  image_redirect_url: ''
 
   ## Diaspora is only tested against this default pubsub server.
   ## You probably don't want to change this.

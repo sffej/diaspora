@@ -36,7 +36,7 @@ select yn in "Yes" "No"; do
         No ) break;;
     esac
 done
-OP=`cat tmp/pids/unicorn.pid`
+OP=`ps afx | grep 'unicorn master' | grep -v grep | awk '{ print $1 }'`
 echo $OP
 echo "start new unicorn cluster?"
 select yn in "Yes" "No"; do
