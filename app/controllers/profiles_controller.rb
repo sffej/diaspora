@@ -5,8 +5,22 @@
 class ProfilesController < ApplicationController
   before_filter :authenticate_user!
 
-  respond_to :html
+  respond_to :html, :except => [:show]
   respond_to :js, :only => :update
+
+  # this is terrible because we're actually serving up the associated person here;
+  # however, this is the effect that we want for now
+  def show
+    @person = Person.find_by_guid!(params[:id])
+
+    respond_to do |format|
+      format.json { render :json => @person.as_api_response(:backbone).merge({
+          :location => @person.profile.location,
+          :birthday => @person.profile.formatted_birthday,
+          }) }
+    end
+  end
+
   def edit
     @person = current_user.person
     @aspect  = :person_edit

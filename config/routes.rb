@@ -11,7 +11,7 @@ Diaspora::Application.routes.draw do
 
   resources :status_messages, :only => [:new, :create]
 
-  resources :posts, :only => [:show, :new, :destroy] do
+  resources :posts do
     resources :likes, :only => [:create, :destroy, :index]
     resources :participations, :only => [:create, :destroy, :index]
     resources :comments, :only => [:new, :create, :destroy, :index]
@@ -124,6 +124,8 @@ Diaspora::Application.routes.draw do
   end
 
   resource :profile, :only => [:edit, :update]
+  resources :profiles, :only => [:show]
+
 
 
   match 'forwardemail',              :to => 'plain#forwardemail'

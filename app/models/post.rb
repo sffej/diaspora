@@ -44,6 +44,8 @@ class Post < ActiveRecord::Base
     t.add :mentioned_people
     t.add :photos
     t.add :nsfw
+    t.add :favorite
+    t.add :frame_name
   end
 
   xml_attr :provider_display_name

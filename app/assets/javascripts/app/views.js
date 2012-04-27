@@ -44,6 +44,7 @@ app.views.Base = Backbone.View.extend({
     if(!this.template) {
       console.log(this.templateName ? ("no template for " + this.templateName) : "no templateName specified")
     }
+
     this.$el
       .html(this.template(presenter))
       .attr("data-template", _.last(this.templateName.split("/")));
@@ -88,22 +89,26 @@ app.views.infiniteScrollMixin = {
     this.bind("loadMore", this.fetchAndshowLoader, this)
     this.stream.bind("fetched", this.hideLoader, this)
     this.stream.bind("allItemsLoaded", this.unbindInfScroll, this)
-    this.collection.bind("add", this.addPost, this);
+
+    this.collection.bind("add", this.addPostView, this);
 
     var throttledScroll = _.throttle(_.bind(this.infScroll, this), 200);
     $(window).scroll(throttledScroll);
   },
 
-  renderTemplate : function() {
+  postRenderTemplate : function() {
     if(this.stream.isFetching()) { this.showLoader() }
   },
 
-  addPost : function(post) {
-    var postView = new this.postClass({ model: post })
-      , placeInStream = (this.collection.at(0).id == post.id) ? "prepend" : "append";
-
-    this.$el[placeInStream](postView.render().el);
+  createPostView : function(post){
+    var postView = new this.postClass({ model: post });
     this.postViews.push(postView)
+    return postView
+  },
+
+  addPostView : function(post) {
+    var placeInStream = (this.collection.at(0).id == post.id) ? "prepend" : "append";
+    this.$el[placeInStream](this.createPostView(post).render().el);
   },
 
   unbindInfScroll : function() {
@@ -121,7 +126,7 @@ app.views.infiniteScrollMixin = {
   },
 
   hideLoader: function() {
-    $("#paginate .loader").addClass("hidden")
+      $("#paginate .loader").addClass("hidden")
   },
 
   infScroll : function() {
