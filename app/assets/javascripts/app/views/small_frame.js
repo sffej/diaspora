@@ -12,7 +12,7 @@ app.views.SmallFrame = app.views.Post.extend({
   events : {
     "click .content" : "favoritePost",
     "click .delete" : "killPost",
-    "click .permalink" : "goToPost"
+    "click .info" : "goToPost"
   },
 
   subviews : {
@@ -83,7 +83,12 @@ app.views.SmallFrame = app.views.Post.extend({
   },
 
   favoritePost : function(evt) {
-    if(evt) { evt.stopImmediatePropagation(); evt.preventDefault() }
+    if(evt) {
+      /* follow links instead of faving the targeted post */
+      if($(evt.target).is('a')) { return }
+
+      evt.stopImmediatePropagation(); evt.preventDefault();
+    }
 
     var prevDimension = this.dimensionsClass();
     this.model.toggleFavorite();
