@@ -28,7 +28,7 @@ module Rack
               </head>
               <body>
                 <div id="cf-placeholder"></div>
-                <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+                <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
                 <script>CFInstall.check({ node: "cf-placx   eholder" #{', destination: "' + @options[:destination] + '" ' if @options[:destination]}});</script>
               </body>
             </html>
