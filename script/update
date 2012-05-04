@@ -46,15 +46,6 @@ select yn in "Yes" "No"; do
     esac
 done
 
-echo "restart workers?"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) god restart resque; break;;
-        No ) break;;
-    esac
-done
-
-
 echo "remake assets?"
 select yn in "Yes" "No"; do
     case $yn in
@@ -86,4 +77,13 @@ select yn in "Yes" "No"; do
     esac
 done
 
+
+
+echo "restart workers?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) god restart resque; break;;
+        No ) break;;
+    esac
+done
 
