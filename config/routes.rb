@@ -12,6 +12,10 @@ Diaspora::Application.routes.draw do
   resources :status_messages, :only => [:new, :create]
 
   resources :posts do
+    member do
+      get :next
+      get :previous
+    end
     resources :likes, :only => [:create, :destroy, :index]
     resources :participations, :only => [:create, :destroy, :index]
     resources :comments, :only => [:new, :create, :destroy, :index]
@@ -49,6 +53,8 @@ Diaspora::Application.routes.draw do
   resources :photos, :except => [:index] do
     put :make_profile_photo
   end
+
+  post "upload_wallpaper" => 'profiles#upload_wallpaper_image'
 
   # ActivityStreams routes
   scope "/activity_streams", :module => "activity_streams", :as => "activity_streams" do

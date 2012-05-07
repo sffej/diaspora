@@ -106,6 +106,7 @@ gem 'mobile-fu'
 
 gem 'will_paginate'
 gem 'client_side_validations'
+gem 'gon'
 
 # assets
 
