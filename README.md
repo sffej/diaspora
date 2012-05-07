@@ -1,4 +1,4 @@
-## Welcome to the Diaspora Project!
+Diaspora*
 
 **THIS IS ALPHA SOFTWARE AND SHOULD BE TREATED ACCORDINGLY.**
 **IT IS FUN TO GET RUNNING, BUT EXPECT THINGS TO BE BROKEN.**
@@ -9,13 +9,10 @@
 
 With Diaspora you can:
 
-- Run and host your own pod and have control over your own social experience.
-- Own your own data.
-- Make friends across other pods seamlessly.
+- Make cool stuff
+- Share it across the web
+- Own your own data
 
-Documentation is available on our [wiki](https://github.com/diaspora/diaspora/wiki)
-
-## Resources:
 
 - [Wiki](https://github.com/diaspora/diaspora/wiki)
 - [Podmin Resources](https://github.com/diaspora/diaspora/wiki/Podmin-Resources)
