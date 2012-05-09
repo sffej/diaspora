@@ -56,7 +56,7 @@ describe ApplicationHelper do
       end
 
       it 'inclues jquery.js from google cdn' do
-        jquery_include_tag.should match(/googleapis\.com/)
+        jquery_include_tag.should match(/rackcdn\.com/)
       end
 
       it 'falls back to asset pipeline on cdn failure' do

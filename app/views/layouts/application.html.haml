@@ -12,12 +12,15 @@
     %meta{:name => "author", :content => "Diaspora, Inc."}
     %meta{'name' => 'keywords', :content => 'diaspora, diaspora*, open source, social network, diasp, diasp.org, diasporg'}
     %meta{'name' => 'description', :content => 'Diaspora is the Privacy Aware Open Source Social Network. Diasp.org is an open Diaspora pod and is user supported. '}
+    = og_site_name
 
     %link{:rel => 'shortcut icon', :href => 'https://c790230.ssl.cf2.rackcdn.com/favicon.png'}
     %link{:rel => 'apple-touch-icon', :href => 'https://c790230.ssl.cf2.rackcdn.com/apple-touch-icon.png'}
 
     %title
       = page_title yield(:page_title)
+
+    = chartbeat_head_block
 
     = include_base_css_framework
     = stylesheet_link_tag 'login', 'application', 'default'
@@ -40,6 +43,7 @@
     = set_current_user_in_javascript
     = translation_missing_warnings
     = current_user_atom_tag
+    = include_google_analytics
 
     = yield(:head)
     = csrf_meta_tag
@@ -52,7 +56,7 @@
         = render 'layouts/header'
 
     .container
-      - if @aspect == :getting_started || @page == :logged_out
+      - if @aspect == :getting_started
         = yield
       - else
         .span-24.last
@@ -61,17 +65,6 @@
     - unless @landing_page
       %a{:id=>"back-to-top", :title=>"#{t('.back_to_top')}", :href=>"#"}
         &#8679;
-
-    :javascript
-      if (typeof(Zenbox) !== "undefined") {
-      Zenbox.init({
-      dropboxID:   "20036597",
-      url:         "https://diasporg.zendesk.com",
-      tabID:       "support",
-      tabColor:    "black",
-      tabPosition: "Right"
-      });
-      }
 
     %footer
       .container
@@ -83,3 +76,5 @@
           %li= link_to t('.whats_new'), 'https://github.com/diaspora/diaspora/wiki/Changelog'
           %li= link_to(t('layouts.application.toggle'), toggle_mobile_path)  if is_mobile_device?
         = image_tag 'branding/powered_by_diaspora.png', :height => "11px", :width => "145px"
+
+    = include_chartbeat

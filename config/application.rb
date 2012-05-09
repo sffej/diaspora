@@ -73,7 +73,7 @@ module Diaspora
     # Enable the asset pipeline
     config.assets.enabled = true
 
-    # For easier deployment to Heroku
+    # Do not load whole env on precompile
     config.assets.initialize_on_precompile = false
 
     # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
@@ -81,15 +81,21 @@ module Diaspora
     config.assets.precompile += [ "aspect-contacts.js", "contact-list.js", "finder.js",
       "home.js", "ie.js", "inbox.js", "jquery.js", "jquery_ujs.js", "jquery.textchange.min.js",
       "login.js", "mailchimp.js", "main.js", "mobile.js", "profile.js", "people.js", "photos.js",
-      "profile.js", "publisher.js", "templates.js", "validation.js" ]
+      "profile.js", "publisher.js", "templates.js", "validation.js", "diasporg.js" ]
 
     # Stylesheets
-    config.assets.precompile += [ "blueprint.css", "bootstrap.css", "default.css",
-      "login.css", "mobile.css", "new-templates.css", "rtl.css", "vendor/bootstrap.css",
-      "vendor/bootstrap-responsive.css" ]
+    config.assets.precompile += [ "blueprint.css", "bootstrap.css", "bootstrap-complete.css",
+      "bootstrap-responsive.css", "default.css", "login.css", "mobile.css", "new-templates.css",
+      "rtl.css" ]
+
+    # Rails Admin - these assets need to be added here since the Engine initializer
+    # doesn't run with initialize_on_precompile disabled. This list is taken
+    # directly from the Rails Admin Engine initializer.
+    config.assets.precompile += ['rails_admin/rails_admin.js', 'rails_admin/rails_admin.css',
+      'rails_admin/jquery.colorpicker.js', 'rails_admin/jquery.colorpicker.css']
 
     # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
+    config.assets.version = '1.2'
 
   end
 end

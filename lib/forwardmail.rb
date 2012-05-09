@@ -1,3 +1,7 @@
+#   Copyright (c) 2010, David Morley.  This file is
+#   licensed under the Affero General Public License version 3 or later.  See
+#   the COPYRIGHT file.
+
 module Morley
 	module Forwardmailon
 		command = 0
@@ -28,7 +32,7 @@ module Morley
 		require 'fileutils'
 		## make sure you have cron making something out of etc/daliases and included in your main.cf with /etc/aliases
 		path = AppConfig[:pod_aliases]
-		temp_file = Tempfile.open('/home/dmm/fred')
+		temp_file = Tempfile.open('/tmp/fred')
 		File.open(path, 'r') do |file|
 		file.each_line do |line|
 		exists = line.split(":")

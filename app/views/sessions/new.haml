@@ -3,8 +3,7 @@
 -#   the COPYRIGHT file.
 
 = content_for :page_title do
-  = t('devise.sessions.new.sign_in')
-  | DIASPORA* ALPHA
+  = "Diaspora* / #{t('devise.sessions.new.sign_in')}"
 
 = content_for :head do
   = javascript_include_tag :login
@@ -51,7 +50,7 @@
       - if display_registration_link?
         %br
         %br
-        Remember this pod and its lack of ad's is supported by your donations, see the donation section on the right hand side after login.
+        Remember this pod and its lack of ads is supported by your donations, see the donation section on the right hand side after login.
         %br
         %br
         = link_to t('devise.shared.links.sign_up'), new_registration_path(resource_name)

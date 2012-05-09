@@ -36,7 +36,7 @@ select yn in "Yes" "No"; do
         No ) break;;
     esac
 done
-OP=`cat tmp/pids/unicorn.pid`
+OP=`ps afx | grep 'unicorn master' | grep -v grep | awk '{ print $1 }'`
 echo $OP
 echo "start new unicorn cluster?"
 select yn in "Yes" "No"; do
@@ -46,19 +46,10 @@ select yn in "Yes" "No"; do
     esac
 done
 
-echo "restart workers?"
+echo "remake assets?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) god restart resque; break;;
-        No ) break;;
-    esac
-done
-
-
-echo "remake css and Jammit?"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) bundle exec sass -q --update public/stylesheets/sass/:public/stylesheets/; bundle exec rake assets:precompile; break;;
+        Yes ) bundle exec rake assets:precompile; break;;
         No ) break;;
     esac
 done
@@ -86,4 +77,13 @@ select yn in "Yes" "No"; do
     esac
 done
 
+
+
+echo "restart workers?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) god restart resque; break;;
+        No ) break;;
+    esac
+done
 
