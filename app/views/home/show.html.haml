@@ -3,19 +3,12 @@
 -#   the COPYRIGHT file.
 
 
-
 - content_for :page_title do
   DIASPORA* Public Pod Diasporg
+
 - begin
   = render :partial => 'home/show'
+
 - rescue
-  :css
-    header{
-      display:none;
-    }
-    body{
-      margin-top: 20px;
-      background: #000000;
-    }
   :erb
     <%= File.open(File.join(Rails.root, 'public/default.html')).read %>
