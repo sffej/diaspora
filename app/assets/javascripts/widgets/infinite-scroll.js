@@ -7,13 +7,11 @@
   var InfiniteScroll = function() {
     var self = this;
     this.options = {
-      bufferPx: 1000,
-      animate: true,
-      debug: true,
-      extraScrollPx: 950, 
+      bufferPx: 500,
+      debug: false,
       donetext: Diaspora.I18n.t("infinite_scroll.no_more"),
       loadingText: "",
-      loadingImg: "https://c790230.ssl.cf2.rackcdn.com/ajax-loader.gif",
+      loadingImg: "/assets/ajax-loader.gif",
       navSelector: "#pagination",
       nextSelector: ".paginate",
       itemSelector: ".stream_element",
