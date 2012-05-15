@@ -36,6 +36,18 @@ select yn in "Yes" "No"; do
         No ) break;;
     esac
 done
+
+echo "remake assets?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) bundle exec rake assets:precompile; break;;
+        No ) break;;
+    esac
+done
+
+
+
+
 OP=`ps afx | grep 'unicorn master' | grep -v grep | awk '{ print $1 }'`
 echo $OP
 echo "start new unicorn cluster?"
@@ -46,13 +58,6 @@ select yn in "Yes" "No"; do
     esac
 done
 
-echo "remake assets?"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) bundle exec rake assets:precompile; break;;
-        No ) break;;
-    esac
-done
 echo "cdn assets?"
 select yn in "Yes" "No"; do
     case $yn in
