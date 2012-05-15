@@ -136,7 +136,7 @@ gem 'jquery-rails'
 # web
 
 gem 'faraday'
-gem 'faraday-stack'
+gem 'faraday_middleware'
 gem 'em-synchrony', '1.0.0', :platforms => :ruby_19
 
 
