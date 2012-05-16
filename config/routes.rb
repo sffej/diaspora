@@ -7,6 +7,12 @@ Diaspora::Application.routes.draw do
     mount RailsAdmin::Engine => '/admin_panel', :as => 'rails_admin'
   end
 
+  # Some INDIVIDUAL is hotlinking to files that don't exist
+  get "/landing" => 'hotlinks#log_referrer'
+  get "/landing/*path" => 'hotlinks#log_referrer'
+
+  get "/atom.xml" => redirect('http://blog.diasporafoundation.org/feed/atom') #too many stupid redirects :()
+  
   get 'oembed' => 'posts#oembed', :as => 'oembed'
   # Posting and Reading
   resources :reshares
