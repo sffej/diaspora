@@ -16,8 +16,8 @@ num_resqueworkers = 21
 num_resqueworkers.times do |num|
   God.watch do |w|
     w.dir      = "#{rails_root}"
-    w.name     = "resque-#{num}"
-    w.group    = 'resque'
+    w.name     = "resque"
+    w.group    = 'diaspora'
     w.interval = 190.seconds
     w.env      = {"QUEUE"=>"photos,receive_local,receive_salmon,receive,mail,socket_webfinger,delete_account,dispatch,http,http_service", "RAILS_ENV"=>rails_env}
     w.start    = "bundle exec rake resque:work"
@@ -70,6 +70,7 @@ end
 
 God.watch do |w|
   w.name = "unicorn"
+  w.group    = 'diaspora'
   w.interval = 200.seconds # default
 
   # unicorn needs to be run from the rails root
@@ -79,7 +80,7 @@ God.watch do |w|
   w.stop = "kill -QUIT `cat #{rails_root}/tmp/pids/unicorn.pid`"
 
   # USR2 causes the master to re-create itself and spawn a new worker pool
-  w.restart = "kill -USR2 `cat #{rails_root}/tmp/pids/unicorn.pid`"
+  w.restart = "kill -HUP `cat #{rails_root}/tmp/pids/unicorn.pid`"
 
   w.start_grace = 10.seconds
   w.restart_grace = 10.seconds
