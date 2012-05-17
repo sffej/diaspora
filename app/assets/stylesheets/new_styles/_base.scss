@@ -16,7 +16,7 @@ a { color : rgb(42,156,235)  }
 }
 
 .rich-media {
-  background-color: $night-background-color;
+  //background-color: $night-background-color;
 
   p {
     @include media-text();
@@ -69,6 +69,7 @@ a { color : rgb(42,156,235)  }
 #author-info {
   position : absolute;
   z-index : 300;
+  width: 400px;
 
   .author-name {
     color: #555;
@@ -123,8 +124,8 @@ a { color : rgb(42,156,235)  }
 
 article { //mood posts
   //default frame show styles
-  $big-text-size : 1em;
-  $medium-text-size : 1em;
+  $big-text-size : 1.3em;
+  $medium-text-size : 1.2em;
   $small-text-size: 1em;
   width: 960px;
   margin: 0 auto;
@@ -150,13 +151,13 @@ article { //mood posts
 
   header, header p{
   //big text
-    @include media-text();
-    font-size: $big-text-size;
-    line-height: 1em;
+    //@include media-text();
+    font-size: $medium-text-size;
+    //line-height: 1em;
   }
 
   section.body{
-    p { font-size: $small-text-size; }
+    p { font-size: $medium-text-size; }
 
     &.short_body{
       p{
@@ -182,12 +183,12 @@ article { //mood posts
   }
 
   &.newspaper {
-    @include newspaper-type();
+    //@include newspaper-type();
 
     text-align: left;
 
     .container {
-      max-width: 600px;
+      //max-width: 600px;
     }
 
     .photo_viewer {
@@ -202,9 +203,9 @@ article { //mood posts
     }
 
     .body p {
-      @include newspaper-type();
-      font-size: 1em;
-      line-height: 1em;
+      //@include newspaper-type();
+      font-size: 1.2em;
+      line-height: 1.2em;
       margin-bottom: 1.2em;
     }
   }
