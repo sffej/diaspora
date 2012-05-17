@@ -47,7 +47,7 @@ $night-text-color : #999;
   @include border-radius(3px, 0px);
   @include pane-width();
 
-  display: block;
+  display: inline-block;
   position: relative;
 
   border-right: 1px solid #444;
