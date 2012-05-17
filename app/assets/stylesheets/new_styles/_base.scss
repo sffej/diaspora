@@ -12,7 +12,7 @@ a { color : rgb(42,156,235)  }
 
 .photoset {
   @include center(horizontal);
-  width: 100%;
+  width: 275%;
 }
 
 .rich-media {
