@@ -46,8 +46,8 @@
 }
 
 .profile-image-container {
-  border-radius: 140px;
-  border : 3px solid #fff;
+  //border-radius: 140px;
+  border : 1px solid #fff;
   box-shadow : 0 0 2px rgba(0,0,0,0.5), 0 0 10px rgba(0,0,0,0.6), inset 0 0 15px rgba(0,0,0,0.5), inset 0 -2px 4px rgba(255,255,255,0.3);
   background-size: cover;
 
@@ -63,15 +63,15 @@
   margin-bottom : 5px;
 
   &.small {
-    height : 40px;
-    width : 40px;
-    border : 2px solid #fff;
+    height : 50px;
+    width : 50px;
+    border : 1px solid #fff;
   }
 
   &.micro {
     height : 24px;
     width : 24px;
-    border : 2px solid #fff;
+    border : 1px solid #fff;
   }
 }
 

@@ -4,12 +4,12 @@ rails_env = 'production'
 #user  = 'diaspora'
 #group = 'diaspora'
 stderr_path "/home/dmm/diaspora/log/unicorn.stderr.log"
-#stdout_path "/home/dmm/diaspora/log/unicorn.stdout.log"
+stdout_path "/home/dmm/diaspora/log/unicorn.stdout.log"
 
 worker_processes 8
 
 ## Load the app before spawning workers
-preload_app false
+preload_app true
 
 # How long to wait before killing an unresponsive worker
 timeout 30

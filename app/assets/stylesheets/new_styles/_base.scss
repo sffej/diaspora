@@ -1,5 +1,5 @@
 body {
-  background-image : image_url("pattern.png");
+  //background-image : image_url("pattern.png");
   padding : none;
 }
 
@@ -123,15 +123,15 @@ a { color : rgb(42,156,235)  }
 
 article { //mood posts
   //default frame show styles
-  $big-text-size : 2.5em;
-  $medium-text-size : 1.5em;
+  $big-text-size : 1em;
+  $medium-text-size : 1em;
   $small-text-size: 1em;
   width: 960px;
   margin: 0 auto;
 
   img {
     max-height: 70%;
-    border : 10px solid #fff;
+    //border : 10px solid #fff;
   }
 
   .photo_viewer {
@@ -152,7 +152,7 @@ article { //mood posts
   //big text
     @include media-text();
     font-size: $big-text-size;
-    line-height: 1.5em;
+    line-height: 1em;
   }
 
   section.body{
@@ -203,8 +203,8 @@ article { //mood posts
 
     .body p {
       @include newspaper-type();
-      font-size: 1.2em;
-      line-height: 1.7em;
+      font-size: 1em;
+      line-height: 1em;
       margin-bottom: 1.2em;
     }
   }
