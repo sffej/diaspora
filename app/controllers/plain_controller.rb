@@ -66,6 +66,7 @@ class PlainController < ApplicationController
         @stats = 'Error'
         @longurl = 'Error: Nothing found, must not be shortened'
       end
+    render :layout => false
   end
 
    def kiva

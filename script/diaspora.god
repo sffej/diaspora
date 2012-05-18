@@ -22,6 +22,7 @@ num_resqueworkers.times do |num|
     w.env      = {"QUEUE"=>"photos,receive_local,receive_salmon,receive,mail,socket_webfinger,delete_account,dispatch,http,http_service", "RAILS_ENV"=>rails_env}
     w.start    = "bundle exec rake resque:work"
     w.log      = "#{rails_root}/log/god.log"
+    w.start_grace = 100.seconds
 
     #w.uid = 'dmm'
     #w.gid = 'dmm'
@@ -82,8 +83,8 @@ God.watch do |w|
   # USR2 causes the master to re-create itself and spawn a new worker pool
   w.restart = "kill -USR2 `cat #{rails_root}/tmp/pids/unicorn.pid`"
 
-  w.start_grace = 10.seconds
-  w.restart_grace = 10.seconds
+  w.start_grace = 1.seconds
+  w.restart_grace = 1.seconds
   w.pid_file = "#{rails_root}/tmp/pids/unicorn.pid"
 
   w.behavior(:clean_pid_file)
