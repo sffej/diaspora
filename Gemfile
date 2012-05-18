@@ -8,10 +8,11 @@ ruby '1.9.3' if ENV['HEROKU']
 gem 'rails', '3.2.2'
 
 gem 'foreman', '0.41'
-gem 'whenever'
+
+gem 'whenever' #why is this in the bundle
 
 gem 'rails_autolink'
-gem 'thin', '~> 1.3.1',    :require => false
+gem 'thin', '~> 1.3.1',    :require => false #why is this here?
 
 # cross-origin resource sharing
 
@@ -20,8 +21,7 @@ gem 'rack-cors', '~> 0.2.4', :require => 'rack/cors'
 # authentication
 
 gem 'devise', '1.5.3'
-gem 'jwt'
-gem 'oauth2-provider', '0.0.19'
+
 gem 'remotipart', '~> 1.0'
 
 gem 'omniauth', '1.0.3'
@@ -64,11 +64,10 @@ gem 'sqlite3' if ENV['DB'] == 'all' || ENV['DB'] == 'sqlite'
 
 # file uploading
 
-gem 'carrierwave', '0.5.8'
+gem 'carrierwave', '0.6.2'
 gem 'fog'
 gem 'fastercsv', '1.5.4', :require => false
 gem 'mini_magick', '3.4'
-gem 'rest-client', '1.6.7'
 
 # JSON and API
 
@@ -99,7 +98,7 @@ gem 'acts-as-taggable-on', '~> 2.2.2'
 
 # URIs and HTTP
 
-gem 'addressable', '2.2.4', :require => 'addressable/uri'
+gem 'addressable', '~> 2.2', :require => 'addressable/uri'
 gem 'http_accept_language', '~> 1.0.2'
 gem 'typhoeus'
 
@@ -138,7 +137,6 @@ gem 'jquery-rails'
 
 gem 'faraday'
 gem 'faraday_middleware'
-gem 'em-synchrony', '1.0.0', :platforms => :ruby_19
 
 
 gem 'jasmine', :git => 'git://github.com/pivotal/jasmine-gem.git'
@@ -150,21 +148,18 @@ group :test do
   gem 'capybara', '~> 1.1.2'
   gem 'cucumber-rails', '1.3.0', :require => false
   gem 'database_cleaner', '0.7.1'
-  gem 'diaspora-client', :git => 'git://github.com/diaspora/diaspora-client.git'
 
   gem 'timecop'
-                          #"0.1.0", #:path => '~/workspace/diaspora-client'
   gem 'factory_girl_rails', '1.7.0'
   gem 'fixture_builder', '0.3.3'
   gem 'fuubar', '>= 1.0'
-  gem 'mongrel', :require => false, :platforms => :ruby_18
   gem 'rspec', '>= 2.0.0'
   gem 'rspec-core', '~> 2.9.0'
   gem 'rspec-instafail', '>= 0.1.7', :require => false
   gem "rspec-rails", "~> 2.9.0" 
   gem 'selenium-webdriver', '2.22.0.rc1'
 
-  gem 'webmock', :require => false
+  gem 'webmock', '~> 1.7', :require => false
   gem 'sqlite3'
   gem 'mock_redis'
 
@@ -172,6 +167,9 @@ group :test do
   gem 'guard-rspec'
   gem 'guard-spork'
   gem 'guard-cucumber'
+
+
+  gem 'mongrel', :require => false, :platforms => :ruby_18 #why
 end
 
 group :test, :development do
@@ -181,7 +179,7 @@ end
 
 group :development do
   gem 'heroku'
-  gem 'heroku_san', :git => 'git://github.com/maxwell/heroku_san.git', :platforms => :mri_19
+  gem 'heroku_san', '3.0.1', :platforms => :mri_19
   gem 'capistrano', :require => false
   gem 'capistrano_colors', :require => false
   gem 'capistrano-ext', :require => false
