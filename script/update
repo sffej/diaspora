@@ -58,13 +58,13 @@ select yn in "Yes" "No"; do
     esac
 done
 
-echo "cdn assets?"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) script/cdn; break;;
-        No ) break;;
-    esac
-done
+#echo "cdn assets?"
+#select yn in "Yes" "No"; do
+#    case $yn in
+#        Yes ) script/cdn; break;;
+#        No ) break;;
+#    esac
+#done
 
 echo "kill old $OP unicorn cluster?"
 select yn in "Yes" "No"; do

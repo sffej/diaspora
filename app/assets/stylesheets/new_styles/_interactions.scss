@@ -6,11 +6,12 @@
   bottom: 0;
   left: 0;
   text-align: center;
+  opacity: .85;
 }
 
 #post-reactions {
   height: 80%;
-  max-height: 350px;
+  max-height: 500px;
   overflow: auto;
   margin-top: 5px;
 }
@@ -86,7 +87,7 @@
 
     textarea{
       height: 18px;
-      width: 318px;
+      width: 550px;
     }
 
     form {
