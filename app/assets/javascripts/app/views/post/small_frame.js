@@ -1,13 +1,11 @@
-//= require "./post_view"
+//= require "../post_view"
 
-app.views.SmallFrame = app.views.Post.extend({
+app.views.Post.SmallFrame = app.views.Post.extend({
   className : "canvas-frame",
 
-  templateName : "small-frame",
+  templateName : "small-frame/default",  // default to fall back to
 
   events : {
-    "click .content" : "favoritePost",
-    "click .delete" : "killPost",
     "click .info" : "goToPost"
   },
 
@@ -17,10 +15,6 @@ app.views.SmallFrame = app.views.Post.extend({
 
   oEmbedView : function(){
     return new app.views.OEmbed({model : this.model})
-  },
-
-  presenter : function(){
-    return this.smallFramePresenter()
   },
 
   smallFramePresenter : function(){
@@ -35,11 +29,14 @@ app.views.SmallFrame = app.views.Post.extend({
   },
 
   initialize : function() {
-    this.$el.addClass([this.dimensionsClass(), this.colorClass(), this.frameClass()].join(' '))
-    return this;
+    this.addStylingClasses()
   },
 
   postRenderTemplate : function() {
+    this.addStylingClasses()
+  },
+
+  addStylingClasses : function() {
     this.$el.addClass([this.dimensionsClass(), this.colorClass(), this.frameClass()].join(' '))
   },
 
@@ -50,53 +47,26 @@ app.views.SmallFrame = app.views.Post.extend({
 
   colorClass : function() {
     var text = this.model.get("text")
-      , baseClass = $.trim(text).length == 0 ? "no-text" : 'has-text';
+      , baseClass = $.trim(text).length == 0 ? "no-text" : "has-text";
+
+    if(this.model.get("photos").length > 0 || this.model.get("o_embed_cache"))
+      baseClass += " has-media";
 
     if(baseClass == "no-text" || this.model.get("photos").length > 0 || this.model.get("o_embed_cache")) { return baseClass }
 
     var randomColor = _.first(_.shuffle(['cyan', 'green', 'yellow', 'purple', 'lime-green', 'orange', 'red', 'turquoise', 'sand']));
 
-    var textClass;
-    if(text.length > 240) {
-      textClass = "blog-text x2 width"
-    } else if(text.length > 140) {
-      textClass = randomColor
-    } else if(text.length > 40) {
-      textClass = randomColor
-    } else {
-      textClass =  "big-text " + randomColor
+    var textClass = randomColor;
+
+    if(text.length < 40) {
+      textClass += " big-text"
     }
 
-    return [baseClass, textClass, "sticky-note"].join(" ")
+    return [baseClass, textClass].join(" ")
   },
 
   dimensionsClass : function() {
     return (this.model.get("favorite")) ?  "x2 width height" : ""
-  },
-
-  favoritePost : function(evt) {
-    if(evt) {
-      /* follow links instead of faving the targeted post */
-      if($(evt.target).is('a')) { return }
-
-      evt.stopImmediatePropagation(); evt.preventDefault();
-    }
-
-    var prevDimension = this.dimensionsClass();
-
-    this.model.toggleFavorite({save : this.model.get("author").diaspora_id == app.currentUser.get("diaspora_id")})
-
-    this.$el.removeClass(prevDimension)
-    this.render()
-
-    app.page.stream.trigger("reLayout")
-    //trigger moar relayouts in the case of images WHOA GROSS HAX
-    _.delay(function(){app.page.stream.trigger("reLayout")}, 200)
-  },
-
-  killPost : function(){
-    this.destroyModel()
-    _.delay(function(){app.page.stream.trigger("reLayout")}, 0)
   },
 
   goToPost : function(evt) {

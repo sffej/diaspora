@@ -17,7 +17,7 @@ num_resqueworkers.times do |num|
   God.watch do |w|
     w.dir      = "#{rails_root}"
     w.name     = "resque-#{num}"
-    w.group    = 'diaspora'
+    w.group    = 'resques'
     w.interval = 190.seconds
     w.env      = {"QUEUE"=>"*", "RAILS_ENV"=>rails_env}
     w.start    = "bundle exec rake resque:work"

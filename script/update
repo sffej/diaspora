@@ -87,7 +87,7 @@ done
 echo "restart workers?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) god restart resque; break;;
+        Yes ) god restart resques; break;;
         No ) break;;
     esac
 done

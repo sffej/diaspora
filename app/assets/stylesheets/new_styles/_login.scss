@@ -1,12 +1,20 @@
-#login {
+#login-container {
+  background-image : url("/assets/highrespng.png");
+  background-position : center 130px;
+  background-repeat : no-repeat;
+  background-size : 450px auto;
+  height : 100%;
+  opacity : 0.9;
   position : absolute;
+  width : 100%
+}
+#login {
+  position : relative;
   top : 0;
   left : 0;
-  margin-top : 200px;
-  //background-color : #afc652;
-  min-height : 100%;
+  padding-top : 300px;
   min-width : 100%;
-
+  opacity : 0.6;
   //color : #fff;
   text-align : center;
 
@@ -17,8 +25,14 @@
 
   #huge-text {
     font-family : Roboto-Light;
-    font-size : 200px;
+    font-size : 51px;
     color : #ddd;
     text-shadow : 0 1px 0 #fff;
+  }
+
+  #forgot_password_link {
+    margin : 40px;
+    color : #fff;
+    clear : all;
   }
 }
