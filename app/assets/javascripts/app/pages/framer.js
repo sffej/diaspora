@@ -24,7 +24,7 @@ app.pages.Framer = app.views.Base.extend({
   },
 
   postView : function(){
-    return new app.views.SmallFrame({model : this.model})
+    return new app.views.Post.SmallFrame({model : this.model})
   },
 
   navigateNext : function(){
@@ -73,7 +73,7 @@ app.views.framerControls = app.views.Base.extend({
 
   presenter : function() {
     var selectedFrame = this.model.get("frame_name")
-      , templates =_.union(app.models.Post.frameMoods, _.without(app.models.Post.legacyTemplateNames, ["status", "status-with-photo-backdrop", "photo-backdrop", "activity-streams-photo", "note"])) //subtract re-implemented templates
+      , templates = app.models.Post.frameMoods //subtract re-implemented templates
     return _.extend(this.defaultPresenter(), {
       templates :_.map(templates, function(template) {
         return {
