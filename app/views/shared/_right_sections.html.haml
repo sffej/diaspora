@@ -27,7 +27,7 @@
       %h4
         = link_to t('aspects.index.donate'), "/supportyourpod", :rel => "facebox" 
     .content
-      = t('aspects.index.keep_us_running', :pod => URI.parse(AppConfig[:pod_url]).host)      
+      = t('aspects.index.keep_pod_running', :pod => URI.parse(AppConfig[:pod_url]).host)      
       = link_to t('aspects.index.donate'), "/supportyourpod", :rel => "facebox"
       %h4
         Use Paypal, Amazon, Bitcoin, Google, Flattr and more to support this pod, KEEP the ads Away!

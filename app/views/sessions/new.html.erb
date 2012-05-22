@@ -1,10 +1,10 @@
 <% content_for :page_title do %>
     <%= "Diaspora* / #{t('devise.sessions.new.sign_in')}" %>
 <% end %>
-
+<div id="login-container">
 <div id="login">
   <h1 id="huge-text">
-    DIASPORA
+    
   </h1>
 
   <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "form-horizontal block-form"}, :autocomplete => 'off') do |f| %>
@@ -27,7 +27,16 @@
             <div class="controls">
                 <%= f.password_field :password, :placeholder => "••••••••", :required => true, :pattern => "......+" %>
             </div>
+            
           </div>
+
+         <div class="control-group">
+            <div class="remember">
+                <%= f.check_box :remember_me, :tabindex => 3 %>
+                <%= "#{t('devise.sessions.new.remember_me')}" %>
+            </div>
+         </div>
+
         </fieldset>
 
         <%= f.submit "Sign In", :class => "new-btn" %>
@@ -44,4 +53,6 @@
       <br/>
       <%= link_to t('devise.shared.links.sign_up'), new_registration_path(resource_name) %>
   <% end %>
+  
+</div>
 </div>
