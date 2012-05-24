@@ -80,9 +80,17 @@ app.views.Base = Backbone.View.extend({
       if(attribute.slice("-2") === "[]") {
         memo[attribute.slice(0, attribute.length - 2)] = _.pluck(this.$el.find(selector).serializeArray(), "value")
       } else {
-        memo[attribute] = this.$el.find(selector).val();
+        memo[attribute] = this.$el.find(selector).val() || this.$el.find(selector).text();
       }
       return memo
+    }
+  },
+
+  destroyModel: function(evt) {
+    evt && evt.preventDefault();
+    if (confirm(Diaspora.I18n.t("confirm_dialog"))) {
+      this.model.destroy();
+      this.remove();
     }
   }
 });
@@ -114,7 +122,7 @@ app.views.InfScroll = app.views.Base.extend({
   },
 
   createPostView : function(post){
-    var postView = new this.postClass({ model: post });
+    var postView = new this.postClass({ model: post, stream: this.stream });
     this.postViews.push(postView)
     return postView
   },

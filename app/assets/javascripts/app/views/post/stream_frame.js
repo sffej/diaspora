@@ -1,24 +1,24 @@
-app.views.Post.StreamFrame = app.views.Post.SmallFrame.extend({
-  events :_.extend({
-    'click .content' : 'fetchInteractions'
-  }, app.views.Post.SmallFrame.prototype.events),
+app.views.Post.StreamFrame = app.views.Base.extend({
+  className : "stream-frame",
 
-  subviews :_.extend({
-    '.interactions' : 'interactionsView'
-  }, app.views.Post.SmallFrame.prototype.subviews),
+  templateName : "stream-frame",
 
-  initialize : function(){
-    this.interactionsView = new app.views.StreamInteractions({model : this.model})
+  subviews : {
+    ".small-frame" : "smallFrameView",
+    '.stream-frame-feedback' : 'feedbackView'
   },
 
-  postRenderTemplate : function(){
-    this.addStylingClasses()
-    this.$el.append($("<div class='interactions'/>"))
+  initialize : function(options) {
+    this.stream = options.stream
+    this.smallFrameView = new app.views.Post.SmallFrame({model : this.model})
+    this.feedbackView =  new app.views.FeedbackActions({ model: this.model })
   },
 
-  fetchInteractions : function() {
-    this.model.interactions.fetch().done(_.bind(function(){
-      this.interactionsView.render()
-    }, this));
+  events : {
+    'click .content' : 'triggerInteracted'
+  },
+
+  triggerInteracted : function() {
+    this.stream.trigger("frame:interacted", this.model)
   }
-})
+});

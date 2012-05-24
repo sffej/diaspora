@@ -11,7 +11,8 @@ app.pages.Stream = app.views.Base.extend({
   templateName : "stream",
 
   subviews : {
-    "#stream-content" : "streamView"
+    "#stream-content" : "streamView",
+    "#stream-interactions" : "interactionsView"
   },
 
   initialize : function(){
@@ -19,5 +20,27 @@ app.pages.Stream = app.views.Base.extend({
     this.stream.preloadOrFetch();
 
     this.streamView = new app.views.NewStream({ model : this.stream })
-  }
+    var interactions = this.interactionsView = new app.views.StreamInteractions()
+
+    this.stream.on("frame:interacted", function(post){
+      interactions.setInteractions(post)
+    })
+  },
+
+  postRenderTemplate : function() {
+    this.$("#header").css("background-image", "url(" + app.currentUser.get("wallpaper") + ")")
+    this.setUpHashChangeOnStreamLoad()
+  },
+
+  setUpHashChangeOnStreamLoad : function(){
+    var self = this;
+    this.streamView.on('loadMore', function(){
+      var post = this.stream.items.last();
+      self.navigateToPost(post)
+    });
+  },
+
+  navigateToPost : function(post){
+    app.router.navigate(location.pathname + "?ex=true&max_time=" + post.createdAt(), {replace: true})
+  },
 });
