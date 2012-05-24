@@ -2,12 +2,16 @@ describe("app.pages.Profile", function(){
   beforeEach(function(){
     this.guid = 'abcdefg123'
     this.profile = factory.profile({personId: this.guid})
+    this.profile.deferred = new $.Deferred()
+    spyOn(app.collections.Posts.prototype, "fetch").andReturn(new $.Deferred)
     app.page = this.page = new app.pages.Profile({model : this.profile });
     this.stream = this.page.stream
+    this.profile.deferred.resolve()
   });
 
   it("fetches the profile of the user with the params from the router and assigns it as the model", function(){
     var profile = new factory.profile()
+    profile.deferred = $.Deferred()
     spyOn(app.models.Profile, 'findByGuid').andReturn(profile)
     var page =  new app.pages.Profile({personId : 'jarjabinkisthebest' })
     expect(app.models.Profile.findByGuid).toHaveBeenCalledWith('jarjabinkisthebest')
@@ -34,6 +38,7 @@ describe("app.pages.Profile", function(){
     context("with no posts", function(){
       beforeEach(function(){
         this.profile.set({"name" : "Alice Waters", person_id : "889"})
+        this.stream.deferred.resolve()
       })
 
       it("has a message that there are no posts", function(){
@@ -52,6 +57,7 @@ describe("app.pages.Profile", function(){
       beforeEach(function(){
         this.post = factory.post()
         this.stream.add(this.post)
+        this.stream.deferred.resolve()
         this.page.toggleEdit()
         expect(this.page.editMode).toBeTruthy()
         this.page.render()
@@ -62,18 +68,6 @@ describe("app.pages.Profile", function(){
           this.page.model.set({is_own_profile : true})
           this.page.render()
           expect(this.page.$("#profile-controls .control").length).toBe(2)
-        })
-
-        it("shows a follow button if showFollowButton returns true", function() {
-          spyOn(this.page, "showFollowButton").andReturn(true)
-          this.page.render()
-          expect(this.page.$("#follow-button").length).toBe(1)
-        })
-
-        it("doesn't show a follow button if showFollowButton returns false", function() {
-          spyOn(this.page, "showFollowButton").andReturn(false)
-          this.page.render()
-          expect(this.page.$("#follow-button").length).toBe(0)
         })
       })
 
@@ -170,35 +164,4 @@ describe("app.pages.Profile", function(){
       })
     })
   });
-
-  describe("followingEnabled", function(){
-    /* for legacy beta testers */
-    it("returns false if following_count is zero", function(){
-      loginAs({following_count : 0})
-      expect(this.page.followingEnabled()).toBeFalsy()
-    })
-
-    it("returns false if the user is not signed in", function(){
-      logout()
-      expect(this.page.followingEnabled()).toBeFalsy()
-    })
-
-    it("returns false if following_count is zero", function(){
-      loginAs({following_count : 1})
-      expect(this.page.followingEnabled()).toBeTruthy()
-    })
-  })
-
-  describe("followingEnabled", function(){
-    /* for legacy beta testers */
-    it("returns false if following_count is zero", function(){
-      app.currentUser.set({following_count : 0})
-      expect(this.page.followingEnabled()).toBeFalsy()
-    })
-
-    it("returns false if following_count is zero", function(){
-      app.currentUser.set({following_count : 1})
-      expect(this.page.followingEnabled()).toBeTruthy()
-    })
-  })
 });

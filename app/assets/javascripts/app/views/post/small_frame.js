@@ -13,6 +13,11 @@ app.views.Post.SmallFrame = app.views.Post.extend({
     '.embed-frame' : "oEmbedView"
   },
 
+  initialize : function(options) {
+    this.stream = options.stream;
+    this.addStylingClasses()
+  },
+
   oEmbedView : function(){
     return new app.views.OEmbed({model : this.model})
   },
@@ -26,10 +31,6 @@ app.views.Post.SmallFrame = app.views.Post.extend({
         resharesCount : this.model.interactions.resharesCount(),
         commentsCount : this.model.interactions.commentsCount()
       })
-  },
-
-  initialize : function() {
-    this.addStylingClasses()
   },
 
   postRenderTemplate : function() {
@@ -70,7 +71,7 @@ app.views.Post.SmallFrame = app.views.Post.extend({
   },
 
   goToPost : function(evt) {
-    if(evt) { evt.stopImmediatePropagation(); }
+    if(evt) { evt.preventDefault() && evt.stopImmediatePropagation(); }
     app.setPreload('post',this.model.attributes)
     app.router.navigate(this.model.url(), true)
   }

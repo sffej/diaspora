@@ -8,17 +8,12 @@ describe("app.pages.Framer", function(){
     expect(this.model).toBe(app.frame) //uses global state of app.frame :/
   });
 
-  it("passes the model down to the post view", function(){
-    expect(this.page.postView().model).toBe(app.frame)
-  });
-
   describe("navigation on save", function(){
     it("navigates to the current user's profile page", function(){
       spyOn(app.router, "navigate")
       this.page.model.trigger("sync")
       expect(app.router.navigate).toHaveBeenCalled()
     })
-
     // want a spec here for the bookmarklet case
   })
 
@@ -35,13 +30,12 @@ describe("app.pages.Framer", function(){
     })
   })
 
-
   describe("rendering", function(){
     beforeEach(function(){
       this.page.render();
     });
 
-    it("saves the model when you click done",function(){
+    it("saves the model when you click done", function(){
       spyOn(app.frame, "save");
       this.page.$("input.done").click();
       expect(app.frame.save).toHaveBeenCalled();

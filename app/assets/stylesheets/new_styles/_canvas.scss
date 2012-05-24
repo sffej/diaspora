@@ -2,6 +2,15 @@
   width : $two-column-width + px;
 }
 
+a.logo{
+text-decoration: none;
+color: white;
+  &:hover{
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+  }
+}
 .no-post-message {
   text-align: center;
   margin-top: 50px;
@@ -40,7 +49,7 @@
     @include transition(-webkit-transform);
     @include box-shadow(0, 8px, 50px, rgba(0,0,0,0.9));
 
-    background-image : image_url("paper-texture-1.jpg");
+    background-image : image_url("texture/paper.jpg");
 
     &:hover {
       .info {
@@ -262,12 +271,14 @@
     }
   }
 
+  &.editable:not(.has-media),
   &.big-text {
     .text-content {
       display : table;
       height : 225px;
       width : 225px;
-
+      margin: 0px auto;
+      
       p {
         display : table-cell;
         vertical-align : middle;
@@ -277,6 +288,11 @@
         text-align : center;
       }
     }
+  }
+
+  &.editable:not(.has-media) p {
+    min-width : 225px;
+    min-height : 225px;
   }
 
   &.x2.big-text .text-content {
@@ -322,7 +338,7 @@
   &.typist {
     .content {
       background : {
-        image : image_url("typist_texture.png");
+        image : image_url("texture/typist.png");
         color : transparent;
       }
     }
@@ -351,6 +367,13 @@
   }
 
   &.vanilla {
+    .content {
+      background :{
+        color : #fff;
+        image : image_url("texture/vanilla.jpg");
+      }
+    }
+
     .background-color {
       display : none;
     }
@@ -369,14 +392,63 @@
 /* new stream overrides */
 #stream {
   color : #fff;
-  background-color : #333;
+  background-color : #222;
+
+  .background {
+    @include box-shadow(-2px, 0, 7px, rgba(0,0,0,0.8));
+    @include dark-hatched-bg();
+
+    position : fixed;
+    height : 100%;
+    width : 100%;
+  }
+
+
+  #stream-interactions,
+  #stream-content {
+    padding-top : 90px;
+  }
 }
 
 #stream-content {
+  .stream-frame {
+    margin-bottom : 40px;
+
+    .stream-frame-feedback {
+      float : right;
+      margin-top : 8px;
+    }
+
+    .status-with-photo-backdrop .text-content p {
+      color: #111;
+    }
+
+    .canvas-frame {
+      .info {
+        display : none;
+      }
+    }
+
+    /* a media box object */
+    .author {
+      margin : 0;
+
+      .bd {
+        margin-top : 11px;
+      }
+    }
+  }
+
   .canvas-frame {
     width: 100%;
+    margin : 0;
+    float : none;
+
     .content {
       width: 100%;
+
+      /* cursor overrides */
+      cursor : pointer;
     }
   }
 }
