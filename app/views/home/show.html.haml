@@ -4,7 +4,8 @@
 
 
 - content_for :page_title do
-  DIASPORA* Public Pod Diasporg
+  = pod_name
+
 - begin
   = render :partial => 'home/show'
 - rescue
