@@ -9,3 +9,14 @@ $(this).css('cursor','wait');
         }
     });
 });
+$(document).ready(function() {
+$("#shorteninvite").click(function() {
+  var $self = $(this)
+    $.ajax({
+      url: '/shorten/?url='+this.value,
+        success: function(data) {
+        $('#invite_code').val(data);
+        }
+    });
+});
+});

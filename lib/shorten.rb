@@ -8,7 +8,7 @@ module Morley
       require 'rubygems'
 	module Shorten
 	 def self.short(url)
-           if !url or url =~ 'test.host'
+           if !url or url =~ (Regexp.new '/test.host/')
              return (url)
            else
              new = Net::HTTP.get(URI.parse("http://dia.so/diaspora-api.php?action=shorturl&url=#{url}&format=simple&signature=d388503621"))
