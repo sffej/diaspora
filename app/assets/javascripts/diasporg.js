@@ -9,14 +9,16 @@ $(this).css('cursor','wait');
         }
     });
 });
-$(document).ready(function() {
-$("#shorteninvite").click(function() {
-  var $self = $(this)
+$("#shorteninvite:not(.done)").live("mousedown", function() {
+  var $url = $('#invite_code').val();
     $.ajax({
-      url: '/shorten/?url='+this.value,
+      url: '/shorten/?url='+$url,
         success: function(data) {
-        $('#invite_code').val(data);
+        $('#invite_code').val(data).addClass("done");
         }
     });
 });
-});
+$(window).scroll(function(){
+    $(":header").css('opacity','0.86');
+})
+
