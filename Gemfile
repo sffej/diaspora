@@ -5,9 +5,9 @@ gem 'resque-cleaner'
 gem 'bundler', '> 1.1.0'
 ruby '1.9.3' if ENV['HEROKU']
 
-gem 'rails', '3.2.2'
+gem 'rails', '3.2.5'
 
-gem 'foreman', '0.41'
+gem 'foreman', '0.46'
 
 gem 'thin', '~> 1.3.1',    :require => false
 gem 'rails_autolink'
@@ -39,7 +39,7 @@ gem "rpm_contrib", "~> 2.1.7"
 
 group :production do # we don't install these on travis to speed up test runs
   gem 'rails_admin', '~> 0.0.3'
-  gem 'fastercsv', '1.5.4', :require => false
+  gem 'fastercsv', '1.5.5', :require => false
   gem 'rack-ssl', :require => 'rack/ssl'
   gem 'rack-rewrite', '~> 1.2.1', :require => false
 
@@ -83,7 +83,7 @@ gem 'rails-i18n'
 # parsing
 
 gem 'nokogiri', '1.5.2'
-gem 'redcarpet', "2.0.1"
+gem 'redcarpet', "2.1.1"
 gem 'roxml', :git => 'git://github.com/Empact/roxml.git', :ref => '7ea9a9ffd2338aaef5b0'
 gem 'ruby-oembed', '~> 0.8.7'
 
@@ -105,7 +105,7 @@ gem 'typhoeus'
 
 # views
 
-gem 'haml'
+gem 'haml', '3.1.6.rc.1'
 gem 'mobile-fu'
 
 gem 'will_paginate'
@@ -154,11 +154,8 @@ group :test do
   gem 'factory_girl_rails', '1.7.0'
   gem 'fixture_builder', '0.3.3'
   gem 'fuubar', '>= 1.0'
-  gem 'rspec', '>= 2.0.0'
-  gem 'rspec-core', '~> 2.9.0'
   gem 'rspec-instafail', '>= 0.1.7', :require => false
-  gem "rspec-rails", "~> 2.9.0" 
-  gem 'selenium-webdriver', '2.22.0.rc1'
+  gem 'selenium-webdriver', '2.22.1'
 
   gem 'webmock', '~> 1.7', :require => false
 
@@ -171,6 +168,7 @@ end
 
 group :test, :development do
   gem 'debugger', :platforms => :mri_19
+  gem "rspec-rails", "~> 2.10" 
   gem 'ruby-debug', :platforms => :mri_18
 end
 
