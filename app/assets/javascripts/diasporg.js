@@ -18,11 +18,11 @@ $("#shorteninvite:not(.done)").live("mousedown", function() {
         }
     });
 });
-$("header").live("mouseover", function() {
-    $("header").css('opacity','1.0');
-});
-$(document).ready(function() {
-$(window).scroll(function(){
-    $("header").css('opacity','0.86');
-})
-});
+//$("header").live("mouseover", function() {
+    //$("header").css('opacity','1.0');
+//});
+//$(document).ready(function() {
+//$(window).scroll(function(){
+    //$("header").css('opacity','0.86');
+//})
+//});
