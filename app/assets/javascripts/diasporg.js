@@ -26,3 +26,18 @@ $("#shorteninvite:not(.done)").live("mousedown", function() {
     //$("header").css('opacity','0.86');
 //})
 //});
+$(document).ready(function() {
+  $("#aspect_nav").mouseover(function() {
+    $("#hiddenaspects").removeClass("hidden");
+  });
+  $("#aspect_nav").mouseout(function() {
+    $("#hiddenaspects").addClass("hidden");
+  });
+  $("#followed_tags_listing").mouseover(function() {
+    $("#hiddentags").removeClass("hidden");
+  });
+  $("#followed_tags_listing").mouseout(function() {
+    $("#hiddentags").addClass("hidden");
+  });
+});
+
