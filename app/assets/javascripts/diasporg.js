@@ -4,7 +4,7 @@ $(this).css('cursor','wait');
     $.ajax({
       url: '/shorten/show?url='+this.href,
         success: function(data) {
-        $self.addClass("expanded").append("<span class='via'> "+data+" </span>");
+        $self.addClass("expanded").after("<span class='via'> URL Expanded: <a href='"+data+"'>"+data+"</a></span>");
         $self.css('cursor','alias');
         }
     });
