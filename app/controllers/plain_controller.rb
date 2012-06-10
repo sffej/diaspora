@@ -50,6 +50,11 @@ class PlainController < ApplicationController
     return
   end
 
+  def shorten
+    @link = Morley::Shorten::short(params[:url])
+    render :layout => false
+  end
+
   def shortenshow
     buffer = Morley::Stats::stats(params[:url])
     result = JSON.parse(buffer)

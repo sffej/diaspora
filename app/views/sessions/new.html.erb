@@ -25,14 +25,14 @@
             </label>
 
             <div class="controls">
-                <%= f.password_field :password, :placeholder => "••••••••", :required => true, :pattern => "......+" %>
+                <%= f.password_field :password, :required => true, :pattern => "......+" %>
             </div>
             
           </div>
 
          <div class="control-group">
             <div class="remember">
-                <%= f.check_box :remember_me, :tabindex => 3 %>
+                <%= f.check_box :remember_me %>
                 <%= "#{t('devise.sessions.new.remember_me')}" %>
             </div>
          </div>
