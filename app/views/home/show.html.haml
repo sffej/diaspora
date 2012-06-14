@@ -18,5 +18,4 @@
       background: #000000;
     }
   :erb
-    <%= File.open(File.join(Rails.root, 'public/default.html')).read %>
-
+    <%= File.open(Rails.root.join('public', 'default.html')).read %>
