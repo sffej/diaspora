@@ -28,7 +28,7 @@ app.pages.Composer = app.views.Base.extend({
       this.model.photos.off()
     }
   },
-
+  
   navigateNext : function(){
     var self = this,
         textArea = this.$("form textarea.text")
