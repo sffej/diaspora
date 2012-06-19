@@ -13,10 +13,6 @@
 
 - else
   = render 'shared/publisher', :selected_aspects => stream.aspects, :aspect_ids => stream.aspect_ids, :for_all_aspects => stream.for_all_aspects?, :aspect => stream.aspect
-  = link_to ('try the beta publisher'), "#composer", :rel => "facebox" 
-  
-  #composer{:style => "display:none;"}
-    %iframe{:src => '/posts/new', :height => 700, :width => 1100, :style => "border:none;"}
 
 = render 'aspects/no_posts_message'
 

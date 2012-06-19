@@ -4,7 +4,6 @@
 <div id="login-container">
 <div id="login">
   <h1 id="huge-text">
-    <%= AppConfig[:pod_name] %>
   </h1>
 
   <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "form-horizontal block-form"}, :autocomplete => 'off') do |f| %>

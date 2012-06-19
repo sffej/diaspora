@@ -5,7 +5,7 @@ class FeatureFlagger
   end
 
   def new_publisher?
-    beta? || admin? || developer?
+    beta? || admin? || developer? || legacy?
   end
 
   def new_profile?
@@ -32,6 +32,10 @@ class FeatureFlagger
 
   def admin?
     @current_user.try(:admin?)
+  end
+
+  def legacy?
+    !Role.is_beta?(@current_user.person)
   end
 
   def beta?

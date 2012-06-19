@@ -2,13 +2,6 @@
 -#   licensed under the Affero General Public License version 3 or later.  See
 -#   the COPYRIGHT file.
 
-:javascript
-  $(function() {
-    $(".question_mark").twipsy({trigger: 'hover', placement: 'bottom'});
-    $(".service_icon").twipsy({trigger: 'hover', placement: 'bottom'});
-    $(".public_icon").twipsy({trigger: 'hover', placement: 'bottom'});
-  });
-
 #diasotip{:style => "display: none;"}
   Protip: Shorten a url by adding a extra / to it, eg http:///domain.com
 
@@ -46,7 +39,15 @@
         - for aspect_id in aspect_ids
           = hidden_field_tag 'aspect_ids[]', aspect_id.to_s
 
+      #publicwarn{:class => "hidden"}
+        Notice: Public posts are readable by all, users, non-users, web spiders, web robots etc.
+
       .options_and_submit
+        .betapublisher
+          = link_to ('Try the Beta Publisher'), "#composer", :rel => "facebox"
+          #composer{:style => "display:none;"}
+            %iframe{:src => '/posts/new', :height => 700, :width => 1100, :style => "border:none;"}
+
         .public_toggle
           %span#publisher_service_icons
             - if current_user.services
@@ -83,7 +84,6 @@
             #question_mark_pane
               = render 'shared/public_explain'
     = link_to '', contacts_path(:aspect_ids => aspect_ids), :class => 'selected_contacts_link hidden'
-
 
     #publisher_photo_upload
       = render 'photos/new_photo', :aspect_ids => aspect_ids.join(',')
