@@ -29,7 +29,7 @@
 
   text-align : center;
 
-  &.expose {
+  .expose {
     @include animation(expose, 4s)
   }
 
