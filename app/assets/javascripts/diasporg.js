@@ -41,3 +41,15 @@ $(document).ready(function() {
   });
 });
 
+$(".dropdown_list").live('click', function() {
+  if ($('.public.radio.selected:contains("Public")').length > 0) {
+    Diaspora.page.flashMessages.render({success: true, notice: "Public post mode on, post will be public internet wide."});
+  } else {
+  }
+});
+$("#aspect_ids_public").live('click', function() {
+  if ("#aspect_ids_public option:selected") {
+    Diaspora.page.flashMessages.render({success: true, notice: "Public post mode on, post will be public internet wide."});
+  } else {
+  }
+});
