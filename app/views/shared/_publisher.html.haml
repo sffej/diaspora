@@ -2,9 +2,6 @@
 -#   licensed under the Affero General Public License version 3 or later.  See
 -#   the COPYRIGHT file.
 
-#diasotip{:style => "display: none;"}
-  Protip: Shorten a url by adding a extra / to it, eg http:///domain.com
-
 -if publisher_explain
   :javascript
     $(document).ready(function() {
@@ -43,7 +40,7 @@
         Notice: Public posts are readable by all, users, non-users, web spiders, web robots etc.
 
       .options_and_submit
-        .betapublisher
+        .betapublisher{:style => "float:right;"}
           = link_to ('Try the Beta Publisher'), "#composer", :rel => "facebox"
           #composer{:style => "display:none;"}
             %iframe{:src => '/posts/new', :height => 700, :width => 1100, :style => "border:none;"}

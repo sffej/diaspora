@@ -3,7 +3,7 @@
 -#   the COPYRIGHT file.
 
 .stream_element{:data=>{:guid=>post.id}}
-  - if :nsfw?
+  - if post.respond_to?(:nsfw?) && post.nsfw?
     .shield_wrapper
       .shield
         = t("javascripts.stream.nsfw")

@@ -69,6 +69,7 @@ var Publisher = {
 
   isPublicPost: function(){
     return $('#publisher [name="aspect_ids[]"]').first().val() == "public";
+    Publisher.createCounter();
   },
 
   isToAllAspects: function(){
