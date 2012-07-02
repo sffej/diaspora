@@ -1,7 +1,7 @@
 //= require ./small_frame
 
 app.views.Post.CanvasFrame = app.views.Post.SmallFrame.extend({
-  SINGLE_COLUMN_WIDTH : 265,
+  SINGLE_COLUMN_WIDTH : 365,
   DOUBLE_COLUMN_WIDTH : 560,
 
   events : {

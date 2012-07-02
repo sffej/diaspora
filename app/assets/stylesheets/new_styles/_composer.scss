@@ -35,10 +35,13 @@
 
   .new_picture{
     margin-top: 4%;
+    float: left;
+    width: 240px;
   }
 
   .photos{
     margin-top: 5px;
+    margin-right: 10px;
   }
 
   input[disabled] {
@@ -46,8 +49,9 @@
   }
 
   textarea#post_text{
-    height: 100px;
+    height: 200px;
     padding : 10px;
+    width : 590px;
   }
 
   .template-picker {
@@ -138,11 +142,14 @@
   }
 
   .flow-controls {
-    padding: 20px 0;
+    padding-top: 5px;
     max-height: 68px;
+    padding-bottom : 20px;
 
     .aspect-selector {
       display : inline-block;
+      margin-bottom : 18px;
+      vertical-align : bottom;
 
       .aspects_dropdown {
         display : inline-block;
@@ -200,8 +207,8 @@
       @include box-shadow(0,0,0,0);
 
       cursor : pointer;
-      height : 70px;
-      width : 54px;
+      height : 24px;
+      width : 24px;
     }
 
     input:not(:checked) + label {
@@ -239,8 +246,8 @@ input[type="image"] {
 
 .new_photo .photo{
   display: inline;
-  max-width: 240px;
-  max-height: 240px;
+  max-width: 175px;
+  max-height: 175px;
   padding: 2px;
 }
 

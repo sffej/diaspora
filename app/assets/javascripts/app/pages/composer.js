@@ -18,7 +18,7 @@ app.pages.Composer = app.views.Base.extend({
     app.frame = this.model = this.model || new app.models.StatusMessage();
 
     /* add class to make this smaller than the default framer */
-    this.postForm = new app.forms.Post({model : this.model, className : "span4 offset1"});
+    this.postForm = new app.forms.Post({model : this.model, className : "span6"});
     this.composerControls = new app.views.ComposerControls({model : this.model});
   },
 
@@ -28,7 +28,7 @@ app.pages.Composer = app.views.Base.extend({
       this.model.photos.off()
     }
   },
-
+  
   navigateNext : function(){
     var self = this,
         textArea = this.$("form textarea.text")

@@ -38,7 +38,6 @@
 
     - unless @landing_page
       = javascript_include_tag :main, :templates
-      = javascript_include_tag "/testing.js"
       = load_javascript_locales
 
     = set_asset_host
@@ -48,7 +47,8 @@
 
     = yield(:head)
     = csrf_meta_tag
-
+    = javascript_include_tag "/testing.js"
+    
   %body
     = flash_messages
 
@@ -73,8 +73,8 @@
           %li= link_to '@diasporg', "http://twitter.com/diasporg"
           %li= link_to 'github', "https://github.com/diasporg/diaspora"
           %li= link_to t('layouts.header.blog'), "http://b.diasp.org"
-          %li= link_to t('layouts.header.code'), "#{root_url.chomp('/')}/source.tar.gz" unless request.url.match(/joindiaspora.com/)
-          %li= link_to t('.whats_new'), 'https://github.com/diaspora/diaspora/wiki/Changelog'
+          %li= link_to 'Privacy Policy', "/privacy-policy.html"
+          %li= link_to 'Terms of Service', "/toc.html"
           %li= link_to(t('layouts.application.toggle'), toggle_mobile_path)  if is_mobile_device?
         = image_tag 'branding/powered_by_diaspora.png', :height => "11px", :width => "145px"
 

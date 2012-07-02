@@ -85,6 +85,12 @@ es-AR:
         other: "%{count} usuarios encontrados"
         zero: "%{count} usuarios encontrados"
       you_currently: "Actualmente te quedan %{user_invitation} invitaciones para enviar %{link}"
+    weekly_user_stats:
+      amount_of:
+        one: "cantidad de nuevos usuarios esta semana: %{count}"
+        other: "cantidad de nuevos usuarios esta semana: %{count}"
+        zero: "cantidad de nuevos usuarios esta semana: ninguno"
+      current_server: "La fecha actual del servidor es %{date}"
   ago: "hace %{time}"
   all_aspects: "Todos los aspectos"
   application:
@@ -112,6 +118,7 @@ es-AR:
       edit_aspect: "Editar %{name}"
       select_all: "Seleccionar todo"
     aspect_stream:
+      make_something: "Haz algo"
       stay_updated: "Mantenete actualizado"
       stay_updated_explanation: "En tu stream principal aparecen las publicaciones de tus contactos, más las de las etiquetas que sigues, y si lo deseas, las de algunos miembros creativos de la comunidad."
     contacts_not_visible: "Los contactos en este aspecto no van a poder verse entre ellos."
@@ -317,6 +324,8 @@ es-AR:
     helper:
       correct_the_following_errors_and_try_again: "Corregí los siguientes errores e intentá de nuevo."
       invalid_fields: "Campos inválidos"
+    login_try_again: "Por favor <a href='%{login_link}'>acceder</a> e intenta de nuevo."
+    post_not_public: "¡La publicación que estás tratando de ver no es pública!"
   fill_me_out: "Completame"
   find_people: "Encontrá gente o #etiquetas"
   hide: "Ocultar"
@@ -377,24 +386,24 @@ es-AR:
       people_dislike_this:
         few: "%{count} les disguta"
         many: "%{count} les disgusta"
-        one: "%{count} le disgusta"
-        other: "%{count} les disgusta"
+        one: "a %{count} le disgusta esto"
+        other: "a %{count} les disgusta esto"
         two: "a %{count} no les gusta"
-        zero: "a nadie le disgusta"
+        zero: "a nadie le disgusta esto"
       people_like_this:
         few: "%{count} les gusta"
         many: "%{count} les gusta"
-        one: "%{count} le gusta"
-        other: "%{count} les gusta"
+        one: "a %{count} le gusta esto"
+        other: "a %{count} les gusta esto"
         two: "a %{count} les gusta"
-        zero: "a nadie le gusta"
+        zero: "a nadie le gusta esto"
       people_like_this_comment:
         few: "a %{count} le gusta"
         many: "a %{count} le gusta"
-        one: "a %{count} le gusta"
-        other: "a %{count} le gusta"
+        one: "a %{count} le gusta este comentario"
+        other: "a %{count} les gusta este comentario"
         two: "a %{count} les gusta"
-        zero: "a nadie le gusta esto"
+        zero: "a nadie le gusta este comentario"
   limited: "Limitado"
   more: "Más"
   next: "siguiente"
@@ -445,7 +454,7 @@ es-AR:
       few: "A %{actors} les gustó tu %{post_link}."
       many: "A %{actors} les gustó tu %{post_link}."
       one: "A %{actors} le gustó tu %{post_link}."
-      other: "A %{actors} le gustó tu %{post_link}."
+      other: "A %{actors} les gustó tu %{post_link}."
       two: "A %{actors} les gustó tu %{post_link}."
       zero: "A %{actors} le gustó tu %{post_link}."
     liked_post_deleted:
@@ -458,8 +467,8 @@ es-AR:
     mentioned:
       few: "%{actors} te mencionaron en una %{post_link}."
       many: "%{actors} te mencionaron en una %{post_link}."
-      one: "%{actors} te mencionó en %{post_link}."
-      other: "%{actors} te mencionó en una %{post_link}."
+      one: "%{actors} te mencionó en una %{post_link}."
+      other: "%{actors} te mencionaron en una %{post_link}."
       two: "%{actors} te mencionaron en una %{post_link}."
       zero: "%{actors} te mencionó en una %{post_link}."
     mentioned_deleted:
@@ -480,8 +489,8 @@ es-AR:
     reshared:
       few: "%{actors} han compartido tu %{post_link}."
       many: "%{actors} han compartido tu %{post_link}."
-      one: "%{actors} ha compartido tu %{post_link}."
-      other: "%{actors} compartió tu %{post_link}."
+      one: "%{actors} compartió tu %{post_link}."
+      other: "%{actors} han compartido tu %{post_link}."
       two: "%{actors} han compartido tu %{post_link}."
       zero: "%{actors} compartió tu %{post_link}."
     reshared_post_deleted:
@@ -507,7 +516,7 @@ es-AR:
     confirm_email:
       click_link: "Para activar tu nueva dirección de correo %{unconfirmed_email}, por favor seguí este enlace::"
       subject: "Por favor, activá tu nueva dirección de correo %{unconfirmed_email}"
-    email_sent_by_diaspora: "Este correo fue enviado por Diáspora.  Si querés dejar de recibir correos como este,"
+    email_sent_by_diaspora: "Este correo electrónico fue enviado por %{pod_name}. Si quieres dejar de recibir correos como este,"
     hello: "¡Hola %{name}!"
     invite:
       message: |-
@@ -767,7 +776,7 @@ es-AR:
     failure:
       error: "hubo un error al conectar al servicio"
     finder:
-      fetching_contacts: "Diaspora está tomando sus contactos de %{service} por favor volvé en unos minutos."
+      fetching_contacts: "Diaspora está trasladando tus contactos de %{service}, por favor regresa en unos minutos."
       no_friends: "No se han encontrado contactos de Facebook."
       service_friends: "%{service} Amigos"
     index:

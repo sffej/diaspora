@@ -13,6 +13,7 @@
 
 - else
   = render 'shared/publisher', :selected_aspects => stream.aspects, :aspect_ids => stream.aspect_ids, :for_all_aspects => stream.for_all_aspects?, :aspect => stream.aspect
+
 = render 'aspects/no_posts_message'
 
 - unless current_user.beta?

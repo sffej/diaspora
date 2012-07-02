@@ -45,7 +45,7 @@ app.views.Content = app.views.Base.extend({
     }
 
     // only collapse if height exceeds collHeight+20%
-    if( elem.height() > ((collHeight*1.8)+addHeight) && !elem.is(".opened") ) {
+    if( elem.height() > ((collHeight*2.8)+addHeight) && !elem.is(".opened") ) {
       elem.data("orig-height", elem.height() );
       elem
         .height( Math.max(collHeight, addHeight) )
@@ -87,7 +87,8 @@ app.views.OEmbed = app.views.Base.extend({
     })
   },
 
-  showOembedContent : function () {
+  showOembedContent : function (evt) {
+    if( $(evt.target).is('a') ) return;
     var insertHTML = $(app.helpers.oEmbed.html(this.model.get("o_embed_cache")));
     var paramSeparator = ( /\?/.test(insertHTML.attr("src")) ) ? "&" : "?";
     insertHTML.attr("src", insertHTML.attr("src") + paramSeparator + "autoplay=1");

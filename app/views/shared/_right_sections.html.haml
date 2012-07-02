@@ -123,6 +123,6 @@
       %li= link_to 'Source Code', "https://github.com/diasporg/diaspora"
       %li= link_to 'Privacy Policy', "/privacy-policy.html"
       %li= link_to 'Terms of Service', "/toc.html"
-      %li= link_to(t('layouts.application.toggle'), toggle_mobile_path)  if is_mobile_device?
+      %li= link_to t('layouts.application.toggle'), toggle_mobile_path
     = image_tag 'https://c790230.ssl.cf2.rackcdn.com/powered_by_diaspora.png', :height => "11px", :width => "145px"
 

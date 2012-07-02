@@ -7,7 +7,7 @@
   var InfiniteScroll = function() {
     var self = this;
     this.options = {
-      bufferPx: 500,
+      bufferPx: 2500,
       debug: false,
       donetext: Diaspora.I18n.t("infinite_scroll.no_more"),
       loadingText: "",

@@ -7,19 +7,16 @@
 bg:
   javascripts:
     aspect_dropdown:
-      add_to_aspect: "Избиране на аспект(и)"
+      add_to_aspect: "Добавяне на контакт"
       all_aspects: "Във всеки аспект"
       error: "Не е възможно започване на споделяне с <%= name %>.  Вероятно ги игнорирате?"
       select_aspects: "Избиране на аспект(и)"
       started_sharing_with: "Започнахте да споделяте с <%= name %>!"
       stopped_sharing_with: "Престанахте да споделяте с <%= name %>."
       toggle:
-        few: "В <%= count %> аспекта"
-        many: "В <%= count %> аспекта"
-        one: "В <%= count %> аспект"
+        one: "В <%= count %> аспекта"
         other: "В <%= count %> аспекта"
-        two: "В <%= count %> аспекта"
-        zero: "Избиране на аспект(и)"
+        zero: "В <%= count %> аспект"
     aspect_navigation:
       deselect_all: "Никой"
       no_aspects: "Няма избран аспект"
@@ -52,6 +49,7 @@ bg:
     ignore: "Игнориране"
     infinite_scroll:
       no_more: "Няма други публикации."
+    my_stream: "Поток"
     photo_uploader:
       looking_good: "Леле, изглеждате страхотно!"
     publisher:
@@ -67,12 +65,9 @@ bg:
       hide: "Скриване"
       like: "Харесва ми"
       likes:
-        few: "<%= count %> Likes"
-        many: "<%= count %> Likes"
-        one: "<%= count %> Like"
-        other: "<%= count %> Likes"
-        two: "<%= count %> Likes"
-        zero: "<%= count %> Likes"
+        one: "Харесана <%= count %> пъти"
+        other: "Харесана <%= count %> пъти"
+        zero: "Харесана <%= count %> път"
       limited: "Ограничено"
       more_comments:
         few: "Покажи останалите <%= count %> коментара"
@@ -85,12 +80,9 @@ bg:
       public: "Публично"
       reshare: "Споделяне"
       reshares:
-        few: "<%= count %> споделяния"
-        many: "<%= count %> споделяния"
-        one: "<%= count %> споделяне"
-        other: "<%= count %> споделяния"
-        two: "<%= count %> Reshares"
-        zero: "<%= count %> споделяния"
+        one: "Споделена <%= count %> пъти"
+        other: "Споделена  <%= count %> пъти"
+        zero: "Споделена <%= count %> път"
       unlike: "Не ми харесва"
     tags:
       wasnt_that_interesting: "Е, вероятно марката #<%= tagName %> не е чак толкова интересна..."
@@ -106,7 +98,7 @@ bg:
       prefixAgo: "преди"
       prefixFromNow: "след"
       seconds: "по-малко от минута"
-      suffixAgo: ""
+      suffixAgo: "преди"
       suffixFromNow: "от сега"
       year: "около година"
       years: "%d години"
