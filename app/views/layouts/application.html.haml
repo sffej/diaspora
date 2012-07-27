@@ -78,5 +78,7 @@
           %li= link_to(t('layouts.application.toggle'), toggle_mobile_path)  if is_mobile_device?
         = image_tag 'branding/powered_by_diaspora.png', :height => "11px", :width => "145px"
 
+    = render :partial =>'shared/footer'
+
     = include_chartbeat
     = include_mixpanel_guid
