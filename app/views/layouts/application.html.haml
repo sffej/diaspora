@@ -67,17 +67,6 @@
       %a{:id=>"back-to-top", :title=>"#{t('.back_to_top')}", :href=>"#"}
         &#8679;
 
-    %footer
-      .container
-        %ul#footer_nav
-          %li= link_to '@diasporg', "http://twitter.com/diasporg"
-          %li= link_to 'github', "https://github.com/diasporg/diaspora"
-          %li= link_to t('layouts.header.blog'), "http://b.diasp.org"
-          %li= link_to 'Privacy Policy', "/privacy-policy.html"
-          %li= link_to 'Terms of Service', "/toc.html"
-          %li= link_to(t('layouts.application.toggle'), toggle_mobile_path)  if is_mobile_device?
-        = image_tag 'branding/powered_by_diaspora.png', :height => "11px", :width => "145px"
-
     = render :partial =>'shared/footer'
 
     = include_chartbeat
