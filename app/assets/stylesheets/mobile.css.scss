@@ -110,8 +110,9 @@ body {
 
 .login_error,
 .login_alert {
-  color: rgb(208, 49, 43);
-  text-shadow: 1px 1px 20px rgb(208, 49, 43); }
+  color: #DF0101;
+  text-shadow: 1px 1px 5px #666;
+}
 
 .login_notice {
   color: rgb(10, 150, 10);
@@ -719,6 +720,7 @@ h3.ltr {
   margin: 0;
   padding: 15px 15px;
   vertical-align: baseline;
+  word-wrap: break-word;
 }
 
 textarea#message_text {
