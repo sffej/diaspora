@@ -39,7 +39,7 @@ module Devise
   module Strategies
     class TokenAuthenticatable < Authenticatable
       private
-      def valid_request?
+      def valid_params_request?
         params[:controller] == "activity_streams/photos" && params[:action] == "create"
       end
     end
