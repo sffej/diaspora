@@ -204,11 +204,7 @@ ActiveRecord::Schema.define(:version => 20120909053122) do
     t.text   "data",                 :null => false
   end
 
-<<<<<<< HEAD
-  add_index "o_embed_caches", ["url"], :name => "index_o_embed_caches_on_url", :length => {"url"=>767}
-=======
   add_index "o_embed_caches", ["url"], :name => "index_o_embed_caches_on_url", :length => {"url"=>255}
->>>>>>> upstream/master
 
   create_table "participations", :force => true do |t|
     t.string   "guid"
