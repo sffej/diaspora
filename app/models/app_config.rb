@@ -3,7 +3,7 @@
 # the COPYRIGHT file.
 
 require 'uri'
-require Rails.root.join('lib', 'enviroment_configuration')
+require Rails.root.join('lib', 'environment_configuration')
 
 class AppConfig < Settingslogic
   def self.source_file_name
@@ -12,7 +12,7 @@ class AppConfig < Settingslogic
       return ENV['application_yml']
     end
     config_file = Rails.root.join("config", "application.yml")
-    if !File.exists?(config_file) && (Rails.env == 'test' || Rails.env.include?("integration") || EnviromentConfiguration.heroku?)
+    if !File.exists?(config_file) && (Rails.env == 'test' || Rails.env.include?("integration") || EnvironmentConfiguration.heroku?)
       config_file = Rails.root.join("config", "application.yml.example")
     end
     config_file
@@ -21,7 +21,7 @@ class AppConfig < Settingslogic
   namespace Rails.env
 
   def self.load!
-    unless EnviromentConfiguration.heroku?
+    unless EnvironmentConfiguration.heroku?
       if no_config_file? && !have_old_config_file?
         $stderr.puts <<-HELP
 ******** You haven't set up your Diaspora settings file. **********
@@ -57,7 +57,7 @@ Please do the following:
       Process.exit(1)
     end
 
-    if !EnviromentConfiguration.heroku? && no_cert_file_in_prod?
+    if !EnvironmentConfiguration.heroku? && no_cert_file_in_prod?
       $stderr.puts <<-HELP
 ******** Diaspora does not know where your SSL-CA-Certificates file is. **********
   Please add the root certificate bundle (this is operating system specific) to application.yml. Defaults:
@@ -169,5 +169,25 @@ HELP
   
   def self.single_process_mode?
     (ENV['SINGLE_PROCESS'] == "true" || ENV['SINGLE_PROCESS_MODE'] == "true" || self[:single_process_mode]) ? true : false
+  end
+  
+  def self.get_redis_instance
+    if ENV["REDISTOGO_URL"].present?
+      puts "WARNING: using the REDISTOGO_URL environment variable is deprecated, please use REDIS_URL now."
+      ENV['REDIS_URL'] = ENV["REDISTOGO_URL"]
+    end
+    
+    redis_options = {}
+    
+    if ENV['REDIS_URL'].present?
+      redis_options = { :url => ENV['REDIS_URL'] }
+    elsif ENV['RAILS_ENV']== 'integration2'
+      redis_options = { :host => 'localhost', :port => 6380 }
+    elsif AppConfig[:redis_url].present?
+      puts "WARNING: You're redis_url doesn't start with redis://" unless AppConfig[:redis_url].start_with?("redis://")
+      redis_options = { :url => AppConfig[:redis_url] }
+    end
+  
+    Redis.new(redis_options.merge(:thread_safe => true))
   end
 end
