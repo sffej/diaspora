@@ -118,8 +118,8 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    #stored_location_for(:user) || current_user_redirect_path
-    stored_location_for(:user) || stream_path
+    stored_location_for(:user) || current_user_redirect_path
+    #stored_location_for(:user) || stream_path
   end
 
   def max_time

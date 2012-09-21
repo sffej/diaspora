@@ -204,7 +204,7 @@ ActiveRecord::Schema.define(:version => 20120909053122) do
     t.text   "data",                 :null => false
   end
 
-  add_index "o_embed_caches", ["url"], :name => "index_o_embed_caches_on_url", :length => {"url"=>255}
+  add_index "o_embed_caches", ["url"], :name => "index_o_embed_caches_on_url", :length => {"url"=>767}
 
   create_table "participations", :force => true do |t|
     t.string   "guid"
@@ -424,7 +424,7 @@ ActiveRecord::Schema.define(:version => 20120909053122) do
     t.boolean  "disable_mail",                                      :default => false, :null => false
     t.string   "language"
     t.string   "email",                                             :default => "",    :null => false
-    t.string   "encrypted_password",                                :default => "",    :null => false
+    t.string   "encrypted_password",                 :limit => 128, :default => "",    :null => false
     t.string   "invitation_token",                   :limit => 60
     t.datetime "invitation_sent_at"
     t.string   "reset_password_token"
