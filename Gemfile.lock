@@ -518,6 +518,7 @@ DEPENDENCIES
   redcarpet (= 2.1.1)
   remotipart (= 1.0.2)
   resque (= 1.22.0)
+  resque-cleaner
   resque-timeout (= 1.0.0)
   roxml!
   rpm_contrib (= 2.1.11)
