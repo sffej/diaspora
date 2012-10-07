@@ -87,7 +87,8 @@
 
     textarea{
       height: 18px;
-      width: 550px;
+      width: 318px;
+      padding: 4px;
     }
 
     form {
@@ -98,6 +99,9 @@
       position: absolute;
       right: 10px;
       bottom: 10px;
+      font-size: 11px; 
+      line-height: 16px; 
+      padding: 5px 9px;
     }
   }
 }

@@ -1,25 +1,20 @@
 branches:
   only:
     - 'master'
-    
+
 language: ruby
 rvm:
   - 1.9.3
 
+
 env:
   - DB=mysql
 
-before_install: 
-  - "./script/ci/before_install.sh"
 
 bundler_args: "--without development production heroku"
-before_script: "./script/ci/before.sh"
-script: "bundle exec rake travis"
+before_install: "./script/ci/before_install.sh"
+script: "./script/ci/build.sh"
 
 notifications:
-  irc:
-    channels:
-      - 'irc.freenode.org:6667#diasporg'
   email:
     - tci@z8s.com
-

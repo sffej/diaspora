@@ -14,6 +14,7 @@ timeout 30
 
 pid '/home/dmm/diaspora/tmp/pids/unicorn.pid'
 listen '/home/dmm/run/diaspora.sock', :backlog => 2048
+@resque_pid = nil
 
 # Ruby Enterprise Feature
 if GC.respond_to?(:copy_on_write_friendly=)
@@ -28,6 +29,12 @@ before_fork do |server, worker|
   # disconnect redis if in use
   if !AppConfig.single_process_mode?
     Resque.redis.client.disconnect
+  end
+  
+  if AppConfig.environment.unicorn.embed_resque_worker?
+    # Clean up Resque workers killed by previous deploys/restarts
+    Resque.workers.each { |w| w.unregister_worker }
+    @resque_pid ||= spawn('bundle exec rake resque:work QUEUES=*')
   end
 
   old_pid = '/var/run/diaspora/diaspora.pid.oldbin'
@@ -46,7 +53,7 @@ after_fork do |server, worker|
   ActiveRecord::Base.establish_connection
 
   # copy pasta from resque.rb because i'm a bad person
-  if !AppConfig.single_process_mode?
+  if !AppConfig.environment.single_process_mode?
     Resque.redis = AppConfig.get_redis_instance
   end
 
