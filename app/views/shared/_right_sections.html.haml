@@ -11,7 +11,7 @@
   t.parentNode.insertBefore(s, t);
   })();
 
-- if AppConfig[:open_invitations]
+- if AppConfig.settings.invitations.open?
   .section
     .title
       = image_tag('https://c790230.ssl.cf2.rackcdn.com/plus.png')

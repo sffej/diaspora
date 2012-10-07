@@ -2,8 +2,5 @@
 --profile
 --color
 --tag ~performance
-<<<<<<< HEAD
-=======
 --order random
 --drb
->>>>>>> upstream/master

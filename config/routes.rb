@@ -198,13 +198,6 @@ Diaspora::Application.routes.draw do
 
   # External
 
-  resources :authorizations, :only => [:index, :destroy]
-  scope "/oauth", :controller => :authorizations, :as => "oauth" do
-    get "authorize" => :new
-    post "authorize" => :create
-    post :token
-  end
-
   resources :services, :only => [:index, :destroy]
   controller :services do
     scope "/auth", :as => "auth" do
@@ -239,7 +232,7 @@ Diaspora::Application.routes.draw do
   #match '/' => redirect("/pages/", current_subdomain), :constraints => { :subdomain => /.+/ }
 
   # Resque web
-  if AppConfig[:mount_resque_web]
+  if AppConfig.admins.inline_resque_web?
     mount Resque::Server.new, :at => '/resque-jobs', :as => "resque_web"
   end
 
