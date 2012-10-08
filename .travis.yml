@@ -8,8 +8,8 @@ rvm:
 
 
 env:
-  - DB=mysql
-
+  - DB=mysql BUILD_TYPE=other
+  - DB=mysql BUILD_TYPE=cucumber
 
 bundler_args: "--without development production heroku"
 before_install: "./script/ci/before_install.sh"
