@@ -1,3 +1,3 @@
-if EnvironmentConfiguration.using_new_relic?
+#if EnvironmentConfiguration.using_new_relic?
   require 'newrelic_rpm'
-end
+#end
