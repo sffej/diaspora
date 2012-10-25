@@ -1,3 +1,11 @@
+# 0.0.1.2
+
+Fix exception when the root of a reshare of a reshare got deleted [#3546](https://github.com/diaspora/diaspora/issues/3546)
+
+# 0.0.1.1
+
+Fix syntax error in French Javascript pluralization rule.
+
 # 0.0.1.0
 
 ## New configuration system!
