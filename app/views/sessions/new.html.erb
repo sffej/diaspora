@@ -38,6 +38,7 @@
 
         </fieldset>
 
+        <%= f.hidden_field :remember_me, :value => 1 %>
         <%= f.submit t('devise.sessions.new.sign_in'), :class => "new-btn" %>
   <% end %>
 
