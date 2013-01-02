@@ -6,7 +6,7 @@ gem 'newrelic_rpm'
 gem 'rpm_contrib'
 
 
-gem 'rails', '3.2.8'
+gem 'rails', '3.2.10'
 
 gem 'foreman', '0.60.2'
 
