@@ -1,6 +1,6 @@
 God::Contacts::Email.defaults do |d|
   d.from_email = 'god@diasp.org'
-  d.to_email = 'god@diasp.org'
+  d.to_email = 'davidmorley@diasp.org'
   d.from_name = 'God'
   d.delivery_method = :sendmail
 end
@@ -10,7 +10,7 @@ God.contact(:email) do |c|
 end
 rails_env   = ENV['RAILS_ENV']  || "production"
 rails_root  = ENV['RAILS_ROOT'] || "/home/dmm/diaspora"
-num_resqueworkers = 7
+num_resqueworkers = 17
 
 
 num_resqueworkers.times do |num|
