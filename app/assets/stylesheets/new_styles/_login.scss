@@ -12,7 +12,7 @@
   position : relative;
   top : 0;
   left : 0;
-  padding-top : 300px;
+  padding-top : 172px;
   min-width : 100%;
   opacity : 0.6;
   //color : #fff;
@@ -24,9 +24,10 @@
   }
 
   #huge-text {
-    font-family : Roboto-Light;
-    font-size : 51px;
-    color : #ddd;
+    font-family : Roboto;
+    font-size : 13px;
+    color : #000;
+    background: #fff;
     text-shadow : 0 1px 0 #fff;
   }
 

@@ -11,15 +11,6 @@
   t.parentNode.insertBefore(s, t);
   })();
 
-- if AppConfig.settings.invitations.open?
-  .section
-    .title
-      = image_tag('https://c790230.ssl.cf2.rackcdn.com/plus.png')
-      %h5
-        = t('shared.invitations.invite_your_friends')
-    .content
-      = render "shared/invitations"
-
 .section
   .title
     = image_tag('https://c790230.ssl.cf2.rackcdn.com/coffee.png')
@@ -29,7 +20,7 @@
     = t('aspects.index.keep_pod_running', :pod => "Diasporg*")      
     = link_to t('aspects.index.donate'), "/supportyourpod", :rel => "facebox"
     %h3
-      Use Paypal, Amazon, Bitcoin, Google, Flattr and more to support this pod, KEEP the ads Away and keep us alive and running!
+      HELP! Donations have about died off and thousands of users are on here daily, PLEASE help out, this pod is funded by you!
     %br
     <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="https://diasp.org"></a>
     %br
@@ -40,6 +31,14 @@
     = link_to(image_tag('https://c790230.ssl.cf2.rackcdn.com/t-shirt.gif', :style => "position:relative;"), "http://cafepress.com/diasporg", :target => "new")
     %br
     Order some merch and promote Diaspora*
+
+.section
+  .title
+    = image_tag('https://c790230.ssl.cf2.rackcdn.com/plus.png')
+    %h5
+      = t('shared.invitations.invite_your_friends')
+  .content
+    = render "shared/invitations"
 
 .section
   .title
