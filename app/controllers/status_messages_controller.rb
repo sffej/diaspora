@@ -62,7 +62,7 @@ class StatusMessagesController < ApplicationController
 
       current_user.participate!(@status_message)
 
-      if coming_from_profile_page? # if this is a post coming from a profile page
+      if coming_from_profile_page? && !own_profile_page? # if this is a post coming from a profile page
         flash[:notice] = successful_mention_message
       end
       respond_to do |format|
@@ -95,6 +95,10 @@ class StatusMessagesController < ApplicationController
 
   def coming_from_profile_page?
     request.env['HTTP_REFERER'].include?("people")
+  end
+
+  def own_profile_page?
+    request.env['HTTP_REFERER'].include?("/people/" + params[:status_message][:author][:guid].to_s)
   end
 
   def normalize_public_flag!

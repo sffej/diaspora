@@ -3,8 +3,15 @@ Diaspora*
 **THIS IS ALPHA SOFTWARE AND SHOULD BE TREATED ACCORDINGLY.**
 **IT IS FUN TO GET RUNNING, BUT EXPECT THINGS TO BE BROKEN.**
 
+<<<<<<< HEAD
 [![Build Status](https://secure.travis-ci.org/diasporg/diaspora.png)](http://travis-ci.org/diasporg/diaspora)
 [![Dependency Status](https://gemnasium.com/diasporg/diaspora.png?travis)](https://gemnasium.com/diasporg/diaspora)
+=======
+* **master:** [![Build Status master](https://secure.travis-ci.org/diaspora/diaspora.png?branch=master)](http://travis-ci.org/diaspora/diaspora)
+* **develop:** [![Build Status develop](https://secure.travis-ci.org/diaspora/diaspora.png?branch=develop)](http://travis-ci.org/diaspora/diaspora)
+* [![Dependency Status](https://gemnasium.com/diaspora/diaspora.png?travis)](https://gemnasium.com/diaspora/diaspora)
+* [![Code Climate](https://codeclimate.com/github/diaspora/diaspora.png)](https://codeclimate.com/github/diaspora/diaspora)
+>>>>>>> upstream/master
 
 
 With Diaspora you can:

@@ -1,8 +1,7 @@
 rails_env = ENV['RAILS_ENV'] || 'development'
 
-# Enable and set these to run the worker as a different user/group
-#user  = 'diaspora'
-#group = 'diaspora'
+require 'pathname'
+require Pathname.new(__FILE__).expand_path.dirname.join('load_config')
 
 worker_processes 5
 
@@ -16,11 +15,14 @@ pid '/home/dmm/diaspora/tmp/pids/unicorn.pid'
 listen '/home/dmm/run/diaspora.sock', :backlog => 2048
 @resque_pid = nil
 
-# Ruby Enterprise Feature
-if GC.respond_to?(:copy_on_write_friendly=)
-  GC.copy_on_write_friendly = true
+
+if AppConfig.server.stderr_log.present?
+  stderr_path AppConfig.server.stderr_log
 end
 
+if AppConfig.server.stdout_log.present?
+  stdout_path AppConfig.server.stdout_log
+end
 
 before_fork do |server, worker|
   # If using preload_app, enable this line
