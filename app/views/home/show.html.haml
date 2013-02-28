@@ -6,16 +6,4 @@
 - content_for :page_title do
   = pod_name
 
-- begin
-  = render :partial => 'home/show'
-- rescue
-  :css
-    header{
-      display:none;
-    }
-    body{
-      margin-top: 20px;
-      background: #000000;
-    }
-  :erb
-    <%= File.open(Rails.root.join('public', 'default.html')).read %>
+= render :partial => 'home/show'
