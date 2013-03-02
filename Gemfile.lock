@@ -141,6 +141,7 @@ GEM
       ruby-progressbar (~> 1.0.0)
     gherkin (2.11.6)
       json (>= 1.7.6)
+    god (0.13.2)
     gon (4.0.2)
       actionpack (>= 2.3.0)
       json

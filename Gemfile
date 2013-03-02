@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-#daisporg
+#diasporg gems
 gem 'resque-cleaner'
 gem 'god'
 gem 'newrelic_rpm'
