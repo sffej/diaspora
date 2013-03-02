@@ -117,6 +117,7 @@ Diaspora::Application.routes.draw do
   post 'users/invitations' => 'invitations#create', :as => 'new_user_invitation'
 
   get 'login' => redirect('/users/sign_in')
+  get 'register' => redirect('/users/sign_up')
 
   scope 'admins', :controller => :admins do
     match :user_search
