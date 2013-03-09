@@ -20,7 +20,7 @@
     = t('aspects.index.keep_pod_running', :pod => "Diasporg*")      
     = link_to t('aspects.index.donate'), "/supportyourpod", :rel => "facebox"
     %h3
-      HELP! Donations have about died off and thousands of users are on here daily, PLEASE help out, this pod is funded by you!
+      Thank You for the donations and keeping us alive and ad free!
     %br
     <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="https://diasp.org"></a>
     %br
@@ -102,28 +102,6 @@
       Forward your @diasp.org address to your email address
   .content
     On this pod you can <a rel="facebox" href="/forwardemail">forward</a> your pod handle to your email account.
-
-%footer
-  .section
-    %ul#footer_nav
-      %li= link_to 'Twitter', "http://twitter.com/diasporg"
-      %li= link_to 'Facebook', "http://facebook.com/diasp.org"
-      %li= link_to 'Blog', "http://b.diasp.org"
-      %li= link_to 'Support', "https://diasporg.zendesk.com"
-      %li= link_to 'Source Code', "https://github.com/diasporg/diaspora"
-      %li= link_to 'Privacy Policy', "/privacy-policy.html"
-      %li= link_to 'Terms of Service', "/toc.html"
-      %li= link_to t('layouts.application.toggle'), toggle_mobile_path
-    = image_tag 'https://c790230.ssl.cf2.rackcdn.com/powered_by_diaspora.png', :height => "11px", :width => "145px"
-
-    - if AppConfig.settings.paypal_hosted_button_id.present?
-      = t('aspects.index.keep_pod_running', :pod => AppConfig.pod_uri.host)
-      %br
-      = render 'shared/donatepod'
-    - else
-      = t('aspects.index.keep_diaspora_running')
-      %br
-      = render 'shared/donatediaspora'
 
 - if AppConfig.admins.podmin_email.present?
   .section
