@@ -1,12 +1,11 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 #diasporg gems
 gem 'resque-cleaner'
 gem 'god'
 gem 'newrelic_rpm'
 gem 'rpm_contrib'
 
-
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.13'
 
 gem 'foreman', '0.61'
 
