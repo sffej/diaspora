@@ -9,7 +9,7 @@ module Morley
 		Rails.logger.info("event=emailforward status=start user=#{user}")
 		##check existing system aliases for conflict or error
 			begin
-                        systemaliases = AppConfig[:system_aliases]
+                        systemaliases = AppConfig.system_aliases
 			file = File.new(systemaliases, "r")
 				while (line = file.gets)
 				sysalias = line.split(":")
@@ -21,6 +21,7 @@ module Morley
 				end
 			file.close
 			rescue => err
+			Rails.logger.info("could not close file #{err} ")
 			return "ERROR: Exception: #{err}"
 			err
 			exit
@@ -31,7 +32,7 @@ module Morley
 		require 'tempfile'
 		require 'fileutils'
 		## make sure you have cron making something out of etc/daliases and included in your main.cf with /etc/aliases
-		path = AppConfig[:pod_aliases]
+		path = AppConfig.pod_aliases
 		temp_file = Tempfile.open('/tmp/fred')
 		File.open(path, 'r') do |file|
 		file.each_line do |line|
