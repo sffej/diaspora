@@ -44,6 +44,20 @@
   .title
     = image_tag('https://c790230.ssl.cf2.rackcdn.com/heart.png')
     %h5
+
+- if AppConfig.settings.invitations.open?
+  .section
+    .title
+      .icons-plus
+      %h5.title-header
+        = t('shared.invitations.invite_your_friends')
+    .content
+      = render "shared/invitations"
+
+.section
+  .title
+    .icons-heart
+    %h5.title-header
       = t('aspects.index.new_here.title')
   .content
     != t('aspects.index.new_here.follow', :link => link_to("#"+t('shared.publisher.new_user_prefill.newhere'), tag_path(:name => t('shared.publisher.new_user_prefill.newhere'))))
@@ -52,8 +66,8 @@
 
 .section
   .title
-    = image_tag('https://c790230.ssl.cf2.rackcdn.com/question.png')
-    %h5
+    .icons-question
+    %h5.title-header
       = t('aspects.index.help.need_help')
   .content
     = t('aspects.index.help.here_to_help')
@@ -75,8 +89,8 @@
 - unless AppConfig.configured_services.blank? || all_services_connected?
   .section
     .title
-      = image_tag('https://c790230.ssl.cf2.rackcdn.com/monotone_wrench_settings.png')
-      %h5
+      .icons-monotone_wrench_settings
+      %h5.title-header
         = t('aspects.index.services.heading')
     .content
       %div
@@ -85,12 +99,12 @@
       #right_service_icons
         - AppConfig.configured_services.each do |service|
           - unless current_user.services.any?{|x| x.provider == service}
-            = link_to(image_tag("social_media_logos/#{service.to_s.downcase}-24x24.png", :title => service.to_s.titleize), "/auth/#{service}")
+            = link_to(content_tag(:div, nil, :class => "social_media_logos-#{service.to_s.downcase}-24x24", :title => service.to_s.titleize), "/auth/#{service}")
 
 .section
   .title
-    = image_tag('https://c790230.ssl.cf2.rackcdn.com/bookmark.png')
-    %h5
+    .icons-bookmark
+    %h5.title-header
       = t('bookmarklet.heading')
   .content
     != t('bookmarklet.explanation', :link => link_to(t('bookmarklet.post_something'), magic_bookmarklet_link))
@@ -100,14 +114,17 @@
     = image_tag('https://c790230.ssl.cf2.rackcdn.com/emailforward.png')
     %h5
       Forward your @diasp.org address to your email address
+    .icons-coffee
+    %h5.title-header
+      = t('aspects.index.donate')
   .content
     On this pod you can <a rel="facebox" href="/forwardemail">forward</a> your pod handle to your email account.
 
 - if AppConfig.admins.podmin_email.present?
   .section
     .title
-      = image_tag('icons/mail.png')
-      %h5
+      .icons-mail
+      %h5.title-header
         = t('aspects.index.help.any_problem')
     .content
       = t('aspects.index.help.contact_podmin')

@@ -11,7 +11,7 @@ module Morley
            if !url or url =~ (Regexp.new '/test.host/')
              return (url)
            else
-             new = Net::HTTP.get(URI.parse("http://dia.so/diaspora-api.php?action=shorturl&url=#{url}&format=simple&signature=d388503621"))
+             new = Net::HTTP.get(URI.parse("http://dia.so/diaspora-api.php?action=shorturl&url=#{url}&format=simple&signature=0bcafe4b72"))
              return (new)
 	   end 
          end
@@ -19,7 +19,7 @@ module Morley
         module Stats
          def self.stats(url)
            if url =~ (Regexp.new "/dia.so/")
-             jsonstats = Net::HTTP.get(URI.parse("http://dia.so/diaspora-api.php?action=url-stats&shorturl=#{url}&format=json&signature=d388503621"))
+             jsonstats = Net::HTTP.get(URI.parse("http://dia.so/diaspora-api.php?action=url-stats&shorturl=#{url}&format=json&signature=0bcafe4b72"))
            elsif url =~ (Regexp.new "/goo.gl/")
              uri = URI.parse("https://www.googleapis.com/urlshortener/v1/url?projection=FULL&shortUrl=#{url}")
              http = Net::HTTP.new(uri.host, uri.port)

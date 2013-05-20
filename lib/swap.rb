@@ -15,7 +15,7 @@ require 'rubygems'
       else
         #do
         oldurl = CGI::escape("#{$2}://#{$3}")
-        newurl = Net::HTTP.get(URI.parse("http://dia.so/diaspora-api.php?action=shorturl&url=#{oldurl}&format=simple&signature=d388503621"))
+        newurl = Net::HTTP.get(URI.parse("http://dia.so/diaspora-api.php?action=shorturl&url=#{oldurl}&format=simple&signature=0bcafe4b72"))
         res = %{#{newurl}}
         res.gsub!(/(\*|_)/) { |m| "\\#{$1}" }
         res
