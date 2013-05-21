@@ -10,7 +10,7 @@ God.contact(:email) do |c|
 end
 rails_env   = ENV['RAILS_ENV']  || "production"
 rails_root  = ENV['RAILS_ROOT'] || "/home/dmm/diaspora"
-num_resqueworkers = 11
+num_resqueworkers = 1
 
 
 num_resqueworkers.times do |num|
@@ -19,8 +19,8 @@ num_resqueworkers.times do |num|
     w.name     = "resque-#{num}"
     w.group    = 'resques'
     w.interval = 190.seconds
-    w.env      = {"QUEUE"=>"*", "RAILS_ENV"=>rails_env}
-    w.start    = "bundle exec rake resque:work"
+    w.env      = {"RAILS_ENV"=>rails_env}
+    w.start    = "bundle exec sidekiq"
     w.log      = "#{rails_root}/log/god.log"
     w.start_grace = 100.seconds
 
@@ -30,7 +30,7 @@ num_resqueworkers.times do |num|
     # restart if memory gets too high
     w.transition(:up, :restart) do |on|
       on.condition(:memory_usage) do |c|
-        c.above = 250.megabytes
+        c.above = 550.megabytes
         c.times = 2
         c.notify = 'david'        
       end

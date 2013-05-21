@@ -139,3 +139,4 @@ fi
 echo ""
 
 god -c script/diaspora.god&
+#exec bundle exec foreman start -m "web=1,sidekiq=$workers" -p $port
