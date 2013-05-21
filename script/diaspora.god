@@ -16,8 +16,8 @@ num_resqueworkers = 1
 num_resqueworkers.times do |num|
   God.watch do |w|
     w.dir      = "#{rails_root}"
-    w.name     = "resque-#{num}"
-    w.group    = 'resques'
+    w.name     = "sidekiq-#{num}"
+    w.group    = 'sidekiq'
     w.interval = 190.seconds
     w.env      = {"RAILS_ENV"=>rails_env}
     w.start    = "bundle exec sidekiq"
@@ -30,7 +30,7 @@ num_resqueworkers.times do |num|
     # restart if memory gets too high
     w.transition(:up, :restart) do |on|
       on.condition(:memory_usage) do |c|
-        c.above = 550.megabytes
+        c.above = 950.megabytes
         c.times = 2
         c.notify = 'david'        
       end

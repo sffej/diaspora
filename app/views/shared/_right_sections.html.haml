@@ -32,19 +32,6 @@
     %br
     Order some merch and promote Diaspora*
 
-.section
-  .title
-    = image_tag('https://c790230.ssl.cf2.rackcdn.com/plus.png')
-    %h5
-      = t('shared.invitations.invite_your_friends')
-  .content
-    = render "shared/invitations"
-
-.section
-  .title
-    = image_tag('https://c790230.ssl.cf2.rackcdn.com/heart.png')
-    %h5
-
 - if AppConfig.settings.invitations.open?
   .section
     .title
