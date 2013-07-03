@@ -1,5 +1,4 @@
-require 'pathname'
-require Pathname.new(__FILE__).expand_path.dirname.join('load_config')
+require File.expand_path('../load_config', __FILE__)
 
 worker_processes 3
 
