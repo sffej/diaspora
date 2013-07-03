@@ -10,19 +10,18 @@ God.contact(:email) do |c|
 end
 rails_env   = ENV['RAILS_ENV']  || "production"
 rails_root  = ENV['RAILS_ROOT'] || "/home/dmm/diaspora"
-num_resqueworkers = 1
-
+num_resqueworkers = 5
 
 num_resqueworkers.times do |num|
   God.watch do |w|
     w.dir      = "#{rails_root}"
     w.name     = "sidekiq-#{num}"
-    w.group    = 'sidekiq'
-    w.interval = 190.seconds
-    w.env      = {"RAILS_ENV"=>rails_env}
+    w.group    = 'sidekiqs'
+    w.interval = 290.seconds
+    #w.env      = {"RAILS_ENV"=>rails_env}
     w.start    = "bundle exec sidekiq"
     w.log      = "#{rails_root}/log/god.log"
-    w.start_grace = 100.seconds
+    #w.start_grace = 100.seconds
 
     #w.uid = 'dmm'
     #w.gid = 'dmm'
@@ -30,8 +29,8 @@ num_resqueworkers.times do |num|
     # restart if memory gets too high
     w.transition(:up, :restart) do |on|
       on.condition(:memory_usage) do |c|
-        c.above = 950.megabytes
-        c.times = 2
+        c.above = 1150.megabytes
+        c.times = 7
         c.notify = 'david'        
       end
     end

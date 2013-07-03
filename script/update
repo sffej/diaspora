@@ -49,11 +49,11 @@ done
 
 
 OP=`ps afx | grep 'unicorn master' | grep -v grep | awk '{ print $1 }'`
-echo $OP
+#echo $OP
 echo "start new unicorn cluster?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) god restart unicorn; break;;
+        Yes ) god restart unicorn; sleep 1m; break;;
         No ) break;;
     esac
 done
@@ -66,10 +66,23 @@ done
 #    esac
 #done
 
-echo "kill old $OP unicorn cluster?"
+OLD=`ps afx | grep 'unicorn master (old)' | grep -v grep | awk '{ print $1 }'`
+NEW=`ps afx | grep 'unicorn master' | grep -v grep | awk '{ print $1 }'`
+
+if [ !OLD ] 
+   then
+        echo "No old unicorn found!"
+fi 
+
+if [ OLD == NEW ] 
+   then
+	echo "oops no new unicorn is ready yet, wait longer to kill old!"
+fi 
+
+echo "kill old $OLD unicorn cluster and keep $NEW?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) kill $OP; break;;
+        Yes ) kill $OLD; break;;
         No ) break;;
     esac
 done
@@ -87,7 +100,7 @@ done
 echo "restart workers?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) god restart resques; break;;
+        Yes ) god restart sidekiq; break;;
         No ) break;;
     esac
 done

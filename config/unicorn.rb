@@ -1,16 +1,16 @@
 require 'pathname'
 require Pathname.new(__FILE__).expand_path.dirname.join('load_config')
 
-worker_processes 5
+worker_processes 3
 
 ## Load the app before spawning workers
 preload_app true
 
 # How long to wait before killing an unresponsive worker
-timeout 30
+timeout 60
 
 pid '/home/dmm/diaspora/tmp/pids/unicorn.pid'
-listen '/home/dmm/run/diaspora.sock', :backlog => 2048
+listen '/home/dmm/run/diaspora.sock'
 @resque_pid = nil
 @sidekiq_pid = nil
 
