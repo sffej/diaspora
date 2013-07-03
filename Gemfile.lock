@@ -449,8 +449,8 @@ DEPENDENCIES
   fog (= 1.12.1)
   foreigner (= 1.4.1)
   foreman (= 0.62)
-  god
   fuubar (= 1.1.1)
+  god
   gon (= 4.1.1)
   guard-cucumber (= 1.4.0)
   guard-rspec (= 3.0.1)
