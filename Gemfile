@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 #diasporg gems
-gem 'resque-cleaner'
 gem 'god'
 gem 'newrelic_rpm'
 gem 'rpm_contrib'
