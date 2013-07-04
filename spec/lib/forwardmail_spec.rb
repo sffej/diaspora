@@ -6,8 +6,8 @@ describe Morley do
 
   describe '#checkifsystemalias' do
     before do
-      AppConfig[:system_aliases] = File.join(Rails.root, 'spec', 'fixtures', 'aliases')
-      AppConfig[:pod_aliases] = File.join(Rails.root, 'spec', 'fixtures', 'daliases')
+      AppConfig.system_aliases = File.join(Rails.root, 'spec', 'fixtures', 'aliases')
+      AppConfig.pod_aliases = File.join(Rails.root, 'spec', 'fixtures', 'daliases')
     end
 
     it 'sends a system reserved username' do
@@ -44,7 +44,7 @@ describe Morley do
 #    end
 
    it 'alias file is formated properly' do
-      @result = File.open(AppConfig[:pod_aliases]).read
+      @result = AppConfig.pod_aliases
       @result.each_line { |line|
         line.should include ':'
       }
@@ -71,7 +71,7 @@ describe Morley do
 #    end
 
    it 'alias file is formated properly' do
-      @result = File.open(AppConfig[:pod_aliases]).read
+      @result = AppConfig.pod_aliases
       @result.each_line { |line|
         line.should include ':'
       }

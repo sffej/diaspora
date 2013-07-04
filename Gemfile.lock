@@ -404,8 +404,6 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    vegas (0.1.11)
-      rack (>= 1.0.0)
     warden (1.2.1)
       rack (>= 1.0)
     webmock (1.11.0)
@@ -479,7 +477,6 @@ DEPENDENCIES
   rb-inotify (= 0.9.0)
   redcarpet (= 2.3.0)
   remotipart (= 1.0.5)
-  resque-cleaner
   rmagick (= 2.13.2)
   roxml (= 3.1.6)
   rpm_contrib
