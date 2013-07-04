@@ -140,6 +140,7 @@ class UsersController < ApplicationController
   end
 
   def user_photo
+    username = params[:username].split('@')[0]
     user = User.find_by_username(username)
     if user.present?
       redirect_to user.image_url
