@@ -1,15 +1,15 @@
 #!/bin/bash
 #fix schema
-wget https://raw.github.com/diaspora/diaspora/master/db/schema.rb
-cp schema.rb db/schema.rb
+#wget https://raw.github.com/diaspora/diaspora/master/db/schema.rb
+#cp schema.rb db/schema.rb
 
 # Install firefox & Xvfb, in preparation for cucumber & jasmine
 
 #echo "Installing Firefox and Xvfb"
 #sudo aptitude --quiet=2 --without-recommends --assume-yes install firefox xvfb
 #sudo cp script/ci/xvfb /etc/init.d/xvfb
-echo "Start Xvfb"
-sh -e /etc/init.d/xvfb start
+#echo "Start Xvfb"
+#sh -e /etc/init.d/xvfb start
 
 # Regenerate css files
 #echo "Regenerating CSS files"
@@ -23,14 +23,14 @@ sh -e /etc/init.d/xvfb start
 #sudo sysctl vm.swappiness=100
 
 # Create a database.yml for the right database
-echo "Setting up database.yml for $DB"
-cp config/database.yml.example config/database.yml
-if [ "$DB" = "postgres" ]; then
-  sed -i 's/*mysql/*postgres_travis/' config/database.yml
-fi
+#echo "Setting up database.yml for $DB"
+#cp config/database.yml.example config/database.yml
+#if [ "$DB" = "postgres" ]; then
+#  sed -i 's/*mysql/*postgres_travis/' config/database.yml
+#fi
 
 # Set up database
-echo "Creating databases for $DB and loading schema"
-bundle exec rake db:create
-bundle exec rake db:schema:load
-echo "Kittens"
+#echo "Creating databases for $DB and loading schema"
+#bundle exec rake db:create
+#bundle exec rake db:schema:load
+#echo "Kittens"
