@@ -79,6 +79,7 @@ module Diaspora
       publisher.js
       templates.js
       validation.js
+
       blueprint.css
       bootstrap.css
       bootstrap-complete.css

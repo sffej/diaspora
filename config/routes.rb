@@ -230,13 +230,6 @@ Diaspora::Application.routes.draw do
   #Protocol Url
   get 'protocol' => redirect("http://wiki.diasporafoundation.org/Federation_Protocol_Overview")
 
-  #match '/' => redirect("/pages/", current_subdomain), :constraints => { :subdomain => /.+/ }
-
-  # Resque web
-  if AppConfig.admins.inline_resque_web?
-    mount Resque::Server.new, :at => '/resque-jobs', :as => "resque_web"
-  end
-
   # Startpage
   root :to => 'home#show'
 end
