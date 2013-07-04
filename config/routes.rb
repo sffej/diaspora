@@ -180,9 +180,6 @@ Diaspora::Application.routes.draw do
   end
   get '/u/:username' => 'people#show', :as => 'user_profile'
   get '/u/:username/profile_photo' => 'users#user_photo'
-  constraints(Subdomain) do
-    match '/' => 'users#user_photo'
-  end
 
   # Federation
 
