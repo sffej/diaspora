@@ -9,6 +9,16 @@ class PhotosController < ApplicationController
 
   respond_to :html, :json
 
+  def show
+    @photo = if user_signed_in?
+      current_user.photos_from(Person.find_by_guid(params[:person_id])).where(id: params[:id]).first
+    else
+      Photo.where(id: params[:id], public: true).first
+    end
+
+    raise ActiveRecord::RecordNotFound unless @photo
+  end
+
   def index
     @post_type = :photos
     @person = Person.find_by_guid(params[:person_id])
@@ -39,7 +49,7 @@ class PhotosController < ApplicationController
   def create
     rescuing_photo_errors do
       if remotipart_submitted?
-        @photo = current_user.build_post(:photo, params[:photo])
+        @photo = current_user.build_post(:photo, photo_params)
         if @photo.save
           respond_to do |format|
             format.json { render :json => {"success" => true, "data" => @photo.as_api_response(:backbone)} }
@@ -128,7 +138,7 @@ class PhotosController < ApplicationController
   def update
     photo = current_user.photos.where(:id => params[:id]).first
     if photo
-      if current_user.update_post( photo, params[:photo] )
+      if current_user.update_post( photo, photo_params )
         flash.now[:notice] = I18n.t 'photos.update.notice'
         respond_to do |format|
           format.js{ render :json => photo, :status => 200 }
@@ -176,6 +186,10 @@ class PhotosController < ApplicationController
   end
 
   private
+
+  def photo_params
+    params.require(:photo).permit(:public, :text, :pending, :user_file, :image_url, :aspect_ids, :set_profile_photo)
+  end
 
   def file_handler(params)
     # For XHR file uploads, request.params[:qqfile] will be the path to the temporary file

@@ -30,6 +30,7 @@ hu:
     comma: ","
     comments:
       hide: "hozzászólások elrejtése"
+      no_comments: "Még nincs hozzászólás."
       show: "összes hozzászólás"
     confirm_dialog: "Biztos vagy benne?"
     conversation:
@@ -47,6 +48,7 @@ hu:
       admin: "Adminisztráció"
       close: "bezárás"
       contacts: "Ismerősök"
+      help: "Súgó"
       home: "Kezdőlap"
       log_out: "Kijelentkezés"
       mark_all_as_read: "Összes olvasottnak jelölése"

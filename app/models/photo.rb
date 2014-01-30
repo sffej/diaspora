@@ -41,13 +41,12 @@ class Photo < ActiveRecord::Base
   validates_associated :status_message
   delegate :author_name, to: :status_message, prefix: true
 
-  attr_accessible :text, :pending
   validate :ownership_of_status_message
 
   before_destroy :ensure_user_picture
   after_destroy :clear_empty_status_message
 
-  after_create do
+  after_commit :on => :create do
     queue_processing_job if self.author.local?
   end
 
@@ -69,7 +68,7 @@ class Photo < ActiveRecord::Base
   end
 
   def self.diaspora_initialize(params = {})
-    photo = self.new params.to_hash
+    photo = self.new params.to_hash.slice(:text, :pending)
     photo.author = params[:author]
     photo.public = params[:public] if params[:public]
     photo.pending = params[:pending] if params[:pending]

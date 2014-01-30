@@ -39,12 +39,6 @@ module PeopleHelper
     "<a data-hovercard='#{remote_or_hovercard_link}' #{person_href(person)} class='#{opts[:class]}' #{ ("target=" + opts[:target]) if opts[:target]}>#{h(person.name)}</a>".html_safe
   end
 
-  def last_visible_post_for(person, current_user=nil)
-    unless Post.visible_from_author(person, current_user).empty?
-      link_to(t('people.last_post'), last_post_person_path(person.to_param))
-    end
-  end
-
   def person_image_tag(person, size = :thumb_small)
     image_tag(person.profile.image_url(size), :alt => person.name, :class => 'avatar', :title => person.name, 'data-person_id' => person.id)
   end
@@ -85,6 +79,32 @@ module PeopleHelper
       return Rails.application.routes.url_helpers.person_url(person, opts)
     else
       return Rails.application.routes.url_helpers.person_path(person, opts)
+    end
+  end
+
+  def sharing_message(person, contact)
+    if contact.sharing?
+      content_tag(:div, :class => 'sharing_message_container', :title => I18n.t('people.helper.is_sharing', :name => person.name)) do
+        content_tag(:div, nil, :class => 'icons-check_yes_ok', :id => 'sharing_message')
+      end
+    else
+      content_tag(:div, :class => 'sharing_message_container', :title => I18n.t('people.helper.is_not_sharing', :name => person.name)) do
+        content_tag(:div, nil, :class => 'icons-circle', :id => 'sharing_message')
+      end
+    end
+  end
+
+  def profile_buttons_class(contact, block)
+    if block.present?
+      'blocked'
+    elsif contact.mutual?
+      'mutual'
+    elsif contact.sharing?
+      'only_sharing'
+    elsif contact.receiving?
+      'receiving'
+    else
+      'not_sharing'
     end
   end
 end

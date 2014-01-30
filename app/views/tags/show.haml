@@ -12,7 +12,7 @@
 - content_for :body_class do
   = "tags_show"
 
-.span-6.tags_people
+#leftNavBar
   %h3
     = t('people', :count => @stream.tagged_people_count)
 
@@ -21,7 +21,7 @@
 
   %br
 
-  .section
+  - if user_signed_in?
     = render "tags/followed_tags_listings"
 
 .span-15.last
@@ -30,8 +30,7 @@
       %h2
         = @stream.display_tag_name
         %small
-          = t('.followed_by')
-          = t('people', :count => @stream.tag_follow_count)
+          = t('.followed_by_people', count: @stream.tag_follow_count)
 
     - if current_user
       = render 'shared/publisher', :selected_aspects => @stream.aspect_ids, :aspect_ids => @stream.aspect_ids, :for_all_aspects => true, :aspect => @stream.aspect

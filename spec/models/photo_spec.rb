@@ -26,24 +26,6 @@ describe Photo do
     @saved_photo.save
   end
 
-  describe "protected attributes" do
-    it "doesn't allow mass assignment of person" do
-      @photo.save!
-      @photo.update_attributes(:author => FactoryGirl.build(:person))
-      @photo.reload.author.should == @user.person
-    end
-    it "doesn't allow mass assignment of person_id" do
-      @photo.save!
-      @photo.update_attributes(:author_id => FactoryGirl.build(:person).id)
-      @photo.reload.author.should == @user.person
-    end
-    it 'allows assignment of text' do
-      @photo.save!
-      @photo.update_attributes(:text => "this is awesome!!")
-      @photo.reload.text.should == "this is awesome!!"
-    end
-  end
-
   describe 'after_create' do
     it 'calls #queue_processing_job' do
       @photo.should_receive(:queue_processing_job)
@@ -72,9 +54,9 @@ describe Photo do
     end
 
     it 'sets the random prefix' do
-      photo_stub = stub.as_null_object
-      photo_stub.should_receive(:random_string=)
-      Photo.stub(:new).and_return(photo_stub)
+      photo_double = double.as_null_object
+      photo_double.should_receive(:random_string=)
+      Photo.stub(:new).and_return(photo_double)
 
       Photo.diaspora_initialize(
         :author => @user.person, :user_file => @image)
@@ -91,9 +73,9 @@ describe Photo do
       it 'saves the photo' do
         url = "https://service.com/user/profile_image"
 
-        photo_stub = stub.as_null_object
-        photo_stub.should_receive(:remote_unprocessed_image_url=).with(url)
-        Photo.stub(:new).and_return(photo_stub)
+        photo_double = double.as_null_object
+        photo_double.should_receive(:remote_unprocessed_image_url=).with(url)
+        Photo.stub(:new).and_return(photo_double)
 
         Photo.diaspora_initialize(
                 :author => @user.person, :image_url => url)

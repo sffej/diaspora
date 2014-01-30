@@ -69,9 +69,10 @@
     %br
     %br
     %p
-      <a rel="facebox" href="/status">markdown help</a>
-      %br
-      Follow the pod on <a target="_new" href="http://twitter.com/diasporg">twitter</a> and <a target="_new" href="http://facebook.com/diasp.org">facebook</a> and <a target="_new" href="http://b.diasp.org">blog</a>
+      != t('aspects.index.help.tutorials_and_wiki',
+           :faq => link_to(t('_help'), faq_getting_help_path),
+           :tutorial => link_to(t('aspects.index.help.tutorial_link_text'), "https://diasporafoundation.org/tutorials", :target => '_blank'),
+           :wiki => link_to('Wiki','http://wiki.diasporafoundation.org', :target => '_blank'), :target => '_blank')
 
 - unless AppConfig.configured_services.blank? || all_services_connected?
   .section
@@ -96,13 +97,16 @@
   .content
     != t('bookmarklet.explanation', :link => link_to(t('bookmarklet.post_something'), magic_bookmarklet_link))
 
-.section
-  .title
-    = image_tag('https://c790230.ssl.cf2.rackcdn.com/emailforward.png')
-    %h5
-      Forward your @diasp.org address to your email address
-  .content
-    On this pod you can <a rel="facebox" href="/forwardemail">forward</a> your pod handle to your email account.
+- if AppConfig.settings.paypal_hosted_button_id.present? || AppConfig.bitcoin_donation_address
+  .section
+    .title
+      .icons-coffee
+      %h5.title-header
+        = t('aspects.index.donate')
+    .content
+      = t('aspects.index.keep_pod_running', :pod => AppConfig.pod_uri.host)
+      %br
+      = render 'shared/donatepod'
 
 - if AppConfig.admins.podmin_email.present?
   .section

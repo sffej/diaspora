@@ -20,6 +20,9 @@
 ## - Replace the dots with underscores: environment_s3_enable
 ## - Upcase everything: ENVIRONMENT_S3_ENABLE
 ## - Specify lists/arrays as comma separated values
+##
+## - For example, on Heroku:
+##   heroku config:set SERVICES_FACEBOOK_APP_ID=whateeryourappid SERVICES_FACEBOOK_SECRET=whateeryourappsecret
 
 configuration: ## Section
   
@@ -34,7 +37,7 @@ configuration: ## Section
     ## from the internet. This should be the URL you want to use to
     ## access the pod. So if you plan to  reverse proxy it, it should be
     ## the URL the proxy listens on.
-    ## DO NOT CHNANGE THIS AFTER INITIAL SETUP
+    ## DO NOT CHANGE THIS AFTER INITIAL SETUP
     ## UNLESS YOU KNOW WHAT YOU'RE DOING!
     ## However changing http to https is okay and has no consequences.
     ## If you do change it you have to start over as it's hardcoded into
@@ -148,13 +151,15 @@ configuration: ## Section
     #stderr_log: '/usr/local/app/diaspora/log/unicorn-stderr.log'
     #stdout_log: '/usr/local/app/diaspora/log/unicorn-stdout.log'
     
-    ## The database type the server should use by default.
-    ## Valid choices are 'mysql' and 'postgres'
-    #database: 'mysql'
-    
     ## Number of Unicorn worker processes, increase this if
     ## you have many users
     #unicorn_worker: 2
+
+    ## Number of seconds before a request is aborted, increase if
+    ## you get empty responses, or large image uploads fail.
+    ## Decrease if you're under heavy load and don't care for some
+    ## requests to fail.
+    #unicorn_timeout: 90
     
     ## Embed a Sidekiq worker inside the unicorn process, useful for
     ## minimal Heroku setups
@@ -189,6 +194,15 @@ configuration: ## Section
     
     ## Chartbeat tracking
     #chartbeat_uid:
+    
+    ## Statistics
+    ## By default pod name, version and whether registrations are
+    ## open or not is reported. Enable more statistics below.
+    statistics: ## Section
+      ## Local user total and 6 month active counts
+      #user_counts: true
+      ## Local post total count
+      #post_counts: true
   
   ## General settings
   settings: ## Section
@@ -202,13 +216,39 @@ configuration: ## Section
     ## the first registration (you).
     #enable_registrations: true
     
-    ## Set this to false if you don't want your users to follow the
-    ## diasporahq@joindiaspora.com account on account creation.
+    ## Users will automatically follow a specified account on creation
+    ## Set this to false if you don't want your users to automatically
+    ## follow an account upon creation.
+    #autofollow_on_join: true
+ 
     ## The diasporahq account helps users start with some activity in
     ## their stream and get news about Diaspora, but if you don't want
-    ## your server to contact joindiaspora.com, set this to false:
-    #follow_diasporahq: false
-    
+    ## your server to contact joindiaspora.com, you can change account
+    ## below or set autofollow_on_join to false
+    #autofollow_on_join_user: 'diasporahq@joindiaspora.com'
+
+    ## Settings about captcha
+    captcha: ## Section
+
+      ## Set this to false if you don't want to use captcha for signup process
+      #enable: true
+
+      ## Change this value to use different captcha image size
+      #image_size: '120x20'
+
+      ## Length of captcha text. Default value is 5
+      #captcha_length: 5
+
+      ## Change this value to use various image style.
+      ## Available options are: 'simply_blue', 'simply_red'
+      ## 'simply_green', 'charcoal_grey', 'embosed_silver', 'all_black',
+      ## 'distorted_black', 'almost_invisible', 'random'
+      #image_style: 'simply_green'
+
+      ## Set this value to use various level of distortion
+      ## Available options are: 'low', 'medium', 'high', 'random'
+      #distortion: 'low'
+
     ## Settings about invitations
     invitations: ## Section
       
@@ -225,6 +265,11 @@ configuration: ## Section
     ## your users for donations to run their pod. If you leave this out
     ## we kindly ask your users to donate to the Diaspora Foundation :)
     #paypal_hosted_button_id: ""
+    
+    ## Bitcoin donations
+    ## You can provide a bitcoin address here to kindly ask
+    ## your users for donations to run their pod.
+    #bitcoin_address: ""
     
     ## Community Spotlight
     ## The community spotlight gives new users a starting point on who
@@ -320,6 +365,12 @@ configuration: ## Section
     tumblr: ## Section
       #enable: true
       #key: 'abcdef'
+      #secret: 'changeme'
+      
+    ## OAuth credentials for Wordpress
+    wordpress: ## Section
+      #enable: true
+      #client_id: 'abcdef'
       #secret: 'changeme'
   
   ## Settings relevant to administrators

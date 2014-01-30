@@ -102,7 +102,7 @@ describe UsersController do
 
       it "uses devise's update with password" do
         @user.should_receive(:update_with_password).with(hash_including(@password_params))
-        @controller.stub!(:current_user).and_return(@user)
+        @controller.stub(:current_user).and_return(@user)
         put :update, :id => @user.id, :user => @password_params
       end
     end
@@ -172,6 +172,13 @@ describe UsersController do
         proc{
           put :update, par
         }.should change(@user.user_preferences, :count).by(-1)
+      end
+    end
+
+    describe 'getting started' do
+      it 'can be reenabled' do
+        put :update, user: {getting_started: true}
+        @user.reload.getting_started?.should be_true
       end
     end
   end

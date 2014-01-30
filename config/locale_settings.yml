@@ -1,11 +1,9 @@
-default: "en"
-
-
 available:
   ar: "العربية"
   art-nvi: "Na'vi"
   bg: "български език"
   br: "Brezhoneg"
+  bs: "bosanski jezik"
   ca: "Català"
   cs: "Čeština"
   cy: "Cymraeg"
@@ -114,7 +112,6 @@ fallbacks:
     - "pt"
   pt-PT:
     - "pt"
-
 
 rtl:
   - "ar"

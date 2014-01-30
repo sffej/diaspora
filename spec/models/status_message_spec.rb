@@ -101,23 +101,30 @@ describe StatusMessage do
     end
   end
 
-  it "should have either a message or at least one photo" do
-    n = FactoryGirl.build(:status_message, :text => nil)
-#    n.valid?.should be_false
+  context "emptyness" do
+    it "needs either a message or at least one photo" do
+      n = @user.build_post(:status_message, :text => nil)
+      n.should_not be_valid
 
-#    n.text = ""
-#    n.valid?.should be_false
+      n.text = ""
+      n.should_not be_valid
 
-    n.text = "wales"
-    n.valid?.should be_true
-    n.text = nil
+      n.text = "wales"
+      n.should be_valid
+      n.text = nil
 
-    photo = @user.build_post(:photo, :user_file => uploaded_photo, :to => @aspect.id)
-    photo.save!
+      photo = @user.build_post(:photo, :user_file => uploaded_photo, :to => @aspect.id)
+      photo.save!
 
-    n.photos << photo
-    n.valid?.should be_true
-    n.errors.full_messages.should == []
+      n.photos << photo
+      n.should be_valid
+      n.errors.full_messages.should == []
+    end
+
+    it "doesn't check for content when author is remote (federation...)" do
+      p = FactoryGirl.build(:status_message, text: nil)
+      p.should be_valid
+    end
   end
 
   it 'should be postable through the user' do
@@ -256,8 +263,8 @@ STR
       msg_lc.save; msg_uc.save; msg_cp.save
 
       tag_array = msg_lc.tags
-      msg_uc.tags.should =~ tag_array
-      msg_cp.tags.should =~ tag_array
+      expect(msg_uc.tags).to match_array(tag_array)
+      expect(msg_cp.tags).to match_array(tag_array)
     end
   end
 
@@ -385,6 +392,34 @@ STR
         sm = FactoryGirl.build(:status_message, :text => @message_text)
         sm.contains_oembed_url_in_text?.should_not be_nil
         sm.oembed_url.should == @youtube_url
+      end
+    end
+  end
+
+  describe 'opengraph' do
+    before do
+      @ninegag_url = "http://9gag.com/gag/a1AMW16"
+      @youtube_url = "https://www.youtube.com/watch?v=3PtFwlKfvHI"
+      @message_text = "#{@ninegag_url} is so cool. so is this link -> https://joindiaspora.com"
+      @oemessage_text = "#{@youtube_url} is so cool. so is this link -> https://joindiaspora.com"
+    end
+
+    it 'should queue a GatherOpenGraphData if it includes a link' do
+      sm = FactoryGirl.build(:status_message, :text => @message_text)
+      Workers::GatherOpenGraphData.should_receive(:perform_async).with(instance_of(Fixnum), instance_of(String))
+      sm.save
+    end
+
+    describe '#contains_open_graph_url_in_text?' do
+      it 'returns the opengraph urls found in the raw message' do
+        sm = FactoryGirl.build(:status_message, :text => @message_text)
+        sm.contains_open_graph_url_in_text?.should_not be_nil
+        sm.open_graph_url.should == @ninegag_url
+      end
+      it 'returns nil if the link is from trusted oembed provider' do
+        sm = FactoryGirl.build(:status_message, :text => @oemessage_text)
+        sm.contains_open_graph_url_in_text?.should be_nil
+        sm.open_graph_url.should be_nil
       end
     end
   end

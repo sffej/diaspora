@@ -7,7 +7,8 @@ Then /^the first comment field should be open/ do
 end
 
 Then /^the first comment field should be closed$/ do
-  find("#main_stream .stream_element .new_comment").should_not be_visible
+  page.should have_css(".stream_element")
+  page.should_not have_selector("#main_stream .stream_element .new_comment", match: :first)
 end
 
 When /^I comment "([^"]*)" on "([^"]*)"$/ do |comment_text, post_text|

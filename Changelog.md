@@ -1,8 +1,315 @@
+# 0.3.0.1
+
+## Bug fixes
+* Fix regression caused by using after_commit with nested '#save' which lead to an infinite recursion [#4715](https://github.com/diaspora/diaspora/issues/4715)
+
+# 0.3.0.0
+
+## Pod statistics
+A new feature [has been added](https://github.com/diaspora/diaspora/pull/4602) to allow pods to report extra statistics. Automatically after this code change, the route /statistics.json contains some basic data that was also available before via page headers (pod name, version, status of signups). But also, optionally podmins can enable user and post counts in the diaspora.yml configuration file. The counts are by default switched off, so if you want to report the total user, active user and local post counts, please edit your diaspora.yml configuration with the example values in diaspora.yml.example and uncomment the required lines as indicated.
+
+## Ruby 2.0
+
+We now recommend using Ruby 2.0 with Diaspora. If you're using RVM make sure to run:
+```bash
+rvm get stable
+rvm install 2.0.0
+cd ~/diaspora
+git pull
+cd - && cd ..
+```
+
+For more details see https://wiki.diasporafoundation.org/Updating
+
+## Refactor
+* Remove old SPV code [#4612](https://github.com/diaspora/diaspora/pull/4612)
+* Move non-model federation stuff into lib/ [#4363](https://github.com/diaspora/diaspora/pull/4363)
+* Build a color palette to uniform color usage [#4437](https://github.com/diaspora/diaspora/pull/4437) [#4469](https://github.com/diaspora/diaspora/pull/4469) [#4479](https://github.com/diaspora/diaspora/pull/4479)
+* Rename bitcoin_wallet_id setting to bitcoin_address [#4485](https://github.com/diaspora/diaspora/pull/4485)
+* Batch insert posts into stream collection for a small speedup [#4341](https://github.com/diaspora/diaspora/pull/4351)
+* Ported fileuploader to Backbone and refactored publisher views [#4480](https://github.com/diaspora/diaspora/pull/4480)
+* Refactor 404.html, fix [#4078](https://github.com/diaspora/diaspora/issues/4078)
+* Remove the (now useless) last post link from the user profile. [#4540](https://github.com/diaspora/diaspora/pull/4540)
+* Refactor ConversationsController, move query building to User model. [#4547](https://github.com/diaspora/diaspora/pull/4547)
+* Refactor the Twitter service model [#4387](https://github.com/diaspora/diaspora/pull/4387)
+* Refactor ConversationsController#create, move more stuff to User model [#4551](https://github.com/diaspora/diaspora/pull/4551)
+* Refactor MessagesController#create, move stuff to User model [#4556](https://github.com/diaspora/diaspora/pull/4556)
+* Reorder the left bar side menu to put the stream first [#4569](https://github.com/diaspora/diaspora/pull/4569)
+* Improve notifications and conversations views design on mobile [#4593](https://github.com/diaspora/diaspora/pull/4593)
+* Slight redesign of mobile publisher [#4604](https://github.com/diaspora/diaspora/pull/4604)
+* Port conversations to Bootstrap [#4622](https://github.com/diaspora/diaspora/pull/4622)
+* Remove participants popover and improve conversations menu [#4644](https://github.com/diaspora/diaspora/pull/4644)
+
+## Bug fixes
+* Highlight down arrow at the user menu on hover [#4441](https://github.com/diaspora/diaspora/pull/4441)
+* Make invite code input width consistent across browsers [#4448](https://github.com/diaspora/diaspora/pull/4448)
+* Fix style of contacts in profile sidebar [#4451](https://github.com/diaspora/diaspora/pull/4451)
+* Fix profile mobile when logged out [#4464](https://github.com/diaspora/diaspora/pull/4464)
+* Fix preview with more than one mention [#4450](https://github.com/diaspora/diaspora/issues/4450)
+* Fix size of images in the SPV [#4471](https://github.com/diaspora/diaspora/pull/4471)
+* Adjust 404 message description to not leak logged out users if a post exists or not [#4477](https://github.com/diaspora/diaspora/pull/4477)
+* Make I18n system more robust against missing keys in pluralization data
+* Prevent overflow of too long strings in the single post view [#4487](https://github.com/diaspora/diaspora/pull/4487)
+* Disable submit button in sign up form after submission to avoid email already exists error [#4506](https://github.com/diaspora/diaspora/issues/4506)
+* Do not pull the 404 pages assets from Amazon S3 [#4501](https://github.com/diaspora/diaspora/pull/4501)
+* Fix counter background does not cover more than 2 digits on profile [#4499](https://github.com/diaspora/diaspora/issues/4499)
+* Fix commenting upon submission fail [#4005] (https://github.com/diaspora/diaspora/issues/4005)
+* Fix date color and alignment in the notifications dropdown [#4502](https://github.com/diaspora/diaspora/issues/4502)
+* Add a white background to images shown in the lightbox [#4475](https://github.com/diaspora/diaspora/issues/4475)
+* Refactor getting_started page, test if facebook is available, fix [#4520](https://github.com/diaspora/diaspora/issues/4520)
+* Avoid publishing empty posts [#4542](https://github.com/diaspora/diaspora/pull/4542)
+* Force comments sort order in mobile spv [#4578](https://github.com/diaspora/diaspora/pull/4578)
+* Fix getting started page for mobile [#4536](https://github.com/diaspora/diaspora/pull/4536)
+* Refactor mobile header, fix [#4579](https://github.com/diaspora/diaspora/issues/4579)
+* Fix avatar display on mobile profile [#4591](https://github.com/diaspora/diaspora/pull/4591)
+* Add lightbox to unauthenticated header, fix [#4432](https://github.com/diaspora/diaspora/issues/4432)
+* Fix "more picture" indication (+n) on mobile by adding a link on the indication [#4592](https://github.com/diaspora/diaspora/pull/4592)
+* Display errors when photo upload fails [#4509](https://github.com/diaspora/diaspora/issues/4509)
+* Fix posting to Twitter by correctly catching exception [#4627](https://github.com/diaspora/diaspora/issues/4627)
+* Change "Show n more comments"-link, fix [#3119](https://github.com/diaspora/diaspora/issues/3119)
+* Specify Firefox version for Travis-CI [#4623](https://github.com/diaspora/diaspora/pull/4623)
+* Remove location when publisher is cleared by user
+* On signup form errors, don't empty previous values by user, fix [#4663](https://github.com/diaspora/diaspora/issues/4663)
+* Remove background from badges in header [#4692](https://github.com/diaspora/diaspora/issues/4692)
+
+## Features
+* Add oEmbed content to the mobile view [#4343](https://github.com/diaspora/diaspora/pull/4353)
+* One click to select the invite URL [#4447](https://github.com/diaspora/diaspora/pull/4447)
+* Disable "mark all as read" link if all notifications are read [#4463](https://github.com/diaspora/diaspora/pull/4463)
+* Collapse aspect list and tag followings list when switching to other views [#4462](https://github.com/diaspora/diaspora/pull/4462)
+* Highlight current stream in left sidebar [#4445](https://github.com/diaspora/diaspora/pull/4445)
+* Added ignore user icon on user profile [#4417](https://github.com/diaspora/diaspora/pull/4417)
+* Improve the management of the contacts visibility settings in an aspect [#4567](https://github.com/diaspora/diaspora/pull/4567)
+* Add actions on aspects on the contact page [#4570](https://github.com/diaspora/diaspora/pull/4570)
+* Added a statistics route with general pod information, and if enabled in pod settings, total user, half year/monthly active users and local post counts [#4602](https://github.com/diaspora/diaspora/pull/4602)
+* Add indication about markdown formatting in the publisher [#4589](https://github.com/diaspora/diaspora/pull/4589)
+* Add captcha to signup form [#4659](https://github.com/diaspora/diaspora/pull/4659)
+* Update Underscore.js 1.3.1 to 1.5.2, update Backbone.js 0.9.2 to 1.1.0 [#4662](https://github.com/diaspora/diaspora/pull/4662)
+
+## Gem updates
+Added:
+* atomic (1.1.14)
+* bcrypt-ruby (3.1.2)
+* backbone-on-rails (1.1.0.0)
+* devise thread_safe (0.1)
+* eco (1.0.0)
+* eco-source (1.1.0.rc.1)
+* ejs (1.1.1)
+* galetahub-simple_captcha (0.1.5)
+* thread_safe (0.1.3)
+* zip-zip (0.2)
+
+Removed:
+* bcrypt-ruby
+* rb-kqueue
+* slim
+* temple
+
+Updated:
+* acts_as_api 0.4.1 -> 0.4.2
+* capybara 2.1.0 -> 2.2.1
+* celluloid (0.13.0 -> 0.15.2
+* chunky_png 1.2.8 -> 1.2.9
+* client_side_validations 3.2.5 -> 3.2.6
+* coderay 1.0.9 -> 1.1.0
+* connection_pool 1.0.0 -> 1.2.0
+* crack 0.4.0 -> 0.4.1
+* cucumber 1.3.5 -> 1.3.10
+* cucumber-rails 1.3.1 -> 1.4.0
+* database_cleaner 1.1.0 -> 1.2.0
+* devise 3.0.2 -> 3.2.2
+* diff-lcs 1.2.4 -> 1.2.5
+* ethon 0.5.12 -> 0.6.2
+* excon 0.25.3 -> 0.31.0
+* factory_girl 4.2.0 -> 4.3.0
+* factory_girl_rails 4.2.0 -> 4.3.0
+* faraday 0.8.8 -> 0.8.9
+* ffi 1.9.0 -> 1.9.3
+* fog 1.14.0 -> 1.19.0
+* foreigner 1.4.2 -> 1.6.1
+* fuubar 1.1.1 -> 1.3.2
+* gherkin 2.12.0 -> 2.12.2
+* guard 1.8.2 -> 2.2.5
+* guard-cucumber 1.4.0 -> 1.4.1
+* guard-rspec 3.0.2 -> 4.2.4
+* haml 4.0.3 -> 4.0.5
+* i18n-inflector-rails 1.0.6 -> 1.0.7
+* json 1.8.0 -> 1.8.1
+* jwt 0.1.8 -> 0.1.10
+* kaminari 0.14.1 -> 0.15.0
+* kgio 2.8.0 -> 2.8.1
+* listen 1.2.2 -> 2.4.0
+* mini_magick 3.6.0 -> 3.7.0
+* mini_profile 0.5.1 -> 0.5.2
+* mobile-fu 1.2.1 -> 1.2.2
+* multi_json 1.7.9 -> 1.8.4
+* multi_test 0.0.2 -> 0.0.3
+* mysql2 0.3.13 -> 0.3.14
+* net-ssh 2.6.8 -> 2.7.0
+* nokogiri 1.6.0 -> 1.6.1
+* omniauth-facebook 1.4.1 -> 1.6.0
+* omniauth-twitter 1.0.0 -> 1.0.1
+* orm_adapter 0.4.0 -> 0.5.0
+* pry 0.9.12.2 -> 0.9.12.4
+* rack-google-analytics 0.11.0 -> 0.14.0
+* rack-rewrite 1.3.3 -> 1.5.0
+* rails_autolink 1.1.0 -> 1.1.5
+* raindrops 0.11.0 -> 0.12.0
+* rake 10.1.0 -> 10.1.1
+* rb-fsevent 0.9.3 -> 0.9.4
+* rb-inotify 0.9.0 -> 0.9.3
+* redis 3.0.4 -> 3.0.6
+* redis-namespace 1.3.0 -> 1.4.1
+* rspec 2.13.0 -> 2.14.1
+* rspec-core 2.13.1 -> 2.14.7
+* rspec-expectations 2.13.0 -> 2.14.4
+* rspec-mocks 2.13.1 -> 2.14.4
+* rspec-rails 2.13.2 -> 2.14.1
+* ruby-oembed 0.8.8 -> 0.8.9
+* ruby-progressbar 1.1.1 -> 1.4.0
+* selenium-webdriver 2.34.0 -> 2.39.0
+* sidekiq 2.11.1 -> 2.17.2
+* slop 3.4.6 -> 3.4.7
+* spork 1.0.0rc3 -> 1.0.0rc4
+* strong_parameters 0.2.1 -> 0.2.2
+* test_after_commit 0.2.0 -> 0.2.2
+* timers 1.0.0 -> 1.1.0
+* timecop 0.6.1 -> 0.7.1
+* typhoeus 0.6.3 -> 0.6.7
+* unicorn 4.6.3 -> 4.8.0
+* webmock 1.13.0 -> 1.16.1
+* will_paginate 3.0.4 -> 3.0.5
+
+# 0.2.0.1
+
+* Bump rails to version 3.2.16, fixes several security issues, see http://weblog.rubyonrails.org/2013/12/3/Rails_3_2_16_and_4_0_2_have_been_released/
+* Bump recommended Ruby version to 1.9.3-p484, see https://www.ruby-lang.org/en/news/2013/11/22/heap-overflow-in-floating-point-parsing-cve-2013-4164/
+
+# 0.2.0.0
+
+**Attention:** This release includes a potentially long running migration! However it should be safe to run this while keeping your application servers on.
+
+## Refactor
+* Service and ServiceController, general code reorg to make it cleaner/+ testable/+ extensible [#4344](https://github.com/diaspora/diaspora/pull/4344)
+* Background actual mailing when sending invitations [#4069](https://github.com/diaspora/diaspora/issues/4069)
+* Set the current user on the client side through gon [#4028](https://github.com/diaspora/diaspora/issues/4028)
+* Update sign out route to a DELETE request [#4068](https://github.com/diaspora/diaspora/issues/4068)
+* Convert all ActivityStreams::Photo to StatusMessages and drop ActivityStreams::Photo [#4144](https://github.com/diaspora/diaspora/issues/4144)
+* Port the Rails application to strong_parameters in preparation to the upgrade to Rails 4 [#4143](https://github.com/diaspora/diaspora/issues/4143)
+* Refactor left bar side menu, improve tag autosuggestion design [#4271](https://github.com/diaspora/diaspora/issues/4271), [#4316](https://github.com/diaspora/diaspora/pull/4316)
+* Extract and factorize the header css in a new file, fix ugly header in registration [#4389](https://github.com/diaspora/diaspora/pull/4389)
+* Move contact list on profile to profile information, show user his own contacts on profile [#4360](https://github.com/diaspora/diaspora/pull/4360)
+* Refactor metas, HTML is now valid [#4356](https://github.com/diaspora/diaspora/pull/4356)
+* Improve sharing message and mention/message buttons on profile [#4374](https://github.com/diaspora/diaspora/pull/4374)
+
+## Bug fixes
+* Check twitter write access before adding/authorizing it for a user. [#4124](https://github.com/diaspora/diaspora/issues/4124)
+* Don't focus comment form on 'show n more comments' [#4265](https://github.com/diaspora/diaspora/issues/4265)
+* Do not render mobile photo view for none-existing photos [#4194](https://github.com/diaspora/diaspora/issues/4194)
+* Render markdown content for prettier email subjects and titles [#4182](https://github.com/diaspora/diaspora/issues/4182)
+* Disable invite button after sending invite [#4173](https://github.com/diaspora/diaspora/issues/4173)
+* Fix pagination for people list on the tag stream page [#4245](https://github.com/diaspora/diaspora/pull/4245)
+* Fix missing timeago tooltip in conversations [#4257](https://github.com/diaspora/diaspora/issues/4257)
+* Fix link to background image [#4289](https://github.com/diaspora/diaspora/pull/4289)
+* Fix Facebox icons 404s when called from Backbone
+* Fix deleting a post from Facebook [#4290](https://github.com/diaspora/diaspora/pull/4290)
+* Display notices a little bit longer to help on sign up errors [#4274](https://github.com/diaspora/diaspora/issues/4274)
+* Fix user contact sharing/receiving [#4163](https://github.com/diaspora/diaspora/issues/4163)
+* Change image to ajax-loader when closing lightbox [#3229](https://github.com/diaspora/diaspora/issues/3229)
+* Fix pointer cursor on the file upload button [#4349](https://github.com/diaspora/diaspora/pull/4349)
+* Resize preview button [#4355](https://github.com/diaspora/diaspora/pull/4355)
+* Fix compability problem with MySQL 5.6 [#4312](https://github.com/diaspora/diaspora/issues/4312)
+* Don't collapse the post preview [#4346](https://github.com/diaspora/diaspora/issues/4346)
+* Improve mobile usability [#4354](https://github.com/diaspora/diaspora/pull/4354)
+* Descending text is no longer cut off in orange welcome banner [#4377](https://github.com/diaspora/diaspora/issues/4377)
+* Adjust Facebook character limit to reality [#4380](https://github.com/diaspora/diaspora/issues/4380)
+* Restore truncated URLs when posting to Twitter [#4211](https://github.com/diaspora/diaspora/issues/4211)
+* Fix mobile search tags [#4392](https://github.com/diaspora/diaspora/issues/4392)
+* Remove placeholders for name fields in settings (no more Sofaer) [#4385](https://github.com/diaspora/diaspora/pull/4385)
+* Problems with layout the registration page for mobile. [#4396](https://github.com/diaspora/diaspora/issues/4396)
+* Do not display photos in the background in the SPV [#4407](https://github.com/diaspora/diaspora/pull/4407)
+* Fix mobile view of deleted reshares [#4397](https://github.com/diaspora/diaspora/issues/4397)
+* Fix the overlapping of embedded youtube videos [#2943](https://github.com/diaspora/diaspora/issues/2943)
+* Fix opacity of control icons [#4414](https://github.com/diaspora/diaspora/issues/4414/)
+* Add hover state to header icons [#4436](https://github.com/diaspora/diaspora/pull/4436)
+* Fix check icon regression on contacts page [#4440](https://github.com/diaspora/diaspora/pull/4440)
+* Do not leak non public photos
+* Fix check icon alignment in aspect dropdown [#4443](https://github.com/diaspora/diaspora/pull/4443)
+
+## Features
+* Admin: add option to find users under 13 (COPPA) [#4252](https://github.com/diaspora/diaspora/pull/4252)
+* Show the user if a contact is sharing with them when viewing their profile page [#2948](https://github.com/diaspora/diaspora/issues/2948)
+* Made Unicorn timeout configurable and increased the default to 90 seconds
+* Follow DiasporaHQ upon account creation is now configurable to another account [#4278](https://github.com/diaspora/diaspora/pull/4278)
+* Use first header as title in the single post view, when possible [#4256](https://github.com/diaspora/diaspora/pull/4256)
+* Close publisher when clicking on the page outside of it [#4282](https://github.com/diaspora/diaspora/pull/4282)
+* Deleting a post deletes it from Tumblr too [#4331](https://github.com/diaspora/diaspora/pull/4331)
+* OpenGraph support [#4215](https://github.com/diaspora/diaspora/pull/4215)
+* Added Wordpress service ability for posts. [#4321](https://github.com/diaspora/diaspora/pull/4321)
+* Implement tag search autocomplete in header search box [#4169](https://github.com/diaspora/diaspora/issues/4169)
+* Uncheck 'make contacts visible to each other' by default when adding new aspect. [#4343](https://github.com/diaspora/diaspora/issues/4343)
+* Add possibility to ask for Bitcoin donations [#4375](https://github.com/diaspora/diaspora/pull/4375)
+* Remove posts, comments and private conversations from the mobile site. [#4408](https://github.com/diaspora/diaspora/pull/4408) [#4409](https://github.com/diaspora/diaspora/pull/4409)
+* Added a link to user photos and thumbnails are shown in the left side bar [#4347](https://github.com/diaspora/diaspora/issues/4347)
+* Rework the single post view [#4410](https://github.com/diaspora/diaspora/pull/4410)
+* Add aspect modification on contacts page, close [#4397](https://github.com/diaspora/diaspora/issues/4397)
+* Add help page [#4405](https://github.com/diaspora/diaspora/issues/4405)
+
+## Gem updates
+
+* Added entypo-rails, mini_portile, multi_test, omniauth-wordpress, opengraph_parser, strong_parameters, test_after_commit
+* addressable 2.3.4 -> 2.3.5
+* asset_sync 0.5.4 -> 1.0.0
+* bcrypt-ruby 3.0.1 -> 3.1.1
+* capybara 1.1.3 -> 2.1.0
+* carrierwave 0.8.0 -> 0.9.0
+* coffee-script-source 1.6.2 -> 1.6.3
+* cucumber 1.3.2 -> 1.3.5
+* database_cleaner 1.0.1 -> 1.1.0
+* devise 2.1.3 -> 3.0.2
+* excon 0.23.0 -> 0.25.3
+* faraday 0.8.7 -> 0.8.8
+* fixture_builder 0.3.5 -> 0.3.6
+* fog 1.12.1 -> 1.14.0
+* font-awesome-rails 3.1.1.3 -> 3.2.1.2
+* foreigner 1.4.1 -> 1.4.2
+* guard 1.8.0 -> 1.8.2
+* guard-rspec 3.0.1 -> 3.0.2
+* guard-spork 1.5.0 -> 1.5.1
+* i18n-inflector 2.6.6 -> 2.6.7
+* listen 1.2.0 -> 1.2.2
+* lumberjack 1.0.3 -> 1.0.4
+* method_source 0.8.1 -> 0.8.2
+* multi_json 1.7.6 -> 1.7.8
+* mysql2 0.3.11 -> 0.3.13
+* net-scp 1.1.1 -> 1.1.2
+* net-ssh 2.6.7 -> 2.6.8
+* nokogiri 1.5.9 -> 1.6.0
+* omniauth-twitter 0.0.16 -> 1.0.0
+* pg 0.15.1 -> 0.16.0
+* rails-i18n 0.7.3 -> 0.7.4
+* rake 10.0.4 -> 10.1.0
+* redcarpet 2.3.0 -> 3.0.0
+* remotipart 1.0.5 -> 1.2.1
+* safe_yaml 0.9.3 -> 0.9.5
+* sass 3.2.9 -> 3.2.10
+* selenium-webdriver 2.32.1 -> 2.34.0
+* sinon-rails 1.4.2.1 -> 1.7.3
+* slop 3.4.5 -> 3.4.6
+* temple 0.6.5 -> 0.6.6
+* twitter 4.7.0 -> 4.8.1
+* uglifier 2.1.1 -> 2.1.2
+* unicorn 4.6.2 -> 4.6.3
+* warden 1.2.1 -> 1.2.3
+* webmock 1.11.0 -> 1.13.0
+* xpath 0.1.4 -> 2.0.0
+
+
 # 0.1.1.0
 
 ## Refactor
 
-* Refactored config/ directory [#4145](https://github.com/diaspora/diaspora/pull/4145).
+* Refactored config/ directory [#4144](https://github.com/diaspora/diaspora/pull/4145).
 * Drop misleading fallback donation form. [Proposal](https://www.loomio.org/discussions/1045?proposal=2722)
 * Update Typhoeus to 0.6.3 and refactor HydraWrapper. [#4162](https://github.com/diaspora/diaspora/pull/4162)
 * Bump recomended Ruby version to 1.9.3-p448, see [Ruby news](http://www.ruby-lang.org/en/news/2013/06/27/hostname-check-bypassing-vulnerability-in-openssl-client-cve-2013-4073/).
@@ -30,6 +337,7 @@
 * Leaving the `to` field blank when sending a private message causes a server error [#4227](https://github.com/diaspora/diaspora/issues/4227)
 * Fix hashtags that start a line when posting to Facebook or Twitter [#3768](https://github.com/diaspora/diaspora/issues/3768) [#4154](https://github.com/diaspora/diaspora/issues/4154)
 * Show avatar of recent user in conversation list [#4237](https://github.com/diaspora/diaspora/issues/4237)
+* Private message fails if contact not entered correctly [#4210](https://github.com/diaspora/diaspora/issues/4210)
 
 ## Features
 
@@ -175,7 +483,7 @@ everything is set up.
 * Cleanup of script/server
 * Attempt to stabilize federation of attached photos (fix [#3033](https://github.com/diaspora/diaspora/issues/3033)  [#3940](https://github.com/diaspora/diaspora/pull/3940) )
 * Refactor develop install script [#4111](https://github.com/diaspora/diaspora/pull/4111)
-* Remove special hacks for supporting Ruby 1.8 [#4113] (https://github.com/diaspora/diaspora/pull/4139)
+* Remove special hacks for supporting Ruby 1.8 [#4113](https://github.com/diaspora/diaspora/pull/4139)
 * Moved custom oEmbed providers to config/oembed_providers.yml [#4131](https://github.com/diaspora/diaspora/pull/4131)
 * Add specs for Post#find_by_guid_or_id_with_user
 

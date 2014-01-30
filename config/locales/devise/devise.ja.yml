@@ -29,12 +29,9 @@ ja:
         subject: "認証手続き"
         you_can_confirm: "次のリンクからアカウントが認証できます。"
       hello: "%{email}さん、こんにちは！"
-      invitation_instructions:
-        displaying_correctly: "Email not displaying correctly? %{link} in your browser"
-        email_address: "questions@joindiaspora.com"
-        view_in: "View in"
       inviter:
         has_invited_you: "%{name}さん"
+        have_invited_you: "%{names}さんがダイアスポラに招待しています"
       reset_password_instructions:
         change: "パスワードを変更する"
         ignore: "再設定を申請した覚えがない場合はこのメールを無視してください。"
@@ -62,9 +59,6 @@ ja:
       updated: "アカウントの更新に成功しました。"
     sessions:
       new:
-        alpha_software: "これから使うソフトはアルファ版です。"
-        bugs_and_feedback: "バク発生に覚悟してください。小さな支障でもページ右側の「フィードバック」ボタンからご報告願います！頂いた問題報告はなるべく早く解決できるよう努力します。"
-        bugs_and_feedback_mobile: "バク発生に覚悟してください。小さな支障でもご報告願います！頂いた問題報告はなるべく早く解決できるよう努力します。"
         login: "ログイン"
         modern_browsers: "最新型のブラウザにしか対応していません。"
         password: "パスワード"
@@ -81,8 +75,6 @@ ja:
         sign_in: "ログイン"
         sign_up: "新規登録"
         sign_up_closed: "一般の新規登録は現在受け付けていません。"
-      mail_signup_form:
-        sign_up_for_an_invite: "参加招待の希望者として登録したい！"
     unlocks:
       new:
         resend_unlock: "ロック解除手続きメールを再送する"

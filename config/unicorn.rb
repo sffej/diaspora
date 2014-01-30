@@ -6,7 +6,7 @@ worker_processes 3
 preload_app true
 
 # How long to wait before killing an unresponsive worker
-timeout 60
+timeout AppConfig.server.unicorn_timeout.to_i
 
 pid '/home/dmm/diaspora/tmp/pids/unicorn.pid'
 listen '/home/dmm/run/diaspora.sock'

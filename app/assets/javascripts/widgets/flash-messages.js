@@ -7,18 +7,12 @@
     });
 
     this.animateMessages = function() {
-      var flashMessages = $("#flash_notice, #flash_error, #flash_alert");
-      flashMessages.addClass("expose")
-      flashMessages.animate({
-        top: 0
-      }, 400).delay(4000).animate({
-        top: -100
-      }, 400, function(){
-        $(this).remove();
-      });
+      self.flashMessages().addClass("expose").delay(8000).fadeTo(200, 0.5);
     };
 
     this.render = function(result) {
+      self.flashMessages().removeClass("expose").remove();
+
       $("<div/>", {
         id: result.success ? "flash_notice" : "flash_error"
       })
@@ -28,7 +22,12 @@
         .html(result.notice))
       .prependTo(document.body);
 
+
       self.animateMessages();
+    };
+
+    this.flashMessages = function() {
+      return $("#flash_notice, #flash_error, #flash_alert");
     };
   };
 

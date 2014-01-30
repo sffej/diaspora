@@ -8,10 +8,13 @@ class User < ActiveRecord::Base
   include Querying
   include SocialActions
 
+  apply_simple_captcha :message => I18n.t('simple_captcha.message.failed'), :add_to_base => true
+
   scope :logged_in_since, lambda { |time| where('last_sign_in_at > ?', time) }
   scope :monthly_actives, lambda { |time = Time.now| logged_in_since(time - 1.month) }
   scope :daily_actives, lambda { |time = Time.now| logged_in_since(time - 1.day) }
   scope :yearly_actives, lambda { |time = Time.now| logged_in_since(time - 1.year) }
+  scope :halfyear_actives, lambda { |time = Time.now| logged_in_since(time - 6.month) }
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
@@ -61,26 +64,13 @@ class User < ActiveRecord::Base
   has_many :blocks
   has_many :ignored_people, :through => :blocks, :source => :person
 
-  has_many :notifications, :foreign_key => :recipient_id
+  has_many :conversation_visibilities, through: :person, order: 'updated_at DESC'
+  has_many :conversations, through: :conversation_visibilities, order: 'updated_at DESC'
 
+  has_many :notifications, :foreign_key => :recipient_id
 
   before_save :guard_unconfirmed_email,
               :save_person!
-
-  attr_accessible :username,
-                  :email,
-                  :getting_started,
-                  :password,
-                  :password_confirmation,
-                  :language,
-                  :disable_mail,
-                  :invitation_service,
-                  :invitation_identifier,
-                  :show_community_spotlight_in_stream,
-                  :auto_follow_back,
-                  :auto_follow_back_aspect_id,
-                  :remember_me
-
 
   def self.all_sharing_with_person(person)
     User.joins(:contacts).where(:contacts => {:person_id => person.id})
@@ -161,8 +151,11 @@ class User < ActiveRecord::Base
     self.hidden_shareables[share_type].present?
   end
 
+  # Copy the method provided by Devise to be able to call it later
+  # from a Sidekiq job
+  alias_method :send_reset_password_instructions!, :send_reset_password_instructions
+
   def send_reset_password_instructions
-    generate_reset_password_token! if should_generate_reset_token?
     Workers::ResetPassword.perform_async(self.id)
   end
 
@@ -342,6 +335,8 @@ class User < ActiveRecord::Base
       params[:image_url_small] = photo.url(:thumb_small)
     end
 
+    params.stringify_keys!
+    params.slice!(*(Profile.column_names+['tag_string', 'date']))
     if self.profile.update_attributes(params)
       deliver_profile_update
       true
@@ -350,13 +345,17 @@ class User < ActiveRecord::Base
     end
   end
 
+  def update_profile_with_omniauth( user_info )
+    update_profile( self.profile.from_omniauth_hash( user_info ) )
+  end
+
   def deliver_profile_update
     Postzord::Dispatcher.build(self, profile).post
   end
 
   ###Helpers############
   def self.build(opts = {})
-    u = User.new(opts)
+    u = User.new(opts.except(:person))
     u.setup(opts)
     u
   end
@@ -391,8 +390,8 @@ class User < ActiveRecord::Base
     self.aspects.create(:name => I18n.t('aspects.seed.work'))
     aq = self.aspects.create(:name => I18n.t('aspects.seed.acquaintances'))
 
-    if AppConfig.settings.follow_diasporahq?
-      default_account = Webfinger.new('diasporahq@joindiaspora.com').fetch
+    if AppConfig.settings.autofollow_on_join?
+      default_account = Webfinger.new(AppConfig.settings.autofollow_on_join_user).fetch
       self.share_with(default_account, aq) if default_account
     end
     aq
@@ -482,6 +481,14 @@ class User < ActiveRecord::Base
     self.save(:validate => false)
   end
 
+  def sign_up
+    if AppConfig.settings.captcha.enable?
+      save_with_captcha
+    else
+      save
+    end
+  end
+  
   private
   def clearable_fields
     self.attributes.keys - ["id", "username", "encrypted_password",

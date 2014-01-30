@@ -8,6 +8,7 @@ vi:
   _applications: "Ứng dụng"
   _comments: "Bình luận"
   _contacts: "Liên lạc"
+  _help: "Trợ giúp"
   _home: "Trang chủ"
   _photos: "ảnh"
   _services: "Dịch vụ"
@@ -52,6 +53,7 @@ vi:
         other: "%{count} bình luận"
         zero: "Không có bình luận"
       daily: "Hàng ngày"
+      go: "đi"
       month: "Tháng"
       posts:
         other: "%{count} bài đăng"
@@ -80,7 +82,6 @@ vi:
   all_aspects: "Tất cả mối quan hệ"
   application:
     helper:
-      diaspora_alpha: "DIASPORA* ALPHA"
       unknown_person: "người lạ"
       video_title:
         unknown: "Chưa biết tựa đề video"
@@ -141,6 +142,7 @@ vi:
       donate: "Quyên góp"
       handle_explanation: "Đây là id diaspora của bạn. Giống như một địa chỉ thư điện tử, người khác có thể liên lạc với bạn thông qua nó."
       help:
+        any_problem: "Có vấn đề?"
         do_you: "Bạn muốn:"
         email_feedback: "%{link} phản hồi hoặc góp ý"
         email_link: "Thư điện tử"
@@ -152,7 +154,6 @@ vi:
         tag_bug: "#bug"
         tag_feature: "#feature"
         tag_question: "#question"
-        tutorials_wiki_and_forum: "%{tutorial} & %{wiki} & %{forum}: Kinh nghiệm, thủ thuật, giải đáp và tin tức từ cộng đồng"
       introduce_yourself: "Đây là luồng của bạn. Hãy tự giới thiệu mình ở đây."
       keep_diaspora_running: "Đóng góp hàng tháng để giúp phát triển Diaspora nhanh hơn!"
       keep_pod_running: "Đóng góp hàng tháng để giúp %{pod} chạy nhanh và duy trì các phí khác!"
@@ -265,8 +266,11 @@ vi:
     two: "%{count} liên lạc"
     zero: "contacts"
   conversations:
+    conversation:
+      participants: "Người tham gia"
     create:
       fail: "Tin nhắn không hợp lệ"
+      no_contact: "Bạn cần phải thêm liên lạc trước đã!"
       sent: "Đã gửi tin nhắn"
     destroy:
       success: "Đã loại bỏ cuộc hội thoại"
@@ -312,6 +316,10 @@ vi:
     post_not_public: "Bài đăng bạn muốn xem không được công khai!"
   fill_me_out: "Điền đầy đủ"
   find_people: "Tìm người hoặc #tags"
+  help:
+    irc: "IRC"
+    markdown: "Markdown"
+    wiki: "wiki"
   hide: "Ẩn"
   invitation_codes:
     excited: "%{name} muốn nhìn thấy bạn ở đây."
@@ -322,7 +330,9 @@ vi:
     create:
       already_contacts: "Bạn đã kết nối với người này"
       already_sent: "Bạn đã mời người này."
+      empty: "Nhập ít nhất một địa chỉ thư điện tử."
       no_more: "Bạn đã hết thư mời."
+      note_already_sent: "Đã gửi lời mời đến địa chỉ: %{emails}"
       own_address: "Bạn không thể gửi lời mời đến địa chỉ riêng của bạn."
       rejected: "Địa chỉ thư điện tử sau có vấn đề: "
       sent: "Thư mời đã được gửi đến: %{emails}"
@@ -345,6 +355,7 @@ vi:
       resend: "Gửi lại"
       send_an_invitation: "Gửi thư mời"
       send_invitation: "Gửi thư mời"
+      sending_invitation: "Đang gửi thư mời..."
       to: "Đến"
   layouts:
     application:
@@ -502,6 +513,7 @@ vi:
       add_contact_from_tag: "thêm liên lạc từ thẻ"
     few: "%{count} người"
     helper:
+      is_sharing: "%{name} đang chia sẻ với bạn"
       results_for: " kết quả cho %{params}"
     index:
       couldnt_find_them_send_invite: "Không thể tìm thấy họ?  Hãy gửi thư mời!"
@@ -510,7 +522,6 @@ vi:
       no_results: "Bạn cần tìm gì đó."
       results_for: "kết quả tìm kiếm cho"
       searching: "đang tìm, vui lòng chờ..."
-    last_post: "Bài đăng cuối"
     many: "%{count} người"
     one: "1 người"
     other: "%{count} người"
@@ -526,6 +537,7 @@ vi:
       gender: "Giới tính"
       in_aspects: "trong mối quan hệ"
       location: "Nơi ở"
+      photos: "Hình ảnh"
       remove_contact: "loại bỏ liên lạc"
       remove_from: "Loại bỏ %{name} khỏi %{aspect}?"
     show:
@@ -607,8 +619,6 @@ vi:
       first_name: "Tên"
       last_name: "Họ"
       update_profile: "Cập nhật hồ sơ"
-      you_are_nsfw: "Bạn đã đánh dấu bản thân không an toàn cho công việc, nội dung của bạn sẽ không hiện cho những ai không cần chúng."
-      you_are_safe_for_work: "Đánh dấu tùy chọn bên dưới để xác nhận nội dung bài đăng có nội dung không an toàn, bài đăng sẽ chỉ hiện trong thẻ #nsfw"
       your_bio: "Tiểu sử"
       your_birthday: "Ngày sinh"
       your_gender: "Giới tính"
@@ -649,6 +659,7 @@ vi:
       enter_username: "Tên người dùng (chỉ gồm chữ cái, số và dấu gạch dưới _)"
       join_the_movement: "Tham gia chuyển đổi!"
       password: "MẬT KHẨU"
+      password_confirmation: "XÁC NHẬN MẬT KHẨU"
       sign_up: "ĐĂNG KÍ"
       sign_up_message: "Social Networking with a <3"
       username: "TÊN NGƯỜI DÙNG"
@@ -705,6 +716,7 @@ vi:
       logged_in_as: "đã đăng nhập với tên"
       no_services: "Bạn chưa kết nối đến dịch vụ nào."
       really_disconnect: "ngắt kết nối với %{service}?"
+      services_explanation: "Kết nối các dịch vụ để có thể đăng tin lên chúng thông qua Diaspora."
     inviter:
       click_link_to_accept_invitation: "Theo dõi liên kết này để chấp nhận lời mời của bạn"
       join_me_on_diaspora: "Tham gia DIASPORA*"
@@ -751,7 +763,7 @@ vi:
       atom_feed: "Nguồn tin"
       control_your_audience: "Kiểm soát phạm vi chia sẻ"
       logged_in: "đã đăng nhập vào %{service}"
-      manage: "quản lí các dịch vụ đã được kết nối"
+      manage: "Quản lí các dịch vụ đã được kết nối"
       new_user_welcome_message: "Sử dụng dấu thăng (#hashtags) để phân loại bài đăng và tìm người dùng khác."
       outside: "Công khai bài đăng để mọi người ở ngoài Diaspora đều được thấy."
       share: "Chia sẻ"
@@ -761,6 +773,7 @@ vi:
       all: "tất cả"
       all_contacts: "tất cả liên lạc"
       discard_post: "Huỷ bài đăng"
+      get_location: "Lấy thông tin vị trí"
       make_public: "công khai hoá"
       new_user_prefill:
         hello: |-
@@ -771,6 +784,7 @@ vi:
         newhere: "NewHere"
       post_a_message_to: "Gửi tin nhắn đến %{aspect}"
       posting: "Đăng bài..."
+      preview: "Xem trước"
       publishing_to: "chia sẻ với: "
       share: "Chia sẻ"
       share_with: "chia sẻ với"
@@ -854,7 +868,6 @@ vi:
   tags:
     show:
       follow: "Theo dõi #%{tag}"
-      followed_by: "được theo dõi bởi"
       following: "Đang theo dõi #%{tag}"
       nobody_talking: "Không có ai đang nói về %{tag}."
       none: "Thẻ rỗng không tồn tại!"
@@ -931,6 +944,7 @@ vi:
       hashtag_suggestions: "Thử theo dõi các thẻ như #art, #movies, #gif, v.v..."
       saved: "Đã lưu!"
       well_hello_there: "Chào bạn!"
+      what_are_you_in_to: "Bạn đang ở đâu?"
       who_are_you: "Bạn là ai?"
     privacy_settings:
       ignored_users: "Người dùng bị bỏ qua"

@@ -176,18 +176,6 @@ FactoryGirl.define do
     end
   end
 
-  factory(:activity_streams_photo, :class => ActivityStreams::Photo) do
-    association(:author, :factory => :person)
-    image_url "#{AppConfig.environments.url}/assets/asterisk.png"
-    image_height 154
-    image_width 154
-    object_url "http://example.com/awesome_things.gif"
-    objectId "http://example.com/awesome_things.gif"
-    actor_url "http://notcubbes/cubber"
-    provider_display_name "not cubbies"
-    public true
-  end
-
   factory(:tag, :class => ActsAsTaggableOn::Tag) do
     name "partytimeexcellent"
   end
@@ -195,6 +183,14 @@ FactoryGirl.define do
   factory(:o_embed_cache) do
     url "http://youtube.com/kittens"
     data {{'data' => 'foo'}}
+  end
+
+  factory(:open_graph_cache) do
+    url "http://example.com/articles/123"
+    image "http://example.com/images/123.jpg"
+    title "Some article"
+    ob_type "article"
+    description "This is the article lead"
   end
 
   factory(:tag_following) do
@@ -210,6 +206,37 @@ FactoryGirl.define do
   factory(:mention) do
     association(:person, :factory => :person)
     association(:post, :factory => :status_message)
+  end
+
+  factory(:conversation) do
+    association(:author, factory: :person)
+    sequence(:subject) { |n| "conversation ##{n}" }
+
+    after(:build) do |c|
+      c.participants << c.author
+    end
+  end
+
+  factory(:conversation_with_message, parent: :conversation) do
+    after(:build) do |c|
+      msg = FactoryGirl.build(:message)
+      msg.conversation_id = c.id
+      c.participants << msg.author
+      msg.save
+    end
+  end
+
+  factory(:message) do
+    association(:author, factory: :person)
+    sequence(:text) { |n| "message text ##{n}" }
+  end
+
+  factory(:message_with_conversation, parent: :message) do
+    after(:build) do |msg|
+      c = FactoryGirl.build(:conversation)
+      c.participants << msg.author
+      msg.conversation_id = c.id
+    end
   end
 
   #templates

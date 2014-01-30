@@ -24,7 +24,7 @@ done
 echo "bundle install?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) bundle install; break;;
+        Yes ) RAILS_ENV=production  bundle install --without test development; break;;
         No ) break;;
     esac
 done

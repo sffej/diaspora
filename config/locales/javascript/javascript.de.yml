@@ -11,6 +11,7 @@ de:
       add_to_aspect: "Kontakt hinzufügen"
       all_aspects: "Alle Aspekte"
       error: "Teilen mit <%= name %> nicht möglich. Ignorierst du sie/ihn?"
+      error_remove: "Konnte <%= name %> nicht aus dem Aspekt entfernen :("
       select_aspects: "Wähle Aspekte aus"
       started_sharing_with: "Du hast angefangen, mit <%= name %> zu teilen!"
       stopped_sharing_with: "Du hast aufgehört, mit <%= name %> zu teilen!"
@@ -29,6 +30,7 @@ de:
     comma: ","
     comments:
       hide: "Kommentare verbergen"
+      no_comments: "Bisher sind keine Kommentare vorhanden."
       show: "Alle Kommentare zeigen"
     confirm_dialog: "Bist du dir sicher?"
     conversation:
@@ -37,6 +39,7 @@ de:
     edit: "Bearbeiten"
     failed_to_like: "Gefällt mir fehlgeschlagen!"
     failed_to_post_message: "Konnte Beitrag nicht senden!"
+    failed_to_remove: "Fehler beim Entfernen des Beitrags!"
     getting_started:
       alright_ill_wait: "Alles klar, ich warte."
       hey: "Hey, <%= name %>!"
@@ -46,6 +49,7 @@ de:
       admin: "Admin"
       close: "schließen"
       contacts: "Kontakte"
+      help: "Hilfe"
       home: "Startseite"
       log_out: "Abmelden"
       mark_all_as_read: "Alle als gelesen markieren"
@@ -69,13 +73,14 @@ de:
     photo_uploader:
       completed: "<%= file %> hochgeladen"
       empty: "Die Datei {file} ist leer. Bitte treffen sie eine erneute Auswahl ohne diese Datei."
+      error: "Es ist ein Fehler aufgetreten während <%= file %> hochgeladen wurde."
       invalid_ext: "{file} hat eine ungültige Erweiterung. Nur {extensions} sind erlaubt."
       looking_good: "OMG, du siehst toll aus!"
       size_error: "{file} ist zu groß. Die maximale Dateigröße beträgt {sizeLimit}."
     publisher:
       at_least_one_aspect: "Du musst zumindest zu einem Aspekt posten"
       limited: "Eingeschränkt - dein Beitrag wird nur Leuten sichtbar sein, mit denen du teilst"
-      near_from: "In der Nähe von <%= location %>"
+      near_from: "Gesendet aus <%= location %>"
       public: "Öffentlich - dein Beitrag ist für alle sichtbar und kann von Suchmaschinen gefunden werden"
     reshares:
       duplicate: "Du hast diesen Beitrag bereits weitergesagt!"
@@ -144,7 +149,7 @@ de:
       years: "%d Jahren"
     videos:
       unknown: "Unbekanntes Videoformat"
-      watch: "Dieses Video auf {{provider}} ansehen"
+      watch: "Dieses Video auf <%= provider %> ansehen"
     viewer:
       comment: "Kommentieren"
       follow_post: "Diesen Beitrag verfolgen"

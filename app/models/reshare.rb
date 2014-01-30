@@ -6,7 +6,6 @@ class Reshare < Post
 
   belongs_to :root, :class_name => 'Post', :foreign_key => :root_guid, :primary_key => :guid
   validate :root_must_be_public
-  attr_accessible :root_guid, :public
   validates_presence_of :root, :on => :create
   validates_uniqueness_of :root_guid, :scope => :author_id
   delegate :author, to: :root, prefix: true
@@ -18,7 +17,7 @@ class Reshare < Post
     self.public = true
   end
 
-  after_create do
+  after_commit :on => :create do
     self.root.update_reshares_counter
   end
 
@@ -34,6 +33,10 @@ class Reshare < Post
     self.root ? root.o_embed_cache : super
   end
 
+  def open_graph_cache
+    self.root ? root.open_graph_cache : super
+  end
+
   def raw_message
     self.root ? root.raw_message : super
   end
@@ -44,10 +47,6 @@ class Reshare < Post
 
   def photos
     self.root ? root.photos : []
-  end
-
-  def frame_name
-    self.root ? root.frame_name : nil
   end
 
   def receive(recipient, sender)

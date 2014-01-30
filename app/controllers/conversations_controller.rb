@@ -1,26 +1,31 @@
 class ConversationsController < ApplicationController
   before_filter :authenticate_user!
 
+  layout ->(c) { request.format == :mobile ? "application" : "with_header" }
+  before_filter -> { @css_framework = :bootstrap }
+
   respond_to :html, :mobile, :json, :js
 
   def index
-    @conversations = Conversation.joins(:conversation_visibilities).where(
-      :conversation_visibilities => {:person_id => current_user.person_id}).paginate(
-      :page => params[:page], :per_page => 15, :order => 'updated_at DESC')
+    @conversations = current_user.conversations.paginate(
+      :page => params[:page], :per_page => 15)
 
-    @visibilities = ConversationVisibility.where(:person_id => current_user.person_id).paginate(
-      :page => params[:page], :per_page => 15, :order => 'updated_at DESC')
-      
+    @visibilities = current_user.conversation_visibilities.paginate(
+      :page => params[:page], :per_page => 15)
+
     @conversation = Conversation.joins(:conversation_visibilities).where(
       :conversation_visibilities => {:person_id => current_user.person_id, :conversation_id => params[:conversation_id]}).first
 
     @unread_counts = {}
     @visibilities.each { |v| @unread_counts[v.conversation_id] = v.unread }
-    
+
     @first_unread_message_id = @conversation.try(:first_unread_message, current_user).try(:id)
 
     @authors = {}
     @conversations.each { |c| @authors[c.id] = c.last_author }
+
+    @ordered_participants = {}
+    @conversations.each { |c| @ordered_participants[c.id] = (c.messages.map{|m| m.author}.reverse + c.participants).uniq }
 
     respond_with do |format|
       format.html
@@ -31,34 +36,34 @@ class ConversationsController < ApplicationController
   def create
     # Can't split nil
     if params[:contact_ids]
-      person_ids = Contact.where(:id => params[:contact_ids].split(',')).map(&:person_id)
+      person_ids = current_user.contacts.where(id: params[:contact_ids].split(',')).pluck(:person_id)
     end
 
-    params[:conversation][:participant_ids] = [*person_ids] | [current_user.person_id]
-    params[:conversation][:author] = current_user.person
-    message_text = params[:conversation].delete(:text)
-    params[:conversation][:messages_attributes] = [ {:author => current_user.person, :text => message_text }]
+    opts = params.require(:conversation).permit(:subject)
+    opts[:participant_ids] = person_ids
+    opts[:message] = { text: params[:conversation][:text] }
+    @conversation = current_user.build_conversation(opts)
 
-    @conversation = Conversation.new(params[:conversation])
+    @response = {}
     if person_ids.present? && @conversation.save
       Postzord::Dispatcher.build(current_user, @conversation).post
-      flash[:notice] = I18n.t('conversations.create.sent')
+      @response[:success] = true
+      @response[:message] = I18n.t('conversations.create.sent')
+      @response[:conversation_id] = @conversation.id
     else
-      flash[:error] = I18n.t('conversations.create.fail')
+      @response[:success] = false
+      @response[:message] = I18n.t('conversations.create.fail')
       if person_ids.blank?
-        flash[:error] = I18n.t('conversations.create.no_contact')
+        @response[:message] = I18n.t('conversations.create.no_contact')
       end
     end
-    if params[:profile]
-      redirect_to person_path(params[:profile])
-    else
-      redirect_to conversations_path(:conversation_id => @conversation.id)
+    respond_to do |format|
+      format.js
     end
   end
 
   def show
-    if @conversation = Conversation.joins(:conversation_visibilities).where(:id => params[:id],
-                                                                            :conversation_visibilities => {:person_id => current_user.person_id}).first
+    if @conversation = current_user.conversations.where(id: params[:id]).first
 
       @first_unread_message_id = @conversation.first_unread_message(current_user).try(:id)
       if @visibility = ConversationVisibility.where(:conversation_id => params[:id], :person_id => current_user.person.id).first

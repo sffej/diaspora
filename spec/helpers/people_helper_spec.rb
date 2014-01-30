@@ -60,26 +60,6 @@ describe PeopleHelper do
     end
   end
 
-  describe '#last_visible_post_for' do
-    before do
-      @person = FactoryGirl.create(:person)
-    end
-
-    it "doesn't show a link, if the person has no visible posts" do
-      last_visible_post_for(@person).should be_blank
-    end
-
-    it "doesn't show a link, if the person has posts but none visible" do
-      post = FactoryGirl.create(:status_message, :author => @person)
-      last_visible_post_for(@person).should be_blank
-    end
-
-    it "shows the link, if the person has at least one visible post" do
-      post = FactoryGirl.create(:status_message, :author => @person, :public => true)
-      last_visible_post_for(@person).should include last_post_person_path(@person.to_param)
-    end
-  end
-
   describe "#person_href" do
     it "calls local_or_remote_person_path and passes through the options" do
       opts = {:absolute => true}
@@ -117,5 +97,26 @@ describe PeopleHelper do
       local_or_remote_person_path(@person).should == person_path(@person)
     end
   end
-end
 
+  describe '#sharing_message' do
+    before do
+      @contact = FactoryGirl.create(:contact, :person => @person)
+    end
+
+    context 'when the contact is sharing' do
+      it 'shows the sharing message' do
+        message = I18n.t('people.helper.is_sharing', :name => @person.name)
+        @contact.stub(:sharing?).and_return(true)
+        sharing_message(@person, @contact).should include(message)
+      end
+    end
+
+    context 'when the contact is not sharing' do
+      it 'does show the not sharing message' do
+        message = I18n.t('people.helper.is_not_sharing', :name => @person.name)
+        @contact.stub(:sharing?).and_return(false)
+        sharing_message(@person, @contact).should include(message)
+      end
+    end
+  end
+end

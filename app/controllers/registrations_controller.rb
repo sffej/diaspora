@@ -5,14 +5,14 @@
 class RegistrationsController < Devise::RegistrationsController
   before_filter :check_registrations_open_or_vaild_invite!, :check_valid_invite!
 
-  layout "with_header", :only => [:new]
-  before_filter -> { @css_framework = :bootstrap }, only: [:new]
+  layout ->(c) { request.format == :mobile ? "application" : "with_header" }, :only => [:new]
+  before_filter -> { @css_framework = :bootstrap }, only: [:new, :create]
 
   def create
-    @user = User.build(params[:user])
+    @user = User.build(user_params)
     @user.process_invite_acceptence(invite) if invite.present?
 
-    if @user.save
+    if @user.sign_up
       flash[:notice] = I18n.t 'registrations.create.success'
       @user.seed_aspects
       sign_in_and_redirect(:user, @user)
@@ -22,7 +22,7 @@ class RegistrationsController < Devise::RegistrationsController
 
       flash[:error] = @user.errors.full_messages.join(" - ")
       Rails.logger.info("event=registration status=failure errors='#{@user.errors.full_messages.join(', ')}'")
-      redirect_to :back
+      render :action => 'new', :layout => 'with_header'
     end
   end
 
@@ -54,4 +54,8 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   helper_method :invite
+
+  def user_params
+    params.require(:user).permit(:username, :email, :getting_started, :password, :password_confirmation, :language, :disable_mail, :invitation_service, :invitation_identifier, :show_community_spotlight_in_stream, :auto_follow_back, :auto_follow_back_aspect_id, :remember_me, :captcha, :captcha_key)
+  end
 end

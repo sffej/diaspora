@@ -2,8 +2,6 @@ app.Router = Backbone.Router.extend({
   routes: {
     //new hotness
     "posts/:id": "singlePost",
-    "posts/:id/next": "siblingPost",
-    "posts/:id/previous": "siblingPost",
     "p/:id": "singlePost",
 
     //oldness
@@ -25,18 +23,7 @@ app.Router = Backbone.Router.extend({
   },
 
   singlePost : function(id) {
-    this.renderPage(function(){ return new app.pages.PostViewer({ id: id })});
-  },
-
-  siblingPost : function(){ //next or previous
-    var post = new app.models.Post();
-    post.bind("change", setPreloadAttributesAndNavigate)
-    post.fetch({url : window.location})
-
-    function setPreloadAttributesAndNavigate(){
-      window.preloads.post = post.attributes
-      app.router.navigate(post.url(), {trigger:true, replace: true})
-    }
+    this.renderPage(function(){ return new app.pages.SinglePostViewer({ id: id })});
   },
 
   renderPage : function(pageConstructor){
@@ -57,6 +44,7 @@ app.Router = Backbone.Router.extend({
 
     $("#main_stream").html(app.page.render().el);
     $('#selected_aspect_contacts .content').html(streamFacesView.render().el);
+    this.hideInactiveStreamLists();
   },
 
   photos : function() {
@@ -69,11 +57,11 @@ app.Router = Backbone.Router.extend({
     this.stream();
 
     app.tagFollowings = new app.collections.TagFollowings();
-    var followedTagsView = new app.views.TagFollowingList({collection: app.tagFollowings});
-    $("#tags_list").replaceWith(followedTagsView.render().el);
-    followedTagsView.setupAutoSuggest();
+    this.followedTagsView = new app.views.TagFollowingList({collection: app.tagFollowings});
+    $("#tags_list").replaceWith(this.followedTagsView.render().el);
+    this.followedTagsView.setupAutoSuggest();
 
-    app.tagFollowings.reset(preloads.tagFollowings);
+    app.tagFollowings.reset(gon.preloads.tagFollowings);
 
     if(name) {
       var followedTagsAction = new app.views.TagFollowingAction(
@@ -81,29 +69,38 @@ app.Router = Backbone.Router.extend({
           );
       $("#author_info").prepend(followedTagsAction.render().el)
     }
+    this.hideInactiveStreamLists();
   },
 
   aspects : function(){
     app.aspects = new app.collections.Aspects(app.currentUser.get('aspects'));
-    var aspects_list =  new app.views.AspectsList({ collection: app.aspects });
-    aspects_list.render();
+    this.aspects_list =  new app.views.AspectsList({ collection: app.aspects });
+    this.aspects_list.render();
     this.aspects_stream();
   },
 
   aspects_stream : function(){
-
     var ids = app.aspects.selectedAspects('id');
     app.stream = new app.models.StreamAspects([], { aspects_ids: ids });
     app.stream.fetch();
 
     app.page = new app.views.Stream({model : app.stream});
     app.publisher = app.publisher || new app.views.Publisher({collection : app.stream.items});
-    app.publisher.updateAspectsSelector(ids);
+    app.publisher.setSelectedAspects(ids);
 
     var streamFacesView = new app.views.StreamFaces({collection : app.stream.items});
 
     $("#main_stream").html(app.page.render().el);
     $('#selected_aspect_contacts .content').html(streamFacesView.render().el);
-  }
+    this.hideInactiveStreamLists();
+  },
+
+  hideInactiveStreamLists: function() {
+    if(this.aspects_list && Backbone.history.fragment != "aspects")
+      this.aspects_list.hideAspectsList();
+
+    if(this.followedTagsView && Backbone.history.fragment != "followed_tags")
+      this.followedTagsView.hideFollowedTags();
+  },
 });
 

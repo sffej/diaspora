@@ -1,3 +1,5 @@
+@import "colors";
+
 body {
   direction: rtl;
   text-align: right;
@@ -297,7 +299,7 @@ ul.comments li.posted .controls .delete {
   left: 10px;
 }
 
-ul.left_nav .contact_count, ul.left_nav .edit {
+ul.left_nav .item_count, ul.left_nav .edit {
   float: left;
 }
 
@@ -313,7 +315,7 @@ ul.left_nav .contact_count, ul.left_nav .edit {
 
 .stream_container {
   border-left: 0;
-  border-right: 1px solid #DDDDDD;
+  border-right: 1px solid $border-grey;
 }
 
 .stream .new_message .right input[type=reset] {
