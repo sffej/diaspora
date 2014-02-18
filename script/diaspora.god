@@ -9,7 +9,7 @@ God.contact(:email) do |c|
   c.group = 'developers'
 end
 rails_env   = ENV['RAILS_ENV']  || "production"
-rails_root  = ENV['RAILS_ROOT'] || "/home/dmm/diaspora"
+rails_root  = ENV['RAILS_ROOT'] || "/home/david/diaspora"
 num_resqueworkers = 5
 
 num_resqueworkers.times do |num|
@@ -18,18 +18,15 @@ num_resqueworkers.times do |num|
     w.name     = "sidekiq-#{num}"
     w.group    = 'sidekiqs'
     w.interval = 290.seconds
-    #w.env      = {"RAILS_ENV"=>rails_env}
+    w.env      = {"RAILS_ENV"=>rails_env}
     w.start    = "bundle exec sidekiq"
     w.log      = "#{rails_root}/log/god.log"
     #w.start_grace = 100.seconds
 
-    #w.uid = 'dmm'
-    #w.gid = 'dmm'
-
     # restart if memory gets too high
     w.transition(:up, :restart) do |on|
       on.condition(:memory_usage) do |c|
-        c.above = 1150.megabytes
+        c.above = 5450.megabytes
         c.times = 7
         c.notify = 'david'        
       end

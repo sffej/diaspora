@@ -1,22 +1,28 @@
 require File.expand_path('../load_config', __FILE__)
 
+# Enable and set these to run the worker as a different user/group
+#user  = 'diaspora'
+#group = 'diaspora'
+
 worker_processes 3
 
 ## Load the app before spawning workers
 preload_app true
 
 # How long to wait before killing an unresponsive worker
-timeout AppConfig.server.unicorn_timeout.to_i
+timeout 130
 
-pid '/home/dmm/diaspora/tmp/pids/unicorn.pid'
-listen '/home/dmm/run/diaspora.sock'
-@resque_pid = nil
 @sidekiq_pid = nil
 
+pid '/home/david/diaspora/tmp/pids/unicorn.pid'
+#listen '/home/david/diaspora/tmp/sockets/diaspora.sock', :backlog => 2048
+listen "127.0.0.1:3000"
 
+#stderr_path AppConfig.server.stderr_log.get if AppConfig.server.stderr_log.present?
+#stdout_path AppConfig.server.stdout_log.get if AppConfig.server.stdout_log.present?
 
-stderr_path AppConfig.server.stderr_log.get if AppConfig.server.stderr_log.present?
-stdout_path AppConfig.server.stdout_log.get if AppConfig.server.stdout_log.present?
+stderr_path "/home/david/diaspora/log/unicorn-stderr.log"
+stdout_path "/home/david/diaspora/log/unicorn-stdout.log"
 
 before_fork do |server, worker|
   # If using preload_app, enable this line
@@ -31,7 +37,7 @@ before_fork do |server, worker|
     @sidekiq_pid ||= spawn('bundle exec sidekiq')
   end
 
-  old_pid = '/var/run/diaspora/diaspora.pid.oldbin'
+  old_pid = '/home/david/diaspora/tmp/pids/diaspora.pid.oldbin'
   if File.exists?(old_pid) && server.pid != old_pid
     begin
       Process.kill("QUIT", File.read(old_pid).to_i)
