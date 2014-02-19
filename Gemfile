@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'god'
 #gem 'newrelic_rpm'
 
-gem 'rails', '3.2.16'
+gem 'rails', '3.2.17'
 
 # Appserver
 
