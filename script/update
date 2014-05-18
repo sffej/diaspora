@@ -4,6 +4,7 @@ function pause(){
    read -p .$*.
 }
 echo 'fetch upstream'
+git checkout Gemfile.lock db/schema.rb
 git fetch upstream
 echo "Merge upstream?"
 select yn in "Yes" "No"; do

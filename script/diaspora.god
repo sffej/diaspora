@@ -10,7 +10,7 @@ God.contact(:email) do |c|
 end
 rails_env   = ENV['RAILS_ENV']  || "production"
 rails_root  = ENV['RAILS_ROOT'] || "/home/david/diaspora"
-num_resqueworkers = 5
+num_resqueworkers = 2
 
 num_resqueworkers.times do |num|
   God.watch do |w|
