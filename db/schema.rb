@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131213171804) do
+ActiveRecord::Schema.define(:version => 20140422134627) do
 
   create_table "account_deletions", :force => true do |t|
     t.string  "diaspora_handle"
@@ -282,6 +282,39 @@ ActiveRecord::Schema.define(:version => 20131213171804) do
     t.datetime "updated_at"
   end
 
+  create_table "poll_answers", :force => true do |t|
+    t.string  "answer",                    :null => false
+    t.integer "poll_id",                   :null => false
+    t.string  "guid"
+    t.integer "vote_count", :default => 0
+  end
+
+  add_index "poll_answers", ["poll_id"], :name => "index_poll_answers_on_poll_id"
+
+  create_table "poll_participations", :force => true do |t|
+    t.integer  "poll_answer_id",          :null => false
+    t.integer  "author_id",               :null => false
+    t.integer  "poll_id",                 :null => false
+    t.string   "guid"
+    t.text     "author_signature"
+    t.text     "parent_author_signature"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+  end
+
+  add_index "poll_participations", ["poll_id"], :name => "index_poll_participations_on_poll_id"
+
+  create_table "polls", :force => true do |t|
+    t.string   "question",          :null => false
+    t.integer  "status_message_id", :null => false
+    t.boolean  "status"
+    t.string   "guid"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "polls", ["status_message_id"], :name => "index_polls_on_status_message_id"
+
   create_table "posts", :force => true do |t|
     t.integer  "author_id",                                              :null => false
     t.boolean  "public",                              :default => false, :null => false
@@ -364,6 +397,18 @@ ActiveRecord::Schema.define(:version => 20131213171804) do
   end
 
   add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_rails_admin_histories"
+
+  create_table "reports", :force => true do |t|
+    t.integer  "item_id",                       :null => false
+    t.string   "item_type",                     :null => false
+    t.boolean  "reviewed",   :default => false
+    t.text     "text"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.integer  "user_id",                       :null => false
+  end
+
+  add_index "reports", ["item_id"], :name => "index_post_reports_on_post_id"
 
   create_table "roles", :force => true do |t|
     t.integer  "person_id"
@@ -483,6 +528,7 @@ ActiveRecord::Schema.define(:version => 20131213171804) do
     t.integer  "auto_follow_back_aspect_id"
     t.text     "hidden_shareables"
     t.datetime "reset_password_sent_at"
+    t.datetime "last_seen"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

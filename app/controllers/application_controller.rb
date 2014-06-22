@@ -152,4 +152,10 @@ class ApplicationController < ActionController::Base
     gon.preloads = {}
   end
 
+  def self.use_bootstrap_for *routes
+    before_filter -> {
+      @css_framework = :bootstrap
+      gon.bootstrap = true
+    }, only: routes.flatten
+  end
 end

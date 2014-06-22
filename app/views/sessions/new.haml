@@ -17,9 +17,7 @@
     %p
       = image_tag('https://c790230.ssl.cf2.rackcdn.com/asterisk.png', :id => 'asterisk', :class => 'logo', :height => 154, :width => 154)
     %p
-      = image_tag('https://c790230.ssl.cf2.rackcdn.com/logo_caps.png', :id => 'logo', :width => 98, :height => 14)
-    %p
-    You must use a modern browser and have cookies/javascript enabled to use this site
+      = image_tag('branding/logo.png', :id => 'logo', :width => 98, :height => 14)
 
     - flash.each do |name, msg|
       %p{:class => "login_#{name}"}= msg

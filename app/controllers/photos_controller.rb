@@ -33,7 +33,7 @@ class PhotosController < ApplicationController
         @contact = Contact.new
       end
 
-      @posts = current_user.photos_from(@person)
+      @posts = current_user.photos_from(@person, max_time: max_time)
 
       respond_to do |format|
         format.all { render 'people/show' }

@@ -11,7 +11,6 @@
 //= require_tree ./pages
 //= require_tree ./collections
 //= require_tree ./views
-//= require_tree ./forms
 
 var app = {
   collections: {},
@@ -90,7 +89,7 @@ var app = {
     Backbone.history.start({pushState: true});
 
     // there's probably a better way to do this...
-    $("a[rel=backbone]").live("click", function(evt){
+    $(document).on("click", "a[rel=backbone]", function(evt){
       evt.preventDefault();
       var link = $(this);
 
@@ -101,7 +100,7 @@ var app = {
 
   setupGlobalViews: function() {
     app.hovercard = new app.views.Hovercard();
-    app.aspectMemberships = new app.views.AspectMembership();
+    app.aspectMembershipsBlueprint = new app.views.AspectMembershipBlueprint();
     app.sidebar = new app.views.Sidebar();
   },
 

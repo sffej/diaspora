@@ -67,3 +67,6 @@ dump.rdb
 
 #Rubinius's JIT
 *.rbc
+
+#IDE
+diaspora.iml
