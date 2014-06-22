@@ -28,7 +28,6 @@
 //= require validation
 //= require app/app
 //= require diaspora
-//= require diasporg
 //= require_tree ./helpers
 //= require_tree ./pages
 //= require_tree ./widgets
