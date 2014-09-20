@@ -26,7 +26,7 @@ num_resqueworkers.times do |num|
     # restart if memory gets too high
     w.transition(:up, :restart) do |on|
       on.condition(:memory_usage) do |c|
-        c.above = 5450.megabytes
+        c.above = 6450.megabytes
         c.times = 7
         c.notify = 'david'        
       end

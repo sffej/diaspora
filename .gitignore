@@ -2,6 +2,7 @@
 app/views/plain/_help.html.haml
 app/views/plain/_status.html.haml
 app/views/home/_show.*
+app/views/terms/terms.*
 app/assets/images/custom/
 
 
