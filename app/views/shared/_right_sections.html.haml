@@ -15,12 +15,10 @@
   .title
     = image_tag('https://c790230.ssl.cf2.rackcdn.com/coffee.png')
     %h4
-      = link_to t('aspects.index.donate'), "/supportyourpod", :rel => "facebox" 
+      = link_to t('aspects.index.donate'), "/supportyourpod", :target => "new"
   .content
     = t('aspects.index.keep_pod_running', :pod => "Diasporg*")      
-    = link_to t('aspects.index.donate'), "/supportyourpod", :rel => "facebox"
-    %h3
-      Thank You for the donations and keeping us alive and ad free!
+    = link_to t('aspects.index.donate'), "/supportyourpod", :target => "new"
     %br
     <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="https://diasp.org"></a>
     %br
@@ -70,7 +68,7 @@
         != t('aspects.index.help.feature_suggestion', :link => link_to("#"+t('aspects.index.help.tag_feature'), tag_path(:name => t('aspects.index.help.tag_feature'))))
     %p
       != t('aspects.index.help.tutorials_and_wiki',
-           :faq => link_to(t('_help'), help_path),
+	   :faq => link_to(t('_help'), help_path),
            :tutorial => link_to(t('aspects.index.help.tutorial_link_text'), "https://diasporafoundation.org/tutorials", :target => '_blank'),
            :wiki => link_to('Wiki','http://wiki.diasporafoundation.org', :target => '_blank'), :target => '_blank')
 
