@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 #diasporg gems
 gem 'god'
 #gem 'newrelic_rpm'
-
 gem 'rails', '3.2.19'
 
 # Appserver
