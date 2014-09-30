@@ -13,8 +13,6 @@
   overflow-y: auto;
   width: 100%;
   text-align: center;
-  padding-top: 80px;
-  padding-bottom: 20px;
 
   color: $text-dark-grey;
   text-shadow: none;
@@ -61,6 +59,7 @@
     color: #333;
     text-decoration: none;
     line-height: 14px;
+    position: absolute;
 
     &:hover{
       color: #eee;
@@ -93,19 +92,19 @@
   position: fixed;
   width: 100%;
   left: 0;
-  bottom: 0;
+  top: 0;
   text-align: center;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0,0,0,0.3);
   padding: 5px 0;
-  white-space: nowrap;
   overflow: hidden;
+  width: 175px;
 }
 
 #lightbox-scrollleft, #lightbox-scrollright{
   z-index: 1005;
   color: #fff;
   background-color: #0f0f0f;
-  display: inline-block;
+  display: none;
   height: 70px;
   width: 30px;
   position: fixed;
@@ -124,12 +123,12 @@
 #lightbox-imageset{
   display: inline-block;
   vertical-align: bottom;
-  padding-left: 50px;
+  padding-left: 5px;
   padding-right: 50px;
 
   img{
-    @include transition(opacity, 0.2s);
-    @include opacity(0.2);
+    @include transition(opacity, 0.6s);
+    @include opacity(0.6);
     height: 70px;
     width: 70px;
     margin-right: 5px;
@@ -141,7 +140,7 @@
     }
 
     &.selected{
-      @include opacity(1);
+      @include opacity(0.9);
     }
   }
 }
