@@ -14,7 +14,7 @@
 .section
   .title
     = image_tag('https://c790230.ssl.cf2.rackcdn.com/coffee.png')
-    %h4
+    %h4{:style => "display:inline;"}
       = link_to t('aspects.index.donate'), "/supportyourpod", :target => "new"
   .content
     = t('aspects.index.keep_pod_running', :pod => "Diasporg*")      
@@ -29,6 +29,17 @@
     = link_to(image_tag('https://c790230.ssl.cf2.rackcdn.com/t-shirt.gif', :style => "position:relative;"), "http://cafepress.com/diasporg", :target => "new")
     %br
     Order some merch and promote Diaspora*
+
+.section
+  .title
+    = image_tag('/images/link.png')
+    %h5{:style => "display:inline;"} dia.so URL Tools
+  .content
+    %h4 dia.so shortens links, expands links and can offer you a short and universal short url rather than your diaspora handle that works on all pods and can remain the same even if you change pods. 
+    %h5
+    %p ...Shorten by using an extra / in your url, eg http:///www.gnu.org/philosophy/philosophy.html in your post.
+    %p ...Expand by hovering over any short link.
+    %p ...Get a short url for your diaspora handle at <a href="http://dia.so">dia.so</a>.
 
 - if AppConfig.settings.invitations.open?
   .section

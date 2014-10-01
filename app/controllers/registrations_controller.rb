@@ -43,7 +43,7 @@ class RegistrationsController < Devise::RegistrationsController
     return true if invite.present?
     unless AppConfig.settings.enable_registrations?
       flash[:error] = t('registrations.closed')
-      redirect_to new_user_session_path
+      redirect_to root_url
     end
   end
 
