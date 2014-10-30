@@ -4,13 +4,13 @@ require File.expand_path('../load_config', __FILE__)
 #user  = 'diaspora'
 #group = 'diaspora'
 
-worker_processes 3
+worker_processes 4
 
 ## Load the app before spawning workers
 preload_app true
 
 # How long to wait before killing an unresponsive worker
-timeout 130
+timeout 190
 
 @sidekiq_pid = nil
 
