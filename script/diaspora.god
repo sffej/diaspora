@@ -1,6 +1,6 @@
 God::Contacts::Email.defaults do |d|
   d.from_email = 'god@diasp.org'
-  d.to_email = 'davidmorley@diasp.org'
+  d.to_email = 'pod-god-alerts@usr.io'
   d.from_name = 'God'
   d.delivery_method = :sendmail
 end
