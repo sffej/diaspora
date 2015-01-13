@@ -10,7 +10,7 @@ worker_processes 6
 preload_app true
 
 # How long to wait before killing an unresponsive worker
-timeout 190
+timeout 390
 
 @sidekiq_pid = nil
 

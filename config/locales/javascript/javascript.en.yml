@@ -9,7 +9,7 @@ en:
     delete: "Delete"
     ignore: "Ignore"
     report:
-      prompt: "Please enter a reason:"
+      prompt: "Report something that violates the pods terms (not things that offend you, use ignore for that)"
       prompt_default: "offensive content"
       name: "Report"
       status:
