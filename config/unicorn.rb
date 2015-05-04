@@ -4,7 +4,7 @@ require File.expand_path('../load_config', __FILE__)
 #user  = 'diaspora'
 #group = 'diaspora'
 
-worker_processes 6
+worker_processes 5
 
 ## Load the app before spawning workers
 preload_app true

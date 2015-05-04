@@ -4,16 +4,18 @@ God::Contacts::Email.defaults do |d|
   d.from_name = 'God'
   d.delivery_method = :sendmail
 end
+
 God.contact(:email) do |c|
   c.name = 'david'
   c.group = 'developers'
 end
+
 rails_env   = ENV['RAILS_ENV']  || "production"
 rails_root  = ENV['RAILS_ROOT'] || "/home/david/diaspora"
 num_resqueworkers = 2
-
 num_resqueworkers.times do |num|
-  God.watch do |w|
+
+God.watch do |w|
     w.dir      = "#{rails_root}"
     w.name     = "sidekiq-#{num}"
     w.group    = 'sidekiqs'
@@ -116,6 +118,56 @@ God.watch do |w|
       c.retry_in = 10.minutes
       c.retry_times = 5
       c.retry_within = 2.hours
+    end
+  end
+end
+
+God.watch do |w|
+  w.name     = "camo"
+  w.pid_file = "#{rails_root}/camo/tmp/camo.pid"
+  w.interval = 30.seconds
+
+  w.env      = {
+    "CAMO_KEY" => '0x24FEEDFACEDEADBEEFCAFE'
+  }
+
+  w.start       = "cd #{rails_root}/camo && exec /usr/bin/nodejs server.js >> log/camo.stdout.log 2>> log/camo.stderr.log"
+  w.stop_signal = "TERM"
+
+  # retart if memory gets too high
+  w.transition(:up, :restart) do |on|
+    on.condition(:memory_usage) do |c|
+      c.above  = 20.megabytes
+      c.times  = 2
+    end
+  end
+
+  # determine the state on startup
+  w.transition(:init, { true => :up, false => :start }) do |on|
+    on.condition(:process_running) do |c|
+      c.running = true
+    end
+  end
+
+  # determine when process has finished starting
+  w.transition([:start, :restart], :up) do |on|
+    on.condition(:process_running) do |c|
+      c.running = true
+      c.interval = 5.seconds
+    end
+
+    # failsafe
+    on.condition(:tries) do |c|
+      c.times = 5
+      c.transition = :start
+      c.interval = 5.seconds
+    end
+  end
+
+  # start if process is not running
+  w.transition(:up, :start) do |on|
+    on.condition(:process_running) do |c|
+      c.running = false
     end
   end
 end
