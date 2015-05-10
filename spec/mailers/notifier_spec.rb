@@ -300,13 +300,13 @@ describe Notifier, :type => :mailer do
         expect(@confirm_email.to).to eq([bob.unconfirmed_email])
       end
 
-      it 'has the unconfirmed emil in the subject' do
-        expect(@confirm_email.subject).to include(bob.unconfirmed_email)
-      end
-
-     # it 'has the unconfirmed emil in the body' do
-     #   expect(@confirm_email.body.encoded).to include(bob.unconfirmed_email)
+     # it 'has the unconfirmed emil in the subject' do
+     #   expect(@confirm_email.subject).to include(bob.unconfirmed_email)
      # end
+
+      it 'has the unconfirmed emil in the body' do
+        expect(@confirm_email.body.encoded).to include(bob.unconfirmed_email)
+      end
 
       it 'has the receivers name in the body' do
         expect(@confirm_email.body.encoded).to include(bob.person.profile.first_name)
