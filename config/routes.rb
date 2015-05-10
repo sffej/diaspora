@@ -107,7 +107,6 @@ Diaspora::Application.routes.draw do
     get :download_photos
   end
 
-
   controller :users do
     get 'public/:username'          => :public,           :as => 'users_public'
     get 'getting_started'           => :getting_started,  :as => 'getting_started'
@@ -130,7 +129,6 @@ Diaspora::Application.routes.draw do
   post 'users/invitations' => 'invitations#create', :as => 'user_invitation'
 
   get 'login' => redirect('/users/sign_in')
-  get 'register' => redirect('/users/sign_up')
 
   # Admin backend routes
 
@@ -152,19 +150,6 @@ Diaspora::Application.routes.draw do
   resource :profile, :only => [:edit, :update]
   resources :profiles, :only => [:show]
 
-
-
-  match 'forwardemail',              :to => 'plain#forwardemail'
-  match 'forwardemail/on',           :to => 'plain#forwardemailon'
-  match 'forwardemail/off',          :to => 'plain#forwardemailoff'
-  match 'status',                    :to => 'plain#status'
-  match 'supportyourpod',            :to => 'plain#supportyourpod'
-  match 'stats',		     :to => 'users#stats'
-  match 'shorten',		     :to => 'plain#shorten'
-  match 'shorten/show',              :to => 'plain#shortenshow'
-  match 'promote',                      :to => 'users#promote'
-  match 'git',                      :to => 'plain#git'
-  resources :plain
 
   resources :contacts,           :except => [:update, :create] do
   end
@@ -194,6 +179,7 @@ Diaspora::Application.routes.draw do
   end
   get '/u/:username' => 'people#show', :as => 'user_profile', :constraints => { :username => /[^\/]+/ }
   get '/u/:username/profile_photo' => 'users#user_photo', :constraints => { :username => /[^\/]+/ }
+
 
   # Federation
 

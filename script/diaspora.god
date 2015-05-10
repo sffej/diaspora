@@ -128,7 +128,7 @@ God.watch do |w|
   w.interval = 30.seconds
 
   w.env      = {
-    "CAMO_KEY" => '0x24FEEDFACEDEADBEEFCAFE'
+    "CAMO_KEY" => 'example123stellaa456example!'
   }
 
   w.start       = "cd #{rails_root}/camo && exec /usr/bin/nodejs server.js >> log/camo.stdout.log 2>> log/camo.stderr.log"
