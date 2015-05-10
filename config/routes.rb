@@ -226,6 +226,9 @@ Diaspora::Application.routes.draw do
   # Help
   get 'help' => 'help#faq', :as => 'help'
   get 'help/:topic' => 'help#faq'
+  get 'supportyourpod' => 'plain#supportyourpod'
+  get 'shorten' => 'plain#shorten'
+  get 'shorten/show' => 'plain#shortenshow'
 
   #Protocol Url
   get 'protocol' => redirect("http://wiki.diasporafoundation.org/Federation_Protocol_Overview")
