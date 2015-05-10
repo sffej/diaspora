@@ -4,6 +4,7 @@
 %li= link_to 'Blog', "http://b.diasp.org"
 %li= link_to 'Support', "http://dia.so/support"
 %li= link_to t('layouts.application.whats_new'), changelog_url
+%li= link_to t('layouts.header.code') + " " + pod_version, "#{source_url}", {:title => t('layouts.application.source_package')}
 %li= link_to(t('layouts.application.toggle'), toggle_mobile_path)
 - if AppConfig.settings.terms.enable?
     %li= link_to(t('_terms'), terms_path)

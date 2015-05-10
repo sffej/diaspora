@@ -3,9 +3,9 @@ branches:
     - 'master'
 
 language: ruby
+
 rvm:
-  - 2.0.0
-  - 1.9.3
+  - 2.1
 
 env:
   - DB=mysql BUILD_TYPE=other
@@ -13,9 +13,6 @@ env:
 
 bundler_args: "--without development production heroku"
 script: "./script/ci/build.sh"
-
-addons:
-  firefox: "26.0"
 
 notifications:
   email:
