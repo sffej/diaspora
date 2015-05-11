@@ -45,7 +45,7 @@ jQuery.fn.center = (function() {
       self.imageset.delegate("img", "click", self.imagesetImageClicked);
 
       self.window.resize(function() {
-        self.lightbox.css("max-height", (self.window.height() - 0) + "px");
+        self.lightbox.css("max-height", (self.window.height() - 100) + "px");
       }).trigger("resize");
 
       self.closelink.click(function(evt){
@@ -169,7 +169,7 @@ jQuery.fn.center = (function() {
     this.revealLightbox = function() {
       self.body.addClass("lightboxed");
       self.lightbox
-        .css("max-height", (self.window.height() - 0) + "px")
+        .css("max-height", (self.window.height() - 100) + "px")
         .show();
 
       return self;

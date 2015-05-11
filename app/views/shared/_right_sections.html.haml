@@ -10,11 +10,6 @@
   s.src = 'https://api.flattr.com/js/0.6/load.js?mode=auto';
   t.parentNode.insertBefore(s, t);
   })();
-  !function(d,s,id) {var js,cjs=d.getElementsByTagName(s)[0],e=d.getElementById(id);if(e){return;}
-  js=d.createElement(s);
-  js.id=id;
-  js.src="https://www.coinbase.com/assets/tips.js";
-  cjs.parentNode.insertBefore(js,cjs);}(document, 'script', 'coinbase-tips');
 
 
 .section
@@ -26,24 +21,15 @@
     = t('aspects.index.keep_pod_running', :pod => "Diasporg*")      
     = link_to t('aspects.index.donate'), "/supportyourpod", :target => "new"
     %br
-    <div class="cb-tip-button" data-content-location="https://diasp.org" data-href="//www.coinbase.com/tip_buttons/show_tip" data-to-user-id="528d8ff6f8f028e269000067"></div>
-    %br
     <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="https://diasp.org"></a>
     %br
-    = link_to(image_tag('https://c790230.ssl.cf2.rackcdn.com/promote.gif'), "/promote")
-    %br
-    Share the pod with your other Social Networks!
-    %br
-    = link_to(image_tag('https://c790230.ssl.cf2.rackcdn.com/t-shirt.gif', :style => "position:relative;"), "http://cafepress.com/diasporg", :target => "new")
-    %br
-    Order some merch and promote Diaspora*
 
 .section
   .title
     = image_tag('/images/link.png')
     %h5{:style => "display:inline;"} dia.so URL Tools
   .content
-    %h4 dia.so shortens links, expands links and can offer you a short and universal short url rather than your diaspora handle that works on all pods and can remain the same even if you change pods. 
+    %h5 dia.so shortens links, expands links and can offer you a short and universal short url rather than your diaspora handle that works on all pods and can remain the same even if you change pods. 
     %h5
     %p ...Shorten by using an extra / in your url, eg http:///www.gnu.org/philosophy/philosophy.html in your post.
     %p ...Expand by hovering over any short link.

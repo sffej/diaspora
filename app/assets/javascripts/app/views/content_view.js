@@ -57,7 +57,7 @@ app.views.Content = app.views.Base.extend({
     }
 
     // only collapse if height exceeds collHeight+20%
-    if( elem.height() > ((collHeight*2.8)+addHeight) && !elem.is(".opened") ) {
+    if( elem.height() > ((collHeight*1.2)+addHeight) && !elem.is(".opened") ) {
       elem.data("orig-height", elem.height() );
       elem
         .height( Math.max(collHeight, addHeight) )
