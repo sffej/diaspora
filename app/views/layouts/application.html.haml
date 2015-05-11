@@ -13,8 +13,8 @@
     %meta{:name => "description", :content => "diaspora*"}/
     %meta{:name => "author", :content => "Diaspora, Inc."}/
 
-    %link{:rel => 'shortcut icon', :href => 'https://c790230.ssl.cf2.rackcdn.com/favicon.png'}
-    %link{:rel => 'apple-touch-icon', :href => 'https://c790230.ssl.cf2.rackcdn.com/apple-touch-icon.png'}
+    %link{:rel => 'shortcut icon', :href => "#{image_path('favicon.png')}" }
+    %link{:rel => 'apple-touch-icon', :href => "#{image_path('apple-touch-icon.png')}"}
 
     = render 'layouts/open_graph'
 
