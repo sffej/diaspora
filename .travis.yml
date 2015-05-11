@@ -1,7 +1,3 @@
-branches:
-  only:
-    - 'master'
-
 language: ruby
 
 rvm:
@@ -9,10 +5,20 @@ rvm:
 
 env:
   - DB=mysql BUILD_TYPE=other
+  - DB=mysql BUILD_TYPE=cucumber
 
-bundler_args: "--without development production heroku"
+sudo: false
+cache:
+  bundler: true
+  directories:
+    - app/assets/images
+
+branches:
+  only:
+    - 'master'
+
+before_install: gem install bundler
+bundler_args: "--without development production heroku --jobs 3 --retry 3"
+
 script: "./script/ci/build.sh"
 
-notifications:
-  email:
-    - tci@z8s.com
