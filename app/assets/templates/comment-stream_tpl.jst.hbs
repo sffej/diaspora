@@ -13,7 +13,7 @@
 {{#if loggedIn}}
   <div class="comment media new_comment_form_wrapper {{#unless commentsCount}} hidden {{/unless}}">
     {{#with current_user}}
-      <a href="/people/{{guid}}" class="img" title="{{name}}">
+      <a href="/people/{{guid}}" class="img">
         {{{personImage this}}}
       </a>
     {{/with}}
