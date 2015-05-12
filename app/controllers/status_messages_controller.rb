@@ -50,13 +50,15 @@ class StatusMessagesController < ApplicationController
   end
 
   def create
+    require File.join(Rails.root, 'lib/swap')
+    message = Morley::Shorty::swap(params[:status_message][:text])
     params[:status_message][:aspect_ids] = [*params[:aspect_ids]]
     normalize_public_flag!
     services = [*params[:services]].compact
 
     @status_message = current_user.build_post(:status_message, params[:status_message])
-    require File.join(Rails.root, 'lib/swap')
-    message = Morley::Shorty::swap(params[:status_message][:text])
+
+
     @status_message.build_location(:address => params[:location_address], :coordinates => params[:location_coords]) if params[:location_address].present?
     if params[:poll_question].present?
       @status_message.build_poll(:question => params[:poll_question])

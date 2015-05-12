@@ -2,26 +2,16 @@
 -#   licensed under the Affero General Public License version 3 or later.  See
 -#   the COPYRIGHT file.
 
-:javascript
-  (function() {
-  var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
-  s.type = 'text/javascript';
-  s.async = true;
-  s.src = 'https://api.flattr.com/js/0.6/load.js?mode=auto';
-  t.parentNode.insertBefore(s, t);
-  })();
-
-
 .section
   .title
     = image_tag('https://c790230.ssl.cf2.rackcdn.com/coffee.png')
     %h4{:style => "display:inline;"}
-      = link_to t('aspects.index.donate'), "/supportyourpod", :target => "new"
+      = t('aspects.index.donate')
   .content
     = t('aspects.index.keep_pod_running', :pod => "Diasporg*")      
     = link_to t('aspects.index.donate'), "/supportyourpod", :target => "new"
     %br
-    <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="https://diasp.org"></a>
+    Viewing the <a href="http://blog.diasporg.org">blog</a> that has sponsored ads and visting any advertisers you find interesting provides the pod revenue also.
     %br
 
 .section
