@@ -12,6 +12,7 @@ end
 
 rails_env   = ENV['RAILS_ENV']  || "production"
 rails_root  = ENV['RAILS_ROOT'] || "/home/david/diaspora"
+
 num_resqueworkers = 2
 num_resqueworkers.times do |num|
 
@@ -128,7 +129,9 @@ God.watch do |w|
   w.interval = 30.seconds
 
   w.env      = {
-    "CAMO_KEY" => 'example123stellaa456example!'
+    "NODE_TLS_REJECT_UNAUTHORIZED" => 0,
+    "CAMO_LENGTH_LIMIT" => 10485760,
+    "CAMO_HEADER_VIA" => 'Camo Asset Proxy at diasp.org'
   }
 
   w.start       = "cd #{rails_root}/camo && exec /usr/bin/nodejs server.js >> log/camo.stdout.log 2>> log/camo.stderr.log"
