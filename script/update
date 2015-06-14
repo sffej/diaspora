@@ -42,7 +42,7 @@ done
 echo "remake assets?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) bundle exec rake assets:precompile; break;;
+        Yes ) RAILS_ENV=production bundle exec rake assets:precompile; break;;
         No ) break;;
     esac
 done
