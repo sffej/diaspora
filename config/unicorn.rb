@@ -1,8 +1,7 @@
-require File.expand_path('../load_config', __FILE__)
+require_relative "load_config"
 
-# Enable and set these to run the worker as a different user/group
-#user  = 'diaspora'
-#group = 'diaspora'
+port = ENV["PORT"]
+port = port && !port.empty? ? port.to_i : nil
 
 worker_processes 5
 
@@ -12,6 +11,7 @@ preload_app true
 # How long to wait before killing an unresponsive worker
 timeout 390
 
+preload_app true
 @sidekiq_pid = nil
 
 pid '/home/david/diaspora/tmp/pids/unicorn.pid'
@@ -29,7 +29,7 @@ before_fork do |server, worker|
   ActiveRecord::Base.connection.disconnect!
 
   # disconnect redis if in use
-  unless AppConfig.single_process_mode?
+  unless AppConfig.environment.single_process_mode?
     Sidekiq.redis {|redis| redis.client.disconnect }
   end
 
@@ -47,10 +47,10 @@ before_fork do |server, worker|
   end
 end
 
+after_fork do |_server, _worker|
+  Logging.reopen # reopen logfiles to obtain a new file descriptor
 
-after_fork do |server, worker|
-  # If using preload_app, enable this line
-  ActiveRecord::Base.establish_connection
+  ActiveRecord::Base.establish_connection # preloading app in master, so reconnect to DB
 
   # We don't generate uuids in the frontend, but let's be on the safe side
   UUID.generator.next_sequence
