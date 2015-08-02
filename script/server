@@ -196,16 +196,11 @@ diaspora.yml.example
 fi
 
 # Start Diaspora
-<<<<<<< HEAD
-
-echo -n "Starting Diaspora in $RAILS_ENV mode on port $port "
-=======
 printf "Starting Diaspora in $RAILS_ENV mode "
 if [ -n "$PORT" ]
 then
   printf "on port $PORT "
 fi
->>>>>>> upstream/master
 if [ "$embed_sidekiq_worker" = "true" ]
 then
   echo "with a Sidekiq worker embedded into Unicorn."
