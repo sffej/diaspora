@@ -419,7 +419,7 @@ describe Notifier, type: :mailer do
     end
 
     it "has the unconfirmed emil in the subject" do
-      expect(@confirm_email.subject).to include(bob.unconfirmed_email)
+      expect(@confirm_email.subject).not_to include(bob.unconfirmed_email)
     end
 
     it "has the unconfirmed emil in the body" do
