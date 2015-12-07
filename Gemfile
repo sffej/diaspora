@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 #diasporg gems
 gem 'god'
+gem 'newrelic_rpm'
+#diasporg end
 
 gem "rails", "4.2.5"
 
