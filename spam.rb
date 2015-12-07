@@ -6,6 +6,10 @@ spam_accounts = %w(popeso@diasp.org jorgearturo666@diasp.org fernandoshare@diasp
 # Delete comments even if spammer isn't a local user or spam isn't on a
 # local users account
 always_delete = true
+#delete all their posts?
+kill_posts = true
+#delete all their photos?
+kill_photos = true
 
 # Keep empty (%w() or []) to retract for all local users
 retract_for = %w()
@@ -19,15 +23,21 @@ require_relative 'config/environment'
 local_spammers, remote_spammers = Person.where(diaspora_handle: spam_accounts).partition { |account| account.local? }
 
 
-
 # Retract all comments of local spammers and close their accounts
 local_spammers.each do |spammer|
  #kill posts
-  Post.where(author_id: spammer.id).each do |post|
-    post.destroy
+  if kill_posts
+    Post.where(author_id: spammer.id).each do |post|
+      post.destroy
+    end
   end
-  #kill photos?
-
+  #kill photos
+  if kill_photos
+    Photo.where(author_id: spammer.id).each do |photo|
+      #need to actually wipe off the server drive here before photo.destroy. not sure how?
+      photo.destroy
+    end
+  end
   Comment.where(author_id: spammer.id).each do |comment|
     spammer.owner.retract(comment)
    end
