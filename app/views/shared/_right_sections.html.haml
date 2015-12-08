@@ -7,20 +7,18 @@
     = image_tag('https://c790230.ssl.cf2.rackcdn.com/coffee.png')
     %h4{:style => "display:inline;"}
       = t('aspects.index.donate')
+  #progressBar
+    %div
   .content
-    = t('aspects.index.keep_pod_running', :pod => "Diasporg*")      
+    Diasporg costs about $1000USD to keep alive and running a year. For 2016 we are at $0/$1000! Please help out where you can, yes even $1 helps! 
     = link_to t('aspects.index.donate'), "/supportyourpod", :target => "new"
-    %br
-    Viewing the <a href="http://blog.diasporg.org">blog</a> that has sponsored ads and visting any advertisers you find interesting provides the pod revenue also.
-    %br
 
 .section
   .title
     = image_tag('/images/link.png')
     %h5{:style => "display:inline;"} dia.so URL Tools
   .content
-    %h5 dia.so shortens links, expands links and can offer you a short and universal short url rather than your diaspora handle that works on all pods and can remain the same even if you change pods. 
-    %h5
+    dia.so shortens links, expands links and can offer you a short and universal short url rather than your diaspora handle that works on all pods and can remain the same even if you change pods. 
     %p ...Shorten by using an extra / in your url, eg http:///www.gnu.org/philosophy/philosophy.html in your post.
     %p ...Expand by hovering over any short link.
     %p ...Get a short url for your diaspora handle at <a href="http://dia.so">dia.so</a>.
@@ -90,17 +88,6 @@
       = t('bookmarklet.heading')
   .content
     != t('bookmarklet.explanation', :link => link_to(t('bookmarklet.post_something'), bookmarklet_url))
-
-- if AppConfig.settings.paypal_donations.enable? || AppConfig.bitcoin_donation_address
-  .section
-    .title
-      %h5.title-header
-        %i.entypo.heart
-        = t('aspects.index.donate')
-    .content
-      %p
-        = t('aspects.index.keep_pod_running', :pod => AppConfig.pod_uri.host)
-      = render 'shared/donatepod'
 
 - if AppConfig.admins.podmin_email.present?
   .section
