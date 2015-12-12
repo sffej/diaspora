@@ -1,1 +1,1 @@
-RAILS_ENV=production rake db:migrate
+RAILS_ENV=production DB=postgres rake db:migrate
