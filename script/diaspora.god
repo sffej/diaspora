@@ -20,7 +20,7 @@ God.watch do |w|
     w.dir      = "#{rails_root}"
     w.name     = "sidekiq-#{num}"
     w.group    = 'sidekiqs'
-    w.interval = 290.seconds
+    w.interval = 100.seconds
     w.env      = {"RAILS_ENV"=>rails_env}
     w.start    = "bundle exec sidekiq"
     w.log      = "#{rails_root}/log/god.log"
@@ -71,7 +71,7 @@ end
 God.watch do |w|
   w.name = "unicorn"
   #w.group    = 'diaspora'
-  w.interval = 200.seconds # default
+  w.interval = 100.seconds # default
 
   # unicorn needs to be run from the rails root
   w.start = "cd #{rails_root} && unicorn -c #{rails_root}/config/unicorn.rb -E #{rails_env} -D"
@@ -125,16 +125,17 @@ end
 
 God.watch do |w|
   w.name     = "camo"
-  w.pid_file = "#{rails_root}/camo/tmp/camo.pid"
-  w.interval = 30.seconds
+  w.pid_file = "#{rails_root}/tmp/pids/camo.pid"
+  w.interval = 100.seconds
 
   w.env      = {
     "NODE_TLS_REJECT_UNAUTHORIZED" => 0,
     "CAMO_LENGTH_LIMIT" => 10485760,
-    "CAMO_HEADER_VIA" => 'Camo Asset Proxy at diasp.org'
+    "CAMO_HEADER_VIA" => 'Camo Asset Proxy at diasp.org',
+    "RAILS_ENV"=>rails_env
   }
 
-  w.start       = "cd #{rails_root}/camo && exec /usr/bin/nodejs server.js >> log/camo.stdout.log 2>> log/camo.stderr.log"
+  w.start       = "cd #{rails_root}/camo && exec /usr/bin/nodejs server.js >> #{rails_root}/log/camo.stdout.log 2>> #{rails_root}/log/camo.stderr.log & echo $! > #{rails_root}/tmp/pids/camo.pid" 
   w.stop_signal = "TERM"
 
   # retart if memory gets too high
@@ -142,6 +143,7 @@ God.watch do |w|
     on.condition(:memory_usage) do |c|
       c.above  = 20.megabytes
       c.times  = 2
+      c.notify = 'david'
     end
   end
 
@@ -171,6 +173,7 @@ God.watch do |w|
   w.transition(:up, :start) do |on|
     on.condition(:process_running) do |c|
       c.running = false
+      c.notify = 'david'
     end
   end
 end

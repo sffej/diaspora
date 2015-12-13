@@ -30,7 +30,6 @@ $('body').on('click', '#aspect_ids_public', function() {
   } else {
   }
 });
-    progress(0, $('#progressBar'));
 });
     function progress(percent, $element) {
         var progressBarWidth = percent * $element.width() / 100;
