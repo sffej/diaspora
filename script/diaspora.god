@@ -13,12 +13,13 @@ end
 rails_env   = ENV['RAILS_ENV']  || "production"
 rails_root  = ENV['RAILS_ROOT'] || "/home/david/diaspora"
 
-num_resqueworkers = 2
-num_resqueworkers.times do |num|
+#num_resqueworkers = 1
+#num_resqueworkers.times do |num|
 
 God.watch do |w|
     w.dir      = "#{rails_root}"
-    w.name     = "sidekiq-#{num}"
+#    w.name     = "sidekiq-#{num}"
+    w.name     = "sidekiq"
     w.group    = 'sidekiqs'
     w.interval = 100.seconds
     w.env      = {"RAILS_ENV"=>rails_env}
@@ -65,7 +66,7 @@ God.watch do |w|
       end
     end
   end
-end
+#end
 
 
 God.watch do |w|
@@ -132,7 +133,12 @@ God.watch do |w|
     "NODE_TLS_REJECT_UNAUTHORIZED" => 0,
     "CAMO_LENGTH_LIMIT" => 10485760,
     "CAMO_HEADER_VIA" => 'Camo Asset Proxy at diasp.org',
-    "RAILS_ENV"=>rails_env
+    "CAMO_HOSTNAME" => 'Diaspora Camo',
+    "CAMO_TIMING_ALLOW_ORIGIN" => '*',
+    "CAMO_SOCKET_TIMEOUT" => 18,
+    "CAMO_LOGGING_ENABLED" => 'disable',
+    "CAMO_MAX_REDIRECTS" => 5,
+    "CAMO_KEEP_ALIVE" => 'true'
   }
 
   w.start       = "cd #{rails_root}/camo && exec /usr/bin/nodejs server.js >> #{rails_root}/log/camo.stdout.log 2>> #{rails_root}/log/camo.stderr.log & echo $! > #{rails_root}/tmp/pids/camo.pid" 
@@ -141,7 +147,7 @@ God.watch do |w|
   # retart if memory gets too high
   w.transition(:up, :restart) do |on|
     on.condition(:memory_usage) do |c|
-      c.above  = 20.megabytes
+      c.above  = 500.megabytes
       c.times  = 2
       c.notify = 'david'
     end
