@@ -136,9 +136,9 @@ God.watch do |w|
     "CAMO_HOSTNAME" => 'Diaspora Camo',
     "CAMO_TIMING_ALLOW_ORIGIN" => '*',
     "CAMO_SOCKET_TIMEOUT" => 18,
-    "CAMO_LOGGING_ENABLED" => 'disable',
-    "CAMO_MAX_REDIRECTS" => 5,
-    "CAMO_KEEP_ALIVE" => 'true'
+    "CAMO_LOGGING_ENABLED" => 'disabled',
+    "CAMO_MAX_REDIRECTS" => 6,
+    "CAMO_KEEP_ALIVE" => 'false'
   }
 
   w.start       = "cd #{rails_root}/camo && exec /usr/bin/nodejs server.js >> #{rails_root}/log/camo.stdout.log 2>> #{rails_root}/log/camo.stderr.log & echo $! > #{rails_root}/tmp/pids/camo.pid" 
