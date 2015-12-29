@@ -30,7 +30,7 @@ God.watch do |w|
     # restart if memory gets too high
     w.transition(:up, :restart) do |on|
       on.condition(:memory_usage) do |c|
-        c.above = 3450.megabytes
+        c.above = 4450.megabytes
         c.times = 4
         c.notify = 'david'        
       end

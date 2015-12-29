@@ -3,7 +3,7 @@ require_relative "load_config"
 port = ENV["PORT"]
 port = port && !port.empty? ? port.to_i : nil
 
-worker_processes 5
+worker_processes 12
 
 ## Load the app before spawning workers
 preload_app true
