@@ -300,6 +300,14 @@ When /^I focus the "([^"]+)" field$/ do |field|
   find_field(field).click
 end
 
+Given /^I have configured a Bitcoin address$/ do
+  AppConfig.settings.bitcoin_address = "AAAAAA"
+end
+
+Then /^I should see the Bitcoin address$/ do
+  find("#bitcoin_address")['value'].should == "AAAAAA"
+end
+
 Given /^"([^"]*)" is hidden$/ do |selector|
   page.should have_selector(selector, visible: false)
   page.should_not have_selector(selector)
