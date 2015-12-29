@@ -27,7 +27,7 @@ class ProcessedImage < CarrierWave::Uploader::Base
     process :resize_to_limit => [300,300]
   end
   version :scaled_full do
-    process :resize_to_limit => [900,nil]
+    process :resize_to_limit => [700,nil]
   end
 
 end
