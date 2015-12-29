@@ -14,16 +14,16 @@ Feature: using the more button on mobile stream
       When I go to the stream page
       Then I should see "There are no posts yet."
 
-    Scenario: There are <15 posts
+    Scenario: There are <25 posts
       Given I am on the home page
       And "bob@bob.bob" has a public post with text "post 1"
 
       When I go to the stream page
       Then I should see "You have reached the end of the stream."
 
-    Scenario: There are 15 posts
+    Scenario: There are 25 posts
       Given I am on the home page
-      Given there are 15 public posts from "bob@bob.bob"
+      Given there are 25 public posts from "bob@bob.bob"
       And "bob@bob.bob" has a public post with text "post 1"
 
       When I go to the stream page
@@ -32,9 +32,9 @@ Feature: using the more button on mobile stream
       When I click on selector ".more-link"
       Then I should see "You have reached the end of the stream."
 
-    Scenario: There are 15 +1 posts
+    Scenario: There are 25 +1 posts
       Given I am on the home page
-      Given there are 16 public posts from "bob@bob.bob"
+      Given there are 26 public posts from "bob@bob.bob"
 
       When I go to the stream page
       Then I should see "More"
