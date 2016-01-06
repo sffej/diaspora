@@ -3,6 +3,9 @@
 function pause(){
    read -p .$*.
 }
+
+rvm get stable
+
 echo 'fetch upstream'
 git checkout upstream/master Gemfile.lock db/schema.rb
 git fetch upstream
@@ -22,7 +25,6 @@ select yn in "Yes" "No"; do
     esac
 done
 
-
 echo "bundle install?"
 select yn in "Yes" "No"; do
     case $yn in
@@ -34,7 +36,7 @@ done
 echo "Do you wish to migrate db?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) RAILS_ENV=production DB=postgres rake db:migrate; echo 'db migrated'; break;;
+        Yes ) RAILS_ENV=production DB=postgres bin/rake db:migrate; echo 'db migrated'; break;;
         No ) break;;
     esac
 done
@@ -42,13 +44,10 @@ done
 echo "remake assets?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) RAILS_ENV=production DB=postgres bundle exec rake assets:precompile; break;;
+        Yes ) RAILS_ENV=production DB=postgres bin/rake assets:precompile; break;;
         No ) break;;
     esac
 done
-
-
-
 
 OP=`ps afx | grep 'unicorn master' | grep -v grep | awk '{ print $1 }'`
 #echo $OP
@@ -59,14 +58,6 @@ select yn in "Yes" "No"; do
         No ) break;;
     esac
 done
-
-#echo "cdn assets?"
-#select yn in "Yes" "No"; do
-#    case $yn in
-#        Yes ) script/cdn; break;;
-#        No ) break;;
-#    esac
-#done
 
 OLD=`ps afx | grep 'unicorn master (old)' | grep -v grep | awk '{ print $1 }'`
 NEW=`ps afx | grep 'unicorn master' | grep -v grep | awk '{ print $1 }'`
@@ -96,8 +87,6 @@ select yn in "Yes" "No"; do
         No ) break;;
     esac
 done
-
-
 
 echo "restart workers?"
 select yn in "Yes" "No"; do
