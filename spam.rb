@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # List of spam accounts
-spam_accounts = %w(popeso@diasp.org jorgearturo666@diasp.org fernandoshare@diasp.org potto@diasp.org plaxxxeres@diasp.org pablo_1214@diasp.org)
+spam_accounts = %w(_liam_@diasp.org)
 
 # Delete comments even if spammer isn't a local user or spam isn't on a
 # local users account
@@ -17,9 +17,9 @@ retract_for = %w()
 ###########################################################################
 
 # Load diaspora environment
-ENV['RAILS_ENV'] ||= "production"
+ENV['RAILS_ENV'] ||= "production" 
+ENV['DB'] ||= "postgres"
 require_relative 'config/environment'
-
 local_spammers, remote_spammers = Person.where(diaspora_handle: spam_accounts).partition { |account| account.local? }
 
 

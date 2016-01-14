@@ -135,10 +135,10 @@ God.watch do |w|
     "CAMO_HEADER_VIA" => 'Camo Asset Proxy at diasp.org',
     "CAMO_HOSTNAME" => 'Diaspora Camo',
     "CAMO_TIMING_ALLOW_ORIGIN" => '*',
-    "CAMO_SOCKET_TIMEOUT" => 18,
-    "CAMO_LOGGING_ENABLED" => 'disabled',
+    "CAMO_SOCKET_TIMEOUT" => 28,
+    "CAMO_LOGGING_ENABLED" => 'disable',
     "CAMO_MAX_REDIRECTS" => 6,
-    "CAMO_KEEP_ALIVE" => 'false'
+    "CAMO_KEEP_ALIVE" => 'true'
   }
 
   w.start       = "cd #{rails_root}/camo && exec /usr/bin/nodejs server.js >> #{rails_root}/log/camo.stdout.log 2>> #{rails_root}/log/camo.stderr.log & echo $! > #{rails_root}/tmp/pids/camo.pid" 
