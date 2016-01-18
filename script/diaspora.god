@@ -13,13 +13,13 @@ end
 rails_env   = ENV['RAILS_ENV']  || "production"
 rails_root  = ENV['RAILS_ROOT'] || "/home/david/diaspora"
 
-#num_resqueworkers = 1
-#num_resqueworkers.times do |num|
+num_resqueworkers = 2
+num_resqueworkers.times do |num|
 
 God.watch do |w|
     w.dir      = "#{rails_root}"
-#    w.name     = "sidekiq-#{num}"
-    w.name     = "sidekiq"
+    w.name     = "sidekiq-#{num}"
+#    w.name     = "sidekiq"
     w.group    = 'sidekiqs'
     w.interval = 100.seconds
     w.env      = {"RAILS_ENV"=>rails_env}
@@ -66,7 +66,7 @@ God.watch do |w|
       end
     end
   end
-#end
+end
 
 
 God.watch do |w|
