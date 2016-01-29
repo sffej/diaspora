@@ -4,7 +4,7 @@ gem 'god'
 gem 'newrelic_rpm'
 #diasporg end
 
-gem "rails", "4.2.5"
+gem "rails", "4.2.5.1"
 
 # Legacy Rails features, remove me!
 # responders (class level)
