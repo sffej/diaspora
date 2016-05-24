@@ -2,17 +2,12 @@
 -#   licensed under the Affero General Public License version 3 or later.  See
 -#   the COPYRIGHT file.
 
-:javascript
-  $(document).ready(function() {progress(122, $('#progressBar'));});
-
 .section
   .title
     %h4{:style => "display:inline;"}
       = t('aspects.index.donate')
-  #progressBar
-    %div
   .content
-    Diasporg costs about $1000USD to keep alive and running a year. For 2016 we are at $1213/$1000! Please help out where you can, yes even $1 helps! 
+    Please help out where you can, yes even $1 helps! 
     = link_to t('aspects.index.donate'), "/supportyourpod"
 
 .section

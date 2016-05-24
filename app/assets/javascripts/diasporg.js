@@ -1,12 +1,16 @@
 $(document).ready(function() {
-//dia.so notify
-$("#status_message_fake_text").blur(function() {
+$("#status_message_fake_text").on('mouseout blur', function() {
 var text = $('#status_message_fake_text').val();
-  if (text.match(/:\/\//ig)) {
-     Diaspora.page.flashMessages.render({success: true, notice: "Protip: Auto-Shorten a url with dia.so by adding a extra / to it in your post, eg http:///domain.com"});
-  }
+urls = text.match(/(https?:\/\/(?:www\.|(?!www))(?!dia\.so)[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/gi);
+if (urls) {
+$( ".markdownIndications" ).html("").css("color","#000000");
+oldurls = urls;
+        for(var i=0; i < oldurls.length; i++) {
+	$( ".markdownIndications" ).append("<span id="+[i]+" onclick=shorten(\'"+oldurls[i]+"\','"+[i]+"')>URL detected "+oldurls[i]+" click to shorten this URL</span><br>");
+        //oldurls[i] = oldurls[i].replace(/\/\//ig, "///");
+        }
+}
 });
-
 $('body').on('mouseenter',"a[href*='//dia.so'][class!='expanded'],a[href*='//t.co'][class!='expanded'],a[href*='//bit.ly'][class!='expanded'],a[href*='//goo.gl'][class!='expanded'],a[href*='//j.mp'][class!='expanded'],a[href*='//is.gd'][class!='expanded']", function() {
 $(this).css('cursor','wait');
   var $self = $(this);
@@ -18,20 +22,25 @@ $(this).css('cursor','wait');
         }
     });
 });
-$('body').on('click', '.dropdown_list', function() {
-  if ($('.public.radio.selected:contains("Public")').length > 0) {
-    Diaspora.page.flashMessages.render({success: true, notice: "Public post mode on, post will be public internet wide."});
-  } else {
-  }
-});
-$('body').on('click', '#aspect_ids_public', function() {
-  if ("#aspect_ids_public option:selected") {
-    Diaspora.page.flashMessages.render({success: true, notice: "Public post mode on, post will be public internet wide."});
-  } else {
-  }
-});
 });
     function progress(percent, $element) {
         var progressBarWidth = percent * $element.width() / 100;
         $element.find('div').animate({ width: progressBarWidth }, 2500).html(percent + "% ");
     }
+
+function shorten(url,id) {
+$('#'+id).html("working");
+var text = $('#status_message_fake_text').val();
+    $.ajax({
+      url: '/shorten/?url='+url,
+        success: function(data) {
+		newdata = data.trim();
+		newtext = text.replace(url, newdata);
+		$('#status_message_fake_text').val(newtext);
+		$('#'+id).html("Link Shortened above");
+		setTimeout(function(){
+			$('#'+id).remove();
+		}, 2000);
+        }
+    });
+}

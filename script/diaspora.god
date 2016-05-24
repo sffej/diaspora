@@ -13,13 +13,12 @@ end
 rails_env   = ENV['RAILS_ENV']  || "production"
 rails_root  = ENV['RAILS_ROOT'] || "/home/david/diaspora"
 
-num_resqueworkers = 2
+num_resqueworkers = 3
 num_resqueworkers.times do |num|
 
 God.watch do |w|
     w.dir      = "#{rails_root}"
     w.name     = "sidekiq-#{num}"
-#    w.name     = "sidekiq"
     w.group    = 'sidekiqs'
     w.interval = 100.seconds
     w.env      = {"RAILS_ENV"=>rails_env}
@@ -135,10 +134,10 @@ God.watch do |w|
     "CAMO_HEADER_VIA" => 'Camo Asset Proxy at diasp.org',
     "CAMO_HOSTNAME" => 'Diaspora Camo',
     "CAMO_TIMING_ALLOW_ORIGIN" => '*',
-    "CAMO_SOCKET_TIMEOUT" => 28,
+    "CAMO_SOCKET_TIMEOUT" => 20,
     "CAMO_LOGGING_ENABLED" => 'disable',
     "CAMO_MAX_REDIRECTS" => 6,
-    "CAMO_KEEP_ALIVE" => 'true'
+    "CAMO_KEEP_ALIVE" => 'false'
   }
 
   w.start       = "cd #{rails_root}/camo && exec /usr/bin/nodejs server.js >> #{rails_root}/log/camo.stdout.log 2>> #{rails_root}/log/camo.stderr.log & echo $! > #{rails_root}/tmp/pids/camo.pid" 
