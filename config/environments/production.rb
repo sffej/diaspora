@@ -36,7 +36,7 @@ Diaspora::Application.configure do
   # config.force_ssl = true
 
   # Log level
-  config.log_level = :info
+  config.log_level = :warn
 
   # Set the logging destination(s)
   config.log_to = %w[file]

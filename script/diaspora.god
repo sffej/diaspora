@@ -130,7 +130,7 @@ God.watch do |w|
 
   w.env      = {
     "NODE_TLS_REJECT_UNAUTHORIZED" => 0,
-    "CAMO_LENGTH_LIMIT" => 10485760,
+    "CAMO_LENGTH_LIMIT" => 20485760,
     "CAMO_HEADER_VIA" => 'Camo Asset Proxy at diasp.org',
     "CAMO_HOSTNAME" => 'Diaspora Camo',
     "CAMO_TIMING_ALLOW_ORIGIN" => '*',
