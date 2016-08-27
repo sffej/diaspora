@@ -3,13 +3,7 @@ config/certs/*.crt
 config/certs/*.key
 config/prosody.cfg.lua
 
-<<<<<<< HEAD
-#trademark sillyness
-app/views/plain/_help.html.haml
-app/views/plain/_status.html.haml
-=======
 # Trademark sillyness
->>>>>>> upstream/master
 app/views/home/_show.*
 app/views/terms/terms.*
 app/assets/images/custom/

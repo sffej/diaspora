@@ -3,7 +3,6 @@ Diaspora::Application.configure do
 
   # Code is not reloaded between requests
   config.cache_classes = true
-  #config.whiny_nils = true
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both thread web servers
@@ -36,7 +35,7 @@ Diaspora::Application.configure do
   # config.force_ssl = true
 
   # Log level
-  config.log_level = :warn
+  config.log_level = :info
 
   # Set the logging destination(s)
   config.log_to = %w[file]
@@ -48,7 +47,7 @@ Diaspora::Application.configure do
   # config.log_tags = [ :subdomain, :uuid ]
 
   # Use a different logger for distributed setups
-  #config.logger = ActiveSupport::TaggedLogging.new(Logger.new)
+  # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
