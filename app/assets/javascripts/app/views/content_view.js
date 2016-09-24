@@ -44,7 +44,7 @@ app.views.Content = app.views.Base.extend({
   },
 
   collapseOversized : function() {
-    var collHeight = 200
+    var collHeight = 800
       , elem = this.$(".collapsible")
       , oembed = elem.find(".oembed")
       , opengraph = elem.find(".opengraph")
