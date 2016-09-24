@@ -7,7 +7,7 @@ function pause(){
 rvm get stable
 
 echo 'fetch upstream'
-git checkout upstream/master Gemfile.lock db/schema.rb
+#git checkout upstream/master Gemfile.lock db/schema.rb
 git fetch upstream
 echo "Merge upstream?"
 select yn in "Yes" "No"; do
