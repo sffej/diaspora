@@ -28,7 +28,7 @@ done
 echo "bundle install?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) RAILS_ENV=production DB=postgres bundle install --deployment; break;;
+        Yes ) RAILS_ENV=production bin/bundle install --jobs $(nproc) --deployment --without test development --with postgresql; break;;
         No ) break;;
     esac
 done
