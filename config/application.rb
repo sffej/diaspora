@@ -3,6 +3,13 @@ require_relative 'boot'
 require 'rails/all'
 Bundler.require(:default, *Bundler.settings.with, Rails.env)
 
+#fix admin_panel
+#config.before_initialize do
+#Kaminari.configure do |config|
+#config.page_method_name = :per_page_kaminari
+#end
+#end
+
 # Do not dump the limit of boolean fields on MySQL,
 # since that generates a db/schema.rb that's incompatible
 # with PostgreSQL

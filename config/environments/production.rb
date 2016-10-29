@@ -1,6 +1,11 @@
 Diaspora::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
-
+#fix admin_panel
+config.before_initialize do
+Kaminari.configure do |config|
+config.page_method_name = :per_page_kaminari
+end
+end
   # Code is not reloaded between requests
   config.cache_classes = true
 
