@@ -12,7 +12,7 @@ en:
     delete: "Delete"
     ignore: "Ignore"
     report:
-      prompt: "Report something that violates the pods terms (not things that offend you, use ignore for that)"
+      prompt: "Report a diasp.org user that violates this pods terms (not things that offend you, use ignore for that). "
       prompt_default: "offensive content"
       name: "Report"
       status:

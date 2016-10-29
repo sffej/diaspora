@@ -150,11 +150,11 @@ describe Post, :type => :model do
           Post.for_visible_shareable_sql(time, 'created_at')
         end
 
-        it 'defaults to 25 posts' do
+        it 'defaults to 15 posts' do
           chain = double.as_null_object
 
           allow(Post).to receive(:by_max_time).and_return(chain)
-          expect(chain).to receive(:limit).with(25).and_return(Post)
+          expect(chain).to receive(:limit).with(15).and_return(Post)
           Post.for_visible_shareable_sql(Time.now + 1, "created_at")
         end
 

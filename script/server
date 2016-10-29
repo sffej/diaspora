@@ -202,5 +202,5 @@ else
 fi
 echo ""
 
-#god -c script/diaspora.god&
+god -c script/diaspora.god
 exec bin/bundle exec loader_eye --stop_all -c config/eye.rb
