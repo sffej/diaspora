@@ -20,7 +20,7 @@ describe Diaspora::MessageRenderer do
     end
 
     context 'when :length is not passed in parameters' do
-      context 'with a Markdown header of less than 200 characters on first line' do
+      context 'with a Markdown header of less than 800 characters on first line' do
         it 'returns atx style header' do
           expect(message("## My title\n Post content...").title).to eq "My title"
           expect(message("## My title ##\n Post content...").title).to eq "My title"
@@ -35,7 +35,7 @@ describe Diaspora::MessageRenderer do
         end
       end
 
-      context "without a Markdown header of less than 200 characters on first line" do
+      context "without a Markdown header of less than 800 characters on first line" do
         it "truncates posts to the 70 first characters" do
           text = "Chillwave heirloom small batch semiotics, brunch cliche yr gluten-free whatever bitters selfies."
           expect(message(text).title).to eq "Chillwave heirloom small batch semiotics, brunch cliche yr gluten-f..."
