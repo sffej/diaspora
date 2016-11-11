@@ -299,10 +299,10 @@ ActiveRecord::Schema.define(version: 20161015174300) do
   create_table "open_graph_caches", force: :cascade do |t|
     t.string "title",       limit: 255
     t.string "ob_type",     limit: 255
-    t.text   "image",       limit: 65535
-    t.text   "url",         limit: 65535
-    t.text   "description", limit: 65535
-    t.text   "video_url",   limit: 65535
+    t.text   "image"
+    t.text   "url"
+    t.text   "description"
+    t.text   "video_url"
   end
 
   create_table "participations", force: :cascade do |t|
@@ -358,7 +358,7 @@ ActiveRecord::Schema.define(version: 20161015174300) do
   add_index "photos", ["status_message_guid"], name: "index_photos_on_status_message_guid", using: :btree
 
   create_table "pods", force: :cascade do |t|
-    t.string   "host",          limit: 255,                                 null: false
+    t.string   "host",                                                      null: false
     t.boolean  "ssl"
     t.datetime "created_at",                                                null: false
     t.datetime "updated_at",                                                null: false
@@ -632,9 +632,9 @@ ActiveRecord::Schema.define(version: 20161015174300) do
     t.boolean  "strip_exif",                                     default: true
     t.string   "exported_photos_file",               limit: 255
     t.datetime "exported_photos_at"
-    t.boolean  "exporting_photos",                                 default: false
-    t.string   "color_theme",                        limit: 255
-    t.boolean  "post_default_public",                              default: false
+    t.boolean  "exporting_photos",                               default: false
+    t.string   "color_theme"
+    t.boolean  "post_default_public",                            default: false
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree

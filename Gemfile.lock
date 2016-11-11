@@ -375,7 +375,6 @@ GEM
       terminal-table
     globalid (0.3.7)
       activesupport (>= 4.1.0)
-    god (0.13.7)
     gon (6.1.0)
       actionpack (>= 3.0)
       json
@@ -522,7 +521,6 @@ GEM
     naught (1.1.0)
     nenv (0.3.0)
     nested_form (0.3.2)
-    newrelic_rpm (3.16.2.321)
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
@@ -946,7 +944,6 @@ DEPENDENCIES
   faraday_middleware (= 0.10.0)
   fixture_builder (= 0.4.1)
   fog (= 1.38.0)
-  god
   fuubar (= 2.2.0)
   gon (= 6.1.0)
   guard (= 2.14.0)

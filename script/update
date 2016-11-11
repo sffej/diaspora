@@ -49,36 +49,36 @@ select yn in "Yes" "No"; do
     esac
 done
 
-OP=`ps afx | grep 'unicorn master' | grep -v grep | awk '{ print $1 }'`
+#OP=`ps afx | grep 'unicorn master' | grep -v grep | awk '{ print $1 }'`
 #echo $OP
-echo "start new unicorn cluster?"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) god restart unicorn; sleep 1m; break;;
-        No ) break;;
-    esac
-done
+#echo "start new unicorn cluster?"
+#select yn in "Yes" "No"; do
+#    case $yn in
+#        Yes ) god restart unicorn; sleep 1m; break;;
+#        No ) break;;
+#    esac
+#done
 
-OLD=`ps afx | grep 'unicorn master (old)' | grep -v grep | awk '{ print $1 }'`
-NEW=`ps afx | grep 'unicorn master' | grep -v grep | awk '{ print $1 }'`
+#OLD=`ps afx | grep 'unicorn master (old)' | grep -v grep | awk '{ print $1 }'`
+#NEW=`ps afx | grep 'unicorn master' | grep -v grep | awk '{ print $1 }'`
 
-if [ !OLD ] 
-   then
-        echo "No old unicorn found!"
-fi 
+#if [ !OLD ] 
+#   then
+#        echo "No old unicorn found!"
+#fi 
 
-if [ OLD == NEW ] 
-   then
-	echo "oops no new unicorn is ready yet, wait longer to kill old!"
-fi 
+#if [ OLD == NEW ] 
+#   then
+#	echo "oops no new unicorn is ready yet, wait longer to kill old!"
+#fi 
 
-echo "kill old $OLD unicorn cluster and keep $NEW?"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) kill $OLD; break;;
-        No ) break;;
-    esac
-done
+#echo "kill old $OLD unicorn cluster and keep $NEW?"
+#select yn in "Yes" "No"; do
+#    case $yn in
+#        Yes ) kill $OLD; break;;
+#        No ) break;;
+#    esac
+#done
 
 echo "notify poduptime?"
 select yn in "Yes" "No"; do
@@ -88,11 +88,11 @@ select yn in "Yes" "No"; do
     esac
 done
 
-echo "restart workers?"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) god restart sidekiqs; break;;
-        No ) break;;
-    esac
-done
+#echo "restart workers?"
+#select yn in "Yes" "No"; do
+#    case $yn in
+#        Yes ) god restart sidekiqs; break;;
+#        No ) break;;
+#    esac
+#done
 
