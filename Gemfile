@@ -211,7 +211,7 @@ gem "versionist", "1.5.0"
 group :production do # we don"t install these on travis to speed up test runs
   # Administration
 
-  gem "rails_admin", "0.8.1"
+  gem "rails_admin", "1.1.0"
 
   # Analytics
 

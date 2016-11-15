@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # List of spam accounts
-spam_accounts = %w(gigab@diasp.org)
+spam_accounts = %w(elianoparasiempre@diasp.org agustingabon@diasp.org)
 
 # Delete comments even if spammer isn't a local user or spam isn't on a
 # local users account
