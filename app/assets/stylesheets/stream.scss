@@ -1,3 +1,16 @@
+#progressBar {
+  width: 710px;
+  height: 14px;
+  border: 1px solid #111;
+}
+#progressBar div {
+  height: 100%;
+  color: #fff;
+  text-align: right;
+  line-height: 14px;
+  width: 0;
+  background-color: #009300;
+}
 .stream_container {
   .stream-title {
     margin: 12px 0;

@@ -375,6 +375,7 @@ GEM
       terminal-table
     globalid (0.3.7)
       activesupport (>= 4.1.0)
+    god (0.13.7)
     gon (6.1.0)
       actionpack (>= 3.0)
       json
@@ -945,6 +946,7 @@ DEPENDENCIES
   fixture_builder (= 0.4.1)
   fog (= 1.38.0)
   fuubar (= 2.2.0)
+  god
   gon (= 6.1.0)
   guard (= 2.14.0)
   guard-cucumber (= 2.1.2)
@@ -1014,7 +1016,7 @@ DEPENDENCIES
   rails-assets-perfect-scrollbar (= 0.6.12)!
   rails-i18n (= 4.0.8)
   rails-timeago (= 2.11.0)
-  rails_admin (= 0.8.1)
+  rails_admin (= 1.1.0)
   rb-fsevent (= 0.9.7)
   rb-inotify (= 0.9.7)
   redcarpet (= 3.3.4)
@@ -1049,4 +1051,4 @@ DEPENDENCIES
   will_paginate (= 3.1.5)
 
 BUNDLED WITH
-   1.13.5
+   1.13.6

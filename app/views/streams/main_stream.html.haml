@@ -7,6 +7,9 @@
     = javascript_include_tag :jsxc, id: 'jsxc',
       data: { endpoint: get_bosh_endpoint }
 
+:javascript
+  $(document).ready(function() {progress(1, $(‘#progressBar’));});
+
 - if current_user.getting_started?
   #welcome-to-diaspora
     .container-fluid
@@ -160,6 +163,7 @@
               = render "shared/links"
 
     .col-md-9
+      = render "shared/bar"
       .stream_container#aspect_stream_container
         = render "aspects/aspect_stream", stream: @stream
 
