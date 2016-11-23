@@ -7,9 +7,6 @@
     = javascript_include_tag :jsxc, id: 'jsxc',
       data: { endpoint: get_bosh_endpoint }
 
-:javascript
-  $(document).ready(function() {progress(1, $(‘#progressBar’));});
-
 - if current_user.getting_started?
   #welcome-to-diaspora
     .container-fluid
