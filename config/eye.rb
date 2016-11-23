@@ -12,12 +12,13 @@ Eye.application("diaspora") do
   stderr "log/eye_processes_stderr.log"
 
   process :web do
-    start_command "bin/bundle exec unicorn -c config/unicorn.rb"
-    daemonize true
-    pid_file "tmp/pids/web.pid"
+    start_command "bin/bundle exec unicorn -c config/unicorn.rb -D"
+    daemonize false
+    pid_file AppConfig.server.pid.get
     stop_signals [:TERM, 10.seconds]
-    env "PORT" => ENV["PORT"]
+    restart_command "kill -USR2 {PID}"
 
+    env "PORT" => ENV["PORT"]
     monitor_children do
       stop_command "kill -QUIT {PID}"
     end
