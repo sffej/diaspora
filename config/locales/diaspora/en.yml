@@ -712,11 +712,11 @@ en:
         type:
           post: "post"
           comment: "comment"
-        subject: "A new %{type} was marked as offensive"
+        subject: "A new %{type} was reported as a violation"
         body: |-
           Hello,
 
-          the %{type} with ID %{id} was marked as offensive.
+          The %{type} with ID %{id} was marked as a violation.
 
           Reason: %{reason}
 
