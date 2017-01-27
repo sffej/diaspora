@@ -25,11 +25,10 @@ select yn in "Yes" "No"; do
         No ) break;;
     esac
 done
-
-echo "bundle install?"
+echo "bundle update, install, clean?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) RAILS_ENV=production bin/bundle install --jobs $(nproc) --deployment --without test development --with postgresql; break;;
+        Yes ) gem install bundler; RAILS_ENV=production bin/bundle install --jobs $(nproc) --deployment --without test development --with postgresql; bin/bundle clean; break;;
         No ) break;;
     esac
 done
@@ -45,7 +44,15 @@ done
 echo "remake assets?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) RAILS_ENV=production DB=postgres bin/rake assets:clean; RAILS_ENV=production DB=postgres bin/rake assets:precompile; break;;
+        Yes ) RAILS_ENV=production DB=postgres bin/rake assets:precompile; RAILS_ENV=production DB=postgres bin/rake assets:clean; echo 'assets cleaned'; break;;
+        No ) break;;
+    esac
+done
+
+echo "restart pod?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) bin/eye restart web; bin/eye restart sidekiqs; break;;
         No ) break;;
     esac
 done
