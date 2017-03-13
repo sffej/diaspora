@@ -11,7 +11,7 @@ oldurls = urls;
         }
 }
 });
-$('body').on('mouseenter',"a[href*='//dia.so'][class!='expanded'],a[href*='//t.co'][class!='expanded'],a[href*='//bit.ly'][class!='expanded'],a[href*='//goo.gl'][class!='expanded'],a[href*='//j.mp'][class!='expanded'],a[href*='//is.gd'][class!='expanded']", function() {
+$('body').on('mouseenter',"a[href^='https://dia.so/'][class!='expanded'],a[href*='//t.co'][class!='expanded'],a[href*='//bit.ly'][class!='expanded'],a[href*='//goo.gl'][class!='expanded'],a[href*='//j.mp'][class!='expanded'],a[href*='//is.gd'][class!='expanded']", function() {
 $(this).css('cursor','wait');
   var $self = $(this);
     $.ajax({
